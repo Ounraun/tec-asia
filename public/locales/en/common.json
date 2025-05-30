@@ -1,0 +1,12 @@
+{
+    "navbar": {
+      "home": "Home",
+      "about": "About Us",
+      "services": "Services",
+      "contact": "Contact"
+    },
+    "language": {
+      "en": "English",
+      "th": "ไทย"
+    }
+  }

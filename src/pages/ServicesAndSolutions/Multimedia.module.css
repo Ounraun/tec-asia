@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.container {
+  min-height: 100vh;
+  background-color: #000;
+  color: white;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+  padding: 4rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.header h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.gradientText {
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(
+    15deg,
+    rgba(52, 168, 213, 1) 19%,
+    rgba(161, 232, 238, 1) 35%,
+    rgba(201, 141, 140, 1) 54%,
+    rgba(189, 108, 15, 1) 96%
+  );
+  background-clip: text;
+  color: transparent;
+  font-family: "Orbitron-SemiBold", Helvetica;
+  font-size: 64px;
+  font-weight: 600;
+  height: 61px;
+  letter-spacing: 1.00px;
+  line-height: 60.6px;
+  text-align: center;
+  text-fill-color: transparent;
+  white-space: nowrap;
+}
+
+.multi {
+  color: #72D4ED;
+}
+
+.media {
+  color: #FFFFFF;
+}
+
+.solution {
+  color: #ffffff;
+  font-family: "Orbitron-Regular", Helvetica;
+  font-size: 64px;
+  font-weight: 400;
+  height: 61px;
+  letter-spacing: 1.00px;
+  line-height: 60.6px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.subtitle {
+  color: #f5f5f5;
+  font-family: "Poppins-Medium", Helvetica;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 30px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.backgroundsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding: 2rem;
+  background-color: #000;
+}
+
+.firstBackground {
+  background-image: url('../../assets/Multimedia/201.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 600px;
+  position: relative;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  position: relative;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.firstBackground::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, #000 0%, transparent 10%, transparent 90%, #000 100%);
+  pointer-events: none;
+}
+
+.secondBackground {
+  background-image: url('../../assets/Multimedia/210.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 600px;
+  position: relative;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  position: relative;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.secondBackground::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, #000 0%, transparent 10%, transparent 90%, #000 100%);
+  pointer-events: none;
+}
+
+.firstBackground .servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
+
+.secondBackground .servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2rem;
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
+
+.serviceCard {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  padding: 1.5rem;
+  position: relative;
+  border: 1px solid rgba(114, 212, 237, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.firstBackground>.servicesGrid>.serviceCard:nth-child(1), .firstBackground>.servicesGrid>.serviceCard:nth-child(3){
+  margin-bottom: 6rem; /* การ์ดที่เป็นเลขคี่เลื่อนลง */
+}
+
+.firstBackground>.servicesGrid>.serviceCard:nth-child(2) {
+  margin-top: 6rem; /* การ์ดที่เป็นเลขคู่เลื่อนขึ้น */
+}
+
+
+.glowDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #72D4ED;
+  box-shadow: 0 0 10px #72D4ED;
+  position: absolute;
+  top: -5px;
+  left: 20px;
+}
+
+.serviceCard h3 {
+  color: #72D4ED;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.serviceCard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.serviceCard li {
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 2rem; /* เพิ่ม padding ซ้ายขวา */
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* .navLink {
+  color: #fff;
+  text-align: center;
+  font-family: Orbitron;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: inline-block;
+}
+
+
+.navLink:hover {
+  color: #72D4ED;
+} */
+
+@media (max-width: 1200px) {
+  .servicesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .backgroundsContainer {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .servicesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .backgroundsContainer {
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  .firstBackground,
+  .secondBackground {
+    padding: 1rem;
+    min-height: 500px;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .navLink {
+    font-size: 1.2rem;
+  }
+} 

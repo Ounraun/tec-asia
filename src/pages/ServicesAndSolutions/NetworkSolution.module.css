@@ -1,0 +1,349 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #34a8d5;
+  --secondary-color: #72D4ED;
+  --background-color: rgba(0, 27, 45, 0.95);
+  --font-family-primary: 'Orbitron', sans-serif;
+  --font-family-secondary: 'Poppins', sans-serif;
+}
+.WireAndWireless_160_272 {
+  color: #d58213;
+  font-family: Orbitron;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  display: inline-block;
+}
+
+
+.container {
+  min-height: 100vh;
+  background-color: #000;
+  color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  z-index: 1;
+}
+
+.header p {
+  color: #fff;
+  font-family: var(--font-family-secondary);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 170%;
+  margin-top: 2rem;
+}
+
+.network {
+  text-align: center;
+  font-family: var(--font-family-primary);
+  font-size: 64px;
+  font-weight: 600;
+  background: linear-gradient(81deg, #34a8d5, #a1e8ee, #c98d8c, #bd6c0f);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+
+.solution {
+  color: #fff;
+  font-family: var(--font-family-primary);
+  font-size: 64px;
+  font-weight: 400;
+}
+
+
+/* .network, .solution {
+  text-shadow: 0 0 10px rgba(52, 168, 213, 0.8);
+} */
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cityImageContainer {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.cityImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(1.5) saturate(1.5);
+}
+
+.topBox {
+  background: rgba(0, 27, 45, 0.95); /* เพิ่มความโปร่งใส */
+  border: 2px solid rgba(16, 151, 249, 0.6); /* เพิ่มความชัดเจนของเส้นขอบ */
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.introText p {
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* ให้ container จัดข้อความลูกทั้งหมดกึ่งกลาง */
+.description {
+  text-align: center;
+}
+
+/* ปรับ p ให้เป็น block กำหนดความกว้างสูงสุด และกึ่งกลางด้วย margin auto */
+.description p {
+  display: block;              /* ให้ p เป็นบล็อกเต็มบรรทัด */
+  max-width: 1074px;           /* หรือ width: 1074px ถ้าต้องการตายตัว */
+  margin: 0 auto;              /* กึ่งกลางแนวนอน */
+  color: #fff;
+  letter-spacing: -0.38px;
+  font-family: Poppins, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 170%;
+}
+
+
+.section {
+  background: rgba(0, 27, 45, 0.95);
+  border: 2px solid rgba(16, 151, 249, 0.6);
+  border-radius: 8px;
+  padding: 2.5rem; /* เพิ่ม padding */
+  margin-bottom: 2.5rem; /* เพิ่มระยะห่างระหว่างเซคชัน */
+}
+
+.contentSections {
+  display: grid;
+  grid-template-columns: 1fr;  /* โมบาย: 1 คอลัมน์ */
+  gap: 2rem;
+}
+
+.section h2 {
+  color: #72D4ED;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.section h2:hover {
+  color: #34a8d5; /* เปลี่ยนสีเมื่อ hover */
+  text-shadow: 0 0 10px rgba(52, 168, 213, 0.8);
+}
+
+.sectionContent p {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0.5rem 0;
+}
+
+.securitySection {
+  position: relative;
+}
+
+.securitySection::before {
+  content: '';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(16, 151, 249, 0.3);
+  border-radius: 50%;
+  filter: blur(10px);
+}
+
+/* .navigation {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 0;
+  margin-top: auto;
+}
+
+.navLink {
+  color: #fff;
+  text-align: center;
+  font-family: Orbitron;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: inline-block;
+}
+
+
+.navLink:hover {
+  color: #72D4ED;
+} */
+
+.mainImageContainer {
+  width: 100%;
+  /* ลบ height ตายตัวออก ให้ตามเนื้อภาพ */
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -8rem; /* ถ้าต้องการเลื่อนขึ้นอีกนิดยังเก็บได้ */
+}
+
+.mainImage {
+  /* margin-top: -6rem; สั้นลงกว่าที่เคย -8rem */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+
+  /* fade เฉพาะขอบบน–ล่าง */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,    /* เริ่มต้นโปร่งตรงขอบบน */
+    black 10%,         /* กลางภาพทึบอยู่ที่ 10% */
+    black 90%,         /* จนถึง 90% */
+    transparent 100%   /* จางลงที่ขอบล่าง */
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+/* --- wrapper แบบเต็มบรรทัด (wire & data) --- */
+.fullWrapper {
+  /* ถ้าต้องการเว้น margin รอบ ๆ */
+  /* width: 100%; */
+}
+
+/* --- wrapper ของสองการ์ดกลาง --- */
+.groupWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+
+  background: rgba(0, 27, 45, 0.95);
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  /* padding: 2.5rem; */
+}
+
+.groupInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* --- ถ้าการ์ดถูกห่อใน groupWrapper ให้ disable ขอบ+พื้นหลังของ .card --- */
+.groupedCard {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+
+
+@media (max-width: 1200px) {
+  .network, .solution {
+    font-size: 28px; /* ลดขนาดฟอนต์ */
+    line-height: 32px;
+  }
+
+  .mainContent {
+    padding: 1rem; /* ลด padding */
+  }
+  .navLink {
+    font-size: 18px; /* ลดขนาดฟอนต์ของลิงก์ */
+  }
+}
+/* ====== บนจอกลางขึ้นไป ====== */
+@media (min-width: 768px) {
+  /* สลับเป็น 2 คอลัมน์ */
+  .contentSections {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* บังคับให้ fullWrapper กับ groupWrapper span เต็มสองคอลัมน์ */
+  .fullWrapper,
+  .groupWrapper {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 768px) {
+  .network, .solution {
+    font-size: 36px;
+    line-height: 36px;
+  }
+
+  .cityImageContainer {
+    height: 150px;
+  }
+
+  .wireSection, .securitySection, .surveillanceSection, .dataSection {
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .navLink {
+    font-size: 20px;
+  }
+
+  .contentSections {
+    grid-template-columns: repeat(2, 1fr); /* พอหน้าจอกลางขึ้นไป ให้เป็น 2 คอลัมน์ */
+  }
+
+  /* item แรก (wire) และตัวสุดท้าย (data) ให้ span ครบสองคอลัมน์ */
+  .contentSections > :nth-child(1),
+  .contentSections > :nth-child(4) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .cityImageContainer {
+    height: 120px;
+  }
+
+  .topBox p, .sectionContent p {
+    font-size: 14px;
+  }
+} 
+@media (min-width: 1200px) {
+  .contentSections {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* แสดง 2 คอลัมน์ */
+    gap: 2rem;
+  }
+}

@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+
+.container {
+  min-height: 100vh;
+  background-color: #000;
+  color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.data {
+  text-align: center;
+  letter-spacing: 1px;
+  background: var(
+    --main-solution,
+    linear-gradient(
+      81deg,
+      #34a8d5 19.23%,
+      #a1e8ee 34.62%,
+      #c98d8c 54.33%,
+      #bd6c0f 95.64%
+    )
+  );
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-family: Orbitron;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 60.587px;
+  display: inline-block;
+}
+
+
+.center {
+  color: #fff;
+  text-align: center;
+  letter-spacing: 1px;
+  font-family: Orbitron;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 60.587px;
+  display: inline-block;
+}
+
+
+
+.subtitle {
+  color: red;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 30px;
+  display: inline-block;
+}
+
+.line {
+  box-sizing: border-box;
+  background: linear-gradient(
+    90deg,
+    #0e0e0e 9.59%,
+    #f6caa9 45.06%,
+    #0e0e0e 85.26%
+  );
+  width: 702px;
+  height: 0.5px;
+  margin: 0 auto;
+}
+
+
+.facilitiesSection {
+  position: relative;
+  padding: 2rem 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(11,40,50,0.3) 50%, rgba(0,0,0,0) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bgImageContainer {
+  width: 100%;
+  max-width: 100rem;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.bgImage {
+  width: 100%;
+  height: auto;
+  /* max-height: 800px; */
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(114, 212, 237, 0.3);
+}
+
+.facilitiesTitle {
+  text-align: center;
+  color: #72D4ED;
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 3rem;
+
+  letter-spacing: 6.4px;
+  text-transform: capitalize;
+  background: var(
+    --main-content-C,
+    linear-gradient(
+      90deg,
+      #005a8e 12.38%,
+      #0497ec 27.84%,
+      #0497ec 89.54%,
+      #005a8e 100%
+    )
+  );
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-family: Orbitron;
+  font-style: normal;
+  line-height: 250%;
+  display: block;
+}
+
+.facilitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* เปลี่ยนเป็น 2 คอลัมน์ */
+  gap: 2rem;
+  max-width: 1096px; /* ลดความกว้างเพื่อให้เหมาะสมกับ 2 คอลัมน์ */
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+.facilityCard:nth-child(odd) {
+  margin-left: 3rem; /* การ์ดที่เป็นเลขคี่เลื่อนลง */
+}
+
+.facilityCard:nth-child(even) {
+  margin-right: 3rem; /* การ์ดที่เป็นเลขคู่เลื่อนขึ้น */
+}
+
+.leftColumn, .rightColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.facilityCard {
+  background: rgba(11, 40, 50, 0.3);
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(114, 212, 237, 0.1);
+}
+
+.facilityCard:hover {
+  background: rgba(11, 40, 50, 0.5);
+  border-color: rgba(114, 212, 237, 0.3);
+  transform: translateY(-5px);
+}
+
+.facilityNumber {
+  color: #72D4ED;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.facilityTitle {
+  color: #d58213;
+  width: 359px;
+  font-family: Orbitron;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  display: inline-block;
+}
+
+
+
+.facilityContent {
+  color: #fff;
+  flex-direction: column;
+  justify-content: center;
+  width: 328px;
+  height: 58px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%;
+  display: inline-block;
+}
+
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+.card {
+  width: 160px;
+  height: 160px;
+  background: #3b82f6;
+  border-radius: 12px;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.card-content {
+  color: white;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+.card:hover .card-content {
+  opacity: 1;
+}
+
+
+/* .navigation {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 0;
+  margin-top: auto;
+} */
+
+/* .navLink {
+  color: #fff;
+  text-align: center;
+  font-family: Orbitron;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: inline-block;
+}
+
+
+.navLink:hover {
+  color: #72D4ED;
+} */
+
+@media (max-width: 1200px) {
+  .facilitiesGrid {
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+  
+  .data, .center {
+    font-size: 48px;
+    line-height: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .facilitiesGrid {
+    flex-direction: column;
+  }
+  
+  .data, .center {
+    font-size: 36px;
+    line-height: 36px;
+  }
+  
+  .facilitiesTitle {
+    font-size: 28px;
+  }
+  
+  .navLink {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .facilitiesGrid {
+    padding: 0;
+  }
+  
+  .facilityCard {
+    padding: 1rem;
+  }
+} 

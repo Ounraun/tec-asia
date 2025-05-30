@@ -1,0 +1,342 @@
+@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+/* html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+} */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 10px;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.4s ease-in;
+  /* background-color: #c394f8; */
+  /* height: 787px; */
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.blue {
+  background-color: #428aa6;
+}
+
+input[type="radio"] {
+  display: none;
+}
+.cardLayout{
+  position: absolute;
+
+  transition: transform 0.4s ease;
+  left: 0;
+  right: 0;
+  width: 60%;
+  height:129%;
+  margin: auto;
+  z-index: 70;
+  /* margin-bottom: 70px; */
+}
+
+
+.card {
+  position: absolute;
+  width: 100%;
+  height:80%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+  background: linear-gradient(180deg, #0D2640 0%, #0A1A2B 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+}
+
+.cardHeader {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  position: absolute;
+  /* top: 10px; */
+  bottom: 0 ;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #0E8DDC;
+  width: 100%;
+  text-align: center;
+
+  /* whith effect 2 */
+  text-shadow: 0px 5px 13.3px rgba(255, 255, 255, 0.21);
+  font-family: Saira;
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 3.375rem */
+  letter-spacing: 0.045rem;
+
+}
+
+.cardBody {
+  padding: 8%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 64px;
+}
+
+.date {
+  font-size: 0.9rem;
+  color: #DFBB90;
+  margin-bottom: 16px;
+ 
+}
+
+.readMore {
+  align-self: flex-end;
+  color: #4acaff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  margin-top: auto;
+}
+
+.readMore:hover {
+  text-decoration: underline;
+  color: #69dbff;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  max-height: 800px;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+:global .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* เพิ่มระยะห่างระหว่างแต่ละ label */
+  position: relative;
+  width: 75%;
+  height: 70%;
+  margin-bottom: 20px;
+  z-index: 2;
+}
+
+.myImage {
+  width: 100%;
+  height: 100%;
+  /* border-radius: 10px; */
+  object-fit: cover;
+}
+
+:global(#item-1:checked ~ .cards #society),
+:global(#item-2:checked ~ .cards #communityEvents),
+:global(#item-3:checked ~ .cards #knowledge) {
+  transform: translateX(-130%) scale(0.8);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+:global(#item-1:checked ~ .cards #knowledge),
+:global(#item-2:checked ~ .cards #society),
+:global(#item-3:checked ~ .cards #communityEvents) {
+  transform: translateX(130%) scale(0.8);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+:global(#item-1:checked ~ .cards #communityEvents),
+:global(#item-2:checked ~ .cards #knowledge),
+:global(#item-3:checked ~ .cards #society) {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  z-index: 1;
+}
+
+:global(#item-1:checked ~ .cards #communityEvents img),
+:global(#item-2:checked ~ .cards #knowledge img),
+:global(#item-3:checked ~ .cards #society img) {
+  box-shadow: 0px 0px 5px 0px rgba(81, 81, 81, 0.47);
+}
+
+.player {
+  background-color: #fff;
+  border-radius: 8px;
+  min-width: 320px;
+  padding: 16px 10px;
+}
+
+.upper-part {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  height: 36px;
+  overflow: hidden;
+}
+
+.play-icon {
+  margin-right: 10px;
+}
+
+.song-info {
+  width: calc(100% - 32px);
+  display: block;
+}
+
+.song-info .title {
+  color: #403d40;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.sub-line {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.subtitle,
+.time {
+  font-size: 12px;
+  line-height: 16px;
+  color: #c6c5c6;
+}
+
+.time {
+  font-size: 12px;
+  line-height: 16px;
+  color: #a5a5a5;
+  font-weight: 500;
+  margin-left: auto;
+}
+
+.progress-bar {
+  height: 3px;
+  width: 100%;
+  background-color: #e9efff;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress {
+  display: block;
+  position: relative;
+  width: 60%;
+  height: 100%;
+  background-color: #2992dc;
+  border-radius: 6px;
+}
+
+.info-area {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 30px;
+  transition: transform 0.4s ease-in;
+}
+
+#item-2:checked ~ .player #test {
+  transform: translateY(0);
+}
+
+#item-2:checked ~ .player #test {
+  transform: translateY(-40px);
+}
+
+#item-3:checked ~ .player #test {
+  transform: translateY(-80px);
+}
+.communityFloorContainer{
+  position: absolute;
+  bottom: 14%;
+  left: -145%;
+  width: 160%;   
+  height: 160px;  
+  margin: 50px auto;
+  z-index: 1;
+  /* overflow: visible; ให้ลูกหลานที่ออกนอก container ยังแสดงอยู่ */
+}
+.communityFloorContainer svg {
+  width: 100%;
+  height: auto; /* หรือกำหนดเป็นค่าเฉพาะ เช่น 160px ตาม container */
+  display: block; /* ป้องกันปัญหา margin-bottom ที่เกิดจาก inline element */
+}
+
+.communityFloor{
+  width: 100%;
+  height: auto;
+  display: block; /* เพื่อเอา margin ที่ไม่ต้องการออก */
+  box-shadow: none !important;
+  z-index: 1;
+}
+
+
+/* .ellipseContainer { */
+  /* position: absolute; */
+  /* bottom: 0; */
+  /* left: -20%; */
+  /* width: 500px;   ปรับตามต้องการ */
+  /* height: 110px;  ปรับตามต้องการ */
+  /* margin: 50px auto;  */
+/* } */
+
+/* .ellipse {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%; */
+  /* border-radius: 50%; ทำให้เป็นวงรี */
+
+  /* เส้นขอบ (border) ที่สีใกล้เคียง Glow */
+  /* border: 2px solid rgba(74, 202, 255,0.1); */
+
+  /* ไล่สีจากกลางไปขอบเพื่อให้เอฟเฟกต์เรืองแสง */
+  /* background: radial-gradient(
+    ellipse at center,
+    rgba(74, 202, 255, 0.6) 0%,
+    rgba(74, 202, 255, 0.3) 50%,
+    rgba(74, 202, 255, 0)   100%
+  ); */
+
+  /* เงารอบนอก + เงาด้านใน (inset) เพื่อสร้าง Glow */
+  /* box-shadow: */
+    /* Glow รอบนอก */
+    /* 0 0 40px 20px rgba(74, 202, 255, 0.3), */
+    /* Glow ข้างใน */
+    /* inset 0 0 40px 10px rgba(74, 202, 255, 0.2); */
+/* } */
+

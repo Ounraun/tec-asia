@@ -1,0 +1,50 @@
+/* --- Card styling --- */
+.cardTitle,
+.cardSubtitle,
+.cardContent p {
+  display: block !important;
+  width: auto !important;        /* ลบ width คงที่ */
+  margin: 0 0 1rem 0;             /* เว้นใต้ทุกบล็อก 1rem */
+}
+
+.card {
+  background: var(--background-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 2.5rem;
+  color: #fff;
+}
+
+
+.cardTitle {
+  color: rgba(213, 130, 19, 1);
+  font-family: var(--font-family-primary);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+
+.cardSubtitle {
+  color: rgba(255, 255, 255, 1);
+  font-family: var(--font-family-secondary);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.cardContent p {
+  color: #fff;
+  font-family: var(--font-family-secondary);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 170%;
+  margin-bottom: 0.75rem;
+}
+
+.groupedCard {
+  border: none; /* ลบ border */
+  background: transparent; /* ทำให้พื้นหลังโปร่งใส (ถ้าจำเป็น) */
+  padding: 2.5rem; /* คง padding ไว้เหมือนเดิม */
+  color: #fff; /* คงสีข้อความ */
+}
