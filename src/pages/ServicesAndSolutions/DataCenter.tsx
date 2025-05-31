@@ -9,6 +9,18 @@ import { getDataCenter } from "../../services/strapi";
 import BG_DataCenter from "@/assets/DataCenter/bg_datacenter.webp";
 
 const DataCenter: React.FC = () => {
+  const positions = [
+    { top: "15%", left: "30%" },
+    { top: "15%", left: "65%" },
+    { top: "48%", left: "70%" },
+    { top: "63%", left: "48%" },
+    { top: "79%", left: "72%" },
+    { top: "67%", left: "36%" },
+    { top: "75%", left: "13%" },
+    { top: "40%", left: "33%" },
+    { top: "23%", left: "13%" },
+  ];
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -57,19 +69,72 @@ const DataCenter: React.FC = () => {
           </div>
         </div> */}
       </div>
+      {/* <div className={styles.bgImageContainer}>
+        <img
+          src={BG_DataCenter}
+          alt="Data Center Background"
+          className={styles.bgImage}
+        />
+        <div className={styles.cardWrapper}>
+          <div className={styles.card}>
+            <div className={styles.cardContent}>ข้อมูลเพิ่มเติม</div>
+          </div>
+          <div className={styles.Background_51_171}></div>
+        </div>
+
+        <div className={styles.cardWrapper}>
+          <div className={styles.card}>
+            <div className={styles.cardContent}>ข้อมูลเพิ่มเติม</div>
+          </div>
+          <div className={styles.Background_51_171}></div>
+        </div>
+      </div> */}
       <div className={styles.bgImageContainer}>
         <img
           src={BG_DataCenter}
           alt="Data Center Background"
           className={styles.bgImage}
         />
-      </div>
-      <div className={styles.cardWrapper}>
-        <div className={styles.card}>
-          <div className={styles.cardContent}>ข้อมูลเพิ่มเติม</div>
-        </div>
-      </div>
 
+        {facility?.content?.map((item, index) => {
+          const pos = positions[index] || { top: "0%", left: "0%" }; // ตำแหน่งของแต่ละ node with fallback
+
+          return (
+            <div
+              key={item.id}
+              className={styles.cardWrapper}
+              style={{ top: pos.top, left: pos.left }}
+            >
+              <div className={styles.card}>
+                {/* โหมดแสดงตัวเลข */}
+                <div className={styles.cardLabel}>{index + 1}</div>
+
+                {/* โหมดแสดงเนื้อหาเมื่อ hover */}
+                <div
+                  className={styles.cardContent}
+                  tabIndex={0}
+                  onClick={(e) => {
+                    const target = e.currentTarget;
+                    target.classList.toggle(styles.visible);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      const target = e.currentTarget;
+                      target.classList.toggle(styles.visible);
+                      e.preventDefault();
+                    }
+                  }}
+                >
+                  <h3>{item.title}</h3>
+                  <p>{item.content}</p>
+                </div>
+              </div>
+
+              <div className={styles.Background_51_171}></div>
+            </div>
+          );
+        })}
+      </div>
       <div className="navigation">
         <Link to="/services/digital-transformation" className="navLink">
           &lt; DIGITAL TRANSFORMATION
