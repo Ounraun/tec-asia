@@ -11,11 +11,9 @@ interface CommunityCardProps {
   title?: string; // Example property
 }
 
-const CommunityCard: React.FC<CommunityCardProps> = ({ title }) => {
+const CommunityCard: React.FC<CommunityCardProps> = () => {
   const navigate = useNavigate();
   const { t } = useTranslation(["common", "communityCard"]);
-
-  console.log(title);
   const handleRadioChange = () => {
     // Toggle class "blue" ใน body เมื่อมีการเปลี่ยนแปลง
     document.body.classList.toggle("blue");
@@ -36,7 +34,7 @@ const CommunityCard: React.FC<CommunityCardProps> = ({ title }) => {
     knowledge: null,
     society: null,
   });
-  type CategoryType = "Company events " | "Knowledge" | "Society";
+  type CategoryType = "Company events" | "Knowledge" | "Society";
 
   // ฟังก์ชันสำหรับดึงข้อมูลของแต่ละ Category
   const fetchLatestPost = async (category: CategoryType, key: string) => {
@@ -46,17 +44,11 @@ const CommunityCard: React.FC<CommunityCardProps> = ({ title }) => {
           category
         )}&sort=updatedAt:desc&pagination[pageSize]=1&populate=*`
       );
-      console.log(
-        `Fetching latest post for ${category} from API: ${response.url}`
-      );
       const data = await response.json();
-      console.log(`Data received for ${category}:`, data); // Log เพื่อดูข้อมูล API ที่ได้
-
       // เพิ่ม Code ส่วนนี้:
       if (data.data && data.data.length > 0) {
         setLatestPosts((prev) => ({ ...prev, [key]: data.data[0] }));
       } else {
-        console.log(`No posts found for ${category}`);
         setLatestPosts((prev) => ({ ...prev, [key]: null })); // หรือค่าเริ่มต้นอื่น
       }
     } catch (error) {

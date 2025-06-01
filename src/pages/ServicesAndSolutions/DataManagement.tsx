@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./DataManagement.module.css";
-import descriptionIcon from "../../assets/DataManagement/87.png";
+import DataImage from "@/assets/DataManagement/87.png";
+
 import { useTranslation } from "react-i18next";
 
 import { getDataManagement } from "../../services/strapi";
@@ -30,25 +31,20 @@ const DataManagement: React.FC = () => {
           </span>
         </h1>
       </div>
-
       <div className={styles.mainContent}>
         <div className={styles.leftSection}>
           <img
-            src={descriptionIcon}
+            src={DataImage}
             alt="Data Management"
             className={styles.mainImage}
           />
         </div>
-
         <div className={styles.rightSection}>
           <div className={styles.descriptionBox}>{services?.subTitle1}</div>
-
           <div className={styles.separator}></div>
-
           <div className={styles.descriptionBox}>{services?.subTitle2}</div>
         </div>
       </div>
-
       <div className={styles.servicesContainer}>
         <h2 className={styles.servicesTitle}>
           {t("dataManagement:ourService")}
@@ -60,26 +56,10 @@ const DataManagement: React.FC = () => {
             <br></br>
             {services?.serviceContent2}
           </div>
-
           <div className={styles.rightContent}>
-            {/* {services.map((service, index) => (
-              <div key={index} className={styles.serviceItem}>
-                <div
-                  className={styles.serviceBar}
-                  style={{ height: `${(index + 1) * 5}px` }}
-                />
-                <div className={styles.serviceContent}>
-                  <h3>{service.title}</h3>
-                  <p>{service.content}</p>
-                </div>
-              </div>
-            ))} */}
             {services?.content.map((item) => (
               <div key={item.id} className={styles.serviceItem}>
-                <div
-                  className={styles.serviceBar}
-                  // style={{ height: `${(item.id + 1) * 5}px` }}
-                />
+                <div className={styles.serviceBar} />
                 <div className={styles.serviceContent}>
                   <h3>{item.title}</h3>
                   <p>{item.content || "No content available"}</p>

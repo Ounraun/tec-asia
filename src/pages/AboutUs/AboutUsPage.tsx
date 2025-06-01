@@ -1,36 +1,20 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, Suspense, lazy } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
-
 import ParticlesComponent from "../../components/Particles/Particles";
-import CommunityCard from "./CommunityCard";
 import Contact from "../../components/Contact";
-
 import aboutStyles from "./AboutUs.module.css";
-
 import { getAboutUs } from "../../services/strapi";
 import type { AboutUs } from "../../types/aboutUs";
-
+import GemGroup from "./GemGroup";
 // Importing SVG assets
 import BG_Service from "@/assets/AboutUs/bg_service.webp";
 import GemFloor from "@/assets/AboutUs/Gem-floor.svg";
-import GemOne from "@/assets/AboutUs/Gem1.svg";
-import GemTwo from "@/assets/AboutUs/Gem2.svg";
-import GemThree from "@/assets/AboutUs/Gem3.svg";
-import GemFour from "@/assets/AboutUs/Gem4.svg";
-import GemFive from "@/assets/AboutUs/Gem5.svg";
-import GemSix from "@/assets/AboutUs/Gem6.svg";
 import BG_Wave from "@/assets/AboutUs/bg-wave.svg";
 import BG_Wave_Service from "@/assets/AboutUs/bg-wave-service.svg";
 
+const CommunityCard = lazy(() => import("./CommunityCard"));
 const AboutUs = () => {
-  const [isHoveredGem1, setIsHoveredGem1] = useState(false);
-  const [isHoveredGem2, setIsHoveredGem2] = useState(false);
-  const [isHoveredGem3, setIsHoveredGem3] = useState(false);
-  const [isHoveredGem4, setIsHoveredGem4] = useState(false);
-  const [isHoveredGem5, setIsHoveredGem5] = useState(false);
-  const [isHoveredGem6, setIsHoveredGem6] = useState(false);
+  // State to manage loading state
   const [isLoading, setIsLoading] = useState(true);
 
   const particles = useMemo(() => {
@@ -39,9 +23,8 @@ const AboutUs = () => {
 
   const { t, i18n } = useTranslation(["common", "aboutUs"]);
   const [aboutUs, setAboutUs] = useState<AboutUs | null>(null);
-  const navigate = useNavigate();
-
-  // 1️⃣ ดึงข้อมูล About Us ตอนหน้า mount และทุกครั้งที่เปลี่ยนภาษา
+  // Fetch About Us data when the component mounts or language changes
+  // ใช้ useEffect เพื่อดึงข้อมูลจาก API
   useEffect(() => {
     setIsLoading(true);
     getAboutUs()
@@ -99,7 +82,10 @@ const AboutUs = () => {
   }
 
   return (
-    <div className="overflow-hidden" style={{ scrollBehavior: "smooth" }}>
+    <div
+      className="overflow-hidden"
+      style={{ scrollBehavior: "smooth", backgroundColor: "#000" }}
+    >
       {/* hero  */}
       <div
         className="position-relative bg-dark"
@@ -155,6 +141,7 @@ const AboutUs = () => {
           src={BG_Service}
           alt="Background"
           className={`${aboutStyles.bgFade}`}
+          aria-hidden="true"
         />
         {/* Background */}
         <div
@@ -178,142 +165,7 @@ const AboutUs = () => {
             {t("aboutUs:solutions")}
           </h1>
         </div>
-        {/* Gems 1 */}
-        <div
-          className={[
-            "position-absolute",
-            aboutStyles["gem-float-1"],
-            isHoveredGem1 ? aboutStyles.hovered : "",
-          ].join(" ")}
-          style={{
-            zIndex: 5,
-            cursor: "pointer",
-          }}
-          onMouseEnter={() => {
-            setIsHoveredGem1(true);
-          }}
-          onMouseLeave={() => {
-            setIsHoveredGem1(false);
-          }}
-          onClick={() => navigate("/services/network-solution")}
-        >
-          <img src={GemOne} alt="" style={{ width: "100%", height: "100%" }} />
-          <p className={`${aboutStyles.textInGem}`}>Network solution</p>
-        </div>
-        {/* Gems 2 */}
-        <div
-          className={[
-            "position-absolute",
-            aboutStyles["gem-float-2"],
-            isHoveredGem2 ? aboutStyles.hovered : "",
-          ].join(" ")}
-          style={{
-            zIndex: 5,
-            cursor: "pointer",
-          }}
-          onMouseEnter={() => {
-            setIsHoveredGem2(true);
-          }}
-          onMouseLeave={() => {
-            setIsHoveredGem2(false);
-          }}
-          onClick={() => navigate("/services/data-center")}
-        >
-          <img src={GemTwo} alt="" style={{ width: "100%", height: "100%" }} />
-          <p className={`${aboutStyles.textInGem}`}>Data center</p>
-        </div>
-        {/* Gems 3 */}
-        <div
-          className={[
-            "position-absolute",
-            aboutStyles["gem-float-3"],
-            isHoveredGem3 ? aboutStyles.hovered : "",
-          ].join(" ")}
-          style={{
-            zIndex: 5,
-            cursor: "pointer",
-          }}
-          onMouseEnter={() => {
-            setIsHoveredGem3(true);
-          }}
-          onMouseLeave={() => {
-            setIsHoveredGem3(false);
-          }}
-          onClick={() => navigate("/services/data-management")}
-        >
-          <img
-            src={GemThree}
-            alt=""
-            style={{ width: "100%", height: "100%" }}
-          />
-          <p className={`${aboutStyles.textInGem}`}>Data management</p>
-        </div>
-        {/* Gems 4 */}
-        <div
-          className={[
-            "position-absolute",
-            aboutStyles["gem-float-4"],
-            isHoveredGem4 ? aboutStyles.hovered : "",
-          ].join(" ")}
-          style={{
-            zIndex: 5,
-            cursor: "pointer",
-          }}
-          onMouseEnter={() => {
-            setIsHoveredGem4(true);
-          }}
-          onMouseLeave={() => {
-            setIsHoveredGem4(false);
-          }}
-          onClick={() => navigate("/services/centralize-management")}
-        >
-          <img src={GemFour} alt="" style={{ width: "100%", height: "100%" }} />
-          <p className={`${aboutStyles.textInGem}`}>Centralize management</p>
-        </div>
-        {/* Gems 5 */}
-        <div
-          className={[
-            "position-absolute",
-            aboutStyles["gem-float-5"],
-            isHoveredGem5 ? aboutStyles.hovered : "",
-          ].join(" ")}
-          style={{
-            zIndex: 5,
-            cursor: "pointer",
-          }}
-          onMouseEnter={() => {
-            setIsHoveredGem5(true);
-          }}
-          onMouseLeave={() => {
-            setIsHoveredGem5(false);
-          }}
-          onClick={() => navigate("/services/multimedia-solution")}
-        >
-          <img src={GemFive} alt="" style={{ width: "100%", height: "100%" }} />
-          <p className={`${aboutStyles.textInGem}`}>Multimedia solution</p>
-        </div>
-        {/* Gems 6 */}
-        <div
-          className={[
-            "position-absolute",
-            aboutStyles["gem-float-6"],
-            isHoveredGem6 ? aboutStyles.hovered : "",
-          ].join(" ")}
-          style={{
-            zIndex: 5,
-            cursor: "pointer",
-          }}
-          onMouseEnter={() => {
-            setIsHoveredGem6(true);
-          }}
-          onMouseLeave={() => {
-            setIsHoveredGem6(false);
-          }}
-          onClick={() => navigate("/services/digital-transformation")}
-        >
-          <img src={GemSix} alt="" style={{ width: "100%", height: "100%" }} />
-          <p className={`${aboutStyles.textInGem}`}>Digital transformation</p>
-        </div>
+        <GemGroup />
         {/* Gems floor */}
         <div
           className="position-absolute"
@@ -324,9 +176,11 @@ const AboutUs = () => {
           }}
         >
           <img
+            className={`${aboutStyles["gem-floor-img"]}`}
             src={GemFloor}
             alt=""
-            style={{ width: "100%", height: "100%" }}
+            loading="lazy"
+            aria-hidden="true"
           />
         </div>
         <div className={`${aboutStyles.vl}`}></div>
@@ -372,11 +226,15 @@ const AboutUs = () => {
               className={`${aboutStyles["bg-wave-filter"]} position-absolute`}
               src={BG_Wave_Service}
               alt=""
+              loading="lazy"
+              aria-hidden="true"
             />
             <img
               className={`${aboutStyles["bg-wave"]} position-absolute`}
               src={BG_Wave}
               alt=""
+              loading="lazy"
+              aria-hidden="true"
             />
           </div>
         </div>
@@ -412,7 +270,9 @@ const AboutUs = () => {
             {t("aboutUs:ourCommunity")}
           </h1>
         </div>
-        <CommunityCard />
+        <Suspense fallback={<div>Loading community...</div>}>
+          <CommunityCard />
+        </Suspense>
         <div className={`${aboutStyles["backgroundSVG"]} position-absolute`}>
           <svg
             viewBox="0 0 1440 2090"

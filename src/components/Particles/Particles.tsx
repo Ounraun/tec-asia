@@ -26,7 +26,7 @@ const ParticlesComponent: React.FC<ParticlesProps> = () => {
       fullScreen: { enable: false }, // ปิด fullScreen mode
       background: {
         color: {
-          value: "#0d0d0e",
+          value: "#000000",
         },
       },
       fpsLimit: 120,
@@ -85,7 +85,7 @@ const ParticlesComponent: React.FC<ParticlesProps> = () => {
           type: "circle",
         },
         size: {
-          value: { min: 1, max: 3 },
+          value: { min: 1, max: 5 },
         },
       },
       detectRetina: true,
