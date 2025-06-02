@@ -48,54 +48,17 @@ const DataCenter: React.FC = () => {
 
       <div className={styles.facilitiesSection}>
         <h2 className={styles.facilitiesTitle}>Facilities System</h2>
-
-        {/* <div className={styles.facilitiesGrid}>
-          <div className={styles.leftColumn}>
-            {facility?.content.slice(0, 5).map((item) => (
-              <div key={item.id} className={styles.facilityCard}>
-                <h3 className={styles.facilityTitle}>{item.title}</h3>
-                <p className={styles.facilityContent}>{item.content}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className={styles.rightColumn}>
-            {facility?.content.slice(5).map((item) => (
-              <div key={item.id} className={styles.facilityCard}>
-                <h3 className={styles.facilityTitle}>{item.title}</h3>
-                <p className={styles.facilityContent}>{item.content}</p>
-              </div>
-            ))}
-          </div>
-        </div> */}
       </div>
-      {/* <div className={styles.bgImageContainer}>
-        <img
-          src={BG_DataCenter}
-          alt="Data Center Background"
-          className={styles.bgImage}
-        />
-        <div className={styles.cardWrapper}>
-          <div className={styles.card}>
-            <div className={styles.cardContent}>ข้อมูลเพิ่มเติม</div>
-          </div>
-          <div className={styles.Background_51_171}></div>
-        </div>
 
-        <div className={styles.cardWrapper}>
-          <div className={styles.card}>
-            <div className={styles.cardContent}>ข้อมูลเพิ่มเติม</div>
-          </div>
-          <div className={styles.Background_51_171}></div>
-        </div>
-      </div> */}
       <div className={styles.bgImageContainer}>
         <img
           src={BG_DataCenter}
           alt="Data Center Background"
           className={styles.bgImage}
         />
-
+        {/* ขอบเบลอจริง */}
+        <div className={styles.blurTop}></div>
+        <div className={styles.blurBottom}></div>
         {facility?.content?.map((item, index) => {
           const pos = positions[index] || { top: "0%", left: "0%" }; // ตำแหน่งของแต่ละ node with fallback
 
