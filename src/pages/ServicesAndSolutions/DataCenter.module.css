@@ -4,15 +4,15 @@
   min-height: 100vh;
   background-color: #000;
   color: white;
-  padding: 2rem;
+
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+
 }
 
 .header {
   text-align: center;
-  margin: 3rem 0;
+  padding: 4rem 0;
 
 }
 

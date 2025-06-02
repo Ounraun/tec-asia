@@ -40,12 +40,12 @@ const Multimedia: React.FC = () => {
           <div className={styles.servicesGrid}>
             {MultimediaService?.content.slice(0, 3).map((service) => (
               <div key={service.id} className={styles.serviceCard}>
-                {/* <div className={styles.glowDot}></div> */}
                 <h3>{service.title}</h3>
-                <ul>
-                  {service.content.split("\n").map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
+                <ul className={styles.customList}>
+                  {service.content.split("\n").map((item, index) => {
+                    const cleanText = item.replace(/^[\u2013\u2014-]\s*/, ""); // ลบ "–", "—", "-"
+                    return <li key={index}>{cleanText}</li>;
+                  })}
                 </ul>
               </div>
             ))}
@@ -56,7 +56,6 @@ const Multimedia: React.FC = () => {
           <div className={styles.servicesGrid}>
             {MultimediaService?.content.slice(3, 7).map((service) => (
               <div key={service.id} className={styles.serviceCard}>
-                {/* <div className={styles.glowDot}></div> */}
                 <h3>{service.title}</h3>
                 <ul>
                   {service.content.split("\n").map((item, index) => (

@@ -15,7 +15,8 @@
 .header {
   width: 100%;
   text-align: center;
-  padding: 4rem 0;
+  /* padding: 4rem 0; */
+  padding-top: 80px;
   position: relative;
   z-index: 2;
 }
@@ -74,13 +75,14 @@
 .subtitle {
   color: #f5f5f5;
   font-family: "Poppins-Medium", Helvetica;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 30px;
   text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 1100px;
+  margin: 16px auto;
+  
 }
 
 .backgroundsContainer {
@@ -93,23 +95,23 @@
 }
 
 .firstBackground {
-  background-image: url('../../assets/Multimedia/201.jpg');
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* ดัน content ไปด้านล่าง */
+  align-items: center;
+  height: 800px; /* ✅ ใช้ height แทน min-height ถ้าอยากควบคุม */
+  padding: 0 2rem 2rem 2rem; /* ✅ padding ล่างกำหนดระยะห่าง */
+
+  background-image: url('../../assets/Multimedia/201.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 100%;
-  min-height: 600px;
-  position: relative;
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  position: relative;
+
   mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+  position: relative;
+  width: 100vw;
+  overflow: hidden;
 }
 
 .firstBackground::before {
@@ -124,7 +126,7 @@
 }
 
 .secondBackground {
-  background-image: url('../../assets/Multimedia/210.png');
+  background-image: url('../../assets/Multimedia/210.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -135,8 +137,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  left: 50%;
-  transform: translateX(-50%);
   width: 100vw;
   position: relative;
   mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
@@ -155,18 +155,14 @@
 }
 
 .firstBackground .servicesGrid {
+  width: 100%;
+  max-width: 2000px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.3);
+  gap: 3rem;
   padding: 2rem;
   border-radius: 10px;
-  backdrop-filter: blur(5px);
+  z-index: 2;
 }
 
 .secondBackground .servicesGrid {
@@ -175,33 +171,89 @@
   grid-template-rows: repeat(2, 1fr);
   gap: 2rem;
   width: 90%;
-  max-width: 800px;
+  max-width: 2000px;
   margin: 0 auto;
+  height: 100%;
   position: relative;
   z-index: 2;
-  background: rgba(0, 0, 0, 0.3);
   padding: 2rem;
   border-radius: 10px;
-  backdrop-filter: blur(5px);
 }
 
 .serviceCard {
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 10px;
-  padding: 1.5rem;
+  background: linear-gradient(360deg, rgb(112 87 20 / 91%) 76%, rgba(0, 0, 0, 1) 100%);
+  border-radius: 20px;
+  box-shadow: 0px 5.48px 3.48px #ddc2688a;
+  padding: 2rem 2rem 2.5rem;
   position: relative;
-  border: 1px solid rgba(114, 212, 237, 0.3);
-  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  overflow: visible;
+  border: none;
+  backdrop-filter: blur(8px); /* คงความฟุ้งบางส่วนไว้ */
 }
 
-.firstBackground>.servicesGrid>.serviceCard:nth-child(1), .firstBackground>.servicesGrid>.serviceCard:nth-child(3){
+/* เส้นไฟด้านบน
+.serviceCard::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: #72d4ed;
+  border-radius: 100px;
+  box-shadow: 0 0 10px 4px #72d4ed;
+  z-index: 10;
+} */
+
+/* Hover effect */
+.serviceCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(66, 165, 245, 0.3);
+}
+
+.serviceCard h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.serviceCard ul, .serviceCard p, .serviceCard li {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-top: 1rem;
+  white-space: pre-wrap;
+}
+
+/* .firstBackground>.servicesGrid>.serviceCard:nth-child(1), .firstBackground>.servicesGrid>.serviceCard:nth-child(3){
   margin-bottom: 6rem; /* การ์ดที่เป็นเลขคี่เลื่อนลง */
-}
+/* }  */
 
-.firstBackground>.servicesGrid>.serviceCard:nth-child(2) {
-  margin-top: 6rem; /* การ์ดที่เป็นเลขคู่เลื่อนขึ้น */
-}
+/* .firstBackground>.servicesGrid>.serviceCard:nth-child(2) { */
+  /* margin-top: 6rem; การ์ดที่เป็นเลขคู่เลื่อนขึ้น */
+/* } */
 
+
+
+
+.firstBackground::before,
+.secondBackground::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, transparent 10%, transparent 90%, rgba(0, 0, 0, 0.8) 100%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, transparent 10%, transparent 90%, rgba(0, 0, 0, 0.8) 100%);
+
+  z-index: 1;
+  pointer-events: none;
+  filter: blur(px);
+}
 
 .glowDot {
   width: 10px;
@@ -215,9 +267,20 @@
 }
 
 .serviceCard h3 {
-  color: #72D4ED;
-  font-size: 1.2rem;
+  background: var(
+    --tital-tone1,
+    linear-gradient(180deg, #005df9 0%, #a7daff 100%)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+
+  font-size: 1.6rem;      /* ใหญ่กว่ารายการย่อยเล็กน้อย */
+  font-family: Orbitron;
+  font-weight: 700;
   margin-bottom: 1rem;
+  line-height: 1.4;
 }
 
 .serviceCard ul {
@@ -228,9 +291,10 @@
 
 .serviceCard li {
   color: #FFFFFF;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  opacity: 0.8;
+  font-weight: 400;
+    line-height: 1.9;
 }
 
 .navigation {
@@ -242,21 +306,31 @@
   z-index: 2;
 }
 
-/* .navLink {
-  color: #fff;
-  text-align: center;
-  font-family: Orbitron;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  display: inline-block;
+.customList {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
 }
 
+.customList li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #ffffff;
+  font-size:1.1rem;
+  line-height: 1.6;
+}
 
-.navLink:hover {
-  color: #72D4ED;
-} */
+.customList li::before {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #72D4ED;
+  border-radius: 50%;
+}
 
 @media (max-width: 1200px) {
   .servicesGrid {
