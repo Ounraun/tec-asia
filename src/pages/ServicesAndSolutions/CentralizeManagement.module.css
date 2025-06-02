@@ -116,7 +116,7 @@
   );
 
   width: 100vw; 
-  height: 360px;
+  height: 280px;
   position: relative;
   left: 50%;
   transform: translateX(-50%); 
@@ -126,7 +126,7 @@
 
 .featuresGrid {
   position: relative;
-  margin-top: -300px; 
+  margin-top: -500px; 
   z-index: 3;
   display: flex;
   flex-wrap: wrap;
