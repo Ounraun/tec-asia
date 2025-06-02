@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import type { Transformation } from "../../types/digitalTransformation";
 import { getDataTransformation } from "../../services/strapi";
+import Maskgroup from "@/assets/DigitalTransformation/Maskgroup.png";
 
 const DigitalTransformation: React.FC = () => {
   const [transformationItem, setTransformationItem] =
@@ -40,19 +41,12 @@ const DigitalTransformation: React.FC = () => {
         <div className={styles.leftSection}>
           <div className={styles.imageContainer}>
             <img
-              src="/src/assets/DigitalTransformation/Maskgroup.png"
+              src={Maskgroup}
               alt="Digital Transformation"
               className={styles.mainImage}
             />
           </div>
           <div className={styles.description}>
-            {/* <p>Digital transformation is the process of using</p>
-            <p>digital technologies to create new or modify existing</p>
-            <p>business processes, culture,</p>
-            <p>and customer experiences to meet</p>
-            <p>changing business and market requirements.</p>
-            <p>This reimagining of business</p>
-            <p>in the digital age is digital transformation.</p> */}
             {transformationItem?.subTitle}
           </div>
         </div>
