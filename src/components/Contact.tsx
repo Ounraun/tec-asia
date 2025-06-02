@@ -33,17 +33,16 @@ const Contact = () => {
         </div>
         <div className="row">
           {/* ด้านซ้าย */}
-          <div className="col-md-6 mb-4">
+          <div className="col-md-4 mb-4 pr-5">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <p className="text-white mb-0" style={{ fontSize: "1.2rem" }}>
                 {companyInfo ? companyInfo.phone : "Loading..."}
               </p>
-              <div>
+              <div className="d-flex align-items-center">
                 <img src={emailIcon} alt="Email" className="me-3" />
                 <img src={facebookIcon} alt="Facebook" />
               </div>
             </div>
-
             <p className="mb-3 text-white" style={{ fontSize: "1rem" }}>
               Location : {companyInfo ? companyInfo.location : "Loading..."}
               <br />
@@ -51,7 +50,8 @@ const Contact = () => {
             </p>
             <img src={Map} alt="Map" />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-1"></div>
+          <div className="col-md-7 ">
             <div className="row">
               <h2 className="mb-4 text-white" style={{ fontFamily: "Saira" }}>
                 {t("contact:menu")}
@@ -63,7 +63,9 @@ const Contact = () => {
                   className="mb-3 text-white"
                   style={{ fontFamily: "Saira" }}
                 >
-                  <h5>{t("contact:serviceAndSolutions")}</h5>
+                  <h5 style={{ color: "#39D6DE" }}>
+                    {t("contact:serviceAndSolutions")}
+                  </h5>
                   <ul className="list-unstyled ps-3">
                     <li
                       style={{ cursor: "pointer" }}
@@ -113,7 +115,9 @@ const Contact = () => {
                   className="mb-3 text-white"
                   style={{ fontFamily: "Saira" }}
                 >
-                  <h5>{t("contact:ourCommunity")}</h5>
+                  <h5 style={{ color: "#39D6DE" }}>
+                    {t("contact:ourCommunity")}
+                  </h5>
                   <ul className="list-unstyled ps-3">
                     <li
                       style={{ cursor: "pointer" }}

@@ -2,6 +2,7 @@
   height: 100%;
   display: flex;
   align-items: center;
+  
 }
 
 .custom-nav-dropdown .dropdown-toggle {
@@ -17,6 +18,7 @@
   text-decoration: none;
   transition: color 0.3s ease;
   position: relative;
+  
 }
 
 .custom-nav-dropdown .dropdown-toggle::after {
@@ -30,14 +32,19 @@
 
 .custom-nav-dropdown.active .dropdown-toggle::after {
   color: #FFFFFF;
+  
 }
 
 .custom-nav-dropdown .dropdown-menu {
-  background-color: #222222;
-  border: 1px solid #333333;
-  border-radius: 4px;
-  margin-top: 0;
-  min-width: 200px;
+  background-color: #0C2536; /* พื้นหลัง dropdown */
+  border: 1.5px solid #00A3FF; /* ขอบสีฟ้าเรืองแสง */
+  border-radius: 12px;
+  padding: 10px 0;
+  box-shadow: 0 0 10px rgba(0, 163, 255, 0.35); /* เงาสีฟ้าเรืองแสง */
+  min-width: 260px;
+  margin-top: 12px;
+  z-index: 1050;
+  
 }
 
 .custom-nav-dropdown .dropdown-item {
@@ -48,13 +55,15 @@
   font-size: 16px;
   text-align: center;
   transition: color 0.3s ease, background-color 0.3s ease;
+  
 }
 
 .custom-nav-dropdown .dropdown-item:hover,
 .custom-nav-dropdown .dropdown-item:focus,
 .custom-nav-dropdown .dropdown-item.active {
-  color: #FFFFFF;
-  background-color: #333333;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #00A3FF;
+  font-weight: 600;
 }
 
 .custom-nav-dropdown.active::after {
@@ -91,4 +100,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  
 } 
+
+.custom-nav-dropdown .dropdown-item {
+  color: #ffffff;
+  font-family: 'Saira', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-align: left;
+  padding: 12px 20px;
+  white-space: normal;
+  line-height: 1.6;
+  transition: all 0.2s ease-in-out;
+  
+}
+.custom-nav-dropdown .dropdown-item::marker {
+  display: none;
+
+}
