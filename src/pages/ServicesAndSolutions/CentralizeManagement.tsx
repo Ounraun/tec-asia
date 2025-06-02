@@ -35,12 +35,13 @@ const CentralizeManagement = () => {
             {t("centralize:management")}
           </span>
         </h1>
+      </div>
+
+      <div className={styles.cityBackground}>
         <p className={styles.subtitle}>
           {feature?.mainSubTitle || "Loading..."}
         </p>
       </div>
-
-      <div className={styles.cityBackground}></div>
 
       <div className={styles.featuresGrid}>
         {feature?.content.map((item) => (
