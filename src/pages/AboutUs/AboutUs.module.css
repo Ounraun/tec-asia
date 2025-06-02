@@ -1,6 +1,20 @@
 :root {
   --font-family-saira: "Saira", sans-serif;
   --color-white: #ffffff;
+  --page-max-width: 1440px;
+}
+
+.container { 
+  /* สมมติว่า `<div className={styles.container}>` ครอบทั้งหน้า */
+  position: relative;
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;        /* กึ่งกลางหน้า */
+  background-color: #000;
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;    /* ไม่ให้เลื่อนด้านข้าง */
 }
 
 .particleWrapper {
@@ -8,7 +22,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 600px;
+  height: 50vh;  
   z-index: 0;
 }
 
@@ -65,6 +79,7 @@
   font-size: clamp(32px, 5vw, 64px); /* ✅ รองรับจอเล็ก/ใหญ่ */
   color: white;
   font-weight: bold;
+  margin-top: 30px;
 }
  
 .bg-container {
@@ -108,7 +123,7 @@
 }
 
 .vl {
-  height: 500px;
+  height: 300px;
   position: absolute;
   bottom: 20%;
   left: 50%;
@@ -157,7 +172,8 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
 
 .community-layout {
   width: 100%;
-  height: 190lvh; /* ใช้ 100lvh เพื่อให้ความสูงเต็มหน้าจอ */
+  height: 100vh; /* ใช้ 100vh เพื่อให้ความสูงเต็มหน้าจอ */
+  position: relative;
   overflow: hidden; /* ซ่อนส่วนที่เกิน */
 }
 
@@ -210,15 +226,13 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
   position: absolute;
 }
 .bg-wave-filter{
-  
   width: 100%;
   bottom: -27%;
   z-index: 4;
 }
 .bg-wave{
-
   width: 100%;
-  bottom: -27%;
+  bottom: -450px;
   z-index: 5;
   /* left: -1%; */
 }
@@ -290,8 +304,8 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
   animation-delay: 0.2s;
   top: 8% ;
   left: 25%;
-  width: 400px;
-  height: 400px;
+  width: 280px;
+  /* height: 303.57px; */
   /* 3s = ระยะเวลารอบละ 3 วินาที, ease-in-out = ความลื่นไหล, infinite = วนซ้ำตลอด */
 }
 .gem-float-2 {
@@ -299,40 +313,40 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
   animation-delay: 0.4s;
   top: 16% ;
   left: 10%;
-  width: 400px;
-  height: 400px;
+  width: 330px;
+  /* height: 271.36px; */
 }
 .gem-float-3 {
   animation: float 5s ease-in-out infinite; 
   animation-delay: 0.6s;
   top: 27% ;
   left: 17%;
-  width: 480px;
-  height: 480px;
+  width: 370px;
+  /* height: 270.08px; */
 }
 .gem-float-4 {
   animation: float 3s ease-in-out infinite; 
   animation-delay: 0.8s;
   top: 8% ;
   right: 27%;
-  width: 400px;
-  height: 480px;
+  width: 300px;
+  /* height: 303.57px; */
 }
 .gem-float-5 {
   animation: float 4s ease-in-out infinite; 
   animation-delay: 1s;
   top: 16% ;
   right: 13%;
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  /* height: 271.36px; */
 }
 .gem-float-6 {
   animation: float 3s ease-in-out infinite; 
   animation-delay: 1.2s;
   top: 28% ;
   right: 18%;
-  width: 430px;
-  height: 430px;
+  width: 350px;
+  /* height: 270px; */
 }
 .hovered {
   animation: float-pulse 1s ease-in-out forwards;
@@ -354,7 +368,7 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
 .backgroundSVG{
   width: 100%;
   height: 100%;
-  top: 10%;
+  top: 190px;
 }
 
 .card-description {

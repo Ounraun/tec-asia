@@ -21,8 +21,6 @@ const Contact = () => {
       .catch((err) => console.error("Failed fetching Company Info:", err));
   }, [i18n.language]);
 
-  console.log("Company Info:", companyInfo);
-
   return (
     <div className="contact-layout">
       <div className="contact-inner overflow-hidden">

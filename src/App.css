@@ -16,6 +16,7 @@
 }
 
 .App {
+    width: 100%;
   text-align: center;
   margin: 0;
   padding: 0;
@@ -33,6 +34,7 @@ main.flex-grow-1 {
   justify-content: space-between;
   padding: 2rem 0;
   margin-top: auto;
+    width: 100%;
 }
 
 

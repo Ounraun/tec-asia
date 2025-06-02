@@ -19,6 +19,9 @@ html, body {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+
+  background-color: #000;    /* <-- พื้นหลังดำเต็มหน้าจอ */
+  overflow-x: hidden;        /* <-- ป้องกันไม่ให้เกิด scrollbar แนวนอน */
 }
 
 * {
@@ -26,7 +29,6 @@ html, body {
 }
 
 a {
-  font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
@@ -38,41 +40,4 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden; /* ป้องกันเลื่อนซ้ายขวา */
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
