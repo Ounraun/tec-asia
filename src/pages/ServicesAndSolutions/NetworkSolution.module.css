@@ -4,8 +4,8 @@
   --primary-color: #34a8d5;
   --secondary-color: #72D4ED;
   --background-color: rgba(0, 27, 45, 0.95);
-  --font-family-primary: 'Orbitron', sans-serif;
-  --font-family-secondary: 'Poppins', sans-serif;
+  --font-family-primary: 'Orbitron';
+  --font-family-secondary: 'Poppins';
 }
 .WireAndWireless_160_272 {
   color: #d58213;
@@ -136,10 +136,11 @@
 
 .contentSections {
   display: grid;
-  grid-template-columns: 1fr;  /* โมบาย: 1 คอลัมน์ */
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   padding: 0 120px;
-  margin-top: 80px
+  margin-top: 80px;
+    overflow: visible !important;
 }
 
 .section h2 {

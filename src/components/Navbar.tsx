@@ -142,15 +142,15 @@ const Navigationbar = () => {
             >
               <NavDropdown.Item
                 as={Link}
-                to="/services/centralize-management"
+                to="/services/network-solution"
                 className={`dropdown-item ${
-                  location.pathname === "/services/centralize-management"
+                  location.pathname === "/services/network-solution"
                     ? "active"
                     : ""
                 }`}
                 onClick={() => setShowServicesDropdown(false)}
               >
-                {t("navbar:centralizeManagement")}
+                {t("navbar:networkSolution")}
               </NavDropdown.Item>
               <NavDropdown.Item
                 as={Link}
@@ -161,6 +161,30 @@ const Navigationbar = () => {
                 onClick={() => setShowServicesDropdown(false)}
               >
                 {t("navbar:dataCenter")}
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                as={Link}
+                to="/services/data-management"
+                className={`dropdown-item ${
+                  location.pathname === "/services/data-management"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() => setShowServicesDropdown(false)}
+              >
+                {t("navbar:dataManagement")}
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                as={Link}
+                to="/services/centralize-management"
+                className={`dropdown-item ${
+                  location.pathname === "/services/centralize-management"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() => setShowServicesDropdown(false)}
+              >
+                {t("navbar:centralizeManagement")}
               </NavDropdown.Item>
               <NavDropdown.Item
                 as={Link}
@@ -185,30 +209,6 @@ const Navigationbar = () => {
                 onClick={() => setShowServicesDropdown(false)}
               >
                 {t("navbar:digitalTransformation")}
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                as={Link}
-                to="/services/data-management"
-                className={`dropdown-item ${
-                  location.pathname === "/services/data-management"
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() => setShowServicesDropdown(false)}
-              >
-                {t("navbar:dataManagement")}
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                as={Link}
-                to="/services/network-solution"
-                className={`dropdown-item ${
-                  location.pathname === "/services/network-solution"
-                    ? "active"
-                    : ""
-                }`}
-                onClick={() => setShowServicesDropdown(false)}
-              >
-                {t("navbar:networkSolution")}
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown

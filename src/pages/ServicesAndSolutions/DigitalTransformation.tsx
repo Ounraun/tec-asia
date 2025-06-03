@@ -64,11 +64,11 @@ const DigitalTransformation: React.FC = () => {
       </div>
 
       <div className="navigation">
-        <Link to="/services/data-management" className="navLink">
-          &lt; DATA MANAGEMENT
+        <Link to="/services/multimedia-solution" className="navLink">
+          &lt; MULTIMEDIA SOLUTION
         </Link>
-        <Link to="/services/data-center" className="navLink">
-          DATA CENTER &gt;
+        <Link to="/services/network-solution" className="navLink">
+          NETWORK SOLUTION &gt;
         </Link>
       </div>
     </div>

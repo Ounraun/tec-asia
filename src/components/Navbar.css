@@ -97,7 +97,7 @@
 }
 
 .profile-dropdown .dropdown-item {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   
@@ -110,7 +110,7 @@
   font-weight: 400;
   text-align: left;
   padding: 12px 20px;
-  white-space: normal;
+  /* white-space: normal; */
   line-height: 1.6;
   transition: all 0.2s ease-in-out;
   

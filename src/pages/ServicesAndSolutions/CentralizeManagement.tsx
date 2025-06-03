@@ -57,8 +57,8 @@ const CentralizeManagement = () => {
 
       <div className={styles.SolutionsCardBackground}></div>
       <div className="navigation">
-        <Link to="/services/data-center" className="navLink">
-          &lt; DATA CENTER
+        <Link to="/services/data-management" className="navLink">
+          &lt; DATA MANAGEMENT
         </Link>
         <Link to="/services/multimedia-solution" className="navLink">
           MULTI MEDIA SOLUTION &gt;

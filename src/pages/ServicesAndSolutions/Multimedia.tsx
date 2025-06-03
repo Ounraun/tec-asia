@@ -72,8 +72,8 @@ const Multimedia: React.FC = () => {
         <a href="/services/centralize-management" className="navLink">
           {"< CENTRALIZE MANAGEMENT"}
         </a>
-        <a href="/services/data-management" className="navLink">
-          {"DATA MANAGEMENT >"}
+        <a href="/services/digital-transformation" className="navLink">
+          {"DIGITAL TRANSFORMATION >"}
         </a>
       </nav>
     </div>

@@ -71,11 +71,11 @@ const DataManagement: React.FC = () => {
       </div>
 
       <div className="navigation">
-        <a href="/services/multimedia-solution" className="navLink">
-          {"< MULTI MEDIA SOLUTION"}
+        <a href="/services/data-center" className="navLink">
+          {"< DATA CENTER"}
         </a>
-        <a href="/services/digital-transformation" className="navLink">
-          {"DIGITAL TRANSFORMATION >"}
+        <a href="/services/centralize-management" className="navLink">
+          {"CENTRALIZE MANAGEMENT >"}
         </a>
       </div>
     </div>

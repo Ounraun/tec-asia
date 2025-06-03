@@ -100,31 +100,27 @@
   height: auto;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
 }
-.blurTop,
+/* .blurTop,
 .blurBottom {
   position: absolute;
   width: 100%;
   height: 150px;
   z-index: 3;
   pointer-events: none;
-
-  /* ✅ ใช้สีเทาเข้มกึ่งโปร่ง */
   background-color: rgba(0, 20, 40, 1);
+  filter: blur(90px); 
+  opacity: 1;    
+} */
 
-  /* ✅ เบลอฟุ้งทั้งพื้นหลัง */
-  filter: blur(90px); /* เพิ่มค่า blur ให้เบลอจริง */
-  opacity: 1;        /* ลดความชัดเจนเพื่อให้มัน "ฟุ้ง" */
-}
-
-.blurTop {
+/* .blurTop {
   top: 0;
 }
 
 .blurBottom {
   bottom: 0;
-}
+} */
 
 .bgImage {
   width: 100%;
@@ -246,6 +242,7 @@
 }
 .cardWrapper:hover {
   transform: scale(1.1); /* ✅ ขยายจากจุดล่างขึ้น */
+  z-index: 1;
 }
 /* กล่องหลัก */
 .card {
@@ -286,6 +283,7 @@
   transition: opacity 1s ease;
   flex-direction: column;
   padding: 0.5rem;
+  z-index: 2;
 }
 
 .card:hover .cardLabel {

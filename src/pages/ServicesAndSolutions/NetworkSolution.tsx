@@ -71,11 +71,11 @@ const NetworkSolution: React.FC = () => {
 
       {/* ส่วนการนำทาง */}
       <nav className="navigation">
-        <Link to="/services/data-center" className="navLink">
-          &lt; DATA CENTER
+        <Link to="/services/digital-transformation" className="navLink">
+          &lt; DIGITAL TRANSFORMATION
         </Link>
-        <Link to="/services/centralize-management" className="navLink">
-          CENTRALIZE MANAGEMENT &gt;
+        <Link to="/services/data-center" className="navLink">
+          DATA CENTER &gt;
         </Link>
       </nav>
     </div>
