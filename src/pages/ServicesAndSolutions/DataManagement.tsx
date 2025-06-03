@@ -59,7 +59,7 @@ const DataManagement: React.FC = () => {
           <div className={styles.rightContent}>
             {services?.content.map((item) => (
               <div key={item.id} className={styles.serviceItem}>
-                <div className={styles.serviceBar} />
+                {/* <div className={styles.serviceBar} /> */}
                 <div className={styles.serviceContent}>
                   <h3>{item.title}</h3>
                   <p>{item.content || "No content available"}</p>
