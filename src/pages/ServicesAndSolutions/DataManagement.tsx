@@ -41,20 +41,20 @@ const DataManagement: React.FC = () => {
         </div>
         <div className={styles.rightSection}>
           <div className={styles.descriptionBox}>{services?.subTitle1}</div>
-          <div className={styles.separator}></div>
+          {/* <div className={styles.separator}></div> */}
           <div className={styles.descriptionBox}>{services?.subTitle2}</div>
         </div>
       </div>
       <div className={styles.servicesContainer}>
-        <h2 className={styles.servicesTitle}>
-          {t("dataManagement:ourService")}
-        </h2>
         <div className={styles.servicesList}>
           <div className={styles.leftContent}>
-            {services?.serviceContent1}
+            {/* {services?.serviceContent1}
             <br></br>
             <br></br>
-            {services?.serviceContent2}
+            {services?.serviceContent2} */}
+            <h2 className={styles.servicesTitle}>
+              {t("dataManagement:ourService")}
+            </h2>
           </div>
           <div className={styles.rightContent}>
             {services?.content.map((item) => (

@@ -1,3 +1,9 @@
+:root {
+  --primary-color: #1097f9;
+  /** สร้างตัวแปรสำรองสำหรับเงาเป็นโปร่งกว่าเล็กน้อย **/
+  --primary-color-shadow: rgba(16, 151, 249, 0.4);
+}
+
 /* --- Card styling --- */
 .cardTitle,
 .cardSubtitle,
@@ -13,6 +19,9 @@
   border-radius: 8px;
   padding: 2.5rem;
   color: #fff;
+
+  /* ใช้ตัวแปรสำหรับเงาโดยตรง */
+  filter: drop-shadow(0 4px 20px var(--primary-color-shadow));
 }
 
 

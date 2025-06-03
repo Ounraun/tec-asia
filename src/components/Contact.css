@@ -3,7 +3,7 @@
   background: linear-gradient(101deg, #052638 25.22%, #000 100%);
   border-top: 1px solid #d6baba80;
   flex-shrink: 0;
-  width: 100vw;
+
   padding: 4rem 3rem;
   position: relative;
   margin: 0;
@@ -12,9 +12,11 @@
 }
 
 .contact-inner {
-  max-width: 100%;
-  margin: 0;
-  padding: 0 2rem;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1rem; /* เว้นขอบซ้ายขวาเล็กน้อย เพื่อไม่ให้ชิดเกินไปเมื่อเต็มความกว้าง */
+  box-sizing: border-box;
 }
 
 .contact-title {
