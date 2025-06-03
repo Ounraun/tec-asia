@@ -46,7 +46,7 @@
 
 .main-image img {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   object-fit: cover;
 }
 
@@ -246,6 +246,9 @@
   padding: 20px 50px;
   position: relative;
 }
+.related-posts-swiper .swiper {
+  overflow: visible !important;
+}
 
 .swiper-button-prev,
 .swiper-button-next {
@@ -290,8 +293,8 @@
 
 .related-post-card {
   filter: drop-shadow(0 4.536px 4.536px #5cb5e7);
-  width: 393.676px;
-  height: 577.391px;
+  width: 360px;        /* กำหนดความกว้างตายตัวพอเหมาะ */
+  height: auto;        /* ปล่อยให้ยืดตามเนื้อหา */
   background: linear-gradient(#1a202a 76.36%, rgba(0, 0, 0, 0.7) 100%);
   border-radius: 32.73px;
   box-shadow: 0 2.297px 2.297px rgba(221, 193, 104, 0.21);
@@ -304,8 +307,8 @@
 }
 
 .related-post-card img {
-  width: 393.501px;
-  height: 347.332px;
+  width: 100%;
+  height: 220px;        /* ความสูงเฉพาะรูปเท่านั้น */
   object-fit: cover;
 }
 
@@ -324,13 +327,13 @@
 .card-content p {
   color: #fff;
   font-family: 'Saira', sans-serif;
-  font-size: 15.869px;
+  font-size: 0.95rem;
   font-weight: 300;
   line-height: normal;
   margin-bottom: 1rem;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  /* -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; */
   overflow: hidden;
   height: 151.957px;
 }
@@ -376,14 +379,16 @@
 }
 
 @media (max-width: 1200px) {
+   .related-posts-swiper {
+    padding: 20px 30px;
+  }
   .related-post-card {
-    width: 300px;
-    height: 440px;
+    width: 100%;      /* กิน full container */
+    max-width: 360px; /* จำกัดสูงสุดตามมือถือ */
   }
 
   .related-post-card img {
-    width: 300px;
-    height: 264px;
+    height: 180px;    /* ถ้าอยากย่อรูปให้สั้นลง */
   }
 }
 

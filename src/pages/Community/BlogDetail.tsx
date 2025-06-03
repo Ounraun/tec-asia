@@ -143,6 +143,7 @@ const BlogDetail = () => {
               modules={[Navigation, Pagination]}
               spaceBetween={20}
               slidesPerView={4}
+              autoHeight={true}
               navigation
               pagination={{ clickable: true }}
               breakpoints={{
@@ -190,6 +191,7 @@ const BlogDetail = () => {
                 modules={[Navigation, Pagination]}
                 spaceBetween={30}
                 slidesPerView={3}
+                autoHeight={true}
                 navigation
                 pagination={{ clickable: true }}
                 breakpoints={{
