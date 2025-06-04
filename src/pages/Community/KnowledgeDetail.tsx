@@ -1,7 +1,10 @@
+// KnowledgeDetail.tsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Contact from "../../components/Contact";
-import "./KnowledgeDetail.css";
+
+// เปลี่ยนมาใช้ CSS Module
+import styles from "./KnowledgeDetail.module.css";
 
 interface KnowledgePost {
   id: number;
@@ -58,47 +61,44 @@ const KnowledgeDetail: React.FC = () => {
   }, [documentId, apiUrl]);
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   if (error || !post) {
-    return <div className="error">{error || "Post not found"}</div>;
+    return <div className={styles.error}>{error || "Post not found"}</div>;
   }
 
   return (
-    <div className="knowledge-detail-container">
+    <div className={styles.knowledgeDetailContainer}>
       {/* Header Section with Image */}
-      <div className="header-section">
-        <div className="knowledge-header">
-          <div className="title-tag">
-            {/* <span className="tag">title topic / main article / example</span> */}
-          </div>
-          <h1 className="main-title">{post.title}</h1>
+      <div className={styles.headerSection}>
+        <div className={styles.knowledgeHeader}>
+          <h1 className={styles.mainTitle}>{post.title}</h1>
         </div>
 
         {/* Main Image */}
-        <div className="main-image-container">
+        <div className={styles.mainImageContainer}>
           <img
             src={`${post.main_image?.url}`}
             alt={post.main_image?.alternativeText || post.title}
-            className="main-image"
+            className={styles.mainImage}
           />
         </div>
       </div>
 
       {/* Content Section */}
-      <div className="content-section">
-        <div className="content-wrapper">
+      <div className={styles.contentSection}>
+        <div className={styles.contentWrapper}>
           <div
-            className="article-content"
+            className={styles.articleContent}
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </div>
       </div>
 
       {/* All Knowledge Link */}
-      <div className="all-knowledge-section">
-        <a href="/community/knowledge" className="all-knowledge-link">
+      <div className={styles.allKnowledgeSection}>
+        <a href="/community/knowledge" className={styles.allKnowledgeLink}>
           All Knowledge
         </a>
       </div>

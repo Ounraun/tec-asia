@@ -224,7 +224,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  aspect-ratio: 1157/397;
+  /* aspect-ratio: 1157/397; */
   background: rgba(0, 27, 45, 0.95);
   border-radius: 8px;
 

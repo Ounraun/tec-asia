@@ -1,0 +1,183 @@
+/* KnowledgeDetail.module.css */
+
+.knowledgeDetailContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  /* padding: 5rem; */ /* ปรับตามต้องการหากต้องการเว้นช่องว่าง */
+  color: #fff;
+}
+
+/* wrapper สำหรับ header section */
+.headerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+
+.knowledgeHeader {
+  flex: 1;
+  width: 100%;
+  /* max-width: 1440px; */
+  margin-bottom: 0;
+}
+
+.titleTag {
+  margin-bottom: 1rem;
+}
+
+.tag {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.mainTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 3rem ;
+  /* width: 100%; */
+  text-align: center;
+  
+}
+
+.mainImageContainer {
+  flex: 2;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  margin: 0;
+  text-align: center;
+}
+
+.mainImage {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.mainImage:hover {
+  transform: scale(1.02);
+}
+
+.contentSection {
+  margin: 2rem 0;
+}
+
+.contentWrapper {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.articleContent {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #fff;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.articleContent h2 {
+  font-size: 1.8rem;
+  margin: 2rem 0 1rem;
+  color: #4A7DFF;
+}
+
+.articleContent p {
+  margin-bottom: 1.5rem;
+}
+
+.articleContent ul,
+.articleContent ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.allKnowledgeSection {
+  text-align: center;
+  margin: 3rem 0;
+}
+
+.allKnowledgeLink {
+  display: inline-flex;
+    align-items: center;
+  justify-content: center;
+    height: 62px;
+  padding: 11px 78px;
+  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  color: white;
+  text-decoration: none;
+  border-radius: 19820.6px;
+    font-size: 1.6rem;     /* ประมาณ 25.6px เมื่อ base font-size = 16px */
+  font-weight: 700; 
+  transition: filter 0.3s ease;
+    letter-spacing: 0.5px;
+      line-height: 1.5;
+        cursor: pointer;
+}
+
+.allKnowledgeLink:hover {
+  filter: brightness(0.9);
+}
+
+/* Loading and Error States */
+.loading,
+.error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.error {
+  color: #ff4444;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .headerSection {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .knowledgeHeader {
+    max-width: 100%;
+  }
+
+  .mainImageContainer {
+    width: 100%;
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .knowledgeDetailContainer {
+    padding: 1rem;
+  }
+
+  .headerSection {
+    gap: 1.5rem;
+  }
+
+  .mainTitle {
+    font-size: 2rem;
+  }
+
+  .mainImageContainer {
+    height: 300px;
+    border-radius: 8px;
+  }
+
+  .contentWrapper {
+    padding: 0 1rem;
+  }
+
+  .articleContent {
+    font-size: 1rem;
+  }
+}

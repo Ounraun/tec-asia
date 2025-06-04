@@ -338,14 +338,14 @@
   height: 151.957px;
 }
 
-.read-more {
+/* .read-more {
   color: #0f8091;
   font-family: 'Poppins', sans-serif;
   font-size: 13.781px;
   font-weight: 400;
   text-decoration: underline;
   cursor: pointer;
-}
+} */
 
 .all-events-btn {
   display: block;
