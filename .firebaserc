@@ -1,5 +1,16 @@
 {
   "projects": {
-    "default": "probable-drive-451406-r7-63906"
-  }
+    "default": "probable-drive-451406-r7-63906",
+    "production": "probable-drive-451406-r7-85b9f"
+  },
+  "targets": {
+    "probable-drive-451406-r7-85b9f": {
+      "hosting": {
+        "production": [
+          "probable-drive-451406-r7-85b9f"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
