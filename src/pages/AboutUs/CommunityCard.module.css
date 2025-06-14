@@ -84,7 +84,7 @@
   .card {
     /* ให้กว้างเต็มความกว้าง viewport ลบ padding ซ้ายขวา 1rem */
     width: calc(100% - 2rem);
-    height: auto;               /* ความสูงอัตโนมัติ ตามเนื้อหา */
+    height: 450px;               /* ความสูงอัตโนมัติ ตามเนื้อหา */
     margin: 1rem auto;          /* เว้นขอบบนล่าง 1rem จัดกึ่งกลาง */
     border-radius: 20px;        /* โค้งมนแต่ลด radius ลงหน่อย */
   }

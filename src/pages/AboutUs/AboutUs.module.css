@@ -314,32 +314,7 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
 }
 
 
-/* 1. ให้ container ปลดล็อค overflow-x และ overflow-y เป็น visible */
-:global(.ourCommunitySwiper) {
-  overflow: visible !important;
-  
-  padding-top: 50px;
-  padding-bottom: 50px;
-}
 
-/* 2. ให้ wrapper ของ Swiper ไม่ถูกคลิป */
-:global(.ourCommunitySwiper .swiper-wrapper) {
-  overflow: visible !important;
-}
-
-/* 3. ปรับ slide ทุกอันให้เล็กลง+โปร่งเล็กน้อย */
-:global(.ourCommunitySwiper .swiper-slide) {
-  opacity: 0.6;
-  transform: scale(0.85);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-/* 4. ขยายเฉพาะ slide ที่ active (ตรงกลาง) */
-:global(.ourCommunitySwiper .swiper-slide-active) {
-  opacity: 1;
-  transform: scale(1.15);
-  z-index: 2;
-}
 
 /* ตัวอย่าง keyframes สำหรับเอฟเฟกต์ลอย */
 @keyframes float {
@@ -480,13 +455,7 @@ button.position-absolute {
   pointer-events: none;
   z-index: 1;
 }
-/* สั่งให้ตัว swiper รับ pointer */
-:global(.ourCommunitySwiper,
-.ourCommunitySwiper .swiper-wrapper,
-.ourCommunitySwiper .swiper-slide ){
-  pointer-events: auto;
 
-}
 
 /* เริ่มต้นสร้าง container + สไลด์ */
 .carouselContainer {
@@ -672,8 +641,9 @@ button.position-absolute {
     display: none !important;
   }
   .community-layout{
-    height: 820px; /* ปรับให้สูงตามเนื้อหา */
-    padding: 2rem 0; /* ลด padding บนและล่าง */
+    /* height: 820px;  */
+    min-height: 890px;
+    padding: 2rem 0; 
   }
   .communityTitle {
     width: 100%;
@@ -681,12 +651,34 @@ button.position-absolute {
     top: 2%;
     transform: translateX(-50%);
   }
-  /* ปรับ pagination bullet */
-  .swiper-pagination-bullet {
-    background: rgba(255,255,255,0.5);
+  .carouselContainer {
+    /* กำหนดให้ความสูงออโต้ ปรับ margin ให้เหมาะ */
+    height: auto;
+    margin: 10rem auto;
+    padding: 0 1rem;
   }
-  .swiper-pagination-bullet-active {
-    background: #39A6DE;
+
+  /* ทุก slide ให้เป็นตำแหน่งปกติ กว้างเต็ม */
+  .slide {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ซ่อน prev/next */
+  .prev,
+  .next {
+    display: none;
+  }
+
+  /* อันกลางให้ชิดขวา-ซ้ายกึ่งกลาง */
+  .current {
+    margin: 0 auto;
   }
   .wave-bg-community {
     top: -45%;
