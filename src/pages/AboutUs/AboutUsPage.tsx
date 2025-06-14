@@ -1,9 +1,5 @@
-import React, { useState, useMemo, useEffect, Suspense, lazy } from "react";
+import React, { useState, useMemo, useEffect, lazy } from "react";
 import { useNavigate } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
 import { useTranslation } from "react-i18next";
 import ParticlesComponent from "../../components/Particles/Particles";
 import Contact from "../../components/Contact";
@@ -17,41 +13,63 @@ import GemFloor from "@/assets/AboutUs/Gem-floor.svg";
 import BG_Wave from "@/assets/AboutUs/bg-wave.svg";
 import BG_Wave_Service from "@/assets/AboutUs/bg-wave-service.svg";
 import { getLatestPostByCategory } from "../../services/strapi";
-import type { BlogPost } from "../../types/blogPost";
 
 const CommunityCard = lazy(() => import("./CommunityCard"));
-
-type Post = BlogPost;
+type Key = "company" | "knowledge" | "society";
 
 const AboutUs = () => {
-  // State to manage loading state
-  const [isLoading, setIsLoading] = useState(true);
+  const [currentIdx, setCurrentIdx] = useState(0);
   const navigate = useNavigate();
-  const [posts, setPosts] = useState<{
-    company?: Post;
-    knowledge?: Post;
-    society?: Post;
-  }>({});
-
-  const particles = useMemo(() => {
-    return <ParticlesComponent />;
-  }, []);
-
+  const [posts, setPosts] = useState<Record<Key, any>>({} as any);
+  // โหลด posts เหมือนเดิม…
   useEffect(() => {
     Promise.all([
       getLatestPostByCategory("Company events"),
       getLatestPostByCategory("Knowledge"),
       getLatestPostByCategory("Society"),
-    ])
-      .then(([cRes, kRes, sRes]) => {
-        setPosts({
-          company: cRes.data[0],
-          knowledge: kRes.data[0],
-          society: sRes.data[0],
-        });
+    ]).then(([cRes, kRes, sRes]) =>
+      setPosts({
+        company: cRes.data[0],
+        knowledge: kRes.data[0],
+        society: sRes.data[0],
       })
-      .catch((err) => console.error(err));
+    );
   }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIdx((idx) => (idx + 1) % keys.length);
+    }, 3000); // ทุก 3 วินาที
+    return () => clearInterval(interval);
+  }, []);
+
+  // Define the keys for posts
+  const keys: Key[] = ["company", "knowledge", "society"];
+
+  // ช่วยคำนวณ prev/next index
+  const prevIdx = (currentIdx + keys.length - 1) % keys.length;
+  const nextIdx = (currentIdx + 1) % keys.length;
+
+  // State to manage loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const particles = useMemo(() => {
+    return <ParticlesComponent />;
+  }, []);
+
+  // useEffect(() => {
+  //   Promise.all([
+  //     getLatestPostByCategory("Company events"),
+  //     getLatestPostByCategory("Knowledge"),
+  //     getLatestPostByCategory("Society"),
+  //   ])
+  //     .then(([cRes, kRes, sRes]) => {
+  //       setPosts({
+  //         company: cRes.data[0],
+  //         knowledge: kRes.data[0],
+  //         society: sRes.data[0],
+  //       });
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, []);
 
   const { t, i18n } = useTranslation(["common", "aboutUs"]);
   const [aboutUs, setAboutUs] = useState<AboutUs | null>(null);
@@ -251,49 +269,35 @@ const AboutUs = () => {
               />
             </div>
           </div>
-          <Suspense fallback={<div>Loading community...</div>}>
-            <Swiper
-              modules={[Pagination, Navigation]}
-              // pagination={{ clickable: true }}
-              slidesPerView={3}
-              breakpoints={{
-                0: {
-                  // เมื่อความกว้าง < 768 ให้เหลือ 1 ก้อน
-                  slidesPerView: 1,
-                  spaceBetween: 16,
-                },
-                768: {
-                  slidesPerView: 3,
-                  spaceBetween: 32,
-                  centeredSlides: true,
-                },
-              }}
-              className="ourCommunitySwiper"
-              style={{ overflow: "visible", zIndex: 5}}
-            >
-              {["company", "knowledge", "society"].map((key) => {
-                const post = (posts as any)[key] as Post | undefined;
-                if (!post) return null;
-                const titleKey =
-                  key === "company"
-                    ? "communityCard:companyEvents"
-                    : key === "knowledge"
-                    ? "communityCard:knowledge"
-                    : "communityCard:society";
-                return (
-                  <SwiperSlide key={key}>
-                    <CommunityCard
-                      title={t(titleKey)}
-                      imageUrl={post.main_image?.url ?? ""}
-                      excerpt={truncate(post.content)}
-                      date={formatDate(post.createdAt)}
-                      onReadMore={() => navigate(`/blog/doc/${post.id}`)}
-                    />
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-          </Suspense>
+          <div className={aboutStyles.carouselContainer}>
+            {keys.map((key, i) => {
+              // ตัดสินตำแหน่ง ถ้า i === currentIdx ก็ current, ถ้า i === prevIdx ก็ prev, ถ้า i === nextIdx ก็ next
+              let posClass = "";
+              if (i === currentIdx) posClass = aboutStyles.current;
+              else if (i === prevIdx) posClass = aboutStyles.prev;
+              else if (i === nextIdx) posClass = aboutStyles.next;
+              else posClass = ""; // กรณีอยากซ่อนกรณีหลายกว่า 3
+
+              return (
+                <div
+                  key={key}
+                  className={`${aboutStyles.slide} ${posClass}`}
+                  onClick={() => {
+                    if (i === prevIdx) setCurrentIdx(prevIdx);
+                    if (i === nextIdx) setCurrentIdx(nextIdx);
+                  }}
+                >
+                  <CommunityCard
+                    title={t(`communityCard:${key}`)}
+                    imageUrl={posts[key]?.main_image.url}
+                    excerpt={truncate(posts[key]?.content)}
+                    date={formatDate(posts[key]?.createdAt)}
+                    onReadMore={() => navigate(`/blog/doc/${posts[key].id}`)}
+                  />
+                </div>
+              );
+            })}
+          </div>
           <div
             className="position-absolute text-white"
             style={{

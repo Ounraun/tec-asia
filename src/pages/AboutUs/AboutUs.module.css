@@ -201,7 +201,7 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
 .community-layout {
   position: relative;
   width: 100%;
-  height: 1300px; 
+  min-height: 1300px;
   padding: 4rem 0;
   overflow: hidden;
   background-color: #101111;
@@ -317,7 +317,9 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
 /* 1. ให้ container ปลดล็อค overflow-x และ overflow-y เป็น visible */
 :global(.ourCommunitySwiper) {
   overflow: visible !important;
-  top: 14%;
+  
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 /* 2. ให้ wrapper ของ Swiper ไม่ถูกคลิป */
@@ -484,6 +486,50 @@ button.position-absolute {
 .ourCommunitySwiper .swiper-slide ){
   pointer-events: auto;
 
+}
+
+/* เริ่มต้นสร้าง container + สไลด์ */
+.carouselContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 700px; /* ปรับให้พอดีกับการ์ดคุณ */
+  perspective: 1000px;
+  overflow: hidden;
+  z-index: 1;
+  margin-top: 90px;
+
+}
+
+.slide {
+  position: absolute;
+  top: 50%;
+  transform-origin: center center;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.6s ease-in-out;
+  cursor: pointer;
+}
+
+/* การ์ดซ้าย (prev) */
+.prev {
+  transform: translateX(-250px) translateY(-50%) scale(0.8);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+/* การ์ดตรงกลาง (current) */
+.current {
+  transform: translateX(0) translateY(-50%) scale(1);
+  opacity: 1;
+  z-index: 2;
+}
+
+/* การ์ดขวา (next) */
+.next {
+  transform: translateX(250px) translateY(-50%) scale(0.8);
+  opacity: 0.5;
+  z-index: 1;
 }
 @media (max-width: 768px) {
   .heroSection {
