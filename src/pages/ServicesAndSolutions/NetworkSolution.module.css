@@ -198,11 +198,6 @@
     transparent 100%
   );
 }
-
-.fullWrapper {
-  /* width: 100%; */  
-}
-
 .groupWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
