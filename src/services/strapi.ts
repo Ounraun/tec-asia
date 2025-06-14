@@ -97,3 +97,16 @@ export async function getCompanyVideoUrl(): Promise<string | null> {
   console.log("Company video URL response:", res?.data?.videoknowledge?.url ?? null);
   return res?.data?.videoknowledge?.url ?? null;
 }
+
+export function getLatestPostByCategory(category: string) {
+  // callStrapi รองรับ params อยู่แล้ว
+  return callStrapi<{ data: BlogPost[] }>(
+    "/api/blog-posts",
+    {
+      "filters[category][name][$eq]": category,
+      sort: "updatedAt:desc",
+      "pagination[pageSize]": 1,
+      populate: "*",
+    }
+  );
+}

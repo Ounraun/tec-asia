@@ -1,4 +1,9 @@
 import React, { useState, useMemo, useEffect, Suspense, lazy } from "react";
+import { useNavigate } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 import { useTranslation } from "react-i18next";
 import ParticlesComponent from "../../components/Particles/Particles";
 import Contact from "../../components/Contact";
@@ -11,14 +16,41 @@ import BG_Service from "@/assets/AboutUs/bg_service.webp";
 import GemFloor from "@/assets/AboutUs/Gem-floor.svg";
 import BG_Wave from "@/assets/AboutUs/bg-wave.svg";
 import BG_Wave_Service from "@/assets/AboutUs/bg-wave-service.svg";
+import { getLatestPostByCategory } from "../../services/strapi";
+import type { BlogPost } from "../../types/blogPost";
 
 const CommunityCard = lazy(() => import("./CommunityCard"));
+
+type Post = BlogPost;
+
 const AboutUs = () => {
   // State to manage loading state
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const [posts, setPosts] = useState<{
+    company?: Post;
+    knowledge?: Post;
+    society?: Post;
+  }>({});
 
   const particles = useMemo(() => {
     return <ParticlesComponent />;
+  }, []);
+
+  useEffect(() => {
+    Promise.all([
+      getLatestPostByCategory("Company events"),
+      getLatestPostByCategory("Knowledge"),
+      getLatestPostByCategory("Society"),
+    ])
+      .then(([cRes, kRes, sRes]) => {
+        setPosts({
+          company: cRes.data[0],
+          knowledge: kRes.data[0],
+          society: sRes.data[0],
+        });
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   const { t, i18n } = useTranslation(["common", "aboutUs"]);
@@ -80,57 +112,50 @@ const AboutUs = () => {
       </div>
     );
   }
+  // ตัดข้อความ
+  function truncate(text: string, maxLength = 100): string {
+    if (!text) return "";
+    return text.length <= maxLength ? text : text.slice(0, maxLength) + "...";
+  }
+
+  // แปลงวันที่
+  function formatDate(isoString: string): string {
+    if (!isoString) return "";
+    const date = new Date(isoString);
+    return date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  }
 
   return (
     <div className={aboutStyles["container"]}>
       <div
-        className="overflow-hidden"
+        className="overflow-x-hidden overflow-y-visible"
         style={{ scrollBehavior: "smooth", backgroundColor: "#000" }}
       >
         {/* hero  */}
         <div
-          className="position-relative bg-dark"
-          style={{
-            zIndex: 1,
-            height: "600px",
-            margin: 0,
-            padding: 0,
-            width: "100%",
-            scrollSnapAlign: "start",
-          }}
+          className={`bg-dark ${aboutStyles.heroSection}`}
+          style={{ scrollSnapAlign: "start", width: "100%" }}
         >
-          <div className={aboutStyles.particleWrapper}>
-            {particles}
-            <div className={aboutStyles.contentLayout}>
-              <div className="p-2" style={{ width: "100%" }}>
-                <h1
-                  className={aboutStyles.mainTitle}
-                  style={{
-                    paddingTop: "0px",
-                  }}
-                >
-                  {aboutUs?.heroTitle}
-                </h1>
-                <p
-                  className={`${aboutStyles.mainText} ${aboutStyles.mainTextS32}`}
-                  style={{
-                    fontWeight: "400",
-                    lineHeight: "170%",
-                    letterSpacing: "-1.9%",
-                    marginTop: "30px",
-                    width: "708px",
-                  }}
-                >
-                  {aboutUs?.heroContent}
-                </p>
-              </div>
+          <div className={aboutStyles.particleWrapper}>{particles}</div>
+          <div className={`${aboutStyles.contentLayout}`}>
+            <div style={{ width: "100%", maxWidth: "700px" }}>
+              <h1 className={aboutStyles.mainTitle}>{aboutUs?.heroTitle}</h1>
+              <p
+                className={`${aboutStyles.mainText} ${aboutStyles.mainTextS32}`}
+              >
+                {aboutUs?.heroContent}
+              </p>
             </div>
           </div>
         </div>
 
         {/* service and solutions */}
         <div
-          className="position-relative"
+          className={`position-relative ${aboutStyles.serviceSection}`}
           style={{
             // height: "293vh",
             overflow: "hidden",
@@ -146,21 +171,8 @@ const AboutUs = () => {
             aria-hidden="true"
           />
           {/* Background */}
-          <div
-            className="position-absolute text-white"
-            style={{
-              top: "27% ",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            <h2
-              className="text-white text-center fw-bold display-4 display-md-3 display-lg-1"
-              style={{
-                fontFamily: "Saira, sans-serif",
-                lineHeight: "142%",
-              }}
-            >
+          <div className={aboutStyles.serviceHeading}>
+            <h2>
               {t("aboutUs:service")}
               <br />
               {t("aboutUs:and")} <br />
@@ -169,19 +181,10 @@ const AboutUs = () => {
           </div>
           <GemGroup />
           {/* Gems floor */}
-          <div
-            className="position-absolute"
-            style={{
-              top: "-10%",
-              right: 0,
-              width: "100%",
-            }}
-          >
+          <div className={aboutStyles.gemFloorWrapper}>
             <img
-              className={`${aboutStyles["gem-floor-img"]}`}
+              className={aboutStyles["gem-floor-img"]}
               src={GemFloor}
-              alt=""
-              loading="lazy"
               aria-hidden="true"
             />
           </div>
@@ -212,14 +215,22 @@ const AboutUs = () => {
         </div>
 
         {/* community */}
-        <div
-          className={`position-relative ${aboutStyles["community-layout"]} ${aboutStyles["bg-community"]}`}
-          style={{ scrollSnapAlign: "start" }}
+        <section
+          className={`${aboutStyles["community-layout"]} ${aboutStyles["bg-community"]}`}
         >
+          <div
+            className={`${aboutStyles.communityTitle} text-white position-absolute`}
+          >
+            <h1 className={aboutStyles["main-text-s64"]}>
+              {t("aboutUs:ourCommunity")}
+            </h1>
+          </div>
+          {/* ซ่อน decoration บางอย่าง ใน CSS */}
           <div className={aboutStyles["filter-bg-community-1"]}></div>
           <div className={aboutStyles["filter-bg-community-2"]}></div>
           <div className={aboutStyles["circle-bg-community-1"]}></div>
           <div className={aboutStyles["circle-bg-community-2"]}></div>
+
           <div className="position-absolute w-100 h-100">
             <div
               className={`${aboutStyles["wave-bg-community"]} position-relative  w-100 h-100`}
@@ -240,11 +251,54 @@ const AboutUs = () => {
               />
             </div>
           </div>
+          <Suspense fallback={<div>Loading community...</div>}>
+            <Swiper
+              modules={[Pagination, Navigation]}
+              // pagination={{ clickable: true }}
+              slidesPerView={3}
+              breakpoints={{
+                0: {
+                  // เมื่อความกว้าง < 768 ให้เหลือ 1 ก้อน
+                  slidesPerView: 1,
+                  spaceBetween: 16,
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 32,
+                  centeredSlides: true,
+                },
+              }}
+              className="ourCommunitySwiper"
+              style={{ overflow: "visible", zIndex: 5}}
+            >
+              {["company", "knowledge", "society"].map((key) => {
+                const post = (posts as any)[key] as Post | undefined;
+                if (!post) return null;
+                const titleKey =
+                  key === "company"
+                    ? "communityCard:companyEvents"
+                    : key === "knowledge"
+                    ? "communityCard:knowledge"
+                    : "communityCard:society";
+                return (
+                  <SwiperSlide key={key}>
+                    <CommunityCard
+                      title={t(titleKey)}
+                      imageUrl={post.main_image?.url ?? ""}
+                      excerpt={truncate(post.content)}
+                      date={formatDate(post.createdAt)}
+                      onReadMore={() => navigate(`/blog/doc/${post.id}`)}
+                    />
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </Suspense>
           <div
             className="position-absolute text-white"
             style={{
               zIndex: 6,
-              bottom: "0%",
+              bottom: "-3%",
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: "100%",
@@ -259,23 +313,8 @@ const AboutUs = () => {
               {t("aboutUs:endLineTwo")}
             </h1>
           </div>
-          <div
-            className="position-absolute text-white"
-            style={{
-              zIndex: 6,
-              top: "7%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            <h1 className={aboutStyles["main-text-s64"]}>
-              {t("aboutUs:ourCommunity")}
-            </h1>
-          </div>
-          <Suspense fallback={<div>Loading community...</div>}>
-            <CommunityCard />
-          </Suspense>
-          <div className={`${aboutStyles["backgroundSVG"]} position-absolute`}>
+
+          {/* <div className={`${aboutStyles["backgroundSVG"]} position-absolute`}>
             <svg
               viewBox="0 0 1440 2090"
               fill="none"
@@ -422,8 +461,8 @@ const AboutUs = () => {
                 </filter>
               </defs>
             </svg>
-          </div>
-        </div>
+          </div> */}
+        </section>
 
         {/* Contact Section */}
         <div id="contact-section" style={{ scrollSnapAlign: "start" }}>

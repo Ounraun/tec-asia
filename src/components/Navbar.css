@@ -119,3 +119,62 @@
   display: none;
 
 }
+/* ใน Navbar.css */
+.navbar-nav {
+  gap: 2rem;                /* ระยะห่างระหว่างเมนู */
+}
+@media (max-width: 768px) {
+  .navbar-brand {
+    margin-left: 1rem !important;
+  }
+  .navbar-collapse {
+    background-color: #222222; /* หรือตามที่ต้องการ */
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  /* 3. ให้รายการ Nav (Nav.Link, Dropdown Toggle, Select) ชิดซ้ายทุกอัน */
+  .navbar-nav {
+    align-items: flex-start;  /* จัดรายการแนวตั้งชิดซ้าย */
+  }
+
+/* 2. ย้ายให้มันไปอยู่เหนือน้ำตก (z-index สูง) */
+  .navbar-collapse.show {
+    position: absolute;
+    top: 84px;     /* ให้ต่ำลงมาจาก navbar */
+    left: 0;
+    right: 0;
+    z-index: 999;  /* หรือมากกว่า element อื่นบนหน้า */
+  }
+  .custom-nav-dropdown {
+    display: flex;
+    flex-direction: column; /* จัด dropdown item แนวตั้ง */
+  }
+    .offcanvas.offcanvas-end {
+    width: 100% !important;
+  }
+  /* ด้านหลัง drawer ให้เป็นสีทึบไม่เห็นเนื้อหาหลังกระจกใส */
+  .offcanvas-backdrop {
+    background-color: rgba(0,0,0,0.8) !important;
+  }
+  /* จัดเนื้อหาใน drawer ให้ง่ายต่อการอ่าน */
+  .offcanvas-body {
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  /* ปรับลิงก์และ dropdown ให้ใหญ่ขึ้น กดง่าย */
+  .offcanvas-body .nav-link,
+  .offcanvas-body .dropdown-toggle {
+    font-size: 1.25rem !important;
+    padding: 1rem 0 !important;
+    width: 100%;
+    text-align: center;
+  }
+  /* ถ้าจะให้ logo อยู่ตรงกลางด้วย */
+  .offcanvas-header {
+    justify-content: center;
+    border-bottom: none;
+  }
+}

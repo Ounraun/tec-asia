@@ -17,41 +17,48 @@
   overflow-x: hidden;    /* ไม่ให้เลื่อนด้านข้าง */
 }
 
+.heroSection {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0; 
+}
+
 .particleWrapper {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;  
+  inset: 0;     /* top:0; right:0; bottom:0; left:0; */
   z-index: 0;
 }
 
 .contentLayout {
-    position: relative;
-    z-index: 1;
-    margin-top: 30px;
-    max-width: 1104px;
-    margin-left: 100px;
-}
-
-.contentLayout {
-  /* Add your desired styles here */
+  position: relative;
+  z-index: 1;
+  max-width: 1104px;
+  /* เอา margin:0 auto ออก แล้วใช้ padding-left */
+  margin: 0;
+  padding: 0 20px 0 100px;  /* เลื่อนซ้าย 100px */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;  /* จัดเนื้อหาไปทางซ้าย */
 }
-  
- .main-title {
-    font-family: "Orbitron";
-    font-weight: bold;
-    font-size: 100px;
-    color: white;
- }
 
- .main-text {
+.main-title {
+  font-family: "Orbitron", sans-serif;
+  font-weight: bold;
+  font-size: clamp(4rem, 8vw, 5.5rem); /* ลดขนาดลงเล็กน้อย */
+  color: white;
+  white-space: nowrap;           /* ห้ามห่อบรรทัด */
+  overflow: hidden;
+  text-overflow: ellipsis;       /* ถ้ายังยาวเกิน ก็ ... */
+}
+.main-text {
   font-family: var(--font-family-saira);
   color: var(--color-white);
+  font-size: 32px;
+  line-height: 1.7;
+  letter-spacing: -1.9%;
+  margin-top: 30px;
+  width: 708px;
+  text-align: left;
 }
  
  .main-text-s16 {
@@ -68,10 +75,13 @@
     font-size: 32px;
     color: white;
 }
-.main-text-s50{
-    font-family: "Saira";
-    font-size: 50px;
-    color: white;
+.main-text-s50 {
+  font-family: "Saira", sans-serif;
+  color: white;
+
+  /* ขยาย-หด ตามขนาด viewport */
+  font-size: clamp(20px, 5vw, 50px);
+  line-height: 1.2;
 }
 
 .main-text-s64 {
@@ -89,17 +99,35 @@
 }
 
 .bgFade {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-
-  /* ใส่ mask ตามเดิม… */
   mask-image: radial-gradient(circle at center, #0d0d0e 65%, transparent 100%);
-  -webkit-mask-image: radial-gradient(circle at center, #0d0d0e 65%, transparent 100%);
-
-  /* ลดความสว่างลง 50% */
-  filter: brightness(0.5) contrast(1);
+  filter: brightness(0.5);
+  z-index: 0;
+}
+.serviceSection {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0;
+  min-height: 600px;  
+}
+.serviceHeading {
+  position: absolute;
+  top: 27%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+.serviceHeading h2 {
+  font-family: var(--font-family-saira);
+  color: white;
+  text-align: center;
+  line-height: 1.42;
+  font-size: 3rem; /* เดสก์ท็อป */
+  margin: 0;
 }
 .service-layout {
     background-image: url("src/assets/bg-solutions.svg"); /* ใช้ path ของรูป */
@@ -171,10 +199,25 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
 }
 
 .community-layout {
-  width: 100%;
-  height: 1200px; 
   position: relative;
-  overflow: hidden; /* ซ่อนส่วนที่เกิน */
+  width: 100%;
+  height: 1300px; 
+  padding: 4rem 0;
+  overflow: hidden;
+  background-color: #101111;
+}
+/* ตำแหน่งปกติบน Desktop */
+.communityTitle {
+  z-index: 6;
+  top: 7%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.wave-bg-community{
+  position: absolute;
+  top: -4%;
+  left: 0;
+
 }
 
 .bg-community {
@@ -189,7 +232,7 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
   position: absolute;
   background-color: rgba(90, 50, 4, 0.5); /* สี RGB พร้อมความโปร่งใส 50% */
   opacity: 100%;
-  z-index: 1;
+
 }
 .filter-bg-community-2 {
   width: 100%;
@@ -199,7 +242,7 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
   position: absolute;
   background: radial-gradient(circle at bottom, rgba(23, 23, 23, 0) 0%, rgba(14, 15, 12, 1) 96%);
   opacity: 100%;
-  z-index: 2;
+
 }
 .circle-bg-community-1{
   width: 400px;
@@ -208,7 +251,7 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
   /* opacity: 56%; */
   filter: blur(200px); /* เพิ่ม Effect blur */
   background: linear-gradient(180deg, #052639 0%, #066398 100%);
-  z-index: 3;
+
   top: 15%;
   left: 70%;
   position: absolute;
@@ -220,7 +263,6 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
   /* opacity: 56%; */
   filter: blur(150px); /*เพิ่ม Effect blur*/
   background: linear-gradient(180deg, #052639 0%, #066398 100%);
-  z-index: 3;
   bottom: 40%;
   left: 5%;
   position: absolute;
@@ -269,6 +311,32 @@ text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่�
   font-weight: bold;
   font-size: 1.8rem;
   color: #39A6DE;
+}
+
+
+/* 1. ให้ container ปลดล็อค overflow-x และ overflow-y เป็น visible */
+:global(.ourCommunitySwiper) {
+  overflow: visible !important;
+  top: 14%;
+}
+
+/* 2. ให้ wrapper ของ Swiper ไม่ถูกคลิป */
+:global(.ourCommunitySwiper .swiper-wrapper) {
+  overflow: visible !important;
+}
+
+/* 3. ปรับ slide ทุกอันให้เล็กลง+โปร่งเล็กน้อย */
+:global(.ourCommunitySwiper .swiper-slide) {
+  opacity: 0.6;
+  transform: scale(0.85);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* 4. ขยายเฉพาะ slide ที่ active (ตรงกลาง) */
+:global(.ourCommunitySwiper .swiper-slide-active) {
+  opacity: 1;
+  transform: scale(1.15);
+  z-index: 2;
 }
 
 /* ตัวอย่าง keyframes สำหรับเอฟเฟกต์ลอย */
@@ -399,8 +467,78 @@ button.position-absolute {
   border: none;
   padding: 0;
 }
+/* ปิด pointer-events ของทุก layer ตกแต่ง */
+.filter-bg-community-1,
+.filter-bg-community-2,
+.circle-bg-community-1,
+.circle-bg-community-2,
+.bg-wave-filter,
+.bg-wave,
+.backgroundSVG {
+  pointer-events: none;
+  z-index: 1;
+}
+/* สั่งให้ตัว swiper รับ pointer */
+:global(.ourCommunitySwiper,
+.ourCommunitySwiper .swiper-wrapper,
+.ourCommunitySwiper .swiper-slide ){
+  pointer-events: auto;
 
+}
 @media (max-width: 768px) {
+  .heroSection {
+    padding: 60px 0; /* ลด padding บนและล่าง */
+  }
+  .contentLayout {
+    /* เอา margin-left ออก และจัดให้อยู่กึ่งกลาง */
+    max-width: none;
+    margin: 30px auto 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  .main-title {
+    /* ปรับขนาดหัวเรื่องให้ยืดหยุ่น */
+    font-size: clamp(2rem, 8vw, 5rem);
+     white-space: normal;  
+    text-align: center;
+  }
+
+  .main-text {
+    /* ปรับขนาดข้อความให้ยืดหยุ่น */
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    max-width: 90vw;
+    text-align: center;
+    margin-top: 16px;
+  }
+  .serviceSection {
+    padding: 2rem 1rem;
+    min-height: 615px;     /* ปรับลงมาหน่อยแต่ก็อย่าให้เล็กเกิน */
+  }
+  .serviceHeading {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin-bottom: 1.5rem;
+  }
+  .serviceHeading h2 {
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .vl {
+    display: none; /* ซ่อนเส้นแนวตั้งบนมือถือ */
+  }
+
+  /* .gemFloorWrapper {
+    display: none;
+  } */
   .gem-float-1,
   .gem-float-2,
   .gem-float-3,
@@ -410,22 +548,101 @@ button.position-absolute {
     animation: none; /* ปิด animation บนอุปกรณ์เล็ก */
     position: static;
     width: 140px;
-    height: 140px;
-    margin: 10px auto;
+    margin-top: 120px;
   }
-
-  .textInGem {
-    font-size: 14px;
+  .gem-float-1 {
+    top: 4%;
+    left: 10%;
   }
-
-  .gem-container-mobile {
+  .gem-float-2 {
+    top: 17%;
+    left: 5%;
+    width: 130px;
+  }
+  .gem-float-3 {
+    top: 24%;
+    left: 10%;
+    width: 170px;
+  }
+  .gem-float-4 {
+    top: 4%;
+    right: 10%;
+    width: 130px;
+  }
+  .gem-float-5 {
+    top: 15%;
+    right: 7%;
+    width: 130px;
+  }
+  .gem-float-6 {
+    top: 28%;
+    right: 10%;
+    width: 140px;
+  }
+  .gem-float-1 .textInGem,
+  .gem-float-2 .textInGem,
+  .gem-float-3 .textInGem,
+  .gem-float-4 .textInGem,
+  .gem-float-5 .textInGem,
+  .gem-float-6 .textInGem {
+    font-size: 12px; /* ลดขนาดฟอนต์ */
+    text-align: center; /* จัดกึ่งกลาง */
+    width: 60%; /* ปรับให้เต็มพื้นที่ */
+  } 
+  .gem-floor-img {
+    width: 100%;
+    height: auto; /* ปรับให้สูงตามสัดส่วน */
+  }
+  .iso-layout {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    padding-top: 60px;
-    padding-bottom: 40px;
-    position: relative;
-    z-index: 5;
+    flex-direction: column;
+    align-items: center;
+    /* -- เอา width:100% ออก เพราะมันรวม padding แล้วเลยล้น -- */
+    max-width: 100%;
+    padding: 0 16px;          /* เผื่อขอบซ้ายขวา */
+    margin: 16px auto 0;      /* auto ด้านซ้าย/ขวา จะทำให้กึ่งกลาง */
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  .iso-item-content {
+    /* กำหนดให้ขยายไม่เกินพื้นที่ ที่เหลือจาก padding */
+    width: 100%;
+    max-width: 360px;         /* 100% - (padding 16px x 2) = 100% - 32px */
+    font-size: 1rem;
+    line-height: 1.4;
+    text-align: center;
+    word-break: break-word;
+    white-space: normal;
+  }
+   .color-gradient-1, .color-gradient-2 {
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+  .filter-bg-community-1,
+  .filter-bg-community-2,
+  .circle-bg-community-1,
+  .circle-bg-community-2 {
+    display: none !important;
+  }
+  .community-layout{
+    height: 820px; /* ปรับให้สูงตามเนื้อหา */
+    padding: 2rem 0; /* ลด padding บนและล่าง */
+  }
+  .communityTitle {
+    width: 100%;
+    text-align: center;
+    top: 2%;
+    transform: translateX(-50%);
+  }
+  /* ปรับ pagination bullet */
+  .swiper-pagination-bullet {
+    background: rgba(255,255,255,0.5);
+  }
+  .swiper-pagination-bullet-active {
+    background: #39A6DE;
+  }
+  .wave-bg-community {
+    top: -45%;
   }
 }

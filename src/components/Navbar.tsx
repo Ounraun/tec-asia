@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  Container,
+  NavDropdown,
+  Offcanvas,
+} from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import "./Navbar.css";
@@ -12,7 +18,6 @@ const Navigationbar = () => {
   const [showCommunityDropdown, setShowCommunityDropdown] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
   const { t, i18n } = useTranslation(["common", "navbar"]);
 
   const switchLang = (lng: "en" | "th") => {
@@ -61,6 +66,7 @@ const Navigationbar = () => {
 
   return (
     <Navbar
+      bg="dark"
       variant="dark"
       expand="lg"
       expanded={expanded}
@@ -84,19 +90,222 @@ const Navigationbar = () => {
         <Navbar.Brand
           as={Link}
           to="/"
-          className="text-white"
+          className="ms-3 d-flex align-items-center"
+        >
+          <img src={logo} alt="Logo" height={40} />
+        </Navbar.Brand>
+        <Navbar.Toggle
+          aria-controls="offcanvasNavbar"
+          className="d-lg-none me-3"
+        />
+        {/* <Navbar.Toggle
+          aria-controls="basic-navbar-nav"
+          className="d-none d-lg-block me-3"
+        /> */}
+        <Navbar.Offcanvas
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+          placement="end"
+          className="text-white d-lg-none"
           style={{
-            marginLeft: "50px",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
+            backgroundColor: "#222222",
+            width: "250px",
+            height: "100vh",
           }}
         >
-          <img src={logo} alt="Logo" height="40" />
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" style={{ height: "100%" }}>
-          <Nav className="ms-auto" style={{ height: "100%" }}>
+          <Offcanvas.Header
+            closeButton
+            style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}
+          >
+            <Navbar.Brand as={Link} to="/" className="mx-auto">
+              <img src={logo} alt="Logo" height={40} />
+            </Navbar.Brand>
+          </Offcanvas.Header>
+          <Offcanvas.Body className="p-0">
+            <Nav className="flex-column w-100">
+              <Nav.Link
+                as={Link}
+                to="/"
+                onClick={() => setExpanded(false)}
+                style={navLinkStyle}
+              >
+                {t("navbar:home")}
+              </Nav.Link>
+
+              <NavDropdown
+                title={t("navbar:serviceAndSolutions")}
+                show={showServicesDropdown}
+                onToggle={setShowServicesDropdown}
+                className="w-100"
+                menuVariant="dark"
+              >
+                {" "}
+                <NavDropdown.Item
+                  as={Link}
+                  to="/services/network-solution"
+                  className={`dropdown-item ${
+                    location.pathname === "/services/network-solution"
+                      ? "active"
+                      : ""
+                  }`}
+                  onClick={() => setShowServicesDropdown(false)}
+                >
+                  {t("navbar:networkSolution")}
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  as={Link}
+                  to="/services/data-center"
+                  className={`dropdown-item ${
+                    location.pathname === "/services/data-center"
+                      ? "active"
+                      : ""
+                  }`}
+                  onClick={() => setShowServicesDropdown(false)}
+                >
+                  {t("navbar:dataCenter")}
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  as={Link}
+                  to="/services/data-management"
+                  className={`dropdown-item ${
+                    location.pathname === "/services/data-management"
+                      ? "active"
+                      : ""
+                  }`}
+                  onClick={() => setShowServicesDropdown(false)}
+                >
+                  {t("navbar:dataManagement")}
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  as={Link}
+                  to="/services/centralize-management"
+                  className={`dropdown-item ${
+                    location.pathname === "/services/centralize-management"
+                      ? "active"
+                      : ""
+                  }`}
+                  onClick={() => setShowServicesDropdown(false)}
+                >
+                  {t("navbar:centralizeManagement")}
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  as={Link}
+                  to="/services/multimedia-solution"
+                  className={`dropdown-item ${
+                    location.pathname === "/services/multimedia-solution"
+                      ? "active"
+                      : ""
+                  }`}
+                  onClick={() => setShowServicesDropdown(false)}
+                >
+                  {t("navbar:multimediaSolutions")}
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  as={Link}
+                  to="/services/digital-transformation"
+                  className={`dropdown-item ${
+                    location.pathname === "/services/digital-transformation"
+                      ? "active"
+                      : ""
+                  }`}
+                  onClick={() => setShowServicesDropdown(false)}
+                >
+                  {t("navbar:digitalTransformation")}
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown
+                title="Our Community"
+                show={showCommunityDropdown}
+                onToggle={setShowCommunityDropdown}
+                className="w-100"
+                menuVariant="dark"
+              >
+                <NavDropdown.Item
+                  as={Link}
+                  to="/community/company-events"
+                  className={`dropdown-item ${
+                    location.pathname === "/community/company-events"
+                      ? "active"
+                      : ""
+                  }`}
+                  onClick={() => setShowCommunityDropdown(false)}
+                >
+                  Company Events
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  as={Link}
+                  to="/community/society"
+                  className={`dropdown-item ${
+                    location.pathname === "/community/society" ? "active" : ""
+                  }`}
+                  onClick={() => setShowCommunityDropdown(false)}
+                >
+                  Society
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  as={Link}
+                  to="/community/knowledge"
+                  className={`dropdown-item ${
+                    location.pathname === "/community/knowledge" ? "active" : ""
+                  }`}
+                  onClick={() => setShowCommunityDropdown(false)}
+                >
+                  Knowledge
+                </NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link
+                as={Link}
+                to="/#contact-section"
+                onClick={() => setExpanded(false)}
+                style={navLinkStyle}
+              >
+                {t("navbar:contact")}
+              </Nav.Link>
+              <NavDropdown
+                title={
+                  <img src={adminIcon} width={24} height={24} alt="admin" />
+                }
+                className="w-100"
+                menuVariant="dark"
+              >
+                <NavDropdown.Item
+                  as="a"
+                  href="https://tec-asia.quickconnect.to/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="dropdown-item"
+                >
+                  {t("navbar:nas")}
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  as={Link}
+                  to="/meeting-rooms"
+                  className={`dropdown-item ${
+                    location.pathname === "/meeting-rooms" ? "active" : ""
+                  }`}
+                >
+                  Meeting Rooms
+                </NavDropdown.Item>
+              </NavDropdown>
+              <div className="px-3 py-2">
+                <select
+                  value={i18n.language}
+                  onChange={(e) => switchLang(e.target.value as any)}
+                  className="form-select form-select-sm"
+                >
+                  <option value="en">{t("language.en")}</option>
+                  <option value="th">{t("language.th")}</option>
+                </select>
+              </div>
+            </Nav>
+          </Offcanvas.Body>
+        </Navbar.Offcanvas>
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          className="d-none d-lg-flex justify-content-end align-items-center w-100"
+          style={{ marginRight: "2rem" }}
+        >
+          <Nav className="ms-auto d-flex align-items-center">
             <Nav.Link
               as={Link}
               to="/"
@@ -349,6 +558,7 @@ const Navigationbar = () => {
               <option value="th">{t("language.th")}</option>
             </select>
           </Nav>
+          {/* <Nav className="ms-auto"></Nav> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
