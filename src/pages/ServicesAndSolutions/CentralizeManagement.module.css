@@ -152,7 +152,7 @@
     rgba(142, 104, 0, 0.84) 76%,
     rgba(0, 0, 0, 1) 100%
   );
-  border-radius: 20px;
+  border-radius: 1rem;
   box-shadow: 0px 5.48px 3.48px #ddc2688a;
   padding: 1.5rem;
   height: 513px;
@@ -202,6 +202,124 @@
   white-space: pre-wrap;
 }
 
+.featureTitle {
+  background: var(
+    --tital-tone1,
+    linear-gradient(180deg, #005df9 0%, #a7daff 100%)
+  );
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-family: Orbitron;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  display: inline-block;
+}
+
+.carouselContainer {
+  position: relative;
+  /* overflow: hidden; */
+  margin-top: -500px; /* ตามตำแหน่งเดิม */
+  z-index: 3;
+}
+/* wrapper ของสไลด์ */
+.slides {
+  display: flex;
+  transition: transform 0.3s ease;
+    justify-content: center;   /* จัดกึ่งกลาง */
+      flex-wrap: wrap;  
+    gap: 1.5rem;
+}
+
+/* แต่ละการ์ด */
+.slide {
+
+  box-sizing: border-box;
+  flex: 0 0 auto;
+}
+
+/* ปุ่ม left/right */
+.prevBtn,
+.nextBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+  z-index: 10;
+}
+.prevBtn { left: 0.5rem; }
+.nextBtn { right: 0.5rem; }
+
+/* pagination dots */
+.dots {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+.dot {
+  width: 8px; height: 8px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.activeDot {
+  background: #34a8d5;
+}
+.navigation {
+  display: flex;
+  justify-content: space-between; /* ขึ้น–ซ้าย และ ขึ้น–ขวา */
+  align-items: center;
+  width: 100%;
+  padding: 0 1rem;           /* เลื่อนเข้าออกนิดหน่อย (ปรับได้) */
+  box-sizing: border-box;
+}
+
+.navLink {
+  color: #fff;
+  font-family: Orbitron, sans-serif;
+  font-size: 1.25rem;
+  transition: color .2s;
+}
+.navLink:hover {
+  color: #34a8d5;
+}
+@media (min-width: 769px) {
+  .prevBtn,
+  .nextBtn,
+  .dots {
+    display: none;
+  }
+  /* กลับไปใช้ flex-wrap: wrap */
+  .slides {
+    flex-wrap: wrap;
+    transform: none !important;
+  }
+  .slide {
+    flex: 1 1 220px; /* หรือปรับตามจำนวนคอลัมน์ที่ต้องการ */
+    max-width: 260px;
+  }
+     .navigation {
+    flex-direction: row;         /* แนวนอน */
+    justify-content: center;     /* จัดกลาง */
+    gap: 90rem;                   /* เพิ่มระยะห่าง */
+    margin: 3rem 0;              /* เว้นมากหน่อยบน-ล่าง */
+  }
+    .navLink {
+    font-size: 1.25rem;          /* ขยายฟอนต์ */
+  }
+}
+
 @media (max-width: 1200px) {
   .featuresGrid {
     flex-wrap: wrap;
@@ -212,6 +330,14 @@
   .Management_29_186 {
     font-size: 50px;
     line-height: 50px;
+  }
+    .featureTitle {
+    font-size: 18px;
+    line-height: 28px;
+    width: 180px;
+  }
+    .navLink {
+    font-size: 18px;
   }
 }
 
@@ -224,6 +350,30 @@
   
   .header {
     padding: 2rem 0;
+  }
+  .featureTitle {
+    font-size: 16px;
+    line-height: 24px;
+    width: 160px;
+  }
+  .container {
+    padding: 0 2rem;
+  }
+  .prevBtn,
+  .nextBtn,
+  .dots {
+    display: block;
+  }
+    .navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+  }
+  .navLink {
+    font-size: 1rem;
+    padding: 0 1rem;
   }
 }
 
@@ -242,47 +392,12 @@
   .header {
     margin: 2rem 0;
   }
-}
-
-.featureTitle {
-  background: var(
-    --tital-tone1,
-    linear-gradient(180deg, #005df9 0%, #a7daff 100%)
-  );
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  font-family: Orbitron;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 30px;
-  display: inline-block;
-}
-
-@media (max-width: 1200px) {
-  .featureTitle {
-    font-size: 18px;
-    line-height: 28px;
-    width: 180px;
-  }
-}
-
-@media (max-width: 768px) {
-  .featureTitle {
-    font-size: 16px;
-    line-height: 24px;
-    width: 160px;
-  }
-  .container {
-    padding: 0 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .featureTitle {
+    .featureTitle {
     font-size: 14px;
     line-height: 20px;
     width: 140px;
   }
-} 
+}
+
+
+
