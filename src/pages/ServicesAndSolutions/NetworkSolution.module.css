@@ -216,21 +216,6 @@
   box-sizing: border-box;
 }
 
-.navLink {
-  color: #FFF;
-  text-align: center;
-  font-family: var(--font-family-primary), sans-serif;
-  font-size: 32px;
-  font-weight: 400;
-  line-height: normal;
-  transition: color 0.2s;
-}
-
-.navLink:hover {
-  color: var(--primary-color);
-}
-
-
 .groupInner {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -242,7 +227,7 @@
   border: none;
   padding: 0;
 }
-/* ====== Navigation Links ====== */
+
 .navLink {
   color: #FFF;                             /* ขาวเต็มความทึบ */
   text-align: center;                      /* จัดกึ่งกลาง */
@@ -256,14 +241,9 @@
 }
 
 .navLink:hover {
-  color: var(--primary-color);            /* เปลี่ยนสีเมื่อ hover */
+  color: var(--primary-color);        
 }
 
-/* ---------------------------------------------
-   MEDIA QUERY
-   ---------------------------------------------
-*/
-/* <-- ใส่บล็อกนี้ไว้เลยหลัง .contentSections --> */
 @media (min-width: 768px) {
   .contentSections > .fullWrapper,
   .contentSections > .groupWrapper {

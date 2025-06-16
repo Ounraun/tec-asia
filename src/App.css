@@ -31,12 +31,12 @@ main.flex-grow-1 {
 
 .navigation {
   display: flex;
-  justify-content: space-between;
-  padding: 2rem 0;
-  margin-top: auto;
-    width: 100%;
+  justify-content: space-between;  /* ดึงลิงก์ซ้ายสุด–ขวาสุด */
+  align-items: center;
+  width: 100%;
+  padding: 2rem 1rem;              /* ใส่ padding ซ้าย–ขวา เพื่อไม่ให้ชนขอบจอ */
+  box-sizing: border-box;
 }
-
 
 .navLink {
   color: #fff;
@@ -53,5 +53,10 @@ main.flex-grow-1 {
 .navLink:hover {
   color: #72D4ED;
 }
-
+@media (max-width: 768px) {
+  .navLink {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
 

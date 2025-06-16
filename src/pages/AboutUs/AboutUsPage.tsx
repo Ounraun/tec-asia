@@ -292,7 +292,9 @@ const AboutUs = () => {
                     imageUrl={posts[key]?.main_image.url}
                     excerpt={truncate(posts[key]?.content)}
                     date={formatDate(posts[key]?.createdAt)}
-                    onReadMore={() => navigate(`/blog/doc/${posts[key].id}`)}
+                    onReadMore={() =>
+                      navigate(`/blog/doc/${posts[key].documentId}`)
+                    }
                   />
                 </div>
               );

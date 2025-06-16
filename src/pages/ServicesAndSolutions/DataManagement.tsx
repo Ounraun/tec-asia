@@ -70,11 +70,11 @@ const DataManagement: React.FC = () => {
         </div>
       </div>
 
-      <div className={styles.navigation}>
-        <a href="/services/data-center" className={styles.navLink}>
+      <div className="navigation">
+        <a href="/services/data-center" className="navLink">
           {"< DATA CENTER"}
         </a>
-        <a href="/services/centralize-management" className={styles.navLink}>
+        <a href="/services/centralize-management" className="navLink">
           {"CENTRALIZE MANAGEMENT >"}
         </a>
       </div>

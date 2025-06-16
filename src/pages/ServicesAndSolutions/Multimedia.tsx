@@ -68,7 +68,7 @@ const Multimedia: React.FC = () => {
         </div>
       </div>
 
-      <nav className={styles.navigation}>
+      <nav className="navigation">
         <a href="/services/centralize-management" className="navLink">
           {"< CENTRALIZE MANAGEMENT"}
         </a>
