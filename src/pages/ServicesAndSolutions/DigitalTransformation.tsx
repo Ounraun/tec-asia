@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import type { Transformation } from "../../types/digitalTransformation";
 import { getDataTransformation } from "../../services/strapi";
 import Maskgroup from "@/assets/DigitalTransformation/Maskgroup.png";
+import bgImage from "@/assets/DigitalTransformation/bg.webp";
 
 const DigitalTransformation: React.FC = () => {
   const [transformationItem, setTransformationItem] =
@@ -67,7 +68,15 @@ const DigitalTransformation: React.FC = () => {
           </div>
         </div>
 
-        <div className={styles.transformationList}>
+        <div
+          className={styles.transformationList}
+          style={{
+            backgroundImage: `url(${bgImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
           <div className={styles.listContainer}>
             {transformationItem?.content.map((item) => (
               <div key={item.id} className={styles.transformationItem}>

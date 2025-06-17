@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap");
 
 :root {
   --primary-color: #34a8d5;
-  --secondary-color: #72D4ED;
+  --secondary-color: #72d4ed;
   --background-color: rgba(0, 27, 45, 0.95);
-  --font-family-primary: 'Orbitron';
-  --font-family-secondary: 'Poppins';
+  --font-family-primary: "Orbitron";
+  --font-family-secondary: "Poppins";
 }
 
 .WireAndWireless_160_272 {
@@ -156,7 +156,7 @@
   position: relative;
 }
 .securitySection::before {
-  content: '';
+  content: "";
   position: absolute;
   right: -20px;
   top: 50%;
@@ -212,7 +212,7 @@
   justify-content: space-between; /* ขึ้น–ซ้าย และ ขึ้น–ขวา */
   align-items: center;
   width: 100%;
-  padding: 0 1rem;           /* เลื่อนเข้าออกนิดหน่อย (ปรับได้) */
+  padding: 0 1rem; /* เลื่อนเข้าออกนิดหน่อย (ปรับได้) */
   box-sizing: border-box;
 }
 
@@ -229,19 +229,19 @@
 }
 
 .navLink {
-  color: #FFF;                             /* ขาวเต็มความทึบ */
-  text-align: center;                      /* จัดกึ่งกลาง */
+  color: #fff; /* ขาวเต็มความทึบ */
+  text-align: center; /* จัดกึ่งกลาง */
   font-family: var(--font-family-primary), sans-serif; /* Orbitron */
-  font-size: 32px;                         /* ขนาด 32px */
-  font-style: normal;                      /* ปกติ */
-  font-weight: 400;                        /* น้ำหนัก 400 */
-  line-height: normal;                     /* ปกติ */
-  transition: color 0.2s;                  /* สลับสีเวลาชี้ */
+  font-size: 32px; /* ขนาด 32px */
+  font-style: normal; /* ปกติ */
+  font-weight: 400; /* น้ำหนัก 400 */
+  line-height: normal; /* ปกติ */
+  transition: color 0.2s; /* สลับสีเวลาชี้ */
   padding: 0 130px;
 }
 
 .navLink:hover {
-  color: var(--primary-color);        
+  color: var(--primary-color);
 }
 
 @media (min-width: 768px) {
@@ -249,19 +249,20 @@
   .contentSections > .groupWrapper {
     grid-column: 1 / -1;
   }
-   .navigation {
-    flex-direction: row;         /* แนวนอน */
-    justify-content: center;     /* จัดกลาง */
-    gap: 90rem;                   /* เพิ่มระยะห่าง */
-    margin: 3rem 0;              /* เว้นมากหน่อยบน-ล่าง */
+  .navigation {
+    flex-direction: row; /* แนวนอน */
+    justify-content: center; /* จัดกลาง */
+    gap: 90rem; /* เพิ่มระยะห่าง */
+    margin: 3rem 0; /* เว้นมากหน่อยบน-ล่าง */
   }
   .navLink {
-    font-size: 1.25rem;          /* ขยายฟอนต์ */
+    font-size: 1.25rem; /* ขยายฟอนต์ */
   }
 }
 /* ====== ลดฟอนต์บนจอ ≥1200px ≤ fullHD ====== */
 @media (max-width: 1200px) {
-  .network, .solution {
+  .network,
+  .solution {
     font-size: 28px;
     line-height: 32px;
   }
@@ -272,10 +273,19 @@
     font-size: 18px;
   }
 }
+@media (max-width: 900px) {
+  .contentSections {
+    padding: 0 6px !important;
+    margin-top: 1.2rem;
+    gap: 1rem;
+    max-width: 100vw;
+  }
+}
 
 /* ====== Tablet & Mobile (≤ 768px) ====== */
 @media (max-width: 768px) {
-  .network, .solution {
+  .network,
+  .solution {
     font-size: 36px;
     line-height: 1.1;
   }
@@ -311,7 +321,6 @@
     gap: 1rem;
   }
 
-  /* navigation ปรับเป็นแนวตั้งกลางจอ */
   .navigation {
     display: flex;
     flex-direction: column;
@@ -320,12 +329,20 @@
     margin: 2rem 0;
   }
   .navLink {
+    padding: 0.7em 0.2em;
     font-size: 1rem;
-    padding: 0 1rem;
+    width: 98vw;
   }
 }
-
-/* ====== Mobile เล็กสุด (≤ 480px) ====== */
+@media (max-width: 600px) {
+  .header {
+    padding: 1rem 0 0.5rem 0;
+  }
+  .description p {
+    max-width: 98vw;
+    font-size: 0.93rem;
+  }
+}
 @media (max-width: 480px) {
   .container {
     padding: 0 1rem;
@@ -337,7 +354,8 @@
   .sectionContent p {
     font-size: 14px;
   }
-  .network, .solution {
+  .network,
+  .solution {
     font-size: 2rem;
     line-height: 1.2;
   }
