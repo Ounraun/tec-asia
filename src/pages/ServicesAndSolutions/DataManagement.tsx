@@ -9,6 +9,7 @@ import type { Service } from "../../types/dataManagement";
 
 const DataManagement: React.FC = () => {
   const [services, setServices] = useState<Service | null>(null);
+  const [loading, setLoading] = useState(true);
   const { t, i18n } = useTranslation(["common", "dataManagement"]);
 
   useEffect(() => {
@@ -16,11 +17,27 @@ const DataManagement: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     getDataManagement()
       .then((res) => setServices(res.data))
-      .catch((err) => console.error("Failed fetching Data Managment:", err));
+      .catch((err) => console.error("Failed fetching Data Managment:", err))
+      .finally(() => {
+        setLoading(false);
+      });
   }, [i18n.language]);
 
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <div className="spinner-border text-light" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -41,17 +58,12 @@ const DataManagement: React.FC = () => {
         </div>
         <div className={styles.rightSection}>
           <div className={styles.descriptionBox}>{services?.subTitle1}</div>
-          {/* <div className={styles.separator}></div> */}
           <div className={styles.descriptionBox}>{services?.subTitle2}</div>
         </div>
       </div>
       <div className={styles.servicesContainer}>
         <div className={styles.servicesList}>
           <div className={styles.leftContent}>
-            {/* {services?.serviceContent1}
-            <br></br>
-            <br></br>
-            {services?.serviceContent2} */}
             <h2 className={styles.servicesTitle}>
               {t("dataManagement:ourService")}
             </h2>
@@ -59,7 +71,6 @@ const DataManagement: React.FC = () => {
           <div className={styles.rightContent}>
             {services?.content.map((item) => (
               <div key={item.id} className={styles.serviceItem}>
-                {/* <div className={styles.serviceBar} /> */}
                 <div className={styles.serviceContent}>
                   <h3>{item.title}</h3>
                   <p>{item.content || "No content available"}</p>

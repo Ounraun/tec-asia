@@ -21,7 +21,7 @@ const AboutUs = () => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const navigate = useNavigate();
   const [posts, setPosts] = useState<Record<Key, any>>({} as any);
-  // โหลด posts เหมือนเดิม…
+
   useEffect(() => {
     Promise.all([
       getLatestPostByCategory("Company events"),
@@ -38,42 +38,23 @@ const AboutUs = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIdx((idx) => (idx + 1) % keys.length);
-    }, 3000); // ทุก 3 วินาที
+    }, 3000); 
     return () => clearInterval(interval);
   }, []);
 
-  // Define the keys for posts
   const keys: Key[] = ["company", "knowledge", "society"];
 
-  // ช่วยคำนวณ prev/next index
   const prevIdx = (currentIdx + keys.length - 1) % keys.length;
   const nextIdx = (currentIdx + 1) % keys.length;
-
-  // State to manage loading state
   const [isLoading, setIsLoading] = useState(true);
   const particles = useMemo(() => {
     return <ParticlesComponent />;
   }, []);
 
-  // useEffect(() => {
-  //   Promise.all([
-  //     getLatestPostByCategory("Company events"),
-  //     getLatestPostByCategory("Knowledge"),
-  //     getLatestPostByCategory("Society"),
-  //   ])
-  //     .then(([cRes, kRes, sRes]) => {
-  //       setPosts({
-  //         company: cRes.data[0],
-  //         knowledge: kRes.data[0],
-  //         society: sRes.data[0],
-  //       });
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, []);
 
   const { t, i18n } = useTranslation(["common", "aboutUs"]);
   const [aboutUs, setAboutUs] = useState<AboutUs | null>(null);
-  // Fetch About Us data when the component mounts or language changes
+
   // ใช้ useEffect เพื่อดึงข้อมูลจาก API
   useEffect(() => {
     setIsLoading(true);
@@ -101,7 +82,6 @@ const AboutUs = () => {
     };
   }, []);
 
-  // ฟังก์ชันสำหรับเลื่อนไปที่ส่วน Contact
   const scrollToContact = () => {
     if (!isLoading) {
       const contactSection = document.getElementById("contact-section");
@@ -111,7 +91,7 @@ const AboutUs = () => {
     }
   };
 
-  // ตรวจสอบ URL hash เมื่อโหลดหน้า
+  
   useEffect(() => {
     if (!isLoading && window.location.hash === "#contact-section") {
       scrollToContact();

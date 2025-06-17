@@ -9,6 +9,7 @@ import type { Feature } from "../../types/centralizeManagement";
 const CentralizeManagement = () => {
   const [feature, setFeature] = useState<Feature | null>(null);
   const [currentIdx, setCurrentIdx] = useState(0);
+  const [loading, setLoading] = useState(true);
   const { t, i18n } = useTranslation(["common", "centralize"]);
 
   useEffect(() => {
@@ -16,6 +17,7 @@ const CentralizeManagement = () => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     getCentralizeManagement()
       .then((res) => {
         setFeature(res.data);
@@ -23,8 +25,24 @@ const CentralizeManagement = () => {
       })
       .catch((err) =>
         console.error("Failed fetching Centralize Managment:", err)
-      );
+      )
+      .finally(() => {
+        setLoading(false);
+      });
   }, [i18n.language]);
+
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <div className="spinner-border text-light" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
   const items = feature?.content || [];
   const isMobile = window.matchMedia("(max-width: 767px)").matches;
@@ -49,17 +67,7 @@ const CentralizeManagement = () => {
       </div>
 
       <div className="carouselContainer">
-        {/* <div className={styles.featuresGrid}>
-          {feature?.content.map((item) => (
-            <div key={item.id} className={styles.featureCard}>
-              <h3 className={styles.featureTitle}>{item.title}</h3>
-              <p className={styles.featureContent}>{item.content}</p>
-            </div>
-          ))}
-        </div> */}
-        {/* --- Carousel / Grid --- */}
         <div className={styles.carouselContainer}>
-          {/* ปุ่มย้อน/ถัดไป เฉพาะบนมือถือ */}
           {isMobile && (
             <button
               className={styles.prevBtn}
@@ -72,8 +80,7 @@ const CentralizeManagement = () => {
 
           <div className={styles.slides}>
             {isMobile
-              ? /* แสดงแค่การ์ดเดียว ตาม currentIdx */
-                items.slice(currentIdx, currentIdx + 1).map((item) => (
+              ? items.slice(currentIdx, currentIdx + 1).map((item) => (
                   <div key={item.id} className={styles.slide}>
                     <div className={styles.featureCard}>
                       <h3 className={styles.featureTitle}>{item.title}</h3>
@@ -81,8 +88,7 @@ const CentralizeManagement = () => {
                     </div>
                   </div>
                 ))
-              : /* บนเดสก์ท็อป: แสดงทั้งหมดเป็น grid/flex */
-                items.map((item) => (
+              : items.map((item) => (
                   <div key={item.id} className={styles.slide}>
                     <div className={styles.featureCard}>
                       <h3 className={styles.featureTitle}>{item.title}</h3>
@@ -101,8 +107,6 @@ const CentralizeManagement = () => {
               ›
             </button>
           )}
-
-          {/* dots pagination เฉพาะมือถือ */}
           {isMobile && (
             <div className={styles.dots}>
               {items.map((_, idx) => (

@@ -9,20 +9,33 @@ const Multimedia: React.FC = () => {
   const [MultimediaService, setContent] = useState<MultimediaService | null>(
     null
   );
+  const [loading, setLoading] = useState(true);
   const { t, i18n } = useTranslation(["common", "multimedia"]);
-  // const [secondServices, setSecondServices] = useState<ServiceItem[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
+    setLoading(true);
     getMultimedia()
       .then((res) => setContent(res.data))
-      .catch((err) =>
-        console.error("Failed fetching Multimedia Service:", err)
-      );
+      .catch((err) => console.error("Failed fetching Multimedia Service:", err))
+      .finally(() => {
+        setLoading(false);
+      });
   }, [i18n.language]);
-
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <div className="spinner-border text-light" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={styles.container}>
       <header className={styles.header}>

@@ -27,14 +27,31 @@ const DataCenter: React.FC = () => {
 
   const [facility, setFacility] = useState<Facility | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
   const { t, i18n } = useTranslation(["common", "dataCenter"]);
 
   useEffect(() => {
+    setLoading(true);
     getDataCenter()
       .then((res) => setFacility(res.data))
-      .catch((err) => console.error("Failed fetching Data Center:", err));
+      .catch((err) => console.error("Failed fetching Data Center:", err))
+      .finally(() => {
+        setLoading(false);
+      });
   }, [i18n.language]);
 
+  if (loading) {
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <div className="spinner-border text-light" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   const handlePrev = () => {
     setCurrentIndex((prev) =>
       prev === 0 ? (facility?.content?.length || 1) - 1 : prev - 1
