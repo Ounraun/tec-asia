@@ -1,7 +1,7 @@
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { useEffect, useMemo } from "react";
 import { Container } from "@tsparticles/engine";
-import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
+import { loadSlim } from "@tsparticles/slim";
 import styles from "./Particle.module.css";
 
 interface ParticlesProps {

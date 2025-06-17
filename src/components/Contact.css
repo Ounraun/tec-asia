@@ -15,7 +15,7 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 1rem; /* เว้นขอบซ้ายขวาเล็กน้อย เพื่อไม่ให้ชิดเกินไปเมื่อเต็มความกว้าง */
+  padding: 0 1rem; 
   box-sizing: border-box;
 }
 
@@ -47,7 +47,6 @@
   cursor: pointer;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .contact-inner {
     padding: 0 1rem;

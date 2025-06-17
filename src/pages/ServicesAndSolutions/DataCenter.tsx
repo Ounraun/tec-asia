@@ -26,6 +26,7 @@ const DataCenter: React.FC = () => {
   }, []);
 
   const [facility, setFacility] = useState<Facility | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const { t, i18n } = useTranslation(["common", "dataCenter"]);
 
   useEffect(() => {
@@ -34,6 +35,16 @@ const DataCenter: React.FC = () => {
       .catch((err) => console.error("Failed fetching Data Center:", err));
   }, [i18n.language]);
 
+  const handlePrev = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? (facility?.content?.length || 1) - 1 : prev - 1
+    );
+  };
+  const handleNext = () => {
+    setCurrentIndex((prev) =>
+      prev === (facility?.content?.length || 1) - 1 ? 0 : prev + 1
+    );
+  };
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -59,20 +70,20 @@ const DataCenter: React.FC = () => {
         {/* ขอบเบลอจริง */}
         <div className={styles.blurTop}></div>
         <div className={styles.blurBottom}></div>
+
         {facility?.content?.map((item, index) => {
-          const pos = positions[index] || { top: "0%", left: "0%" }; // ตำแหน่งของแต่ละ node with fallback
+          const pos = positions[index] || { top: "0%", left: "0%" };
 
           return (
             <div
               key={item.id}
-              className={styles.cardWrapper}
+              className={`${styles.cardWrapper} ${
+                styles.responsiveCardWrapper
+              } ${index === currentIndex ? styles.active : ""}`}
               style={{ top: pos.top, left: pos.left }}
             >
               <div className={styles.card}>
-                {/* โหมดแสดงตัวเลข */}
                 <div className={styles.cardLabel}>{index + 1}</div>
-
-                {/* โหมดแสดงเนื้อหาเมื่อ hover */}
                 <div
                   className={styles.cardContent}
                   tabIndex={0}
@@ -97,6 +108,25 @@ const DataCenter: React.FC = () => {
             </div>
           );
         })}
+        <div className={styles.carouselControls}>
+          <button
+            className={styles.carouselButton}
+            onClick={handlePrev}
+            aria-label="Previous"
+          >
+            &lt;
+          </button>
+          <span className={styles.carouselIndicator}>
+            {currentIndex + 1 + " / " + (facility?.content?.length || 1)}
+          </span>
+          <button
+            className={styles.carouselButton}
+            onClick={handleNext}
+            aria-label="Next"
+          >
+            &gt;
+          </button>
+        </div>
       </div>
       <div className="navigation">
         <Link to="/services/digital-transformation" className="navLink">

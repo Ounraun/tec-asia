@@ -1,16 +1,14 @@
 :root {
   --primary-color: #1097f9;
-  /** สร้างตัวแปรสำรองสำหรับเงาเป็นโปร่งกว่าเล็กน้อย **/
   --primary-color-shadow: rgba(16, 151, 249, 0.4);
 }
 
-/* --- Card styling --- */
 .cardTitle,
 .cardSubtitle,
 .cardContent p {
   display: block !important;
-  width: auto !important;        /* ลบ width คงที่ */
-  margin: 0 0 1rem 0;             /* เว้นใต้ทุกบล็อก 1rem */
+  width: auto !important;  
+  margin: 0 0 1rem 0;        
 }
 
 .card {
@@ -20,7 +18,6 @@
   padding: 2.5rem;
   color: #fff;
 
-  /* ใช้ตัวแปรสำหรับเงาโดยตรง */
   filter: drop-shadow(0 4px 20px var(--primary-color-shadow));
 }
 
@@ -52,8 +49,8 @@
 }
 
 .groupedCard {
-  border: none; /* ลบ border */
-  background: transparent; /* ทำให้พื้นหลังโปร่งใส (ถ้าจำเป็น) */
-  padding: 2.5rem; /* คง padding ไว้เหมือนเดิม */
-  color: #fff; /* คงสีข้อความ */
+  border: none; 
+  background: transparent;
+  padding: 2.5rem;
+  color: #fff; 
 }
