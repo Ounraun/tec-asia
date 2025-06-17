@@ -362,11 +362,11 @@
     font-size: 20px;
   }
   .cardLabel {
-    font-size: 1rem;
+    display: none !important;
   }
   .card {
     min-width: 20px;
-    max-width: 200px;
+    max-width: 270px;
     min-height: auto;
   }
   .Background_51_171 {
@@ -387,6 +387,11 @@
   }
   .carouselControls {
     display: flex;
+  }
+  .cardContent {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 }
 

@@ -72,9 +72,9 @@ const CentralizeManagement = () => {
             <button
               className={styles.prevBtn}
               onClick={prev}
-              disabled={currentIdx === 0}
+              aria-label="Previous"
             >
-              ‹
+              &lt;
             </button>
           )}
 
@@ -104,7 +104,7 @@ const CentralizeManagement = () => {
               onClick={next}
               disabled={currentIdx === items.length - 1}
             >
-              ›
+              &gt;
             </button>
           )}
           {isMobile && (

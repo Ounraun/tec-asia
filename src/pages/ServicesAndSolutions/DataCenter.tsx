@@ -84,7 +84,6 @@ const DataCenter: React.FC = () => {
           alt="Data Center Background"
           className={styles.bgImage}
         />
-        {/* ขอบเบลอจริง */}
         <div className={styles.blurTop}></div>
         <div className={styles.blurBottom}></div>
 

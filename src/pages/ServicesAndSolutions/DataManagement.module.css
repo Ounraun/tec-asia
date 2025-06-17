@@ -281,22 +281,19 @@
   display: inline-block;
 }
 
-/* ================================
-   Navigation Links (เหมือนหน้าก่อนหน้า)
-   ================================ */
 .navigation {
   display: flex;
-  justify-content: space-between;  /* ดึงลิงก์ซ้ายสุด–ขวาสุด */
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 2rem 1rem;              /* ใส่ padding ซ้าย–ขวา เพื่อไม่ให้ชนขอบจอ */
+  padding: 2rem 1rem;          
   box-sizing: border-box;
 }
 
 .navLink {
-  color: #fff;                      /* สีขาว */
+  color: #fff;  
   text-align: center;
-  font-family: var(--font-family-primary), sans-serif; /* Orbitron */
+  font-family: var(--font-family-primary), sans-serif;
  font-size: clamp(1rem, 4vw, 2rem);
   font-weight: 400;
   line-height: normal;
@@ -304,7 +301,7 @@
 }
 
 .navLink:hover {
-  color: var(--primary-color);     /* เปลี่ยนเป็นสี primary เวลาชี้ */
+  color: var(--primary-color);  
 }
 
 @media (max-width: 1200px) {

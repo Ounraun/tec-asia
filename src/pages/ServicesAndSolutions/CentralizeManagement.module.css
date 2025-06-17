@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 .container {
   min-height: 100vh;
@@ -73,7 +73,7 @@
 }
 
 .cityBackground {
-  background-image: url('../../assets/CentralizeManagement/city-background.png');
+  background-image: url("../../assets/CentralizeManagement/city-background.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -87,18 +87,18 @@
 }
 .cityBackground::before,
 .cityBackground::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
   pointer-events: none;
-  filter: blur(5px); 
+  filter: blur(5px);
   z-index: 2;
 }
 
 .cityBackground::before {
   top: 0;
-  height: 150px; 
+  height: 150px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
 }
 
@@ -115,18 +115,18 @@
     rgba(70, 70, 70, 0.04) 100%
   );
 
-  width: 100vw; 
+  width: 100vw;
   height: 280px;
   position: relative;
   left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
   margin-top: -100px;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .featuresGrid {
   position: relative;
-  margin-top: -500px; 
+  margin-top: -500px;
   z-index: 3;
   display: flex;
   flex-wrap: wrap;
@@ -169,11 +169,11 @@
 .featureCard::before {
   content: "";
   position: absolute;
-  top: -3px; 
+  top: -3px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;  
-  height: 4px;     
+  width: 100px;
+  height: 4px;
   background: #72d4ed;
   border-radius: 100px;
   box-shadow: 0 0 10px 4px #72d4ed;
@@ -182,7 +182,7 @@
 
 .featureCard:hover {
   transform: translateY(-5px);
-  border-color: #42A5F5;
+  border-color: #42a5f5;
   box-shadow: 0 0 20px rgba(66, 165, 245, 0.3);
 }
 
@@ -195,7 +195,7 @@
 
 .featureCard p {
   color: rgba(255, 255, 255, 0.8);
-  font-family: 'Orbitron', sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 14px;
   line-height: 1.6;
   margin-top: 1rem;
@@ -228,14 +228,13 @@
 .slides {
   display: flex;
   transition: transform 0.3s ease;
-    justify-content: center;   /* จัดกึ่งกลาง */
-      flex-wrap: wrap;  
-    gap: 1.5rem;
+  justify-content: center; /* จัดกึ่งกลาง */
+  flex-wrap: wrap;
+  gap: 1.5rem;
 }
 
 /* แต่ละการ์ด */
 .slide {
-
   box-sizing: border-box;
   flex: 0 0 auto;
 }
@@ -246,7 +245,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   border: none;
   color: #fff;
   font-size: 2rem;
@@ -254,8 +253,12 @@
   cursor: pointer;
   z-index: 10;
 }
-.prevBtn { left: 0.5rem; }
-.nextBtn { right: 0.5rem; }
+.prevBtn {
+  left: 0.5rem;
+}
+.nextBtn {
+  right: 0.5rem;
+}
 
 /* pagination dots */
 .dots {
@@ -268,8 +271,9 @@
   z-index: 10;
 }
 .dot {
-  width: 8px; height: 8px;
-  background: rgba(255,255,255,0.5);
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   cursor: pointer;
 }
@@ -281,7 +285,7 @@
   justify-content: space-between; /* ขึ้น–ซ้าย และ ขึ้น–ขวา */
   align-items: center;
   width: 100%;
-  padding: 0 1rem;           /* เลื่อนเข้าออกนิดหน่อย (ปรับได้) */
+  padding: 0 1rem; /* เลื่อนเข้าออกนิดหน่อย (ปรับได้) */
   box-sizing: border-box;
 }
 
@@ -289,7 +293,7 @@
   color: #fff;
   font-family: Orbitron, sans-serif;
   font-size: 1.25rem;
-  transition: color .2s;
+  transition: color 0.2s;
 }
 .navLink:hover {
   color: #34a8d5;
@@ -309,14 +313,14 @@
     flex: 1 1 220px; /* หรือปรับตามจำนวนคอลัมน์ที่ต้องการ */
     max-width: 260px;
   }
-     .navigation {
-    flex-direction: row;         /* แนวนอน */
-    justify-content: center;     /* จัดกลาง */
-    gap: 90rem;                   /* เพิ่มระยะห่าง */
-    margin: 3rem 0;              /* เว้นมากหน่อยบน-ล่าง */
+  .navigation {
+    flex-direction: row; /* แนวนอน */
+    justify-content: center; /* จัดกลาง */
+    gap: 90rem; /* เพิ่มระยะห่าง */
+    margin: 3rem 0; /* เว้นมากหน่อยบน-ล่าง */
   }
-    .navLink {
-    font-size: 1.25rem;          /* ขยายฟอนต์ */
+  .navLink {
+    font-size: 1.25rem; /* ขยายฟอนต์ */
   }
 }
 
@@ -325,18 +329,18 @@
     flex-wrap: wrap;
     gap: 2rem;
   }
-  
+
   .highlight,
   .Management_29_186 {
     font-size: 50px;
     line-height: 50px;
   }
-    .featureTitle {
+  .featureTitle {
     font-size: 18px;
     line-height: 28px;
     width: 180px;
   }
-    .navLink {
+  .navLink {
     font-size: 18px;
   }
 }
@@ -347,7 +351,7 @@
     font-size: 40px;
     line-height: 40px;
   }
-  
+
   .header {
     padding: 2rem 0;
   }
@@ -364,7 +368,7 @@
   .dots {
     display: block;
   }
-    .navigation {
+  .navigation {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -379,25 +383,22 @@
 
 @media (max-width: 480px) {
   .featuresGrid {
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
   }
-  
+
   .highlight,
   .Management_29_186 {
     font-size: 40px;
     line-height: 40px;
   }
-  
+
   .header {
     margin: 2rem 0;
   }
-    .featureTitle {
+  .featureTitle {
     font-size: 14px;
     line-height: 20px;
     width: 140px;
   }
 }
-
-
-
