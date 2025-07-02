@@ -2,23 +2,16 @@
   height: 100%;
   display: flex;
   align-items: center;
-  
 }
 
 .custom-nav-dropdown .dropdown-toggle {
-  height: 100%;
+  border: none !important;
+  padding: 0 15px !important;
+  height: 84px;
+  line-height: 84px;
   display: flex;
   align-items: center;
-  padding: 0 15px;
-  font-family: "Orbitron";
-  font-weight: 500;
-  font-size: 17.88px;
-  letter-spacing: 2%;
-  color: #A1A1A1;
-  text-decoration: none;
-  transition: color 0.3s ease;
-  position: relative;
-  
+  background: transparent !important;
 }
 
 .custom-nav-dropdown .dropdown-toggle::after {
@@ -27,57 +20,42 @@
 }
 
 .custom-nav-dropdown.active .dropdown-toggle {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .custom-nav-dropdown.active .dropdown-toggle::after {
-  color: #FFFFFF;
-  
+  color: #ffffff;
 }
 
 .custom-nav-dropdown .dropdown-menu {
-  background-color: #0C2536; /* พื้นหลัง dropdown */
-  border: 1.5px solid #00A3FF; /* ขอบสีฟ้าเรืองแสง */
+  background-color: #0c2536;
+  border: 1.5px solid #00a3ff;
   border-radius: 12px;
   padding: 10px 0;
-  box-shadow: 0 0 10px rgba(0, 163, 255, 0.35); /* เงาสีฟ้าเรืองแสง */
+  box-shadow: 0 0 10px rgba(0, 163, 255, 0.35);
   min-width: 260px;
   margin-top: 12px;
   z-index: 1050;
-  
 }
 
 .custom-nav-dropdown .dropdown-item {
-  color: #A1A1A1;
+  color: #a1a1a1;
   padding: 10px 20px;
   font-family: "Orbitron";
   font-weight: 500;
   font-size: 16px;
   text-align: center;
   transition: color 0.3s ease, background-color 0.3s ease;
-  
 }
 
 .custom-nav-dropdown .dropdown-item:hover,
 .custom-nav-dropdown .dropdown-item:focus,
 .custom-nav-dropdown .dropdown-item.active {
   background-color: rgba(255, 255, 255, 0.05);
-  color: #00A3FF;
+  color: #00a3ff;
   font-weight: 600;
 }
 
-.custom-nav-dropdown.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #00A3FF;
-  border-radius: 2px;
-}
-
-/* Profile Dropdown Specific Styles */
 .profile-dropdown .dropdown-toggle {
   padding: 0 10px;
 }
@@ -93,70 +71,209 @@
 }
 
 .profile-dropdown.active .dropdown-toggle svg {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .profile-dropdown .dropdown-item {
-  /* display: flex; */
   justify-content: center;
   align-items: center;
-  
-} 
+}
 
 .custom-nav-dropdown .dropdown-item {
   color: #ffffff;
-  font-family: 'Saira', sans-serif;
+  font-family: "Saira", sans-serif;
   font-size: 1.25rem;
   font-weight: 400;
   text-align: left;
   padding: 12px 20px;
-  /* white-space: normal; */
   line-height: 1.6;
   transition: all 0.2s ease-in-out;
-  
 }
 .custom-nav-dropdown .dropdown-item::marker {
   display: none;
-
 }
-/* ใน Navbar.css */
+.navbar {
+  position: relative;
+}
 .navbar-nav {
-  gap: 2rem;                /* ระยะห่างระหว่างเมนู */
+  gap: 2rem;
 }
-@media (max-width: 768px) {
+.tec-navbar-underline {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  height: 3px;
+  background: #72d4ed;
+  border-radius: 2px 2px 0 0;
+  z-index: 2;
+  pointer-events: none;
+  transition: all 0.2s;
+}
+.tec-nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 84px;
+  padding: 0 15px;
+  font-family: "Orbitron", sans-serif;
+  box-sizing: border-box;
+}
+.tec-nav-link.active {
+  color: #fff !important;
+}
+.navbar-nav .nav-link.tec-nav-link {
+  height: 84px !important;
+  min-height: 84px !important;
+  max-height: 84px !important;
+  display: flex !important;
+  align-items: center;
+  padding: 0 15px !important;
+  box-sizing: border-box;
+}
+#language-dropdown .dropdown-menu {
+  min-width: 160px;
+  border-radius: 12px;
+  border: 1.5px solid #00a3ff;
+  background: #0c2536;
+  box-shadow: 0 0 12px 0 rgba(0, 163, 255, 0.22);
+}
+@media (max-width: 992px) {
+  #language-dropdown .dropdown-menu {
+    min-width: 160px;
+    border-radius: 12px;
+    border: 1.5px solid #00a3ff;
+    background: #0c2536;
+    box-shadow: 0 0 12px 0 rgba(0, 163, 255, 0.22);
+  }
+  .custom-nav-dropdown .dropdown-menu {
+    background-color: #032031;
+    border: 2px solid #00a3ff;
+    border-radius: 18px;
+    padding: 18px 0 18px 0;
+    min-width: 320px;
+    margin-top: 16px;
+    box-shadow: 0 6px 28px 0 rgba(0, 163, 255, 0.18);
+    z-index: 1050;
+    left: 0;
+    right: auto;
+    top: 82px !important; /* ปรับให้ตรงกับ navbar */
+  }
+  .custom-nav-dropdown .dropdown-item {
+    color: #fff;
+    font-family: "Saira", sans-serif;
+    font-size: 1.28rem; /* ~20px */
+    font-weight: 700;
+    text-align: left;
+    padding: 16px 32px;
+    border-radius: 10px;
+    transition: all 0.2s;
+    background: none;
+    box-shadow: none;
+    letter-spacing: 0.03em;
+    text-shadow: 0px 5px 13.3px rgba(255, 255, 255, 0.21);
+    position: relative;
+  }
+  .custom-nav-dropdown .dropdown-item:hover,
+  .custom-nav-dropdown .dropdown-item:focus,
+  .custom-nav-dropdown .dropdown-item.active {
+    background-color: rgba(0, 163, 255, 0.1);
+    color: #00a3ff;
+    font-weight: 900;
+    text-shadow: 0px 5px 13.3px rgba(0, 163, 255, 0.21);
+  }
+  .custom-nav-dropdown .dropdown-menu {
+    box-shadow: 0 0 20px 0 rgba(0, 163, 255, 0.28);
+    border: 1.5px solid #00a3ff;
+    border-radius: 12px;
+  }
+  .profile-dropdown {
+    width: 90% !important;
+    margin: 0 auto 1.2rem auto !important;
+    border-radius: 10px !important;
+    border: 1.5px solid #222 !important; /* สีเทาเข้มกลืนพื้นหลัง */
+    background: #222 !important;
+    box-shadow: 0 0 0 0; /* ลบเงา */
+    min-width: 0 !important;
+    max-width: 340px;
+  }
+  .profile-dropdown .dropdown-toggle {
+    padding: 0 0 !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    line-height: 46px !important;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: transparent !important;
+    border-radius: 10px !important;
+  }
+  .profile-dropdown .dropdown-toggle img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .profile-dropdown .dropdown-menu {
+    min-width: 120px !important;
+    border-radius: 10px;
+    background: #1b1b1b;
+    border: 1px solid #333 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    margin-top: 4px;
+  }
+
+  .profile-dropdown .dropdown-item {
+    font-size: 1rem !important;
+    padding: 8px 18px !important;
+    text-align: center;
+    color: #cfd8dc !important;
+  }
+  .profile-dropdown.active,
+  .profile-dropdown .dropdown-toggle.active {
+    border: 1.5px solid #00a3ff !important;
+    background: #19212a !important;
+  }
+
   .navbar-brand {
     margin-left: 1rem !important;
   }
   .navbar-collapse {
-    background-color: #222222; /* หรือตามที่ต้องการ */
+    background-color: #222222;
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  /* 3. ให้รายการ Nav (Nav.Link, Dropdown Toggle, Select) ชิดซ้ายทุกอัน */
   .navbar-nav {
-    align-items: flex-start;  /* จัดรายการแนวตั้งชิดซ้าย */
+    align-items: flex-start;
   }
 
-/* 2. ย้ายให้มันไปอยู่เหนือน้ำตก (z-index สูง) */
   .navbar-collapse.show {
     position: absolute;
-    top: 84px;     /* ให้ต่ำลงมาจาก navbar */
+    top: 84px;
     left: 0;
     right: 0;
-    z-index: 999;  /* หรือมากกว่า element อื่นบนหน้า */
+    z-index: 999;
   }
   .custom-nav-dropdown {
     display: flex;
-    flex-direction: column; /* จัด dropdown item แนวตั้ง */
+    flex-direction: column;
   }
-    .offcanvas.offcanvas-end {
+  .offcanvas {
+    background: #222222 !important;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 8px 36px 0 rgba(0, 163, 255, 0.25);
+  }
+
+  .offcanvas.offcanvas-end {
     width: 100% !important;
   }
-  /* ด้านหลัง drawer ให้เป็นสีทึบไม่เห็นเนื้อหาหลังกระจกใส */
+
   .offcanvas-backdrop {
-    background-color: rgba(0,0,0,0.8) !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
   }
-  /* จัดเนื้อหาใน drawer ให้ง่ายต่อการอ่าน */
+  .offcanvas-header {
+    border-bottom: 1px solid #212b36;
+  }
+
   .offcanvas-body {
     padding: 2rem 1.5rem;
     display: flex;
@@ -164,17 +281,64 @@
     align-items: center;
     gap: 1.5rem;
   }
-  /* ปรับลิงก์และ dropdown ให้ใหญ่ขึ้น กดง่าย */
-  .offcanvas-body .nav-link,
-  .offcanvas-body .dropdown-toggle {
-    font-size: 1.25rem !important;
-    padding: 1rem 0 !important;
-    width: 100%;
+
+  .offcanvas .nav-link,
+  .offcanvas .dropdown-toggle {
+    color: #a1a1a1;
+    font-family: "Orbitron";
+    font-size: 1.35rem;
+    padding: 1.2rem 0;
     text-align: center;
+    border-radius: 8px;
+    transition: background 0.18s, color 0.18s;
   }
-  /* ถ้าจะให้ logo อยู่ตรงกลางด้วย */
-  .offcanvas-header {
-    justify-content: center;
-    border-bottom: none;
+  .offcanvas .nav-link,
+  .offcanvas .dropdown-toggle {
+    margin-bottom: 0.6rem;
+  }
+
+  .offcanvas .dropdown-menu {
+    margin-bottom: 0.7rem;
+  }
+
+  .offcanvas .nav-link.active,
+  .offcanvas .dropdown-toggle.active {
+    color: #00a3ff;
+    /* background: rgba(0, 163, 255, 0.08); */
+    font-weight: bold;
+  }
+  .offcanvas .dropdown-menu {
+    background: #19212a;
+    border: 2px solid #00a3ff;
+    border-radius: 16px;
+    box-shadow: 0 0 14px 0 rgba(0, 163, 255, 0.22);
+    margin: 0.3rem auto;
+    width: 90%;
+    padding: 0.4rem 0;
+  }
+  .offcanvas .dropdown-item {
+    color: #a1a1a1;
+    font-family: "Orbitron";
+    font-size: 1.13rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    text-align: left;
+  }
+  .offcanvas .dropdown-item.active,
+  .offcanvas .dropdown-item:focus,
+  .offcanvas .dropdown-item:hover {
+    /* background: #14213a; */
+    color: #00a3ff;
+    font-weight: bold;
+  }
+  .offcanvas .nav-link.tec-nav-link {
+    justify-content: center !important; /* flex center */
+    text-align: center !important;
+    width: 100%;
+    margin: 0 auto 0.6rem auto !important; /* เหลือระยะเท่าๆ กับอันอื่น */
+    display: flex !important;
+    align-items: center;
+    font-size: 1.35rem;
   }
 }

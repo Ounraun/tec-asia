@@ -11,7 +11,11 @@ export interface CommunityCardProps {
 }
 
 const CommunityCard: React.FC<CommunityCardProps> = ({
-  title, imageUrl, excerpt, date, onReadMore,
+  title,
+  imageUrl,
+  excerpt,
+  date,
+  onReadMore,
 }) => (
   <div className={styles.card}>
     <div className={styles.cardHeader}>
@@ -24,7 +28,7 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
         Read more
       </button>
     </div>
-    <h3 className={styles.cardTitle}>{title}</h3>
+    {/* <h3 className={styles.cardTitle}>{title}</h3> */}
   </div>
 );
 

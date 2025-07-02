@@ -46,16 +46,6 @@ const Navigationbar = () => {
     whiteSpace: "nowrap" as const,
   };
 
-  const activeUnderlineStyle = {
-    position: "absolute" as const,
-    bottom: 0,
-    left: 0,
-    width: "100%",
-    height: "2px",
-    backgroundColor: "#00A3FF",
-    borderRadius: "2px",
-  };
-
   const dropdownStyle = {
     ...navLinkStyle,
     display: "flex",
@@ -63,6 +53,9 @@ const Navigationbar = () => {
     gap: "5px",
     padding: "0 15px",
   };
+
+  const [showProfileDropdownMobile, setShowProfileDropdownMobile] =
+    useState(false);
 
   return (
     <Navbar
@@ -98,10 +91,8 @@ const Navigationbar = () => {
           aria-controls="offcanvasNavbar"
           className="d-lg-none me-3"
         />
-        {/* <Navbar.Toggle
-          aria-controls="basic-navbar-nav"
-          className="d-none d-lg-block me-3"
-        /> */}
+
+        {/* // Mobile Navbar */}
         <Navbar.Offcanvas
           id="offcanvasNavbar"
           aria-labelledby="offcanvasNavbarLabel"
@@ -126,17 +117,56 @@ const Navigationbar = () => {
               <Nav.Link
                 as={Link}
                 to="/"
+                className={`tec-nav-link${
+                  location.pathname === "/" ? " active" : ""
+                }`}
                 onClick={() => setExpanded(false)}
-                style={navLinkStyle}
               >
                 {t("navbar:home")}
+                {location.pathname === "/" && (
+                  <span className="tec-navbar-underline" />
+                )}
               </Nav.Link>
-
               <NavDropdown
-                title={t("navbar:serviceAndSolutions")}
+                title={
+                  <span
+                    className={
+                      location.pathname.startsWith("/services/") ? "active" : ""
+                    }
+                    style={{
+                      position: "relative",
+                      color: location.pathname.startsWith("/services/")
+                        ? "#00a3ff"
+                        : undefined,
+                      fontWeight: location.pathname.startsWith("/services/")
+                        ? "bold"
+                        : undefined,
+                      borderRadius: "8px",
+                      display: "block",
+                      padding: "1.2rem 0",
+                    }}
+                  >
+                    {t("navbar:serviceAndSolutions")}
+                    {location.pathname.startsWith("/services/") && (
+                      <span
+                        className="tec-navbar-underline"
+                        style={{
+                          left: 0,
+                          right: 0,
+                          margin: "auto",
+                          bottom: 0,
+                          width: "100%",
+                          position: "absolute",
+                        }}
+                      />
+                    )}
+                  </span>
+                }
                 show={showServicesDropdown}
                 onToggle={setShowServicesDropdown}
-                className="w-100"
+                className={`w-100${
+                  location.pathname.startsWith("/services/") ? " active" : ""
+                }`}
                 menuVariant="dark"
               >
                 {" "}
@@ -148,7 +178,10 @@ const Navigationbar = () => {
                       ? "active"
                       : ""
                   }`}
-                  onClick={() => setShowServicesDropdown(false)}
+                  onClick={() => {
+                    setShowServicesDropdown(false);
+                    setExpanded(false);
+                  }}
                 >
                   {t("navbar:networkSolution")}
                 </NavDropdown.Item>
@@ -160,7 +193,10 @@ const Navigationbar = () => {
                       ? "active"
                       : ""
                   }`}
-                  onClick={() => setShowServicesDropdown(false)}
+                  onClick={() => {
+                    setShowServicesDropdown(false);
+                    setExpanded(false);
+                  }}
                 >
                   {t("navbar:dataCenter")}
                 </NavDropdown.Item>
@@ -172,7 +208,10 @@ const Navigationbar = () => {
                       ? "active"
                       : ""
                   }`}
-                  onClick={() => setShowServicesDropdown(false)}
+                  onClick={() => {
+                    setShowServicesDropdown(false);
+                    setExpanded(false);
+                  }}
                 >
                   {t("navbar:dataManagement")}
                 </NavDropdown.Item>
@@ -184,7 +223,10 @@ const Navigationbar = () => {
                       ? "active"
                       : ""
                   }`}
-                  onClick={() => setShowServicesDropdown(false)}
+                  onClick={() => {
+                    setShowServicesDropdown(false);
+                    setExpanded(false);
+                  }}
                 >
                   {t("navbar:centralizeManagement")}
                 </NavDropdown.Item>
@@ -196,7 +238,10 @@ const Navigationbar = () => {
                       ? "active"
                       : ""
                   }`}
-                  onClick={() => setShowServicesDropdown(false)}
+                  onClick={() => {
+                    setShowServicesDropdown(false);
+                    setExpanded(false);
+                  }}
                 >
                   {t("navbar:multimediaSolutions")}
                 </NavDropdown.Item>
@@ -208,16 +253,56 @@ const Navigationbar = () => {
                       ? "active"
                       : ""
                   }`}
-                  onClick={() => setShowServicesDropdown(false)}
+                  onClick={() => {
+                    setShowServicesDropdown(false);
+                    setExpanded(false);
+                  }}
                 >
                   {t("navbar:digitalTransformation")}
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown
-                title="Our Community"
+                title={
+                  <span
+                    style={{
+                      position: "relative",
+                      color: location.pathname.startsWith("/community/")
+                        ? "#00a3ff"
+                        : "#A1A1A1",
+                      // background: location.pathname.startsWith("/community/")
+                      //   ? "rgba(0, 163, 255, 0.08)"
+                      //   : undefined,
+                      fontWeight: location.pathname.startsWith("/community/")
+                        ? "bold"
+                        : undefined,
+                      borderRadius: "8px",
+                      padding: "1.2rem 0",
+                      width: "100%",
+                      display: "block",
+                      textAlign: "center",
+                    }}
+                  >
+                    {t("navbar:ourCommunity")}
+                    {location.pathname.startsWith("/community/") && (
+                      <span
+                        className="tec-navbar-underline"
+                        style={{
+                          left: 0,
+                          right: 0,
+                          margin: "auto",
+                          bottom: 0,
+                          width: "100%",
+                          position: "absolute",
+                        }}
+                      />
+                    )}
+                  </span>
+                }
                 show={showCommunityDropdown}
                 onToggle={setShowCommunityDropdown}
-                className="w-100"
+                className={`w-100${
+                  location.pathname.startsWith("/community/") ? " active" : ""
+                }`}
                 menuVariant="dark"
               >
                 <NavDropdown.Item
@@ -228,7 +313,10 @@ const Navigationbar = () => {
                       ? "active"
                       : ""
                   }`}
-                  onClick={() => setShowCommunityDropdown(false)}
+                  onClick={() => {
+                    setShowServicesDropdown(false);
+                    setExpanded(false);
+                  }}
                 >
                   Company Events
                 </NavDropdown.Item>
@@ -238,7 +326,10 @@ const Navigationbar = () => {
                   className={`dropdown-item ${
                     location.pathname === "/community/society" ? "active" : ""
                   }`}
-                  onClick={() => setShowCommunityDropdown(false)}
+                  onClick={() => {
+                    setShowServicesDropdown(false);
+                    setExpanded(false);
+                  }}
                 >
                   Society
                 </NavDropdown.Item>
@@ -248,7 +339,10 @@ const Navigationbar = () => {
                   className={`dropdown-item ${
                     location.pathname === "/community/knowledge" ? "active" : ""
                   }`}
-                  onClick={() => setShowCommunityDropdown(false)}
+                  onClick={() => {
+                    setShowServicesDropdown(false);
+                    setExpanded(false);
+                  }}
                 >
                   Knowledge
                 </NavDropdown.Item>
@@ -256,16 +350,39 @@ const Navigationbar = () => {
               <Nav.Link
                 as={Link}
                 to="/#contact-section"
-                onClick={() => setExpanded(false)}
-                style={navLinkStyle}
+                className={`tec-nav-link${
+                  location.pathname === "#contact-section" ? " active" : ""
+                }`}
+                onClick={() => {
+                  setShowServicesDropdown(false);
+                  setExpanded(false);
+                }}
               >
                 {t("navbar:contact")}
+                {location.pathname === "/" &&
+                  location.hash === "#contact-section" && (
+                    <span className="tec-navbar-underline" />
+                  )}
               </Nav.Link>
               <NavDropdown
                 title={
-                  <img src={adminIcon} width={24} height={24} alt="admin" />
+                  <img
+                    src={adminIcon}
+                    width={22}
+                    height={22}
+                    alt="admin"
+                    style={{
+                      filter:
+                        showProfileDropdownMobile ||
+                        location.pathname === "/meeting-rooms"
+                          ? "none"
+                          : "grayscale(1) opacity(0.7)",
+                    }}
+                  />
                 }
-                className="w-100"
+                show={showProfileDropdownMobile}
+                onToggle={setShowProfileDropdownMobile}
+                className={`w-100${showProfileDropdownMobile ? " active" : ""}`}
                 menuVariant="dark"
               >
                 <NavDropdown.Item
@@ -274,6 +391,7 @@ const Navigationbar = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="dropdown-item"
+                  onClick={() => setExpanded(false)}
                 >
                   {t("navbar:nas")}
                 </NavDropdown.Item>
@@ -283,11 +401,43 @@ const Navigationbar = () => {
                   className={`dropdown-item ${
                     location.pathname === "/meeting-rooms" ? "active" : ""
                   }`}
+                  onClick={() => setExpanded(false)}
                 >
-                  Meeting Rooms
+                  {t("navbar:meettingRoom")}
                 </NavDropdown.Item>
               </NavDropdown>
-              <div className="px-3 py-2">
+              <NavDropdown
+                title={
+                  <span
+                    style={{
+                      fontFamily: "Orbitron",
+                      fontWeight: 500,
+                      fontSize: "18px",
+                    }}
+                  >
+                    {i18n.language === "en" ? "English" : "ไทย"}
+                  </span>
+                }
+                id="language-dropdown"
+                className="custom-nav-dropdown"
+                align="end"
+              >
+                <NavDropdown.Item
+                  active={i18n.language === "en"}
+                  onClick={() => switchLang("en")}
+                  style={{ fontFamily: "Orbitron", fontSize: "16px" }}
+                >
+                  English
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  active={i18n.language === "th"}
+                  onClick={() => switchLang("th")}
+                  style={{ fontFamily: "Orbitron", fontSize: "16px" }}
+                >
+                  ไทย
+                </NavDropdown.Item>
+              </NavDropdown>
+              {/* <div className="px-3 py-2">
                 <select
                   value={i18n.language}
                   onChange={(e) => switchLang(e.target.value as any)}
@@ -296,10 +446,12 @@ const Navigationbar = () => {
                   <option value="en">{t("language.en")}</option>
                   <option value="th">{t("language.th")}</option>
                 </select>
-              </div>
+              </div> */}
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
+
+        {/* // Desktop Navbar */}
         <Navbar.Collapse
           id="basic-navbar-nav"
           className="d-none d-lg-flex justify-content-end align-items-center w-100"
@@ -309,34 +461,45 @@ const Navigationbar = () => {
             <Nav.Link
               as={Link}
               to="/"
+              className={`tec-nav-link${
+                location.pathname === "/" ? " active" : ""
+              }`}
               style={{
-                ...(location.pathname === "/"
-                  ? activeNavLinkStyle
-                  : navLinkStyle),
+                ...navLinkStyle,
+                position: "relative",
                 marginRight: "25px",
                 height: "100%",
+                display: "flex",
+                alignItems: "center",
               }}
             >
               {t("navbar:home")}
               {location.pathname === "/" && (
-                <div style={activeUnderlineStyle} />
+                <span className="tec-navbar-underline" />
               )}
             </Nav.Link>
             <NavDropdown
               title={
-                <div
+                <span
+                  className={`tec-nav-link${
+                    location.pathname.startsWith("/services/") ? " active" : ""
+                  }`}
                   style={{
-                    ...(location.pathname.startsWith("/services/")
-                      ? { ...dropdownStyle, color: "#FFFFFF" }
-                      : dropdownStyle),
+                    ...dropdownStyle,
+                    position: "relative",
+                    color: location.pathname.startsWith("/services/")
+                      ? "#fff"
+                      : "#A1A1A1",
+                    display: "inline-block",
                     height: "100%",
+                    padding: "0 5px",
                   }}
                 >
                   {t("navbar:serviceAndSolutions")}
                   {location.pathname.startsWith("/services/") && (
-                    <div style={activeUnderlineStyle} />
+                    <span className="tec-navbar-underline" />
                   )}
-                </div>
+                </span>
               }
               id="services-dropdown"
               show={showServicesDropdown}
@@ -423,16 +586,20 @@ const Navigationbar = () => {
             <NavDropdown
               title={
                 <div
+                  className={`tec-nav-link${
+                    location.pathname.startsWith("/community/") ? " active" : ""
+                  }`}
                   style={{
-                    ...(location.pathname.startsWith("/community/")
-                      ? { ...dropdownStyle, color: "#FFFFFF" }
-                      : dropdownStyle),
-                    height: "100%",
+                    ...dropdownStyle,
+                    position: "relative",
+                    color: location.pathname.startsWith("/community/")
+                      ? "#fff"
+                      : "#A1A1A1",
                   }}
                 >
                   Our Community
                   {location.pathname.startsWith("/community/") && (
-                    <div style={activeUnderlineStyle} />
+                    <span className="tec-navbar-underline" />
                   )}
                 </div>
               }
@@ -487,6 +654,9 @@ const Navigationbar = () => {
                 e.preventDefault();
                 navigate("/#contact-section");
               }}
+              className={`tec-nav-link${
+                location.pathname === "#contact-section" ? " active" : ""
+              }`}
               style={{
                 ...(location.pathname === "/" &&
                 location.hash === "#contact-section"
@@ -499,7 +669,7 @@ const Navigationbar = () => {
               Contact
               {location.pathname === "/" &&
                 location.hash === "#contact-section" && (
-                  <div style={activeUnderlineStyle} />
+                  <span className="tec-navbar-underline" />
                 )}
             </Nav.Link>
             <NavDropdown
@@ -550,13 +720,44 @@ const Navigationbar = () => {
                 Meeting Rooms
               </NavDropdown.Item>
             </NavDropdown>
-            <select
+            {/* <select
               value={i18n.language}
               onChange={(e) => switchLang(e.target.value as "en" | "th")}
             >
               <option value="en">{t("language.en")}</option>
               <option value="th">{t("language.th")}</option>
-            </select>
+            </select> */}
+            <NavDropdown
+              title={
+                <span
+                  style={{
+                    fontFamily: "Orbitron",
+                    fontWeight: 500,
+                    fontSize: "18px",
+                  }}
+                >
+                  {i18n.language === "en" ? "English" : "ไทย"}
+                </span>
+              }
+              id="language-dropdown"
+              className="custom-nav-dropdown"
+              align="end"
+            >
+              <NavDropdown.Item
+                active={i18n.language === "en"}
+                onClick={() => switchLang("en")}
+                style={{ fontFamily: "Orbitron", fontSize: "16px" }}
+              >
+                English
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                active={i18n.language === "th"}
+                onClick={() => switchLang("th")}
+                style={{ fontFamily: "Orbitron", fontSize: "16px" }}
+              >
+                ไทย
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
           {/* <Nav className="ms-auto"></Nav> */}
         </Navbar.Collapse>

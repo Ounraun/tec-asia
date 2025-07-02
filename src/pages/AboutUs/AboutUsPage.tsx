@@ -38,7 +38,7 @@ const AboutUs = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIdx((idx) => (idx + 1) % keys.length);
-    }, 3000); 
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
@@ -50,7 +50,6 @@ const AboutUs = () => {
   const particles = useMemo(() => {
     return <ParticlesComponent />;
   }, []);
-
 
   const { t, i18n } = useTranslation(["common", "aboutUs"]);
   const [aboutUs, setAboutUs] = useState<AboutUs | null>(null);
@@ -91,7 +90,6 @@ const AboutUs = () => {
     }
   };
 
-  
   useEffect(() => {
     if (!isLoading && window.location.hash === "#contact-section") {
       scrollToContact();
@@ -251,7 +249,6 @@ const AboutUs = () => {
           </div>
           <div className={aboutStyles.carouselContainer}>
             {keys.map((key, i) => {
-              // ตัดสินตำแหน่ง ถ้า i === currentIdx ก็ current, ถ้า i === prevIdx ก็ prev, ถ้า i === nextIdx ก็ next
               let posClass = "";
               if (i === currentIdx) posClass = aboutStyles.current;
               else if (i === prevIdx) posClass = aboutStyles.prev;
@@ -276,6 +273,9 @@ const AboutUs = () => {
                       navigate(`/blog/doc/${posts[key].documentId}`)
                     }
                   />
+                  <div className={aboutStyles.cardCategoryTitle}>
+                    {t(`communityCard:${key}`)}
+                  </div>
                 </div>
               );
             })}
@@ -284,7 +284,7 @@ const AboutUs = () => {
             className="position-absolute text-white"
             style={{
               zIndex: 6,
-              bottom: "-3%",
+              bottom: "5%",
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: "100%",
