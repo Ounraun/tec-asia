@@ -95,9 +95,9 @@
 .navbar {
   position: relative;
 }
-.navbar-nav {
+/* .navbar-nav {
   gap: 2rem;
-}
+} */
 .tec-navbar-underline {
   position: absolute;
   left: 0;

@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap");
 
 * {
   margin: 0;
@@ -16,7 +16,7 @@
 }
 
 .App {
-    width: 100%;
+  width: 100%;
   text-align: center;
   margin: 0;
   padding: 0;
@@ -25,16 +25,16 @@
 main.flex-grow-1 {
   margin: 0;
   padding: 0;
-  padding-top: 84px; /* เท่ากับความสูงของ Navbar */
+  /* padding-top: 84px; เท่ากับความสูงของ Navbar */
   /* position: relative; */
 }
 
 .navigation {
   display: flex;
-  justify-content: space-between;  /* ดึงลิงก์ซ้ายสุด–ขวาสุด */
+  justify-content: space-between; /* ดึงลิงก์ซ้ายสุด–ขวาสุด */
   align-items: center;
   width: 100%;
-  padding: 2rem 1rem;              /* ใส่ padding ซ้าย–ขวา เพื่อไม่ให้ชนขอบจอ */
+  padding: 2rem 1rem; /* ใส่ padding ซ้าย–ขวา เพื่อไม่ให้ชนขอบจอ */
   box-sizing: border-box;
 }
 
@@ -49,9 +49,8 @@ main.flex-grow-1 {
   display: inline-block;
 }
 
-
 .navLink:hover {
-  color: #72D4ED;
+  color: #72d4ed;
 }
 @media (max-width: 768px) {
   .navLink {
@@ -59,4 +58,3 @@ main.flex-grow-1 {
     padding: 0 1rem;
   }
 }
-

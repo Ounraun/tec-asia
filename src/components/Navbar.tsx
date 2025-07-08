@@ -696,7 +696,7 @@ const Navigationbar = () => {
                   : ""
               }`}
               style={{
-                marginLeft: "50px",
+                marginLeft: "0px",
                 marginRight: "50px",
                 height: "100%",
               }}
@@ -720,13 +720,6 @@ const Navigationbar = () => {
                 Meeting Rooms
               </NavDropdown.Item>
             </NavDropdown>
-            {/* <select
-              value={i18n.language}
-              onChange={(e) => switchLang(e.target.value as "en" | "th")}
-            >
-              <option value="en">{t("language.en")}</option>
-              <option value="th">{t("language.th")}</option>
-            </select> */}
             <NavDropdown
               title={
                 <span
