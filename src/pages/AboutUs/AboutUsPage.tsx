@@ -153,7 +153,6 @@ const AboutUs = () => {
         <div
           className={`position-relative ${aboutStyles.serviceSection}`}
           style={{
-            // height: "293vh",
             overflow: "hidden",
             scrollSnapAlign: "start",
           }}
