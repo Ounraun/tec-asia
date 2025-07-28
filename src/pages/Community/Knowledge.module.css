@@ -24,7 +24,7 @@
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  font-family: Orbitron;
+  font-family: var(--font-heading);
   font-size: 69.751px;
   font-style: normal;
   font-weight: 700;
@@ -53,10 +53,10 @@
 }
 
 .knowledgeHeader h1 {
-  font-family: 'Saira', sans-serif;
+  font-family: var(--font-body);
   font-size: 3rem;
   font-weight: bold;
-  color: #00A3FF;
+  color: #00a3ff;
   margin: 0 0 1rem 0;
 }
 
@@ -70,17 +70,17 @@
 .moreKnowledgeBtn {
   background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
   border: none;
- border-radius: 19820.6px;
+  border-radius: 19820.6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: 62px;
   padding: 11px 78px;
   color: white;
-font-size: 1.6rem;
+  font-size: 1.6rem;
   font-weight: 700;
-    line-height: 1.5;
- letter-spacing: 0.5px;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: auto;
@@ -88,7 +88,7 @@ font-size: 1.6rem;
 }
 
 .moreKnowledgeBtn:hover {
-  background-color: #0077FF;
+  background-color: #0077ff;
 }
 
 .videoContainer {
@@ -96,7 +96,7 @@ font-size: 1.6rem;
   max-width: 50%;
   position: relative;
   aspect-ratio: 16 / 9;
-  background: #1E1E1E;
+  background: #1e1e1e;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -116,7 +116,7 @@ font-size: 1.6rem;
 }
 
 .trendCard {
-  background: #1E1E1E;
+  background: #1e1e1e;
   border-radius: 20px;
   overflow: hidden;
   transition: transform 0.3s ease;
@@ -163,7 +163,7 @@ font-size: 1.6rem;
   margin: 0 0 8px;
   font-size: 1rem;
   font-weight: 600;
-  font-family: 'Saira', sans-serif;
+  font-family: var(--font-body);
   text-transform: uppercase;
 }
 
@@ -171,7 +171,7 @@ font-size: 1.6rem;
   color: #484071;
   margin: 0 0 12px;
   font-size: 1.4rem;
-  font-family: 'Saira', sans-serif;
+  font-family: var(--font-body);
 }
 
 .cardBottom p {
@@ -189,7 +189,7 @@ font-size: 1.6rem;
 }
 
 .readMore {
-  color: #DFBB90;
+  color: #dfbb90;
   text-decoration: none;
   font-size: 1rem;
   margin-top: 12px;
@@ -214,7 +214,7 @@ font-size: 1.6rem;
 }
 
 .companyInfo h3 {
-  color: #00A3FF;
+  color: #00a3ff;
   margin-bottom: 20px;
 }
 
@@ -227,7 +227,7 @@ font-size: 1.6rem;
 }
 
 .menuSection h4 {
-  color: #FF6B00;
+  color: #ff6b00;
   margin-bottom: 20px;
 }
 

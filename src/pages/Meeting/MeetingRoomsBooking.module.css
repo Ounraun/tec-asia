@@ -1,12 +1,12 @@
 .meetingRoomsContainer {
   padding: 2rem;
-  background-color: #0E0E0E;
+  background-color: #0e0e0e;
   min-height: 100vh;
   color: white;
 }
 
 .pageTitle {
-  color: #42A5F5;
+  color: #42a5f5;
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -14,7 +14,11 @@
 .roomDetail {
   max-width: 800px;
   margin: 0 auto 2rem;
-  background: linear-gradient(to right, rgba(31, 42, 55, 0.8), rgba(31, 42, 55, 0.6));
+  background: linear-gradient(
+    to right,
+    rgba(31, 42, 55, 0.8),
+    rgba(31, 42, 55, 0.6)
+  );
   border-radius: 12px;
   padding: 2rem;
 }
@@ -47,7 +51,6 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* ตารางการจอง */
 .bookingTableContainer {
   position: relative;
   width: 100%;
@@ -86,7 +89,7 @@
   padding: 1rem;
   text-align: center;
   background: rgba(66, 165, 245, 0.2);
-  color: #42A5F5;
+  color: #42a5f5;
   font-weight: 600;
   border-radius: 6px;
   font-size: 0.9rem;
@@ -107,7 +110,7 @@
 
 .bookingTable td:first-child {
   background: rgba(66, 165, 245, 0.1);
-  color: #42A5F5;
+  color: #42a5f5;
   font-weight: 500;
   width: 120px;
 }
@@ -137,7 +140,7 @@
 .bookingInfo > div:first-child {
   font-weight: 600;
   margin-bottom: 4px;
-  color: #F44336;
+  color: #f44336;
 }
 
 .bookingInfo > div:last-child {
@@ -146,7 +149,7 @@
 }
 
 .rebookingLink {
-  color: #42A5F5;
+  color: #42a5f5;
   text-decoration: none;
 }
 
@@ -154,7 +157,6 @@
   text-decoration: underline;
 }
 
-/* ฟอร์มการจอง */
 .bookingForm {
   max-width: 1200px;
   margin: 2rem auto;
@@ -207,7 +209,7 @@
   padding: 2rem;
   background: rgba(66, 165, 245, 0.1);
   border-radius: 12px;
-  color: #42A5F5;
+  color: #42a5f5;
   font-size: 1.2rem;
   border: 1px solid rgba(66, 165, 245, 0.2);
   animation: fadeIn 0.3s ease;
@@ -358,14 +360,14 @@
 .noBookings p:first-child {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #42A5F5;
+  color: #42a5f5;
 }
 
 /* ปรับแต่งปฏิทิน */
 :global(.react-datepicker) {
   background: #1a1a1a;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
 }
 
 :global(.react-datepicker__header) {
@@ -382,18 +384,17 @@
 }
 
 :global(.react-datepicker__day--selected) {
-  background: #42A5F5;
+  background: #42a5f5;
 }
 
 :global(.react-datepicker__day--keyboard-selected) {
-  background: #42A5F5;
+  background: #42a5f5;
 }
 
 :global(.react-datepicker__day--disabled) {
   color: rgba(255, 255, 255, 0.3);
 }
 
-/* ปรับแต่งปุ่มนำทาง */
 .weekNavigation {
   margin-bottom: 2rem;
   display: flex;
@@ -423,7 +424,6 @@
   font-weight: 500;
 }
 
-/* ปรับปรุง hover effect ของตาราง */
 .clickable:hover:not(.booked) {
   background: rgba(66, 165, 245, 0.15) !important;
   border: 1px solid rgba(66, 165, 245, 0.3);
@@ -442,7 +442,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* ปรับปรุงสไตล์สำหรับฟอร์มในโหมดดูข้อมูล */
 .bookingForm input[readonly],
 .bookingForm textarea[readonly],
 .bookingForm select[disabled] {
@@ -475,7 +474,7 @@
   padding-bottom: 8px;
   border-bottom: 1px solid rgba(66, 165, 245, 0.2);
   font-weight: 500;
-  color: #42A5F5;
+  color: #42a5f5;
 }
 
 .participantsCount {
@@ -483,14 +482,14 @@
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 0.9em;
-  color: #42A5F5;
+  color: #42a5f5;
   border: 1px solid rgba(66, 165, 245, 0.2);
 }
 
 .participantEmail {
   background-color: rgba(66, 165, 245, 0.1);
   border: 1px solid rgba(66, 165, 245, 0.2);
-  color: #42A5F5;
+  color: #42a5f5;
   padding: 8px 12px;
   border-radius: 6px;
   margin-bottom: 8px;
@@ -512,7 +511,7 @@
 .participantEmail:before {
   content: "✉";
   margin-right: 8px;
-  color: #42A5F5;
+  color: #42a5f5;
 }
 
 .noParticipants {
@@ -524,12 +523,12 @@
   margin-top: 8px;
   font-style: italic;
   border: 1px solid rgba(255, 255, 255, 0.1);
-} 
+}
 
 .formActions {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.5rem; /* ระยะห่างระหว่างปุ่ม */
-  justify-content: flex-end; /* หรือ center, space-between ตามต้องการ */
+  gap: 0.5rem;
+  justify-content: flex-end;
 }

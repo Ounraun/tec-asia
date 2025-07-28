@@ -1,31 +1,20 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400&display=swap");
 .card {
-  /* ขนาดตามต้นแบบ */
   width: 404px;
   height: 617px;
-
-  /* เงา Drop-shadow */
   filter: drop-shadow(0px 4.888px 4.888px rgba(92, 181, 231, 0.6));
-
-  /* background gradient ตามต้นแบบ */
   background: linear-gradient(180deg, #1a202a 76.36%, rgba(0, 0, 0, 0.7) 100%);
-
-  /* กรอบโค้งมนและเงาเบาๆ */
   border-radius: 35.272px;
   box-shadow: 0 2.475px 2.475px rgba(221, 193, 104, 0.2);
-
-  /* จัด layout เป็น flex column */
   display: flex;
   flex-direction: column;
-
-  /* ตัด overflow ให้รูปไม่ล้น */
   overflow: hidden;
   box-sizing: border-box;
 }
-/* 3) ส่วนหัวภาพ สูง 374px ตาม MaskGroup */
+
 .cardHeader {
   flex-shrink: 0;
-  height: 374.3px; /* ตามต้นแบบ */
+  height: 374.3px;
   overflow: hidden;
 }
 .cardHeader img {
@@ -33,32 +22,31 @@
   height: 100%;
   object-fit: cover;
 }
-/* .myImage { width:100%; height:100%; object-fit:cover } */
-/* 4) ส่วนเนื้อหาใต้ภาพ */
+
 .cardBody {
   padding: 1rem;
   flex: 1;
   display: flex;
   flex-direction: column;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-subContent);
 }
-/* 5) ข้อความย่อ (excerpt) */
+
 .excerpt {
   flex: 1;
-  font-size: 17.1px;   /* ขนาดตามต้นแบบ */
+  font-size: 17.1px;
   font-weight: 300;
   line-height: 1.4;
   color: #fff;
   margin-bottom: 1rem;
 }
-/* 6) วันที่ */
+
 .date {
-  font-size: 14.85px;  /* ขนาดตามต้นแบบ */
+  font-size: 14.85px;
   font-weight: 275;
   color: #dfbb90;
   margin-bottom: 1rem;
 }
-/* 7) ปุ่ม Read more */
+
 .readMore {
   font-size: 14.85px;
   font-weight: 400;
@@ -69,36 +57,34 @@
   align-self: flex-end;
   cursor: pointer;
 }
-/* 8) ชื่อประเภท (cardTitle) */
+
 .cardTitle {
   text-align: center;
   margin-top: 1rem;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-body);
   font-size: 17.1px;
   font-weight: 400;
   color: #0e8ddc;
 }
 
-/* Mobile styles */
 @media (max-width: 768px) {
   .card {
-    /* ให้กว้างเต็มความกว้าง viewport ลบ padding ซ้ายขวา 1rem */
     width: calc(100% - 2rem);
-    height: 450px;               /* ความสูงอัตโนมัติ ตามเนื้อหา */
-    margin: 1rem auto;          /* เว้นขอบบนล่าง 1rem จัดกึ่งกลาง */
-    border-radius: 20px;        /* โค้งมนแต่ลด radius ลงหน่อย */
+    height: 450px;
+    margin: 1rem auto;
+    border-radius: 20px;
   }
 
   .cardHeader {
-    height: 200px;              /* ลดความสูงภาพหัวลง */
+    height: 200px;
   }
 
   .cardBody {
-    padding: 0.75rem;           /* ลด padding ลงเล็กน้อย */
+    padding: 0.75rem;
   }
 
   .excerpt {
-    font-size: 14px;            /* ย่อข้อความลงให้พอดีมือถือ */
+    font-size: 14px;
     margin-bottom: 0.75rem;
   }
 

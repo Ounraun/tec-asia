@@ -3,7 +3,6 @@
   min-height: 100vh;
   padding: 100px 50px 50px;
   color: white;
-  
 }
 
 .community-header {
@@ -27,14 +26,13 @@
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  font-family: Orbitron;
+  font-family: var(--font-heading);
   font-size: 69.751px;
   font-style: normal;
   font-weight: 700;
   line-height: 101.523%;
   display: inline-block;
 }
-
 
 .events-grid {
   display: flex;
@@ -54,7 +52,9 @@
   fill: rgba(0, 27, 45, 1); /* สี fill */
   stroke-width: 2px;
   stroke: rgba(16, 151, 249, 0.5); /* คงค่า stroke เดิม */
-  filter: drop-shadow(0 4px 20px rgba(16, 151, 249, 0.25)); /* เปลี่ยน drop-shadow */
+  filter: drop-shadow(
+    0 4px 20px rgba(16, 151, 249, 0.25)
+  ); /* เปลี่ยน drop-shadow */
   box-sizing: border-box;
   flex-shrink: 0;
   border: 2px solid rgba(16, 151, 249, 0.5); /* เพิ่ม border ด้วยสี #1097F9 */
@@ -72,8 +72,7 @@
   
 } */
 
-.event-content{
-
+.event-content {
 }
 
 .event-card.right .event-image-container {
@@ -137,15 +136,13 @@
   color: #fff;
   text-align: center;
   letter-spacing: 0.512px;
-  font-family: Saira;
+  font-family: var(--font-body);
   font-size: 25.623px;
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
   display: inline-block;
 }
-
-
 
 .more-btn:hover {
   opacity: 0.9;
@@ -159,7 +156,7 @@
 }
 
 .company-info h3 {
-  color: #00A3FF;
+  color: #00a3ff;
   margin-bottom: 20px;
 }
 
@@ -171,7 +168,7 @@
 }
 
 .menu-section h4 {
-  color: #FF6B00;
+  color: #ff6b00;
   margin-bottom: 20px;
 }
 
@@ -179,7 +176,7 @@
   text-align: center;
   padding: 50px;
   font-size: 1.2rem;
-  color: #00A3FF;
+  color: #00a3ff;
 }
 
 /* Responsive Design */
@@ -216,4 +213,4 @@
   .footer-info {
     grid-template-columns: 1fr;
   }
-} 
+}

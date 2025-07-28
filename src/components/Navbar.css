@@ -41,7 +41,7 @@
 .custom-nav-dropdown .dropdown-item {
   color: #a1a1a1;
   padding: 10px 20px;
-  font-family: "Orbitron";
+  font-family: var(--font-heading);
   font-weight: 500;
   font-size: 16px;
   text-align: center;
@@ -81,7 +81,7 @@
 
 .custom-nav-dropdown .dropdown-item {
   color: #ffffff;
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
   font-size: 1.25rem;
   font-weight: 400;
   text-align: left;
@@ -116,7 +116,7 @@
   align-items: center;
   height: 84px;
   padding: 0 15px;
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading), sans-serif;
   box-sizing: border-box;
 }
 .tec-nav-link.active {
@@ -161,7 +161,7 @@
   }
   .custom-nav-dropdown .dropdown-item {
     color: #fff;
-    font-family: "Saira", sans-serif;
+    font-family: var(--font-body);
     font-size: 1.28rem; /* ~20px */
     font-weight: 700;
     text-align: left;
@@ -285,7 +285,7 @@
   .offcanvas .nav-link,
   .offcanvas .dropdown-toggle {
     color: #a1a1a1;
-    font-family: "Orbitron";
+    font-family: var(--font-heading);
     font-size: 1.35rem;
     padding: 1.2rem 0;
     text-align: center;
@@ -318,7 +318,7 @@
   }
   .offcanvas .dropdown-item {
     color: #a1a1a1;
-    font-family: "Orbitron";
+    font-family: var(--font-heading);
     font-size: 1.13rem;
     padding: 0.85rem 1.5rem;
     border-radius: 8px;

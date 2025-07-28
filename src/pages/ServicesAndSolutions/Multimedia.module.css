@@ -41,7 +41,7 @@
   );
   background-clip: text;
   color: transparent;
-  font-family: "Orbitron";
+  font-family: var(--font-heading);
   font-size: 64px;
   font-weight: 600;
   height: 61px;
@@ -62,7 +62,7 @@
 
 .solution {
   color: #ffffff;
-  font-family: "Orbitron-Regular", Helvetica;
+  font-family: var(--font-heading);
   font-size: 64px;
   font-weight: 400;
   height: 61px;
@@ -74,7 +74,7 @@
 
 .subtitle {
   color: #f5f5f5;
-  font-family: "Poppins-Medium", Helvetica;
+  font-family: var(--font-subContent);
   font-size: 22px;
   font-weight: 500;
   letter-spacing: 0;
@@ -247,7 +247,7 @@
 .serviceCard p,
 .serviceCard li {
   color: rgba(255, 255, 255, 0.8);
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-size: 14px;
   line-height: 1.8;
   margin-top: 1rem;
@@ -302,7 +302,7 @@
   text-fill-color: transparent;
 
   font-size: 1.6rem;
-  font-family: Orbitron;
+  font-family: var(--font-heading);
   font-weight: 700;
   margin-bottom: 1rem;
   line-height: 1.4;
@@ -325,7 +325,7 @@
 .navigation {
   display: flex;
   justify-content: space-between;
-  padding: 2rem 2rem; /* เพิ่ม padding ซ้ายขวา */
+  padding: 2rem 2rem; 
   width: 100%;
   position: relative;
   z-index: 2;

@@ -3,8 +3,8 @@ import Backend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 
 i18n
-  .use(Backend)                // โหลด JSON ผ่าน HTTP
-  .use(initReactI18next)       // connect กับ React
+  .use(Backend)               
+  .use(initReactI18next)     
   .init({
     fallbackLng: 'en',
     supportedLngs: ['en', 'th'],
@@ -14,6 +14,12 @@ i18n
       loadPath: '/locales/{{lng}}/{{ns}}.json'
     },
     react: { useSuspense: false }
+  }).then(() => {
+    // ตั้งค่าเริ่มต้นให้ <html> มี lang ปัจจุบัน
+    document.documentElement.lang = i18n.language;
   });
-
+  
+i18n.on('languageChanged', (lng) => {
+  document.documentElement.lang = lng;
+});
 export default i18n;

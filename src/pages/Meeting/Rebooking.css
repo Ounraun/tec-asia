@@ -11,7 +11,7 @@
 .rebooking-title {
   font-size: 2rem;
   margin-bottom: 2rem;
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
 }
 
 .rebooking-form {
@@ -28,17 +28,18 @@ label {
   display: block;
   margin-bottom: 0.5rem;
   color: rgba(255, 255, 255, 0.8);
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
 }
 
-input, select {
+input,
+select {
   width: 100%;
   padding: 0.75rem;
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
   color: white;
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
 }
 
 .date-inputs {
@@ -69,7 +70,7 @@ input, select {
   font-weight: 500;
   cursor: pointer;
   margin: 1.5rem 0;
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
 }
 
 .additional-emails {
@@ -87,7 +88,7 @@ input, select {
   margin: 1rem 0;
   display: flex;
   align-items: center;
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
 }
 
 .plus-icon {
@@ -105,14 +106,13 @@ input, select {
   font-weight: bold;
   cursor: pointer;
   margin-top: 2rem;
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
 }
 
 .confirm-booking:hover {
   background-color: #ff8c00;
 }
 
-/* Dark theme styles */
 input::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
@@ -123,4 +123,4 @@ select {
   background-repeat: no-repeat;
   background-position: right 0.7rem center;
   background-size: 1.2rem;
-} 
+}

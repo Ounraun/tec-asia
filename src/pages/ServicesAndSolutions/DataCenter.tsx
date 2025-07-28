@@ -99,7 +99,7 @@ const DataCenter: React.FC = () => {
               style={{ top: pos.top, left: pos.left }}
             >
               <div className={styles.card}>
-                <div className={styles.cardLabel}>{index + 1}</div>
+                <div className={styles.cardLabel}>{item.title}</div>
                 <div
                   className={styles.cardContent}
                   tabIndex={0}
@@ -145,11 +145,11 @@ const DataCenter: React.FC = () => {
         </div>
       </div>
       <div className="navigation">
-        <Link to="/services/digital-transformation" className="navLink">
-          &lt; DIGITAL TRANSFORMATION
-        </Link>
         <Link to="/services/network-solution" className="navLink">
-          NETWORK SOLUTION &gt;
+          &lt; NETWORK SOLUTION
+        </Link>
+        <Link to="/services/data-management" className="navLink">
+          DATA MANAGEMENT &gt;
         </Link>
       </div>
     </div>

@@ -1,13 +1,9 @@
-/* KnowledgeDetail.module.css */
-
 .knowledgeDetailContainer {
   max-width: 1440px;
   margin: 0 auto;
-  /* padding: 5rem; */ /* ปรับตามต้องการหากต้องการเว้นช่องว่าง */
   color: #fff;
 }
 
-/* wrapper สำหรับ header section */
 .headerSection {
   display: flex;
   flex-direction: column;
@@ -19,7 +15,6 @@
 .knowledgeHeader {
   flex: 1;
   width: 100%;
-  /* max-width: 1440px; */
   margin-bottom: 0;
 }
 
@@ -36,10 +31,8 @@
   font-size: 2.5rem;
   font-weight: bold;
   color: #fff;
-  margin-top: 3rem ;
-  /* width: 100%; */
+  margin-top: 3rem;
   text-align: center;
-  
 }
 
 .mainImageContainer {
@@ -85,7 +78,7 @@
 .articleContent h2 {
   font-size: 1.8rem;
   margin: 2rem 0 1rem;
-  color: #4A7DFF;
+  color: #4a7dff;
 }
 
 .articleContent p {
@@ -105,27 +98,26 @@
 
 .allKnowledgeLink {
   display: inline-flex;
-    align-items: center;
+  align-items: center;
   justify-content: center;
-    height: 62px;
+  height: 62px;
   padding: 11px 78px;
   background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
   color: white;
   text-decoration: none;
   border-radius: 19820.6px;
-    font-size: 1.6rem;     /* ประมาณ 25.6px เมื่อ base font-size = 16px */
-  font-weight: 700; 
+  font-size: 1.6rem;
+  font-weight: 700;
   transition: filter 0.3s ease;
-    letter-spacing: 0.5px;
-      line-height: 1.5;
-        cursor: pointer;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+  cursor: pointer;
 }
 
 .allKnowledgeLink:hover {
   filter: brightness(0.9);
 }
 
-/* Loading and Error States */
 .loading,
 .error {
   text-align: center;
@@ -138,7 +130,6 @@
   color: #ff4444;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .headerSection {
     flex-direction: column;

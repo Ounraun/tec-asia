@@ -4,13 +4,11 @@
   --primary-color: #34a8d5;
   --secondary-color: #72d4ed;
   --background-color: rgba(0, 27, 45, 0.95);
-  --font-family-primary: "Orbitron";
-  --font-family-secondary: "Poppins";
 }
 
 .WireAndWireless_160_272 {
   color: #d58213;
-  font-family: Orbitron;
+  font-family: var(--font-heading);
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -35,7 +33,7 @@
 
 .header p {
   color: #fff;
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-subContent);
   font-size: 20px;
   font-weight: 700;
   line-height: 170%;
@@ -44,7 +42,7 @@
 
 .network {
   text-align: center;
-  font-family: var(--font-family-primary);
+  font-family: var(--font-heading);
   font-size: 64px;
   font-weight: 600;
   background: linear-gradient(81deg, #34a8d5, #a1e8ee, #c98d8c, #bd6c0f);
@@ -54,7 +52,7 @@
 
 .solution {
   color: #fff;
-  font-family: var(--font-family-primary);
+  font-family: var(--font-heading);
   font-size: 64px;
   font-weight: 400;
 }
@@ -92,7 +90,7 @@
 
 .introText p {
   color: #fff;
-  font-family: var(--font-family-secondary), sans-serif;
+  font-family: var(--font-subContent), sans-serif;
   font-size: 18px;
   line-height: 1.5;
   margin-bottom: 1rem;
@@ -108,7 +106,7 @@
   margin: 0 auto;
   color: #fff;
   letter-spacing: -0.38px;
-  font-family: var(--font-family-secondary), sans-serif;
+  font-family: var(--font-subContent), sans-serif;
   font-size: 20px;
   font-weight: 400;
   line-height: 170%;
@@ -125,15 +123,15 @@
 .contentSections {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  padding: 0 120px;
-  margin-top: 80px;
+  gap: 3.5rem;
+  padding: 0 140px;
+  margin-top: 30px;
   overflow: visible !important;
 }
 
 .section h2 {
   color: var(--secondary-color);
-  font-family: var(--font-family-primary), sans-serif;
+  font-family: var(--font-heading), sans-serif;
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 1.5rem;
@@ -146,7 +144,7 @@
 
 .sectionContent p {
   color: rgba(255, 255, 255, 0.8);
-  font-family: var(--font-family-secondary), sans-serif;
+  font-family: var(--font-subContent), sans-serif;
   font-size: 14px;
   line-height: 1.6;
   margin: 0.5rem 0;
@@ -209,10 +207,10 @@
 }
 .navigation {
   display: flex;
-  justify-content: space-between; /* ขึ้น–ซ้าย และ ขึ้น–ขวา */
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 1rem; /* เลื่อนเข้าออกนิดหน่อย (ปรับได้) */
+  padding: 0 1rem;
   box-sizing: border-box;
 }
 
@@ -229,14 +227,14 @@
 }
 
 .navLink {
-  color: #fff; /* ขาวเต็มความทึบ */
-  text-align: center; /* จัดกึ่งกลาง */
-  font-family: var(--font-family-primary), sans-serif; /* Orbitron */
-  font-size: 32px; /* ขนาด 32px */
-  font-style: normal; /* ปกติ */
-  font-weight: 400; /* น้ำหนัก 400 */
-  line-height: normal; /* ปกติ */
-  transition: color 0.2s; /* สลับสีเวลาชี้ */
+  color: #fff;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  transition: color 0.2s;
   padding: 0 130px;
 }
 
@@ -250,16 +248,16 @@
     grid-column: 1 / -1;
   }
   .navigation {
-    flex-direction: row; /* แนวนอน */
-    justify-content: center; /* จัดกลาง */
-    gap: 90rem; /* เพิ่มระยะห่าง */
-    margin: 3rem 0; /* เว้นมากหน่อยบน-ล่าง */
+    flex-direction: row;
+    justify-content: center;
+    gap: 90rem;
+    margin: 3rem 0;
   }
   .navLink {
-    font-size: 1.25rem; /* ขยายฟอนต์ */
+    font-size: 1.25rem;
   }
 }
-/* ====== ลดฟอนต์บนจอ ≥1200px ≤ fullHD ====== */
+
 @media (max-width: 1200px) {
   .network,
   .solution {
@@ -282,7 +280,6 @@
   }
 }
 
-/* ====== Tablet & Mobile (≤ 768px) ====== */
 @media (max-width: 768px) {
   .network,
   .solution {
@@ -305,7 +302,6 @@
     max-width: 90vw;
   }
 
-  /* ======= ปรับ grid ให้เป็น 1 คอลัมน์ ======= */
   .contentSections {
     grid-template-columns: 1fr !important;
     padding: 0 1rem;

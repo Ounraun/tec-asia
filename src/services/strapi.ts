@@ -110,3 +110,11 @@ export function getLatestPostByCategory(category: string) {
     }
   );
 }
+
+export function getStrapiImageUrl(url?: string) {
+  if (!url) return "";
+  const base =
+    import.meta.env.VITE_API_URL ||
+    "http://localhost:1337";
+  return url.startsWith("http") ? url : base + url;
+}

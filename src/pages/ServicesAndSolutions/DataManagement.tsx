@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./DataManagement.module.css";
-import DataImage from "@/assets/DataManagement/87.png";
+import DataImage from "@/assets/DataManagement/87.webp";
 
 import { useTranslation } from "react-i18next";
 

@@ -1,11 +1,11 @@
 .booking-confirm-container {
-  height: calc(100vh - 84px); /* ลบความสูงของ Navbar */
+  height: calc(100vh - 84px);
   background-color: #000000;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  margin-top: 84px; /* เท่ากับความสูงของ Navbar */
+  margin-top: 84px;
 }
 
 .booking-confirm-box {
@@ -18,11 +18,11 @@
   align-items: center;
   gap: 2rem;
   position: relative;
-  top: -42px; /* ขยับขึ้นครึ่งหนึ่งของ Navbar height */
+  top: -42px;
 }
 
 .confirm-title {
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
   font-size: 32px;
   font-weight: 500;
   margin-bottom: 1rem;
@@ -35,18 +35,18 @@
 }
 
 .confirm-message p {
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
 }
 
 .close-button {
-  background-color: #FFA500;
+  background-color: #ffa500;
   border: none;
   border-radius: 4px;
   color: white;
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 500;
   padding: 0.75rem 3rem;
@@ -55,13 +55,13 @@
 }
 
 .close-button:hover {
-  background-color: #FF8C00;
+  background-color: #ff8c00;
 }
 
 .redirect-message {
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6);
   margin-top: 1rem !important;
   font-style: italic;
-} 
+}

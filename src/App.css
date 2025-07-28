@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Saira:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap");
 
 * {
   margin: 0;
@@ -25,16 +26,14 @@
 main.flex-grow-1 {
   margin: 0;
   padding: 0;
-  /* padding-top: 84px; เท่ากับความสูงของ Navbar */
-  /* position: relative; */
 }
 
 .navigation {
   display: flex;
-  justify-content: space-between; /* ดึงลิงก์ซ้ายสุด–ขวาสุด */
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 2rem 1rem; /* ใส่ padding ซ้าย–ขวา เพื่อไม่ให้ชนขอบจอ */
+  padding: 6rem 7rem;
   box-sizing: border-box;
 }
 
@@ -52,6 +51,19 @@ main.flex-grow-1 {
 .navLink:hover {
   color: #72d4ed;
 }
+
+html[lang="en"] {
+  --font-heading: "Orbitron", sans-serif;
+  --font-body: "Saira", sans-serif;
+  --font-subContent: "Poppins", sans-serif;
+}
+
+html[lang="th"] {
+  --font-heading: "Sarabun", sans-serif;
+  --font-body: "Sarabun", sans-serif;
+  --font-subContent: "Sarabun", sans-serif;
+}
+
 @media (max-width: 768px) {
   .navLink {
     font-size: 1rem;

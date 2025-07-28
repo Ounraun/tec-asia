@@ -20,7 +20,7 @@
 }
 
 .header h1 {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-size: 2.5rem;
   display: flex;
   justify-content: center;
@@ -44,7 +44,7 @@
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  font-family: Orbitron;
+  font-family: var(--font-heading) ;
   font-size: 64px;
   font-style: normal;
   font-weight: 600;
@@ -56,7 +56,7 @@
   color: #fff;
   text-align: center;
   letter-spacing: 1px;
-  font-family: Orbitron;
+  font-family: var(--font-heading);
   font-size: 64px;
   font-style: normal;
   font-weight: 400;
@@ -117,7 +117,7 @@
   color: #f5f5f5;
   text-align: center;
   width: 549px;
-  font-family: Poppins;
+  font-family: var(--font-subContent);
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -174,7 +174,7 @@
   padding: 0 20px;
   position: relative;
   box-sizing: border-box;
-  font-family: "Orbitron", "Poppins", sans-serif;
+  font-family: var(--font-heading);
   transition: box-shadow 0.18s, border-color 0.18s;
   box-shadow: 0 2px 10px 0 #18334a0c;
 }
@@ -195,7 +195,7 @@
 
 .transformationItem p {
   color: #e9f7ff;
-  font-family: "Orbitron", "Poppins", sans-serif;
+  font-family: var(--font-subContent);
   font-size: 1.09rem;
   font-weight: 400;
   letter-spacing: 0.01em;

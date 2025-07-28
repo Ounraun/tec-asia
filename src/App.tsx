@@ -1,6 +1,3 @@
-// import { useState } from "react";
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route } from "react-router-dom";
@@ -11,7 +8,7 @@ import Multimedia from "./pages/ServicesAndSolutions/Multimedia";
 import DataManagement from "./pages/ServicesAndSolutions/DataManagement";
 import DigitalTransformation from "./pages/ServicesAndSolutions/DigitalTransformation";
 import DataCenter from "./pages/ServicesAndSolutions/DataCenter";
-// import Contact from "./pages/Contact";
+
 import NAS from "./pages/NAS";
 import MeetingRooms from "./pages/Meeting/MeetingRooms";
 import Rebooking from "./pages/Meeting/Rebooking";
@@ -23,11 +20,8 @@ import MeetingRoomsBooking from "./pages/Meeting/MeetingRoomsBooking";
 import NetworkSolution from "./pages/ServicesAndSolutions/NetworkSolution";
 import BlogDetail from "./pages/Community/BlogDetail";
 import KnowledgeDetail from "./pages/Community/KnowledgeDetail";
-// import Test from "./pages/Services/Test";
 
 function App() {
-  // const [count, setCount] = useState(0);
-
   return (
     <>
       <Navbar />

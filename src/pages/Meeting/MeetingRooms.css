@@ -8,7 +8,7 @@
 }
 
 .page-title {
-  color: #42A5F5;
+  color: #42a5f5;
   text-align: center;
   font-size: 2rem;
   margin-bottom: 3rem;
@@ -27,7 +27,11 @@
 
 .room-card {
   display: flex;
-  background: linear-gradient(to right, rgba(31, 42, 55, 0.8), rgba(31, 42, 55, 0.6));
+  background: linear-gradient(
+    to right,
+    rgba(31, 42, 55, 0.8),
+    rgba(31, 42, 55, 0.6)
+  );
   border-radius: 12px;
   overflow: hidden;
   padding: 1rem;
@@ -72,7 +76,7 @@
 
 .booking-button {
   display: inline-block;
-  background: linear-gradient(90deg, #42A5F5, #29B6F6);
+  background: linear-gradient(90deg, #42a5f5, #29b6f6);
   color: white;
   text-decoration: none;
   padding: 0.75rem 2rem;
@@ -83,7 +87,7 @@
 }
 
 .booking-button:hover {
-  background: linear-gradient(90deg, #29B6F6, #42A5F5);
+  background: linear-gradient(90deg, #29b6f6, #42a5f5);
   transform: translateY(-2px);
 }
 
@@ -112,7 +116,8 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -149,7 +154,8 @@ label {
   color: rgba(255, 255, 255, 0.8);
 }
 
-input, select {
+input,
+select {
   width: 100%;
   padding: 0.5rem;
   background-color: transparent;
@@ -213,7 +219,6 @@ input, select {
   background-color: #ff8c00;
 }
 
-/* ปรับ Ellipse ให้เป็น absolute position */
 .Ellipse_11_8_727 {
   position: absolute;
   width: 30vw;
@@ -246,7 +251,6 @@ input, select {
   z-index: 0;
 }
 
-/* เพิ่ม z-index ให้กับเนื้อหาทั้งหมด */
 .rooms-grid,
 .booking-table,
 .booking-form {
@@ -254,7 +258,6 @@ input, select {
   z-index: 1;
 }
 
-/* ปรับ media queries สำหรับ ellipse */
 @media screen and (max-width: 768px) {
   .Ellipse_11_8_727 {
     width: 50vw;
@@ -282,8 +285,6 @@ input, select {
     left: -35%;
   }
 }
-
-/* เปลี่ยนจากขนาดแบบ fixed เป็น relative */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -291,7 +292,6 @@ input, select {
   padding: 0 20px;
 }
 
-/* ใช้หน่วย vw หรือ % แทน px */
 .element {
   width: 90vw;
   max-width: 873.449px;
@@ -299,7 +299,6 @@ input, select {
   aspect-ratio: 873.449 / 1529.36;
 }
 
-/* เพิ่ม media queries สำหรับหน้าจอขนาดต่างๆ */
 @media screen and (max-width: 1200px) {
   .element {
     width: 95vw;

@@ -44,20 +44,11 @@ const Society = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        console.log("Fetching all blog posts...");
         const url = `${apiUrl}/api/blog-posts?filters[category][name][$eq]=Society&populate=*`;
-        console.log("API URL:", url);
-
         const response = await fetch(url);
         const data = await response.json();
 
-        console.log("Raw API Response:", data);
-
         if (data.data && Array.isArray(data.data)) {
-          // แสดงข้อมูลดิบทั้งหมดก่อน
-          console.log("All raw posts:", JSON.stringify(data.data, null, 2));
-
-          // แสดงข้อมูลแต่ละโพสต์แบบละเอียด
           data.data.forEach((item: any, index: number) => {
             console.log(`\nPost ${index + 1} details:`, {
               id: item.id,
@@ -70,7 +61,6 @@ const Society = () => {
             });
           });
 
-          // ตรวจสอบโพสต์ที่เป็น society
           const societyPosts = data.data.filter(
             (item: any) => item.category?.name?.toLowerCase() === "society"
           );

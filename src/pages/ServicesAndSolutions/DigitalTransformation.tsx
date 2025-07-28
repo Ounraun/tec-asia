@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import type { Transformation } from "../../types/digitalTransformation";
 import { getDataTransformation } from "../../services/strapi";
-import Maskgroup from "@/assets/DigitalTransformation/Maskgroup.png";
+import Maskgroup from "@/assets/DigitalTransformation/Maskgroup.webp";
 import bgImage from "@/assets/DigitalTransformation/bg.webp";
 
 const DigitalTransformation: React.FC = () => {

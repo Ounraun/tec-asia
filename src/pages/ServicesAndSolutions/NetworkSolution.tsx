@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styles from "./NetworkSolution.module.css";
 import ContentCard from "../../components/NetworkSolutions/Card";
 
+import BackgroudCity from "../../assets/NetworkSolution/backgroudCity.webp";
+
 import { useTranslation } from "react-i18next";
 import type { NetworkSolution } from "../../types/networkSolution";
 import { getNetworkSolution } from "../../services/strapi";
@@ -54,7 +56,7 @@ const NetworkSolution: React.FC = () => {
 
       <div className={styles.mainImageContainer}>
         <img
-          src={`${networkData?.mainImage?.url}`}
+          src={BackgroudCity}
           alt={networkData?.mainImage?.alternativeText || "Default Image"}
           className={styles.mainImage}
         />
@@ -79,11 +81,11 @@ const NetworkSolution: React.FC = () => {
         </div>
       </div>
       <nav className="navigation">
-        <Link to="/services/data-center" className="navLink">
-          &lt; DATA CENTER
-        </Link>
         <Link to="/services/digital-transformation" className="navLink">
-          DIGITAL TRANSFORMATION &gt;
+          &lt; DIGITAL TRANSFORMATION
+        </Link>
+        <Link to="/services/data-center" className="navLink">
+          DATA CENTER &gt;
         </Link>
       </nav>
     </div>

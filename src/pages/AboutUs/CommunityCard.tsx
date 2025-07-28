@@ -28,7 +28,6 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
         Read more
       </button>
     </div>
-    {/* <h3 className={styles.cardTitle}>{title}</h3> */}
   </div>
 );
 

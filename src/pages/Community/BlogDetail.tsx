@@ -36,7 +36,6 @@ const BlogDetail = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
-  // const [selectedImage, setSelectedImage] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
 

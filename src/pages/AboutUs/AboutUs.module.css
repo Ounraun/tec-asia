@@ -1,13 +1,18 @@
 :root {
-  --font-family-saira: "Saira", sans-serif;
   --color-white: #ffffff;
   --page-max-width: 1440px;
+  --font-heading: "Orbitron", sans-serif;
+  --font-body: "Saira", sans-serif;
+}
+
+html[lang="th"] {
+  --font-heading: "Sarabun", sans-serif;
+  --font-body: "Sarabun", sans-serif;
 }
 
 .container {
   position: relative;
   width: 100%;
-  /* max-width: var(--page-max-width); */
   margin: 0 auto;
   background-color: #000;
   color: var(--color-white);
@@ -24,68 +29,67 @@
 
 .particleWrapper {
   position: absolute;
-  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  inset: 0;
   z-index: 0;
 }
 
 .contentLayout {
   position: relative;
   z-index: 1;
-  max-width: 1104px;
-  /* เอา margin:0 auto ออก แล้วใช้ padding-left */
+  max-width: 100%;
   margin: 0;
-  padding: 0 20px 0 100px; /* เลื่อนซ้าย 100px */
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* จัดเนื้อหาไปทางซ้าย */
+  align-items: flex-start;
 }
 
 .main-title {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-weight: bold;
-  font-size: clamp(4rem, 8vw, 5.5rem); /* ลดขนาดลงเล็กน้อย */
+  font-size: clamp(4rem, 8vw, 4rem);
   color: white;
-  white-space: nowrap; /* ห้ามห่อบรรทัด */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* ถ้ายังยาวเกิน ก็ ... */
+  text-overflow: ellipsis;
+  text-align: center;
 }
 .main-text {
-  font-family: var(--font-family-saira);
+  font-family: var(--font-body);
   color: var(--color-white);
   font-size: 32px;
   line-height: 1.7;
   letter-spacing: -1.9%;
-  margin-top: 30px;
-  width: 708px;
-  text-align: left;
+  margin-top: 60px;
+  padding: 0 300px;
+  width: 100%;
+  text-align: center;
 }
 
 .main-text-s16 {
-  font-family: "Saira";
+  font-family: var(--font-body);
   font-size: 16px;
 }
 .main-text-s24 {
-  font-family: "Saira";
+  font-family: var(--font-body);
   font-size: 24px;
 }
 
 .main-text-s32 {
-  font-family: "Saira";
+  font-family: var(--font-body);
   font-size: 32px;
   color: white;
 }
 .main-text-s50 {
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
   color: white;
-
-  /* ขยาย-หด ตามขนาด viewport */
   font-size: clamp(20px, 5vw, 50px);
   line-height: 1.2;
 }
 
 .main-text-s64 {
-  font-family: "Saira";
-  font-size: clamp(32px, 5vw, 64px); /* ✅ รองรับจอเล็ก/ใหญ่ */
+  font-family: var(--font-body);
+  font-size: clamp(32px, 5vw, 64px);
   color: white;
   font-weight: bold;
   margin-top: 30px;
@@ -102,17 +106,15 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  /* object-fit: cover; */
   mask-image: radial-gradient(circle at center, #0d0d0e 65%, transparent 100%);
-  /* filter: brightness(0.5); */
   z-index: 0;
 }
 .serviceSection {
   position: relative;
   overflow: hidden;
-  /* padding: 100px 0; */
   min-height: 600px;
 }
+
 .serviceHeading {
   position: absolute;
   top: 27%;
@@ -121,23 +123,21 @@
   z-index: 1;
 }
 .serviceHeading h2 {
-  font-family: var(--font-family-saira);
+  font-family: var(--font-body);
   color: white;
   text-align: center;
   line-height: 1.42;
-  font-size: 3rem; /* เดสก์ท็อป */
+  font-size: 3rem;
   margin: 0;
 }
 .service-layout {
-  background-image: url("src/assets/bg-solutions.svg"); /* ใช้ path ของรูป */
-  background-size: contain; /* ปรับให้เต็มพื้นที่ */
-  background-position: center; /* จัดให้อยู่ตรงกลาง */
-  background-repeat: no-repeat; /*ป้องกันการซ้ำ*/
-  background-color: #000; /* ปรับเป็นสีเดียวกับพื้นหลัง */
-  /* transform: scale(1); */
+  background-image: url("src/assets/bg-solutions.svg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #000;
   height: 100%;
   width: 100%;
-  /* margin-top: 600px; */
 }
 
 .bold-text {
@@ -154,7 +154,6 @@
   bottom: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* transform: translateX(-50%,-50%); */
   width: 1px;
   background: linear-gradient(to bottom, #4b6b6e 10%, #f6caa9 45%, #44686a 85%);
 }
@@ -163,8 +162,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-top: 100px;
-    margin-bottom: 100px; */
   position: absolute;
   width: 100%;
   text-align: center;
@@ -172,8 +169,8 @@
 }
 
 .iso-item-content {
-  font-family: "Saira", sans-serif;
-  font-weight: 400; /* Regular */
+  font-family: var(--font-body);
+  font-weight: 400;
   font-size: 48px;
   line-height: 120%;
 }
@@ -187,7 +184,7 @@
 }
 .color-gradient-2 {
   color: #3ce1cd;
-  text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6); /* สี F4D669 ที่ความโปร่งใส 60% */
+  text-shadow: 0px 1px 10px rgba(244, 214, 105, 0.6);
 }
 
 .community-layout {
@@ -198,7 +195,7 @@
   overflow: hidden;
   background-color: #101111;
 }
-/* ตำแหน่งปกติบน Desktop */
+
 .communityTitle {
   z-index: 6;
   top: 7%;
@@ -221,7 +218,7 @@
   top: 3%;
   left: 0;
   position: absolute;
-  background-color: rgba(90, 50, 4, 0.5); /* สี RGB พร้อมความโปร่งใส 50% */
+  background-color: rgba(90, 50, 4, 0.5);
   opacity: 100%;
 }
 .filter-bg-community-2 {
@@ -241,8 +238,7 @@
   width: 400px;
   height: 400px;
   border-radius: 100%;
-  /* opacity: 56%; */
-  filter: blur(200px); /* เพิ่ม Effect blur */
+  filter: blur(200px);
   background: linear-gradient(180deg, #052639 0%, #066398 100%);
 
   top: 15%;
@@ -253,8 +249,7 @@
   width: 350px;
   height: 350px;
   border-radius: 100%;
-  /* opacity: 56%; */
-  filter: blur(150px); /*เพิ่ม Effect blur*/
+  filter: blur(150px);
   background: linear-gradient(180deg, #052639 0%, #066398 100%);
   bottom: 40%;
   left: 5%;
@@ -266,19 +261,19 @@
   z-index: 4;
 }
 .bg-wave {
-  width: 120%; /* ขยายเกิน 100vw หน่อย */
+  width: 120%;
   position: absolute;
-  left: -2vw; /* เลื่อนไปทางซ้ายให้เส้นกรอบหลุดจอ */
-  min-width: 1200px; /* กันจอใหญ่ๆ */
+  left: -2vw;
+  min-width: 1200px;
   bottom: -612px;
   z-index: 5;
 }
 
 .contact-layout {
   width: 100%;
-  max-width: 1200px; /* คุมไม่ให้ส่วนข้อมูลติดต่อเกิน */
-  margin: 0 auto; /* จัดให้อยู่ตรงกลางกรอบ */
-  padding: 80px 1rem; /* ลด padding ซ้าย–ขวาให้เล็กลง */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 1rem;
   background: linear-gradient(90deg, #052638 0%, #000000 100%);
   border-top: 1px solid rgba(214, 186, 186, 0.5);
   display: flex;
@@ -289,26 +284,24 @@
 
 .contact-item {
   width: 100%;
-  /* height: 100%; */
   display: flex;
   padding: 80px 2rem;
 }
 
 .contact-layout,
 .contact-item {
-  box-sizing: border-box; /* รวม padding/border ใน width calculation */
-  max-width: 100vw; /* ไม่ให้เกินความกว้าง viewport */
-  overflow-x: hidden; /* ซ่อน overflow แนวนอน */
+  box-sizing: border-box;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .contact-title {
-  font-family: "Saira";
+  font-family: var(--font-body);
   font-weight: bold;
   font-size: 1.8rem;
   color: #39a6de;
 }
 
-/* ตัวอย่าง keyframes สำหรับเอฟเฟกต์ลอย */
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -321,27 +314,12 @@
   }
 }
 
-.textInGem {
-  position: absolute; /*ใช้ตำแหน่งแบบ absolute*/
-  top: 50%; /* ตรงกลางแนวตั้ง */
-  left: 50%; /* ตรงกลางแนวนอน */
-  transform: translate(-50%, -50%); /* ปรับให้อยู่ตรงกลางพอดี */
-  font-family: "Saira"; /* ใช้ฟอนต์ Saira */
-  font-size: 20px; /* ขนาดฟอนต์ 20px */
-  font-weight: bold; /* น้ำหนักฟอนต์ Bold */
-  color: white; /* สีฟอนต์เป็นสีขาว */
-  text-align: center; /* จัดข้อความให้อยู่กลาง */
-  margin: 0;
-}
-/* สร้างคลาส gem-float สำหรับผูกกับ element */
 .gem-float-1 {
   animation: float 3s ease-in-out infinite;
   animation-delay: 0.2s;
   top: 8%;
   left: 25%;
   width: 280px;
-  /* height: 303.57px; */
-  /* 3s = ระยะเวลารอบละ 3 วินาที, ease-in-out = ความลื่นไหล, infinite = วนซ้ำตลอด */
 }
 .gem-float-2 {
   animation: float 4s ease-in-out infinite;
@@ -417,7 +395,7 @@
 
 .card-description {
   color: #fff;
-  font-family: "Saira", sans-serif;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 300;
   line-height: 1.4;
@@ -428,7 +406,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  max-height: 60px; /* 3 lines * line-height * font-size */
+  max-height: 60px;
   padding: 0 1rem;
   word-wrap: break-word;
   white-space: normal;
@@ -443,7 +421,7 @@ button.position-absolute {
   border: none;
   padding: 0;
 }
-/* ปิด pointer-events ของทุก layer ตกแต่ง */
+
 .filter-bg-community-1,
 .filter-bg-community-2,
 .circle-bg-community-1,
@@ -460,7 +438,7 @@ button.position-absolute {
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 700px; /* ปรับให้พอดีกับการ์ดคุณ */
+  height: 700px;
   perspective: 1000px;
   overflow: hidden;
   z-index: 1;
@@ -476,21 +454,18 @@ button.position-absolute {
   cursor: pointer;
 }
 
-/* การ์ดซ้าย (prev) */
 .prev {
   transform: translateX(-250px) translateY(-50%) scale(0.8);
   opacity: 0.5;
   z-index: 1;
 }
 
-/* การ์ดตรงกลาง (current) */
 .current {
   transform: translateX(0) translateY(-50%) scale(1);
   opacity: 1;
   z-index: 2;
 }
 
-/* การ์ดขวา (next) */
 .next {
   transform: translateX(250px) translateY(-50%) scale(0.8);
   opacity: 0.5;
@@ -499,12 +474,12 @@ button.position-absolute {
 
 .cardCategoryTitle {
   color: #0e8ddc;
-  text-shadow: 0px 5px 13.3px rgba(255, 255, 255, 0.21); /* Effect 2 */
-  font-family: "Saira", sans-serif;
+  text-shadow: 0px 5px 13.3px rgba(255, 255, 255, 0.21);
+  font-family: var(--font-body);
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
-  line-height: 150%; /* 54px */
+  line-height: 150%;
   letter-spacing: 0.72px;
   text-align: center;
   margin-top: 18px;
@@ -522,10 +497,9 @@ button.position-absolute {
 }
 @media (max-width: 768px) {
   .heroSection {
-    padding: 60px 0; /* ลด padding บนและล่าง */
+    padding: 60px 0;
   }
   .contentLayout {
-    /* เอา margin-left ออก และจัดให้อยู่กึ่งกลาง */
     max-width: none;
     margin: 30px auto 0;
     margin-left: auto;
@@ -537,14 +511,12 @@ button.position-absolute {
   }
 
   .main-title {
-    /* ปรับขนาดหัวเรื่องให้ยืดหยุ่น */
     font-size: clamp(2rem, 8vw, 5rem);
     white-space: normal;
     text-align: center;
   }
 
   .main-text {
-    /* ปรับขนาดข้อความให้ยืดหยุ่น */
     font-size: clamp(1rem, 4vw, 1.5rem);
     max-width: 90vw;
     text-align: center;
@@ -552,7 +524,7 @@ button.position-absolute {
   }
   .serviceSection {
     padding: 2rem 1rem;
-    min-height: 615px; /* ปรับลงมาหน่อยแต่ก็อย่าให้เล็กเกิน */
+    min-height: 615px;
   }
   .serviceHeading {
     position: relative !important;
@@ -617,13 +589,13 @@ button.position-absolute {
   .gem-float-4 .textInGem,
   .gem-float-5 .textInGem,
   .gem-float-6 .textInGem {
-    font-size: 12px; /* ลดขนาดฟอนต์ */
-    text-align: center; /* จัดกึ่งกลาง */
-    width: 60%; /* ปรับให้เต็มพื้นที่ */
+    font-size: 12px;
+    text-align: center;
+    width: 60%;
   }
   .gem-floor-img {
     width: 100%;
-    height: auto; /* ปรับให้สูงตามสัดส่วน */
+    height: auto;
   }
   .iso-layout {
     display: flex;
@@ -658,7 +630,6 @@ button.position-absolute {
     display: none !important;
   }
   .community-layout {
-    /* height: 820px;  */
     min-height: 890px;
     padding: 2rem 0;
   }
@@ -669,13 +640,10 @@ button.position-absolute {
     transform: translateX(-50%);
   }
   .carouselContainer {
-    /* กำหนดให้ความสูงออโต้ ปรับ margin ให้เหมาะ */
     height: auto;
     margin: 10rem auto;
     padding: 0 1rem;
   }
-
-  /* ทุก slide ให้เป็นตำแหน่งปกติ กว้างเต็ม */
   .slide {
     position: relative !important;
     top: 0 !important;
@@ -687,13 +655,11 @@ button.position-absolute {
     margin-bottom: 1.5rem;
   }
 
-  /* ซ่อน prev/next */
   .prev,
   .next {
     display: none;
   }
 
-  /* อันกลางให้ชิดขวา-ซ้ายกึ่งกลาง */
   .current {
     margin: 0 auto;
   }

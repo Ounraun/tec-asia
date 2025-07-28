@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Saira:300&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Poppins:200,400&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Saira:300&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,400&display=swap");
 
 .blog-detail-container {
   max-width: 1440px;
@@ -11,7 +11,7 @@
   color: #fff;
   text-align: center;
   letter-spacing: 1.25px;
-  font-family: Orbitron;
+  font-family: var(--font-heading);
   font-size: 49.319px;
   font-style: normal;
   font-weight: 700;
@@ -21,14 +21,12 @@
   margin-bottom: 2rem;
 }
 
-/* Main Content Layout */
 .blog-content-layout {
   display: flex;
   gap: 2rem;
   margin-bottom: 3rem;
 }
 
-/* Main Content */
 .main-content {
   display: flex;
   gap: 3rem;
@@ -58,7 +56,6 @@
   font-size: 1.1rem;
 }
 
-/* Gallery Section */
 .gallery-section {
   position: relative;
   padding: 0 50px;
@@ -74,7 +71,7 @@
 .gallery-section .swiper-button-next {
   width: 40px;
   height: 40px;
-  background: #4A7DFF;
+  background: #4a7dff;
   border-radius: 50%;
   color: white;
   top: 50%;
@@ -111,7 +108,7 @@
 }
 
 .gallery-section .swiper-pagination-bullet-active {
-  background: #4A7DFF;
+  background: #4a7dff;
   transform: scale(1.2);
 }
 
@@ -152,7 +149,7 @@
 }
 
 .gallery-nav::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 20px;
   height: 20px;
@@ -195,7 +192,6 @@
   transform: scale(1.05);
 }
 
-/* Pagination */
 .pagination {
   display: flex;
   justify-content: center;
@@ -215,7 +211,7 @@
 }
 
 .pagination-dot.active {
-  background: #00A3FF;
+  background: #00a3ff;
   transform: scale(1.2);
 }
 
@@ -223,7 +219,6 @@
   background: rgba(0, 163, 255, 0.5);
 }
 
-/* Related Posts Styles */
 .other-events {
   margin-bottom: 4rem;
   text-align: center;
@@ -233,7 +228,7 @@
   color: #fff;
   text-align: center;
   letter-spacing: 1.25px;
-  font-family: Orbitron;
+  font-family: var(--font-heading);
   font-size: 49.319px;
   font-style: normal;
   font-weight: 700;
@@ -254,7 +249,7 @@
 .swiper-button-next {
   width: 40px !important;
   height: 40px !important;
-  background: #4A7DFF;
+  background: #4a7dff;
   border-radius: 50%;
   color: white !important;
 }
@@ -280,11 +275,9 @@
 }
 
 .swiper-pagination-bullet-active {
-  background: #4A7DFF !important;
+  background: #4a7dff !important;
   transform: scale(1.2);
 }
-
-/* Update related posts grid to work with Swiper */
 .related-posts-grid {
   display: flex;
   gap: 2rem;
@@ -293,8 +286,8 @@
 
 .related-post-card {
   filter: drop-shadow(0 4.536px 4.536px #5cb5e7);
-  width: 360px;        /* กำหนดความกว้างตายตัวพอเหมาะ */
-  height: auto;        /* ปล่อยให้ยืดตามเนื้อหา */
+  width: 360px;
+  height: auto;
   background: linear-gradient(#1a202a 76.36%, rgba(0, 0, 0, 0.7) 100%);
   border-radius: 32.73px;
   box-shadow: 0 2.297px 2.297px rgba(221, 193, 104, 0.21);
@@ -308,7 +301,7 @@
 
 .related-post-card img {
   width: 100%;
-  height: 220px;        /* ความสูงเฉพาะรูปเท่านั้น */
+  height: 220px;
   object-fit: cover;
 }
 
@@ -317,8 +310,8 @@
 }
 
 .card-content h3 {
-  color: #DFBB90;
-  font-family: 'Poppins', sans-serif;
+  color: #dfbb90;
+  font-family: var(--font-subContent);
   font-size: 13.781px;
   font-weight: 275;
   margin-bottom: 1rem;
@@ -326,33 +319,22 @@
 
 .card-content p {
   color: #fff;
-  font-family: 'Saira', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   font-weight: 300;
   line-height: normal;
   margin-bottom: 1rem;
   display: -webkit-box;
-  /* -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical; */
   overflow: hidden;
   height: 151.957px;
 }
-
-/* .read-more {
-  color: #0f8091;
-  font-family: 'Poppins', sans-serif;
-  font-size: 13.781px;
-  font-weight: 400;
-  text-decoration: underline;
-  cursor: pointer;
-} */
 
 .all-events-btn {
   display: block;
   width: fit-content;
   margin: 0 auto;
   padding: 1rem 2rem;
-  background: #00A3FF;
+  background: #00a3ff;
   color: white;
   border: none;
   border-radius: 4px;
@@ -379,16 +361,16 @@
 }
 
 @media (max-width: 1200px) {
-   .related-posts-swiper {
+  .related-posts-swiper {
     padding: 20px 30px;
   }
   .related-post-card {
-    width: 100%;      /* กิน full container */
+    width: 100%; /* กิน full container */
     max-width: 360px; /* จำกัดสูงสุดตามมือถือ */
   }
 
   .related-post-card img {
-    height: 180px;    /* ถ้าอยากย่อรูปให้สั้นลง */
+    height: 180px; /* ถ้าอยากย่อรูปให้สั้นลง */
   }
 }
 
@@ -433,4 +415,4 @@
     height: auto;
     aspect-ratio: 393.501/347.332;
   }
-} 
+}
