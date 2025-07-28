@@ -12,7 +12,7 @@ export default defineConfig({
   ],
   css: {
     modules: {
-      localsConvention: 'camelCase', // ใช้ camelCase สำหรับชื่อคลาส
+      localsConvention: 'camelCase', 
     },
   },
   resolve: {

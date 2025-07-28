@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState, ChangeEvent } from "react";
-import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.min.css";
 import styles from "./MeetingRoomsBooking.module.css";
@@ -168,24 +168,6 @@ const MeetingRoomsBooking: React.FC = () => {
     return date;
   };
 
-  // const getDayOfWeek = (date: Date) => {
-  //   const days = [
-  //     "Sunday",
-  //     "Monday",
-  //     "Tuesday",
-  //     "Wednesday",
-  //     "Thursday",
-  //     "Friday",
-  //     "Saturday",
-  //   ];
-  //   return days[date.getDay()];
-  // };
-
-  // const refreshData = () => {
-  //   setLoading(true);
-  //   setRefreshKey((prev) => prev + 1);
-  // };
-
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const roomDetails: RoomDetails = {
@@ -332,7 +314,7 @@ const MeetingRoomsBooking: React.FC = () => {
     setWeekDates({ monday: newMonday, sunday: newSunday });
   };
 
-  // แก้ไขฟังก์ชัน handleStartTimeChange
+
   const handleStartTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newStartTime = e.target.value;
     setStartTime(newStartTime);
@@ -346,7 +328,7 @@ const MeetingRoomsBooking: React.FC = () => {
     }
   };
 
-  // แก้ไขฟังก์ชัน handleEndTimeChange
+
   const handleEndTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newEndTime = e.target.value;
     setEndTime(newEndTime);
@@ -1029,8 +1011,6 @@ const MeetingRoomsBooking: React.FC = () => {
       </div>
     );
   }
-
-  const roomDetail = bookings.length > 0 ? bookings[0].meeting_room : null;
 
   const renderBookingTable = () => {
     const { monday, sunday } = weekDates;

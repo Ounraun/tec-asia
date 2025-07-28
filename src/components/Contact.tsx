@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./Contact.css";
 import emailIcon from "../assets/AboutUs/icon-email.svg";
 import facebookIcon from "../assets/AboutUs/icon-facebook.svg";
-import Map from "../assets/AboutUs/map.svg";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 

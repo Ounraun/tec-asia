@@ -118,7 +118,7 @@ const Knowledge: React.FC = () => {
           ) : posts.length === 0 ? (
             <div className={styles.noPosts}>No knowledge posts found</div>
           ) : (
-            posts.map((post, index) => (
+            posts.map((post) => (
               <div key={post.id} className={styles.trendCard}>
                 {post.main_image && (
                   <img
