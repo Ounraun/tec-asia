@@ -95,9 +95,6 @@
 .navbar {
   position: relative;
 }
-/* .navbar-nav {
-  gap: 2rem;
-} */
 .tec-navbar-underline {
   position: absolute;
   left: 0;
@@ -191,9 +188,9 @@
     width: 90% !important;
     margin: 0 auto 1.2rem auto !important;
     border-radius: 10px !important;
-    border: 1.5px solid #222 !important; /* สีเทาเข้มกลืนพื้นหลัง */
+    border: 1.5px solid #222 !important;
     background: #222 !important;
-    box-shadow: 0 0 0 0; /* ลบเงา */
+    box-shadow: 0 0 0 0;
     min-width: 0 !important;
     max-width: 340px;
   }
@@ -304,7 +301,6 @@
   .offcanvas .nav-link.active,
   .offcanvas .dropdown-toggle.active {
     color: #00a3ff;
-    /* background: rgba(0, 163, 255, 0.08); */
     font-weight: bold;
   }
   .offcanvas .dropdown-menu {
@@ -328,15 +324,14 @@
   .offcanvas .dropdown-item.active,
   .offcanvas .dropdown-item:focus,
   .offcanvas .dropdown-item:hover {
-    /* background: #14213a; */
     color: #00a3ff;
     font-weight: bold;
   }
   .offcanvas .nav-link.tec-nav-link {
-    justify-content: center !important; /* flex center */
+    justify-content: center !important;
     text-align: center !important;
     width: 100%;
-    margin: 0 auto 0.6rem auto !important; /* เหลือระยะเท่าๆ กับอันอื่น */
+    margin: 0 auto 0.6rem auto !important;
     display: flex !important;
     align-items: center;
     font-size: 1.35rem;

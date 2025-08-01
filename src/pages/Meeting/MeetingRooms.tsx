@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./MeetingRooms.css";
+import { getStrapiImageUrl } from "../../services/strapi";
+import { useTranslation } from "react-i18next";
 
 // กำหนด Interface สำหรับห้องประชุม
 interface MeetingRoom {
@@ -32,6 +34,7 @@ const MeetingRooms: React.FC = () => {
   const [meetingRooms, setMeetingRooms] = useState<MeetingRoom[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t, i18n } = useTranslation(["common", "meetingRoom"]);
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -48,7 +51,7 @@ const MeetingRooms: React.FC = () => {
         setError("เกิดข้อผิดพลาดในการโหลดข้อมูล");
         setLoading(false);
       });
-  }, [apiUrl]);
+  }, [apiUrl, i18n.language]);
 
   if (loading) {
     return (
@@ -68,12 +71,12 @@ const MeetingRooms: React.FC = () => {
 
   return (
     <div className="meeting-rooms-container">
-      <h1 className="page-title">บริการใช้งานห้องประชุม</h1>
+      <h1 className="page-title">{t("meetingRoom:meetingRoomServices")}</h1>
       <div className="rooms-grid">
         {meetingRooms.map((room) => (
           <div key={room.id} className="room-card">
             <div className="room-image">
-              <img src={`${room.picture.url}`} alt={room.name} />
+              <img src={getStrapiImageUrl(room.picture.url)} alt={room.name} />
             </div>
             <div className="room-info">
               <h2>{room.name}</h2>

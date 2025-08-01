@@ -24,8 +24,8 @@
 }
 
 .cardBody {
-  padding: 1rem;
-  flex: 1;
+  padding: 2rem;
+  flex: 0 1 auto;
   display: flex;
   flex-direction: column;
   font-family: var(--font-subContent);

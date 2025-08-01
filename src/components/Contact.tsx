@@ -35,20 +35,20 @@ const Contact = () => {
               <img src={facebookIcon} alt="Facebook" />
             </div>
             <p className="text-white">
-              {companyInfo?.location ?? "Loading..."}
-              <br />
               {companyInfo?.address ?? "Loading..."}
+              <br />
+              {companyInfo?.location ?? "Loading..."}
             </p>
           </div>
 
-          <div className="col-lg-6 mb-4">
+          <div className="col-lg-6">
             <div className="map-container">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.1964524159557!2d100.5786777110017!3d13.7670234865706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d61c5ec1ffbb1%3A0xb0a7eeab763bfdb5!2z4Lia4Lij4Li04Lip4Lix4LiXIOC4lOC4tCDguYDguK3guYfguIHguIvguYzguYDguIvguYDguKXguYnguJnguJfguYwg4LiE4Lit4Lih4Lih4Li54LiZ4Li04LmA4LiE4LiK4Lix4LmI4LiZIOC4iOC4s-C4geC4seC4lA!5e0!3m2!1sen!2sth!4v1753334691233!5m2!1sen!2sth"
                 width="100%"
-                height="236"
+                height="260"
                 style={{ border: 0 }}
-                allowFullScreen=""
+                allowFullScreen={true}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
@@ -61,7 +61,7 @@ const Contact = () => {
             <h2 className="section-title">
               {t("contact:serviceAndSolutions")}
             </h2>
-            <ul className="list-unstyled ps-3 text-white service-list">
+            <ul className="list-unstyled text-white service-list">
               <li
                 style={{ cursor: "pointer" }}
                 onClick={() => navigate("/services/network-solution")}
@@ -103,7 +103,7 @@ const Contact = () => {
 
           <div className="col-md-6 mb-4">
             <h2 className="section-title">{t("contact:ourCommunity")}</h2>
-            <ul className="list-unstyled ps-3 text-white">
+            <ul className="list-unstyled text-white">
               <li
                 style={{ cursor: "pointer" }}
                 onClick={() => navigate("/community/company-events")}

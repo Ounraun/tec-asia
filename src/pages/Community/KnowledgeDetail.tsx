@@ -5,6 +5,7 @@ import Contact from "../../components/Contact";
 
 // เปลี่ยนมาใช้ CSS Module
 import styles from "./KnowledgeDetail.module.css";
+import { getStrapiImageUrl } from "../../services/strapi";
 
 interface KnowledgePost {
   id: number;
@@ -79,8 +80,8 @@ const KnowledgeDetail: React.FC = () => {
         {/* Main Image */}
         <div className={styles.mainImageContainer}>
           <img
-            src={`${post.main_image?.url}`}
-            alt={post.main_image?.alternativeText || post.title}
+            src={getStrapiImageUrl(post?.main_image?.url)}
+            alt={post.title}
             className={styles.mainImage}
           />
         </div>

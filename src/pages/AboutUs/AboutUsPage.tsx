@@ -280,7 +280,7 @@ const AboutUs = () => {
             className="position-absolute text-white"
             style={{
               zIndex: 6,
-              bottom: "5%",
+              bottom: "3%",
               left: "50%",
               transform: "translate(-50%, -50%)",
               width: "100%",

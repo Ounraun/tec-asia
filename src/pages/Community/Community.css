@@ -1,7 +1,7 @@
 .community-container {
   background-color: #000;
   min-height: 100vh;
-  padding: 100px 50px 50px;
+  padding: 100px 60px;
   color: white;
 }
 
@@ -38,8 +38,8 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 2rem;
-  max-width: 1200px;
+  padding: 2rem 0 6rem 0;
+  /* max-width: 1200px; */
   margin: 0 auto;
 }
 
@@ -47,18 +47,16 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  padding: 1.5rem;
-  background-color: rgba(0, 27, 45, 1); /* เปลี่ยนพื้นหลังเป็นสี rgba */
-  fill: rgba(0, 27, 45, 1); /* สี fill */
+  padding: 3.2rem;
+  background-color: rgba(0, 27, 45, 1);
+  fill: rgba(0, 27, 45, 1);
   stroke-width: 2px;
-  stroke: rgba(16, 151, 249, 0.5); /* คงค่า stroke เดิม */
-  filter: drop-shadow(
-    0 4px 20px rgba(16, 151, 249, 0.25)
-  ); /* เปลี่ยน drop-shadow */
+  stroke: rgba(16, 151, 249, 0.5);
+  filter: drop-shadow(0 4px 20px rgba(16, 151, 249, 0.25));
   box-sizing: border-box;
   flex-shrink: 0;
-  border: 2px solid rgba(16, 151, 249, 0.5); /* เพิ่ม border ด้วยสี #1097F9 */
-  border-radius: 8px; /* เพิ่มมุมโค้ง */
+  border: 2px solid rgba(16, 151, 249, 0.5);
+  border-radius: 8px;
   min-height: 300px;
 }
 
@@ -67,23 +65,10 @@
   grid-row: 1;
 }
 
-/* .event-card.left .event-content {
-
-  
-} */
-
-.event-content {
-}
-
 .event-card.right .event-image-container {
   grid-column: 2;
   grid-row: 1;
 }
-
-/* .event-card.right .event-content {
-  grid-column: 1;
-  grid-row: 1;
-} */
 
 .event-image-container {
   width: 100%;
@@ -95,7 +80,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 1rem;
 }
 
@@ -130,6 +115,7 @@
   padding: 11.029px 32.677px 13.353px 33.918px;
   display: inline-flex;
   overflow: hidden;
+  border: none;
 }
 
 .more-btn span {
@@ -158,13 +144,6 @@
 .company-info h3 {
   color: #00a3ff;
   margin-bottom: 20px;
-}
-
-.map-container {
-  margin-top: 20px;
-  height: 200px;
-  background: rgba(1, 22, 39, 0.84);
-  border-radius: 10px;
 }
 
 .menu-section h4 {

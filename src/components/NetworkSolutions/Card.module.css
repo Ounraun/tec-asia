@@ -7,8 +7,8 @@
 .cardSubtitle,
 .cardContent p {
   display: block !important;
-  width: auto !important;  
-  margin: 0 0 1rem 0;        
+  width: auto !important;
+  margin: 0 0 1rem 0;
 }
 
 .card {
@@ -21,7 +21,6 @@
   filter: drop-shadow(0 4px 20px var(--primary-color-shadow));
 }
 
-
 .cardTitle {
   color: rgba(213, 130, 19, 1);
   font-family: var(--font-family-primary);
@@ -30,12 +29,12 @@
   margin-bottom: 0.75rem;
 }
 
-
 .cardSubtitle {
   color: rgba(255, 255, 255, 1);
   font-family: var(--font-family-secondary);
   font-size: 20px;
   font-weight: 700;
+  line-height: 170%;
   margin-bottom: 0.75rem;
 }
 
@@ -49,8 +48,8 @@
 }
 
 .groupedCard {
-  border: none; 
+  border: none;
   background: transparent;
   padding: 2.5rem;
-  color: #fff; 
+  color: #fff;
 }

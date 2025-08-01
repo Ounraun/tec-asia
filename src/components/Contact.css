@@ -55,21 +55,20 @@
 }
 
 .section-title {
-  font-family: var(--font-body) ;
+  font-family: var(--font-body);
   color: #fff;
   margin-bottom: 1rem;
 }
 .service-list {
-  column-count: 2; 
-  column-gap: 2rem; 
-
+  column-count: 2;
+  column-gap: 2rem;
 }
 .custom-gutter {
   --bs-gutter-x: 8.5rem !important;
 }
 @media (max-width: 992px) {
   .map-container iframe {
-    height: 250px;
+    /* height: 250px; */
   }
 }
 

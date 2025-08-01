@@ -314,7 +314,6 @@ const MeetingRoomsBooking: React.FC = () => {
     setWeekDates({ monday: newMonday, sunday: newSunday });
   };
 
-
   const handleStartTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newStartTime = e.target.value;
     setStartTime(newStartTime);
@@ -327,7 +326,6 @@ const MeetingRoomsBooking: React.FC = () => {
       setTimeError(null);
     }
   };
-
 
   const handleEndTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newEndTime = e.target.value;
@@ -1150,7 +1148,7 @@ const MeetingRoomsBooking: React.FC = () => {
                             </div>
                           ) : (
                             <div className={styles.available}>
-                              {isPast ? "ไม่สามารถจอง" : "ว่าง"}
+                              {isPast ? "" : ""}
                             </div>
                           )}
                         </td>

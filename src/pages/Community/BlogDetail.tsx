@@ -12,6 +12,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./BlogDetail.css";
+import { getStrapiImageUrl } from "../../services/strapi";
 
 interface BlogPost {
   id: number;
@@ -116,9 +117,9 @@ const BlogDetail = () => {
         <div className="main-content">
           {/* Main Image */}
           <div className="main-image">
-            {post.main_image?.url ? (
+            {getStrapiImageUrl(post?.main_image?.url) ? (
               <img
-                src={`${post.main_image.url}`}
+                src={getStrapiImageUrl(post?.main_image?.url)}
                 alt={post.title}
                 onError={(e) => {
                   e.currentTarget.src = "/placeholder.jpg";

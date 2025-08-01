@@ -69,7 +69,7 @@ const Navigationbar = () => {
       style={{
         height: "84px",
         backgroundColor: "#222222",
-        padding: 0,
+        padding: "0px 60px",
       }}
     >
       <Container
@@ -269,9 +269,6 @@ const Navigationbar = () => {
                       color: location.pathname.startsWith("/community/")
                         ? "#00a3ff"
                         : "#A1A1A1",
-                      // background: location.pathname.startsWith("/community/")
-                      //   ? "rgba(0, 163, 255, 0.08)"
-                      //   : undefined,
                       fontWeight: location.pathname.startsWith("/community/")
                         ? "bold"
                         : undefined,
@@ -437,16 +434,6 @@ const Navigationbar = () => {
                   ไทย
                 </NavDropdown.Item>
               </NavDropdown>
-              {/* <div className="px-3 py-2">
-                <select
-                  value={i18n.language}
-                  onChange={(e) => switchLang(e.target.value as any)}
-                  className="form-select form-select-sm"
-                >
-                  <option value="en">{t("language.en")}</option>
-                  <option value="th">{t("language.th")}</option>
-                </select>
-              </div> */}
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
@@ -455,7 +442,6 @@ const Navigationbar = () => {
         <Navbar.Collapse
           id="basic-navbar-nav"
           className="d-none d-lg-flex justify-content-end align-items-center w-100"
-          style={{ marginRight: "2rem" }}
         >
           <Nav className="ms-auto d-flex align-items-center">
             <Nav.Link

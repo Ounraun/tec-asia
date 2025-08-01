@@ -40,14 +40,14 @@ const DataManagement: React.FC = () => {
   }
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
+      <header className={styles.header}>
         <h1>
           <span className={styles.data}>{t("dataManagement:data")}</span>{" "}
           <span className={styles.management}>
             {t("dataManagement:management")}
           </span>
         </h1>
-      </div>
+      </header>
       <div className={styles.mainContent}>
         <div className={styles.leftSection}>
           <img

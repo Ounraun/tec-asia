@@ -15,10 +15,10 @@ const DataCenter: React.FC = () => {
     { top: "48%", left: "70%" },
     { top: "63%", left: "48%" },
     { top: "79%", left: "72%" },
-    { top: "67%", left: "36%" },
+    { top: "64%", left: "30%" },
     { top: "75%", left: "13%" },
     { top: "40%", left: "33%" },
-    { top: "23%", left: "13%" },
+    { top: "23%", left: "7%" },
   ];
 
   useEffect(() => {
@@ -64,13 +64,13 @@ const DataCenter: React.FC = () => {
   };
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
+      <header className={styles.header}>
         <h1>
           <span className={styles.data}>{t("dataCenter:data")}</span>{" "}
           <span className={styles.center}>{t("dataCenter:center")}</span>
         </h1>
         <p className={styles.subtitle}>{facility?.subTitle || "Loading..."}</p>
-      </div>
+      </header>
 
       <div className={styles.line}></div>
 

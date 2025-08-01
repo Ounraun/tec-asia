@@ -61,7 +61,7 @@ html[lang="th"] {
   line-height: 1.7;
   letter-spacing: -1.9%;
   margin-top: 60px;
-  padding: 0 300px;
+  padding: 0 15rem;
   width: 100%;
   text-align: center;
 }
@@ -438,11 +438,11 @@ button.position-absolute {
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 700px;
+  height: 730px;
   perspective: 1000px;
   overflow: hidden;
   z-index: 1;
-  margin-top: 160px;
+  margin-top: 130px;
 }
 
 .slide {
@@ -482,7 +482,7 @@ button.position-absolute {
   line-height: 150%;
   letter-spacing: 0.72px;
   text-align: center;
-  margin-top: 18px;
+  margin-top: 3rem;
   margin-bottom: 24px;
 }
 @media (max-width: 1440px) {
@@ -494,11 +494,23 @@ button.position-absolute {
   .bg-wave {
     bottom: -224px;
   }
+  .main-text {
+    font-family: var(--font-body);
+    color: var(--color-white);
+    font-size: 32px;
+    line-height: 1.7;
+    letter-spacing: -1.9%;
+    margin-top: 60px;
+    padding: 0 1rem;
+    width: 100%;
+    text-align: center;
+  }
 }
 @media (max-width: 768px) {
   .heroSection {
     padding: 60px 0;
   }
+
   .contentLayout {
     max-width: none;
     margin: 30px auto 0;

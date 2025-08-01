@@ -16,7 +16,7 @@
 
 .header {
   text-align: center;
-  padding: 4rem 0;
+  padding: 5rem 0;
 }
 
 .header h1 {
@@ -44,7 +44,7 @@
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  font-family: var(--font-heading) ;
+  font-family: var(--font-heading);
   font-size: 64px;
   font-style: normal;
   font-weight: 600;

@@ -11,7 +11,7 @@
 
 .header {
   text-align: center;
-  padding: 4rem 0;
+  padding: 5rem 0 0;
 }
 
 .data {
@@ -252,6 +252,7 @@
   font-weight: bold;
   color: #f59e0b;
   transition: opacity 0.3s ease;
+  padding: 1rem;
 }
 
 .cardContent {

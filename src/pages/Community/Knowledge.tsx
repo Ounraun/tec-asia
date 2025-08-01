@@ -8,6 +8,7 @@ import styles from "./Knowledge.module.css";
 import { useTranslation } from "react-i18next";
 import type { BlogPost } from "../../types/blogPost";
 import { getCompanyVideoUrl } from "../../services/strapi";
+import { getStrapiImageUrl } from "../../services/strapi";
 
 const Knowledge: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -22,8 +23,6 @@ const Knowledge: React.FC = () => {
     const fetchVideo = async () => {
       const url = await getCompanyVideoUrl();
       setBridgeVideo(url);
-
-      // รอให้ state update แล้ว reload video
       setTimeout(() => {
         if (videoRef.current) {
           videoRef.current.load();
@@ -40,20 +39,13 @@ const Knowledge: React.FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        console.log("Fetching all blog posts...");
         const url = `${apiUrl}/api/blog-posts?filters[category][name][$eq]=Knowledge&populate=*`;
-        console.log("API URL:", url);
-
         const response = await fetch(url);
         const data = await response.json();
-
-        console.log("Raw API Response:", data);
-
         if (data.data && Array.isArray(data.data)) {
           const knowledgePosts = data.data.filter(
             (item: any) => item.category?.name?.toLowerCase() === "knowledge"
           );
-          console.log("\nKnowledge posts:", knowledgePosts);
           setPosts(knowledgePosts);
         }
         setLoading(false);
@@ -111,7 +103,6 @@ const Knowledge: React.FC = () => {
           </div>
         </div>
 
-        {/* AI Trends Grid */}
         <div className={styles.trendsGrid}>
           {loading ? (
             <div className={styles.loading}>Loading...</div>
@@ -120,10 +111,10 @@ const Knowledge: React.FC = () => {
           ) : (
             posts.map((post) => (
               <div key={post.id} className={styles.trendCard}>
-                {post.main_image && (
+                {getStrapiImageUrl(post?.main_image?.url) && (
                   <img
-                    src={`${post.main_image.url}`}
-                    alt={post.main_image.alternativeText || post.title}
+                    src={getStrapiImageUrl(post?.main_image?.url)}
+                    alt={post.title}
                     className={styles.cardImage}
                     onError={(e) => {
                       console.error("Image failed to load:", e);
