@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Contact from "../../components/Contact";
 import ParticlesComponent from "../../components/Particles/Particles";
 import "./Community.css";
-
+import { getStrapiImageUrl } from "../../services/strapi";
 interface Category {
   createdAt: string;
   description: string | null;
@@ -140,11 +140,11 @@ const Society = () => {
                     <h3>{post.title}</h3>
                     <p>{post.content}</p>
                   </div>
-                  {post.main_image && (
+                  {getStrapiImageUrl(post?.main_image?.url) && (
                     <div className="event-image-container">
                       <img
-                        src={`${post.main_image.url}`}
-                        alt={post.main_image.alternativeText || post.title}
+                        src={getStrapiImageUrl(post?.main_image?.url)}
+                        alt={post.title}
                         className="event-image"
                         onError={(e) => {
                           console.error("Image failed to load:", e);
