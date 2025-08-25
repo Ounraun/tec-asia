@@ -16,7 +16,7 @@ export interface BlogPost {
   content: string;
   show_main: boolean;
   gallery_image: any | null;
-  main_image:
+  mainImage:
     | {
         id: number;
         documentId: string;

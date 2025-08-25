@@ -12,7 +12,7 @@ interface KnowledgePost {
   title: string;
   content: string;
   subtitle: string;
-  main_image: {
+  mainImage: {
     url: string;
     alternativeText: string;
   };
@@ -80,7 +80,7 @@ const KnowledgeDetail: React.FC = () => {
         {/* Main Image */}
         <div className={styles.mainImageContainer}>
           <img
-            src={getStrapiImageUrl(post?.main_image?.url)}
+            src={getStrapiImageUrl(post?.mainImage?.url)}
             alt={post.title}
             className={styles.mainImage}
           />

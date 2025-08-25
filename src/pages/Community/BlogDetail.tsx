@@ -19,7 +19,7 @@ interface BlogPost {
   documentId: string;
   title: string;
   content: string;
-  main_image: {
+  mainImage: {
     url: string;
     alternativeText: string;
   } | null;
@@ -117,9 +117,9 @@ const BlogDetail = () => {
         <div className="main-content">
           {/* Main Image */}
           <div className="main-image">
-            {getStrapiImageUrl(post?.main_image?.url) ? (
+            {getStrapiImageUrl(post?.mainImage?.url) ? (
               <img
-                src={getStrapiImageUrl(post?.main_image?.url)}
+                src={getStrapiImageUrl(post?.mainImage?.url)}
                 alt={post.title}
                 onError={(e) => {
                   e.currentTarget.src = "/placeholder.jpg";
@@ -218,9 +218,9 @@ const BlogDetail = () => {
                       }
                       style={{ cursor: "pointer" }}
                     >
-                      {relatedPost.main_image?.url && (
+                      {relatedPost.mainImage?.url && (
                         <img
-                          src={`${relatedPost.main_image.url}`}
+                          src={`${relatedPost.mainImage.url}`}
                           alt={relatedPost.title}
                           onError={(e) => {
                             e.currentTarget.src = "/placeholder.jpg";

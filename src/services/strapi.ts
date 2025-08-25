@@ -111,10 +111,11 @@ export function getLatestPostByCategory(category: string) {
   );
 }
 
+export const API_ORIGIN =
+  (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+
 export function getStrapiImageUrl(url?: string) {
   if (!url) return "";
-  const base =
-    import.meta.env.VITE_API_URL ||
-    "http://localhost:1337";
-  return url.startsWith("http") ? url : base + url;
+  if (/^https?:\/\//i.test(url)) return url;        // ได้ลิงก์เต็มอยู่แล้ว
+  return `${API_ORIGIN}${url.startsWith("/") ? "" : "/"}${url}`;
 }

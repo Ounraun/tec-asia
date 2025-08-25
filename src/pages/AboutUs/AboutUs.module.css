@@ -131,7 +131,7 @@ html[lang="th"] {
   margin: 0;
 }
 .service-layout {
-  background-image: url("src/assets/bg-solutions.svg");
+  /* background-image: url("src/assets/bg-solutions.svg"); */
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;

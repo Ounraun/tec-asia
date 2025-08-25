@@ -97,7 +97,7 @@ const Knowledge: React.FC = () => {
               autoPlay
               poster="/path-to-video-thumbnail.jpg"
             >
-              <source src={bridgeVideo ?? ""} type="video/mp4" />
+              <source src="/knowledge/knowledge.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
@@ -111,9 +111,9 @@ const Knowledge: React.FC = () => {
           ) : (
             posts.map((post) => (
               <div key={post.id} className={styles.trendCard}>
-                {getStrapiImageUrl(post?.main_image?.url) && (
+                {getStrapiImageUrl(post?.mainImage?.url) && (
                   <img
-                    src={getStrapiImageUrl(post?.main_image?.url)}
+                    src={getStrapiImageUrl(post?.mainImage?.url)}
                     alt={post.title}
                     className={styles.cardImage}
                     onError={(e) => {

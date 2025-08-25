@@ -20,7 +20,7 @@ interface BlogPost {
   createdAt: string;
   documentId: string;
   gallery_image: null | any;
-  main_image: {
+  mainImage: {
     id: number;
     documentId: string;
     name: string;
@@ -55,7 +55,7 @@ const Society = () => {
               title: item.title,
               content: item.content,
               category: item.category?.name,
-              main_image: item.main_image,
+              mainImage: item.mainImage,
               show_main: item.show_main,
               documentId: item.documentId,
             });
@@ -140,10 +140,10 @@ const Society = () => {
                     <h3>{post.title}</h3>
                     <p>{post.content}</p>
                   </div>
-                  {getStrapiImageUrl(post?.main_image?.url) && (
+                  {getStrapiImageUrl(post?.mainImage?.url) && (
                     <div className="event-image-container">
                       <img
-                        src={getStrapiImageUrl(post?.main_image?.url)}
+                        src={getStrapiImageUrl(post?.mainImage?.url)}
                         alt={post.title}
                         className="event-image"
                         onError={(e) => {

@@ -251,6 +251,15 @@ const AboutUs = () => {
               else if (i === nextIdx) posClass = aboutStyles.next;
               else posClass = "";
 
+              const rawUrl = posts[key]?.mainImage?.url; 
+              const imageUrl = getStrapiImageUrl(rawUrl); 
+              console.log("[AboutUs] image", {
+                key,
+                rawUrl,
+                imageUrl,
+                base: import.meta.env.VITE_API_URL,
+              });
+
               return (
                 <div
                   key={key}
@@ -262,7 +271,7 @@ const AboutUs = () => {
                 >
                   <CommunityCard
                     title={t(`communityCard:${key}`)}
-                    imageUrl={getStrapiImageUrl(posts[key]?.main_image?.url)}
+                    imageUrl={imageUrl}
                     excerpt={truncate(posts[key]?.content)}
                     date={formatDate(posts[key]?.createdAt)}
                     onReadMore={() =>
