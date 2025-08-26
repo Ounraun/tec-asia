@@ -71,11 +71,14 @@ const Knowledge: React.FC = () => {
         <div className={styles.knowledgeTopSection}>
           <div className={styles.knowledgeHeader}>
             <p className={styles.knowledgeSubtitle}>
-              {t("knowledge:subTitle1")}
-              <br />
-              {t("knowledge:subTitle2")}
-              <br />
-              {t("knowledge:subTitle3")}
+              ดิเอกเซลเลน
+              เราให้ความสำคัญกับองค์ความรู้และเชื่อว่าการส่งมอบองค์ความรู้ที่ถูกต้องและมีคุณภาพ
+              จะช่วยให้ลูกค้าเข้าถึงข้อมูลที่เป็นประโยชน์
+              และเข้าใจถึงคุณค่าการบริการ
+              ไม่เพียงแต่เพื่อการตัดสินใจที่ชัดเจนขึ้น
+              แต่ยังทำให้เห็นว่าบริการด้าน IT Solutions ของเรา
+              สามารถตอบโจทย์ความต้องการ
+              และสนับสนุนการเติบโตของธุรกิจได้อย่างแท้จริง
             </p>
             <button className={styles.moreKnowledgeBtn}>
               <a

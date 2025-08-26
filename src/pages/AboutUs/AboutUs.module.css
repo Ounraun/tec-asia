@@ -129,6 +129,7 @@ html[lang="th"] {
   line-height: 1.42;
   font-size: 3rem;
   margin: 0;
+  font-weight: 900;
 }
 .service-layout {
   /* background-image: url("src/assets/bg-solutions.svg"); */
