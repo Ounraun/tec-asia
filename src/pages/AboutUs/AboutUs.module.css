@@ -47,12 +47,15 @@ html[lang="th"] {
 .main-title {
   font-family: var(--font-heading);
   font-weight: bold;
-  font-size: clamp(4rem, 8vw, 4rem);
+  font-size: clamp(2rem, 8vw, 4rem);
   color: white;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
   text-align: center;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  display: block;
 }
 .main-text {
   font-family: var(--font-body);
