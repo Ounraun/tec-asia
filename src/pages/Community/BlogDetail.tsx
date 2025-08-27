@@ -169,8 +169,9 @@ const BlogDetail = () => {
                 <SwiperSlide key={index}>
                   <div className="gallery-item">
                     <img
-                      src={`${image.url}`}
+                      src={getStrapiImageUrl(image?.url)}
                       alt={`Gallery ${index + 1}`}
+                      loading="lazy"
                       onError={(e) => {
                         e.currentTarget.src = "/placeholder.jpg";
                       }}
@@ -220,8 +221,9 @@ const BlogDetail = () => {
                     >
                       {relatedPost.mainImage?.url && (
                         <img
-                          src={`${relatedPost.mainImage.url}`}
+                          src={getStrapiImageUrl(relatedPost.mainImage?.url)}
                           alt={relatedPost.title}
+                          loading="lazy"
                           onError={(e) => {
                             e.currentTarget.src = "/placeholder.jpg";
                           }}
