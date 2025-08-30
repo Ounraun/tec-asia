@@ -164,26 +164,26 @@ const MeetingRoomsBooking: React.FC = () => {
 
   /* -------------------- Fetch bookings -------------------- */
   const fetchBookings = async () => {
+    if (!roomId) return;
     try {
       const startDate = ymdd(currentDisplayedWeek.monday);
       const endDate = ymdd(currentDisplayedWeek.sunday);
 
-      const endpoint =
-        `${apiUrl}/api/bookings` +
-        `?locale=${LOCALE}` +
-        `&filters[date][$gte]=${startDate}` +
-        `&filters[date][$lte]=${endDate}` +
-        `&populate=*`;
+      // ✅ สร้าง query ด้วย URLSearchParams ให้ปลอดภัย/อ่านง่าย
+      const qs = new URLSearchParams({
+        locale: LOCALE,
+        "filters[date][$gte]": startDate,
+        "filters[date][$lte]": endDate,
+        "filters[meeting_room][documentId][$eq]": roomId, // ✅ filter ที่เซิร์ฟเวอร์
+        populate: "*",
+      });
 
-      const res = await fetch(endpoint);
+      const url = `${apiUrl}/api/bookings?${qs.toString()}`;
+      const res = await fetch(url);
       if (!res.ok) throw new Error("โหลดข้อมูลการจองไม่สำเร็จ");
 
-      const data = await res.json();
-
-      const filtered: Booking[] = (data?.data || []).filter(
-        (b: Booking) => b.meeting_room && b.meeting_room.documentId === roomId
-      );
-      setBookings(filtered);
+      const json = await res.json();
+      setBookings(json?.data || []); // ✅ ไม่ต้อง filter ซ้ำฝั่ง client
     } catch (err: any) {
       setFetchError(err?.message || "เกิดข้อผิดพลาดในการโหลดข้อมูล");
     } finally {
@@ -359,11 +359,11 @@ const MeetingRoomsBooking: React.FC = () => {
   /* -------------------- Submit / Update -------------------- */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSubmitting) return; // ⬅️ กันดับเบิลคลิก
+    if (isSubmitting) return;
     if (!validateForm()) return;
 
-    setIsSubmitting(true); // ⬅️ ล็อกการส่ง
-    const rid = genRid(); // ⬅️ สร้างไอดีแปะไปกับรีเควสต์
+    setIsSubmitting(true);
+    const rid = genRid();
 
     try {
       const participants = formData.participants.filter((e) => e.trim() !== "");
@@ -380,18 +380,20 @@ const MeetingRoomsBooking: React.FC = () => {
           contact_email: formData.contact_email,
           contact_name: formData.contact_name,
           contact_phone: formData.contact_phone || "",
-          meeting_room: roomId ? { connect: [roomId] } : undefined,
+          meeting_room: roomId
+            ? { connect: [{ documentId: roomId }] }
+            : undefined,
           email: participants.map((email) => ({ email })),
         },
       };
 
-      const res = await fetch(`${apiUrl}/api/bookings?locale=${LOCALE}`, {
+      const url = `${apiUrl}/api/bookings?locale=${LOCALE}&rid=${encodeURIComponent(
+        rid
+      )}`;
+
+      const res = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Request-Id": rid, // ⬅️ สำคัญ
-          "Cache-Control": "no-store", // ⬅️ กัน proxy บางตัว
-        },
+        headers: { "Content-Type": "application/json" }, // ✅ พอแค่นี้
         body: JSON.stringify(payload),
       });
 
@@ -401,7 +403,7 @@ const MeetingRoomsBooking: React.FC = () => {
       }
 
       navigate("/booking-confirm");
-      // ... (รีเซ็ต state ต่าง ๆ ตามเดิม)
+      // reset form
       setFormData({
         subject: "",
         description: "",
@@ -423,13 +425,13 @@ const MeetingRoomsBooking: React.FC = () => {
     } catch (err: any) {
       window.alert(err?.message || "เกิดข้อผิดพลาดในการจอง");
     } finally {
-      setIsSubmitting(false); // ⬅️ ปลดล็อกไม่ว่าผลลัพธ์เป็นอะไร
+      setIsSubmitting(false);
     }
   };
 
   const handleUpdateBooking = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSubmitting) return; // ⬅️ กันดับเบิลคลิก
+    if (isSubmitting) return;
     if (!validateForm() || !editingBookingDocId) return;
 
     setIsSubmitting(true);
@@ -450,23 +452,22 @@ const MeetingRoomsBooking: React.FC = () => {
           contact_email: formData.contact_email,
           contact_name: formData.contact_name,
           contact_phone: formData.contact_phone || "",
-          meeting_room: roomId ? { connect: [roomId] } : undefined,
+          meeting_room: roomId
+            ? { connect: [{ documentId: roomId }] }
+            : undefined,
           email: participants.map((email) => ({ email })),
         },
       };
 
-      const res = await fetch(
-        `${apiUrl}/api/bookings/${editingBookingDocId}?locale=${LOCALE}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Request-Id": rid, // ⬅️ สำคัญ
-            "Cache-Control": "no-store",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const url = `${apiUrl}/api/bookings/${editingBookingDocId}?locale=${LOCALE}&rid=${encodeURIComponent(
+        rid
+      )}`;
+
+      const res = await fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" }, // ✅ พอแค่นี้
+        body: JSON.stringify(payload),
+      });
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -482,7 +483,7 @@ const MeetingRoomsBooking: React.FC = () => {
     } catch (err: any) {
       window.alert(err?.message || "เกิดข้อผิดพลาดในการอัพเดท");
     } finally {
-      setIsSubmitting(false); // ⬅️ ปลดล็อก
+      setIsSubmitting(false);
     }
   };
 
