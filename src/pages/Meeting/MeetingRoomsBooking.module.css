@@ -330,6 +330,8 @@
 }
 
 .emailInput {
+  width: 100%; /* กินเต็มบรรทัด */
+  box-sizing: border-box;
   margin-bottom: 0.5rem;
 }
 
@@ -531,4 +533,100 @@
   align-items: center;
   gap: 0.5rem;
   justify-content: flex-end;
+}
+
+.participantInputs {
+  display: flex;
+  flex-direction: column; /* เรียงแนวตั้ง */
+  gap: 12px; /* ระยะห่างระหว่างช่อง */
+  width: 100%;
+}
+
+.participantRow {
+  width: 100%;
+}
+
+.addMoreBelow {
+  margin-top: 10px; /* แยกจากช่องสุดท้าย */
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* ===== Buttons (shared) ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* primary = โทนเดียวกับปุ่มยืนยันการจอง */
+.btnPrimary {
+  background-color: #3498db;
+  color: #fff;
+}
+.btnPrimary:hover {
+  background-color: #2f89c7;
+}
+.btnPrimary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ปุ่มเพิ่มผู้เข้าร่วม: แค่จัดระยะให้อยู่ใต้ช่อง input สุดท้าย */
+.addParticipant {
+  margin-top: 0.5rem;
+  align-self: flex-start; /* ไม่ยืดเต็มบรรทัด */
+}
+
+.plusIcon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.btnGhost {
+  background: transparent;
+  color: #3498db; /* ตัวหนังสือน้ำเงินเบา ๆ */
+  border: 1px solid transparent; /* ไม่มีขอบให้เห็น */
+}
+
+.btnGhost:hover {
+  background-color: #3498db; /* hover เป็นน้ำเงิน */
+  color: #fff;
+  border-color: #3498db;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(52, 152, 219, 0.25);
+}
+
+.btnGhost:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btnGhost:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* โฟกัสด้วยคีย์บอร์ด */
+.btn:focus-visible {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .formGroup {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .formGroup label {
+    min-width: 0;
+  }
 }

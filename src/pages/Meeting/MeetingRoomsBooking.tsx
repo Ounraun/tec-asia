@@ -1,32 +1,24 @@
-import React, { ReactNode, useEffect, useState, ChangeEvent } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.min.css";
 import styles from "./MeetingRoomsBooking.module.css";
 import ParticlesComponent from "../../components/Particles/Particles";
 
+/* -------------------- Types -------------------- */
 interface Booking {
-  description: ReactNode;
-  subject: ReactNode;
-  contact_name: ReactNode;
-  contact_phone: ReactNode;
-  contact_email: ReactNode;
-  end_time: string;
-  start_time: string;
-  date: string;
-  booked_by: ReactNode;
-  meeting_room: any;
   id: number;
-  purpose: string;
-  email?: {
-    data: {
-      id: number;
-      attributes: {
-        email: string;
-      };
-    }[];
-  };
   documentId: string;
+  date: string; // "YYYY-MM-DD"
+  start_time: string; // "HH:mm[:ss[.SSS]]" หรือ ISO
+  end_time: string; // เช่น "08:00:00.000"
+  subject: string;
+  description: string;
+  contact_name: string;
+  contact_phone: string;
+  contact_email: string;
+  meeting_room?: { documentId: string };
+  email?: { data: { id: number; attributes: { email: string } }[] };
 }
 
 interface RoomDetails {
@@ -36,95 +28,106 @@ interface RoomDetails {
   max: number;
 }
 
-// ต้องมี interface สำหรับข้อมูลที่จะส่งไป Strapi
 interface BookingFormData {
-  subject: string; // หัวข้อการประชุม
-  description: string; // รายละเอียด
-  contact_email: string; // อีเมล์ผู้จอง
-  contact_name: string; // ชื่อผู้จอง
-  contact_phone?: string; // เบอร์ติดต่อ
-  participants: string[]; // อีเมล์ผู้เข้าร่วม
-  date: string; // วันที่จอง
-  start_time: string; // เวลาเริ่ม
-  end_time: string; // เวลาสิ้นสุด
-  meeting_room: string; // ID ห้องประชุม
+  subject: string;
+  description: string;
+  contact_email: string;
+  contact_name: string;
+  contact_phone?: string;
+  participants: string[];
+  date: string;
+  start_time: string;
+  end_time: string;
+  meeting_room: string;
 }
+const genRid = () =>
+  `fe_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+
+/* -------------------- Const -------------------- */
+const LOCALE = "en";
+
+/* -------------------- Helpers -------------------- */
+// 08:00 / 08:00:00 / ISO -> minutes since 00:00
+const toMinutes = (val: string): number => {
+  if (!val) return 0;
+  if (val.includes("T")) {
+    const d = new Date(val);
+    return d.getHours() * 60 + d.getMinutes();
+  }
+  const [h, m] = val.split(":");
+  return (parseInt(h || "0", 10) || 0) * 60 + (parseInt(m || "0", 10) || 0);
+};
+
+// overlap แบบ half-open ช่วง [aStart, aEnd) ชน [bStart, bEnd) ?
+const rangesOverlap = (
+  aStart: number,
+  aEnd: number,
+  bStart: number,
+  bEnd: number
+) => aStart < bEnd && bStart < aEnd;
 
 const getWeekDates = (date?: Date) => {
   const today = date || new Date();
-  const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  const currentDay = today.getDay(); // 0..6 (Sun..Sat)
   const monday = new Date(today);
-
-  // ถ้าวันนี้เป็นวันอาทิตย์ (0) ให้ถอยกลับไป 6 วัน
-  // ถ้าเป็นวันอื่นๆ ให้ถอยกลับไปจนถึงวันจันทร์
   const daysToMonday = currentDay === 0 ? 6 : currentDay - 1;
   monday.setDate(today.getDate() - daysToMonday);
-
-  // ตั้งเวลาเป็น 00:00:00
   monday.setHours(0, 0, 0, 0);
 
   const sunday = new Date(monday);
   sunday.setDate(monday.getDate() + 6);
-  // ตั้งเวลาเป็น 23:59:59
   sunday.setHours(23, 59, 59, 999);
 
   return { monday, sunday };
 };
 
-const formatDate = (date: Date) => {
-  return date.toLocaleDateString("th-TH", {
+const thDate = (d: Date) =>
+  d.toLocaleDateString("th-TH", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   });
-};
 
-// เพิ่มฟังก์ชันสำหรับสร้างตัวเลือกเวลา
+const ymdd = (d: Date) => d.toISOString().split("T")[0];
+
 const generateTimeOptions = () => {
-  const times: string[] = [];
-  for (let hour = 7; hour <= 20; hour++) {
-    const formattedHour = hour.toString().padStart(2, "0");
-    times.push(`${formattedHour}:00`);
-  }
-  return times;
+  const t: string[] = [];
+  for (let h = 7; h <= 20; h++) t.push(`${String(h).padStart(2, "0")}:00`);
+  return t;
 };
 
-// เพิ่มฟังก์ชันสำหรับตรวจสอบเวลาที่เลือก
 const validateTimeSelection = (start: string, end: string): boolean => {
-  const startHour = parseInt(start.split(":")[0]);
-  const endHour = parseInt(end.split(":")[0]);
-  const startMinute = parseInt(start.split(":")[1]);
-  const endMinute = parseInt(end.split(":")[1]);
-
-  // แปลงเป็นนาทีเพื่อเปรียบเทียบ
-  const startTime = startHour * 60 + startMinute;
-  const endTime = endHour * 60 + endMinute;
-  const minTime = 7 * 60; // 07:00
-  const maxTime = 20 * 60; // 20:00
-
-  return startTime >= minTime && endTime <= maxTime && startTime < endTime;
+  const s = toMinutes(start);
+  const e = toMinutes(end);
+  return s >= 7 * 60 && e <= 20 * 60 && s < e;
 };
 
+/* -------------------- Component -------------------- */
 const MeetingRoomsBooking: React.FC = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [fetchError, setFetchError] = useState<string | null>(null); // สำหรับโหลด bookings
+  const [formError, setFormError] = useState<string | null>(null); // สำหรับ validate ฟอร์ม
+
   const [roomDetails, setRoomDetails] = useState<RoomDetails | null>(null);
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [weekDates, setWeekDates] = useState<{ monday: Date; sunday: Date }>(
+  const [weekDates, setWeekDates] = useState(getWeekDates());
+  const [currentDisplayedWeek, setCurrentDisplayedWeek] = useState(
     getWeekDates()
   );
-  const [currentDisplayedWeek, setCurrentDisplayedWeek] = useState<{
-    monday: Date;
-    sunday: Date;
-  }>(getWeekDates());
+
   const [refreshKey, setRefreshKey] = useState(0);
-  const [startTime, setStartTime] = useState<string>("");
-  const [endTime, setEndTime] = useState<string>("");
+
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [timeError, setTimeError] = useState<string | null>(null);
+
   const [formData, setFormData] = useState<BookingFormData>({
     subject: "",
     description: "",
@@ -137,6 +140,7 @@ const MeetingRoomsBooking: React.FC = () => {
     end_time: "",
     meeting_room: roomId || "",
   });
+
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [isViewMode, setIsViewMode] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -147,111 +151,51 @@ const MeetingRoomsBooking: React.FC = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  const parseTimeString = (dateStr: string, timeStr: string | undefined) => {
-    if (!timeStr) return new Date();
-
-    console.log("Parsing date and time:", { dateStr, timeStr });
-
-    const [hours, minutes] = timeStr.split(":");
-    const [year, month, day] = dateStr.split("-");
-    const date = new Date(
-      parseInt(year),
-      parseInt(month) - 1,
-      parseInt(day),
-      parseInt(hours),
-      parseInt(minutes),
-      0,
-      0
-    );
-
-    console.log("Parsed date:", date);
-    return date;
-  };
-
+  /* -------- room details from query string -------- */
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const roomDetails: RoomDetails = {
+    setRoomDetails({
       name: params.get("name") || "",
       description: params.get("description") || "",
       min: parseInt(params.get("min") || "0"),
       max: parseInt(params.get("max") || "0"),
-    };
-    setRoomDetails(roomDetails);
+    });
   }, [location.search]);
 
+  /* -------------------- Fetch bookings -------------------- */
   const fetchBookings = async () => {
     try {
-      const formatDateForAPI = (date: Date) => {
-        return date.toISOString().split("T")[0];
-      };
+      const startDate = ymdd(currentDisplayedWeek.monday);
+      const endDate = ymdd(currentDisplayedWeek.sunday);
 
-      const startDate = formatDateForAPI(currentDisplayedWeek.monday);
-      const endDate = formatDateForAPI(currentDisplayedWeek.sunday);
+      const endpoint =
+        `${apiUrl}/api/bookings` +
+        `?locale=${LOCALE}` +
+        `&filters[date][$gte]=${startDate}` +
+        `&filters[date][$lte]=${endDate}` +
+        `&populate=*`;
 
-      const apiEndpoint = `${apiUrl}/api/bookings?filters[date][$gte]=${startDate}&filters[date][$lte]=${endDate}&populate=*`;
-      console.log("กำลังดึงข้อมูลการจองจาก API:", {
-        endpoint: apiEndpoint,
-        startDate,
-        endDate,
-        currentDisplayedWeek: {
-          monday: currentDisplayedWeek.monday.toISOString(),
-          sunday: currentDisplayedWeek.sunday.toISOString(),
-        },
-      });
+      const res = await fetch(endpoint);
+      if (!res.ok) throw new Error("โหลดข้อมูลการจองไม่สำเร็จ");
 
-      const response = await fetch(apiEndpoint);
+      const data = await res.json();
 
-      if (!response.ok) {
-        throw new Error("ไม่สามารถโหลดข้อมูลการจองได้");
-      }
-
-      const data = await response.json();
-      console.log("ข้อมูลการจองที่ได้จาก API:", data);
-
-      if (data.data) {
-        const filteredBookings = data.data.filter(
-          (booking: Booking) =>
-            !booking.meeting_room ||
-            (booking.meeting_room && booking.meeting_room.documentId === roomId)
-        );
-        console.log("ข้อมูลการจองหลังจากกรอง:", {
-          totalBookings: filteredBookings.length,
-          bookings: filteredBookings,
-        });
-        setBookings(filteredBookings);
-      } else {
-        console.log("ไม่พบข้อมูลการจอง");
-        setBookings([]);
-      }
-    } catch (err) {
-      console.error("Error fetching bookings:", err);
-      setError(
-        err instanceof Error ? err.message : "เกิดข้อผิดพลาดในการโหลดข้อมูล"
+      const filtered: Booking[] = (data?.data || []).filter(
+        (b: Booking) => b.meeting_room && b.meeting_room.documentId === roomId
       );
+      setBookings(filtered);
+    } catch (err: any) {
+      setFetchError(err?.message || "เกิดข้อผิดพลาดในการโหลดข้อมูล");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (roomId) {
-      const fetchData = async () => {
-        try {
-          console.log("Week dates changed:", {
-            monday: currentDisplayedWeek.monday.toISOString(),
-            sunday: currentDisplayedWeek.sunday.toISOString(),
-            refreshKey: refreshKey,
-          });
-
-          setLoading(true);
-          await fetchBookings();
-        } catch (error) {
-          console.error("Error in fetchData:", error);
-        }
-      };
-
-      fetchData();
-    }
+    if (!roomId) return;
+    setLoading(true);
+    fetchBookings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     roomId,
     currentDisplayedWeek.monday.toISOString(),
@@ -261,89 +205,70 @@ const MeetingRoomsBooking: React.FC = () => {
   ]);
 
   useEffect(() => {
-    const handleVisibilityChange = () => {
+    const onFocusOrVisible = () => {
       if (document.visibilityState === "visible") {
         fetchBookings();
       }
     };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("focus", fetchBookings);
-
+    document.addEventListener("visibilitychange", onFocusOrVisible);
+    window.addEventListener("focus", onFocusOrVisible);
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("focus", fetchBookings);
+      document.removeEventListener("visibilitychange", onFocusOrVisible);
+      window.removeEventListener("focus", onFocusOrVisible);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /* -------------------- Week nav -------------------- */
   const handlePreviousWeek = () => {
-    setLoading(true);
-    const newMonday = new Date(currentDisplayedWeek.monday);
-    newMonday.setDate(currentDisplayedWeek.monday.getDate() - 7);
-    newMonday.setHours(0, 0, 0, 0);
+    const newMon = new Date(currentDisplayedWeek.monday);
+    newMon.setDate(newMon.getDate() - 7);
+    newMon.setHours(0, 0, 0, 0);
 
-    const newSunday = new Date(newMonday);
-    newSunday.setDate(newMonday.getDate() + 6);
-    newSunday.setHours(23, 59, 59, 999);
+    const newSun = new Date(newMon);
+    newSun.setDate(newMon.getDate() + 6);
+    newSun.setHours(23, 59, 59, 999);
 
-    console.log("Changing to previous week:", {
-      newMonday: newMonday.toISOString(),
-      newSunday: newSunday.toISOString(),
-    });
-
-    setCurrentDisplayedWeek({ monday: newMonday, sunday: newSunday });
-    setWeekDates({ monday: newMonday, sunday: newSunday });
+    setCurrentDisplayedWeek({ monday: newMon, sunday: newSun });
+    setWeekDates({ monday: newMon, sunday: newSun });
   };
 
   const handleNextWeek = () => {
-    setLoading(true);
-    const newMonday = new Date(currentDisplayedWeek.monday);
-    newMonday.setDate(currentDisplayedWeek.monday.getDate() + 7);
-    newMonday.setHours(0, 0, 0, 0);
+    const newMon = new Date(currentDisplayedWeek.monday);
+    newMon.setDate(newMon.getDate() + 7);
+    newMon.setHours(0, 0, 0, 0);
 
-    const newSunday = new Date(newMonday);
-    newSunday.setDate(newMonday.getDate() + 6);
-    newSunday.setHours(23, 59, 59, 999);
+    const newSun = new Date(newMon);
+    newSun.setDate(newMon.getDate() + 6);
+    newSun.setHours(23, 59, 59, 999);
 
-    console.log("Changing to next week:", {
-      newMonday: newMonday.toISOString(),
-      newSunday: newSunday.toISOString(),
-    });
-
-    setCurrentDisplayedWeek({ monday: newMonday, sunday: newSunday });
-    setWeekDates({ monday: newMonday, sunday: newSunday });
+    setCurrentDisplayedWeek({ monday: newMon, sunday: newSun });
+    setWeekDates({ monday: newMon, sunday: newSun });
   };
 
+  /* -------------------- Form handlers -------------------- */
   const handleStartTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newStartTime = e.target.value;
-    setStartTime(newStartTime);
-
-    if (endTime && !validateTimeSelection(newStartTime, endTime)) {
-      setTimeError(
-        "กรุณาเลือกเวลาระหว่าง 07:00 - 20:00 และเวลาเริ่มต้นต้องน้อยกว่าเวลาสิ้นสุด"
-      );
-    } else {
-      setTimeError(null);
-    }
+    const v = e.target.value;
+    setStartTime(v);
+    setTimeError(
+      endTime && !validateTimeSelection(v, endTime)
+        ? "กรุณาเลือกเวลา 07:00–20:00 และเวลาเริ่ม < เวลาสิ้นสุด"
+        : null
+    );
   };
 
   const handleEndTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newEndTime = e.target.value;
-    setEndTime(newEndTime);
-
-    if (startTime && !validateTimeSelection(startTime, newEndTime)) {
-      setTimeError(
-        "กรุณาเลือกเวลาระหว่าง 07:00 - 20:00 และเวลาเริ่มต้นต้องน้อยกว่าเวลาสิ้นสุด"
-      );
-    } else {
-      setTimeError(null);
-    }
+    const v = e.target.value;
+    setEndTime(v);
+    setTimeError(
+      startTime && !validateTimeSelection(startTime, v)
+        ? "กรุณาเลือกเวลา 07:00–20:00 และเวลาเริ่ม < เวลาสิ้นสุด"
+        : null
+    );
   };
 
-  // สร้างตัวเลือกเวลา
-  const timeOptions = generateTimeOptions();
+  const timeOptions = React.useMemo(generateTimeOptions, []);
 
-  // ฟังก์ชันจัดการการเปลี่ยนแปลงข้อมูลในฟอร์ม
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -351,191 +276,102 @@ const MeetingRoomsBooking: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ฟังก์ชันจัดการผู้เข้าร่วม
-  const handleParticipantChange = (index: number, value: string) => {
-    const newParticipants = [...formData.participants];
-    newParticipants[index] = value;
-    setFormData((prev) => ({
-      ...prev,
-      participants: newParticipants,
-    }));
+  const handleParticipantChange = (idx: number, value: string) => {
+    const list = [...formData.participants];
+    list[idx] = value;
+    setFormData((prev) => ({ ...prev, participants: list }));
   };
 
-  // เพิ่มฟังก์ชันตรวจสอบอีเมล์
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  /* -------------------- Validators -------------------- */
+  const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
-  // ตรวจสอบข้อมูลที่จำเป็น
-  const validateRequiredFields = (): boolean => {
+  const validateRequiredFields = () => {
     if (
       !formData.subject ||
       !formData.description ||
       !formData.contact_email ||
       !formData.contact_name
     ) {
-      setError("กรุณากรอกข้อมูลให้ครบถ้วน");
+      setFormError("กรุณากรอกข้อมูลให้ครบ");
       return false;
     }
-
     if (!selectedDate || !startTime || !endTime) {
-      setError("กรุณาเลือกวันที่และเวลาให้ครบถ้วน");
+      setFormError("กรุณาเลือกวันที่และเวลาให้ครบ");
       return false;
     }
-
     return true;
   };
 
-  // ตรวจสอบรูปแบบอีเมล์
-  const validateEmails = (): boolean => {
-    console.log("Validating emails:", {
-      contact_email: formData.contact_email,
-      participants: formData.participants,
-    });
-
-    if (!validateEmail(formData.contact_email)) {
-      setError("รูปแบบอีเมล์ผู้จองไม่ถูกต้อง");
+  const validateEmails = () => {
+    if (!isEmail(formData.contact_email)) {
+      setFormError("รูปแบบอีเมล์ผู้จองไม่ถูกต้อง");
       return false;
     }
-
-    // กรองเฉพาะอีเมล์ที่ไม่ว่างเปล่า
-    const filledParticipants = formData.participants.filter(
-      (email) => email.trim() !== ""
-    );
-    console.log("Filled participants:", filledParticipants);
-
-    // ถ้าไม่มีผู้เข้าร่วม ให้ผ่านการตรวจสอบ
-    if (filledParticipants.length === 0) {
-      return true;
+    const invalid = formData.participants
+      .filter((e) => e.trim() !== "")
+      .filter((e) => !isEmail(e));
+    if (invalid.length) {
+      setFormError(`อีเมล์ผู้เข้าร่วมไม่ถูกต้อง: ${invalid.join(", ")}`);
+      return false;
     }
+    return true;
+  };
 
-    // ตรวจสอบรูปแบบอีเมล์ของผู้เข้าร่วมที่กรอกข้อมูล
-    const invalidParticipants = filledParticipants.filter(
-      (email) => !validateEmail(email)
-    );
-
-    console.log("Invalid participants:", invalidParticipants);
-
-    if (invalidParticipants.length > 0) {
-      setError(
-        `รูปแบบอีเมล์ผู้เข้าร่วมไม่ถูกต้อง: ${invalidParticipants.join(", ")}`
+  const validateTime = () => {
+    if (!validateTimeSelection(startTime, endTime)) {
+      setFormError(
+        "เวลาจองต้องอยู่ระหว่าง 07:00 - 20:00 และเวลาเริ่ม < เวลาสิ้นสุด"
       );
       return false;
     }
-
     return true;
   };
 
-  // ตรวจสอบความถูกต้องของเวลา
-  const validateTime = (): boolean => {
-    const startHour = parseInt(startTime.split(":")[0]);
-    const endHour = parseInt(endTime.split(":")[0]);
+  const validateBookingOverlap = () => {
+    const day = selectedDate ? ymdd(selectedDate) : "";
+    const sReq = toMinutes(startTime);
+    const eReq = toMinutes(endTime);
 
-    if (startHour < 7 || endHour > 20) {
-      setError("เวลาจองต้องอยู่ระหว่าง 07:00 - 20:00 น.");
-      return false;
-    }
-
-    if (startTime >= endTime) {
-      setError("เวลาเริ่มต้นต้องน้อยกว่าเวลาสิ้นสุด");
-      return false;
-    }
-
-    return true;
-  };
-
-  // ตรวจสอบการจองซ้ำ
-  const validateBookingOverlap = (): boolean => {
-    const selectedDateStr = selectedDate?.toISOString().split("T")[0];
-
-    console.log("กำลังตรวจสอบการจองซ้ำ:", {
-      วันที่เลือก: selectedDateStr,
-      เวลาเริ่ม: startTime,
-      เวลาสิ้นสุด: endTime,
-      การจองทั้งหมด: bookings,
-      กำลังแก้ไขการจอง: {
-        id: editingBookingId,
-        documentId: editingBookingDocId,
-      },
+    const clash = bookings.find((b) => {
+      if (b.documentId === editingBookingDocId) return false; // ข้ามเรคอร์ดที่กำลังแก้
+      if (b.date !== day) return false;
+      const sB = toMinutes(b.start_time);
+      const eB = toMinutes(b.end_time);
+      return rangesOverlap(sReq, eReq, sB, eB);
     });
 
-    const overlappingBooking = bookings.find((booking) => {
-      // ข้ามการตรวจสอบถ้าเป็นการจองเดียวกันที่กำลังแก้ไข
-      if (booking.documentId === editingBookingDocId) {
-        console.log("ข้ามการตรวจสอบการจองที่กำลังแก้ไข:", {
-          id: booking.id,
-          documentId: booking.documentId,
-        });
-        return false;
-      }
-
-      if (booking.date !== selectedDateStr) return false;
-
-      const bookingStart = booking.start_time;
-      const bookingEnd = booking.end_time;
-
-      const isOverlap =
-        (startTime >= bookingStart && startTime < bookingEnd) ||
-        (endTime > bookingStart && endTime <= bookingEnd) ||
-        (startTime <= bookingStart && endTime >= bookingEnd);
-
-      if (isOverlap) {
-        console.log("พบการจองที่ซ้ำซ้อน:", {
-          การจองที่ซ้ำ: {
-            id: booking.id,
-            วันที่: booking.date,
-            เวลาเริ่ม: bookingStart,
-            เวลาสิ้นสุด: bookingEnd,
-            หัวข้อ: booking.subject,
-          },
-          การจองที่ต้องการ: {
-            วันที่: selectedDateStr,
-            เวลาเริ่ม: startTime,
-            เวลาสิ้นสุด: endTime,
-          },
-        });
-      }
-
-      return isOverlap;
-    });
-
-    if (overlappingBooking) {
-      setError("มีการจองในช่วงเวลานี้แล้ว");
+    if (clash) {
+      setFormError("มีการจองในช่วงเวลานี้แล้ว");
       return false;
     }
-
     return true;
   };
 
-  // รวมการตรวจสอบทั้งหมด
-  const validateForm = (): boolean => {
-    setError(null);
-
-    if (!validateRequiredFields()) return false;
-    if (!validateEmails()) return false;
-    if (!validateTime()) return false;
-    if (!validateBookingOverlap()) return false;
-
-    return true;
+  const validateForm = () => {
+    setFormError(null);
+    return (
+      validateRequiredFields() &&
+      validateEmails() &&
+      validateTime() &&
+      validateBookingOverlap()
+    );
   };
-
-  // ฟังก์ชันสำหรับส่งข้อมูล
+  /* -------------------- Submit / Update -------------------- */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return; // ⬅️ กันดับเบิลคลิก
+    if (!validateForm()) return;
 
-    if (!validateForm()) {
-      return;
-    }
+    setIsSubmitting(true); // ⬅️ ล็อกการส่ง
+    const rid = genRid(); // ⬅️ สร้างไอดีแปะไปกับรีเควสต์
 
     try {
-      const filteredParticipants = formData.participants.filter(
-        (email) => email.trim() !== ""
-      );
+      const participants = formData.participants.filter((e) => e.trim() !== "");
+      const bookingDate = selectedDate ? ymdd(selectedDate) : "";
 
-      const bookingDate = selectedDate?.toISOString().split("T")[0];
-      const bookingData = {
+      const payload = {
         data: {
+          locale: LOCALE,
           date: bookingDate,
           start_time: `${startTime}:00.000`,
           end_time: `${endTime}:00.000`,
@@ -544,47 +380,28 @@ const MeetingRoomsBooking: React.FC = () => {
           contact_email: formData.contact_email,
           contact_name: formData.contact_name,
           contact_phone: formData.contact_phone || "",
-          meeting_room: roomId,
-          email: filteredParticipants.map((email) => ({ email })),
+          meeting_room: roomId ? { connect: [roomId] } : undefined,
+          email: participants.map((email) => ({ email })),
         },
       };
 
-      console.log("กำลังส่งข้อมูลการจองไปยัง API:", bookingData);
-
-      const response = await fetch(`${apiUrl}/api/bookings`, {
+      const res = await fetch(`${apiUrl}/api/bookings?locale=${LOCALE}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-Request-Id": rid, // ⬅️ สำคัญ
+          "Cache-Control": "no-store", // ⬅️ กัน proxy บางตัว
         },
-        body: JSON.stringify(bookingData),
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error?.message || "การจองไม่สำเร็จ");
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body?.error?.message || "การจองไม่สำเร็จ");
       }
 
-      // const responseData = await response.json();
-      // console.log("การจองสำเร็จ ข้อมูลที่ได้รับ:", responseData);
-
-      // window.alert("จองห้องประชุมสำเร็จ");
       navigate("/booking-confirm");
-
-      // อัพเดท currentDisplayedWeek ให้ตรงกับสัปดาห์ที่จอง
-      if (selectedDate) {
-        const bookingWeek = getWeekDates(selectedDate);
-        console.log("อัพเดทสัปดาห์ที่แสดง:", {
-          วันที่จอง: selectedDate.toISOString(),
-          สัปดาห์ใหม่: {
-            monday: bookingWeek.monday.toISOString(),
-            sunday: bookingWeek.sunday.toISOString(),
-          },
-        });
-        setCurrentDisplayedWeek(bookingWeek);
-        setWeekDates(bookingWeek);
-      }
-
-      // รีเซ็ตฟอร์มก่อนดึงข้อมูลใหม่
+      // ... (รีเซ็ต state ต่าง ๆ ตามเดิม)
       setFormData({
         subject: "",
         description: "",
@@ -600,246 +417,151 @@ const MeetingRoomsBooking: React.FC = () => {
       setSelectedDate(null);
       setStartTime("");
       setEndTime("");
-      setError(null);
       setShowBookingForm(false);
-
-      // ตั้งค่า loading เป็น true
       setLoading(true);
-
-      // เพิ่ม refreshKey เพื่อกระตุ้นการรีเฟรชข้อมูล
-      setRefreshKey((prev) => prev + 1);
-    } catch (error) {
-      console.error("Error submitting booking:", error);
-      window.alert(
-        error instanceof Error
-          ? error.message
-          : "เกิดข้อผิดพลาดในการจอง กรุณาลองใหม่อีกครั้ง"
-      );
+      setRefreshKey((x) => x + 1);
+    } catch (err: any) {
+      window.alert(err?.message || "เกิดข้อผิดพลาดในการจอง");
+    } finally {
+      setIsSubmitting(false); // ⬅️ ปลดล็อกไม่ว่าผลลัพธ์เป็นอะไร
     }
   };
 
-  const isBooked = (date: Date, hour: number): boolean => {
-    if (!bookings) return false;
+  const handleUpdateBooking = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting) return; // ⬅️ กันดับเบิลคลิก
+    if (!validateForm() || !editingBookingDocId) return;
 
-    const checkDate = new Date(date);
-    checkDate.setHours(hour, 0, 0, 0);
+    setIsSubmitting(true);
+    const rid = genRid();
 
-    return bookings.some((booking) => {
-      const bookingStart = new Date(booking.start_time);
-      const bookingEnd = new Date(booking.end_time);
-      return checkDate >= bookingStart && checkDate < bookingEnd;
-    });
-  };
+    try {
+      const participants = formData.participants.filter((e) => e.trim() !== "");
+      const bookingDate = selectedDate ? ymdd(selectedDate) : "";
 
-  const handleCellClick = (
-    date: Date,
-    hour: number,
-    existingBooking?: Booking
-  ) => {
-    if (existingBooking) {
-      console.log("ข้อมูลการจองที่เลือก:", {
-        id: existingBooking.id,
-        documentId: existingBooking.documentId,
-        ข้อมูลทั้งหมด: existingBooking,
-      });
-
-      setEditingBookingDocId(existingBooking.documentId);
-      setEditingBookingId(existingBooking.id);
-      // เพิ่ม console.log เพื่อแสดง endpoint
-      console.log("Endpoint ที่ใช้ในการดึงข้อมูล:", {
-        API_URL: apiUrl,
-        BOOKING_ID: existingBooking.id,
-        FULL_ENDPOINT: `${apiUrl}/api/bookings/${existingBooking.id}?populate=*`,
-        วิธีการเรียกใช้: "GET",
-        พารามิเตอร์: {
-          populate: "*",
-          id: existingBooking.id,
+      const payload = {
+        data: {
+          locale: LOCALE,
+          date: bookingDate,
+          start_time: `${startTime}:00.000`,
+          end_time: `${endTime}:00.000`,
+          subject: formData.subject,
+          description: formData.description,
+          contact_email: formData.contact_email,
+          contact_name: formData.contact_name,
+          contact_phone: formData.contact_phone || "",
+          meeting_room: roomId ? { connect: [roomId] } : undefined,
+          email: participants.map((email) => ({ email })),
         },
-      });
-
-      // แสดงข้อมูลการจองที่คลิก
-      console.log("ข้อมูลการจองที่เลือก:", {
-        id: existingBooking.id,
-        วันที่: existingBooking.date,
-        เวลาเริ่ม: existingBooking.start_time,
-        เวลาสิ้นสุด: existingBooking.end_time,
-        หัวข้อ: existingBooking.subject,
-        รายละเอียด: existingBooking.description,
-        ผู้จอง: existingBooking.contact_name,
-        อีเมล์ผู้จอง: existingBooking.contact_email,
-        เบอร์โทร: existingBooking.contact_phone,
-        ห้องประชุม: existingBooking.meeting_room,
-        booked_by: existingBooking.booked_by,
-        ผู้เข้าร่วม:
-          existingBooking.email?.data?.map(
-            (p: { id: number; attributes: { email: string } }) =>
-              p.attributes.email
-          ) || [],
-        ข้อมูลอีเมลดิบ: existingBooking.email,
-      });
-
-      setIsViewMode(true);
-      setIsEditMode(false);
-      setSelectedDate(new Date(existingBooking.date));
-
-      const formatTime = (time: string) => {
-        // ถ้าเวลามาในรูปแบบ ISO หรือมี T
-        if (time.includes("T")) {
-          const date = new Date(time);
-          return `${String(date.getHours()).padStart(2, "0")}:${String(
-            date.getMinutes()
-          ).padStart(2, "0")}`;
-        }
-
-        // ถ้าเวลามาในรูปแบบ HH:mm:ss.SSS
-        if (time.includes(".")) {
-          return time.split(".")[0].substring(0, 5);
-        }
-
-        // ถ้าเวลามาในรูปแบบ HH:mm:ss
-        if (time.includes(":") && time.split(":").length === 3) {
-          return time.substring(0, 5);
-        }
-
-        // ถ้าเวลามาในรูปแบบ HH:mm
-        return time
-          .split(":")
-          .map((num) => num.padStart(2, "0"))
-          .join(":");
       };
 
-      const formattedStartTime = formatTime(existingBooking.start_time);
-      const formattedEndTime = formatTime(existingBooking.end_time);
-
-      setStartTime(formattedStartTime);
-      setEndTime(formattedEndTime);
-
-      // แปลงวันที่ให้อยู่ในรูปแบบที่อ่านง่าย
-      const formattedDate = new Date(existingBooking.date).toLocaleDateString(
-        "th-TH",
+      const res = await fetch(
+        `${apiUrl}/api/bookings/${editingBookingDocId}?locale=${LOCALE}`,
         {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          weekday: "long",
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Request-Id": rid, // ⬅️ สำคัญ
+            "Cache-Control": "no-store",
+          },
+          body: JSON.stringify(payload),
         }
       );
 
-      // ดึงข้อมูลอีเมลผู้เข้าร่วม
-      //  // const participantEmails = existingBooking.email?.map((p: { email: any; }) => p.email) || [];
-      console.log("ตรวจสอบข้อมูล email:", {
-        email: existingBooking.email,
-        isArray: Array.isArray(existingBooking.email),
-      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body?.error?.message || "การอัพเดทไม่สำเร็จ");
+      }
 
-      const participantEmails = Array.isArray(existingBooking.email)
-        ? existingBooking.email.map((p) => p.email)
-        : [];
+      window.alert("อัพเดทการจองสำเร็จ");
+      setIsEditMode(false);
+      setEditingBookingId(null);
+      setEditingBookingDocId(null);
+      setShowBookingForm(false);
+      setRefreshKey((x) => x + 1);
+    } catch (err: any) {
+      window.alert(err?.message || "เกิดข้อผิดพลาดในการอัพเดท");
+    } finally {
+      setIsSubmitting(false); // ⬅️ ปลดล็อก
+    }
+  };
 
-      console.log("รายชื่ออีเมลผู้เข้าร่วม:", participantEmails);
+  /* -------------------- UI helpers -------------------- */
+  const isBooked = (date: Date, hour: number) => {
+    const day = ymdd(date);
+    const cellStart = hour * 60;
+    const cellEnd = cellStart + 60;
+    return bookings.some((b) => {
+      if (b.date !== day) return false;
+      const sB = toMinutes(b.start_time);
+      const eB = toMinutes(b.end_time);
+      return rangesOverlap(cellStart, cellEnd, sB, eB);
+    });
+  };
+
+  const handleCellClick = (date: Date, hour: number, existing?: Booking) => {
+    if (existing) {
+      setEditingBookingDocId(existing.documentId);
+      setEditingBookingId(existing.id);
+      setIsViewMode(true);
+      setIsEditMode(false);
+      setSelectedDate(new Date(existing.date));
+
+      const s = toMinutes(existing.start_time);
+      const e = toMinutes(existing.end_time);
+      const pad = (n: number) => String(n).padStart(2, "0");
+      const toHHmm = (min: number) =>
+        `${pad(Math.floor(min / 60))}:${pad(min % 60)}`;
+
+      const sHH = toHHmm(s);
+      const eHH = toHHmm(e);
+
+      setStartTime(sHH);
+      setEndTime(eHH);
+
+      const participants =
+        existing.email?.data?.map((p) => p.attributes.email) || [];
 
       setFormData({
-        subject: String(existingBooking.subject || ""),
-        description: String(existingBooking.description || ""),
-        contact_email: String(existingBooking.contact_email || ""),
-        contact_name: String(existingBooking.contact_name || ""),
-        contact_phone: String(existingBooking.contact_phone || ""),
-        participants: participantEmails,
-        date: formattedDate,
-        start_time: formattedStartTime,
-        end_time: formattedEndTime,
+        subject: existing.subject || "",
+        description: existing.description || "",
+        contact_email: existing.contact_email || "",
+        contact_name: existing.contact_name || "",
+        contact_phone: existing.contact_phone || "",
+        participants,
+        date: existing.date,
+        start_time: sHH,
+        end_time: eHH,
         meeting_room: roomId || "",
       });
 
-      console.log("ข้อมูลทั้งหมดใน formData:", {
-        หัวข้อการประชุม: String(existingBooking.subject || ""),
-        รายละเอียด: String(existingBooking.description || ""),
-        อีเมล์ผู้จอง: String(existingBooking.contact_email || ""),
-        ชื่อผู้จอง: String(existingBooking.contact_name || ""),
-        เบอร์โทร: String(existingBooking.contact_phone || ""),
-        ผู้เข้าร่วม:
-          existingBooking.email?.data?.map((p) => ({
-            id: p.id,
-            email: p.attributes.email,
-          })) || [],
-        จำนวนผู้เข้าร่วม: existingBooking.email?.data?.length || 0,
-        วันที่: formattedDate,
-        เวลาเริ่ม: formattedStartTime,
-        เวลาสิ้นสุด: formattedEndTime,
-        ห้องประชุม: roomId || "",
-        ข้อมูลดิบ: {
-          ...existingBooking,
-          email_data: existingBooking.email?.data,
-          email_attributes: existingBooking.email?.data?.map(
-            (p) => p.attributes
-          ),
-        },
-      });
-
-      console.log("ข้อมูลผู้เข้าร่วมที่จะแสดงในฟอร์ม:", {
-        จำนวนผู้เข้าร่วม: existingBooking.email?.data?.length || 0,
-        รายชื่อผู้เข้าร่วม:
-          existingBooking.email?.data?.map((p) => ({
-            id: p.id,
-            email: p.attributes.email,
-          })) || [],
-        ข้อมูลอีเมลดิบ: existingBooking.email,
-        ข้อมูลอีเมลที่เข้าถึงได้: {
-          data_1: existingBooking.email?.data,
-          data_2: existingBooking.email && existingBooking.email.data,
-          data_3: existingBooking.email?.data ?? [],
-          data_4: existingBooking.email?.data || [],
-          data_5: existingBooking.email?.data
-            ? [...existingBooking.email.data]
-            : [],
-          data_6: existingBooking.email?.data
-            ? JSON.parse(JSON.stringify(existingBooking.email.data || []))
-            : [],
-          data_7: existingBooking.email?.data
-            ? Array.from(existingBooking.email.data)
-            : [],
-        },
-      });
-
       setShowBookingForm(true);
-
-      setTimeout(() => {
-        const formElement = document.getElementById("bookingForm");
-        formElement?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+      setTimeout(
+        () =>
+          document
+            .getElementById("bookingForm")
+            ?.scrollIntoView({ behavior: "smooth" }),
+        100
+      );
       return;
     }
 
-    setEditingBookingId(null);
-    setIsEditMode(false);
-    // เคลียร์ข้อมูลฟอร์มก่อน
-    setFormData({
-      subject: "",
-      description: "",
-      contact_email: "",
-      contact_name: "",
-      contact_phone: "",
-      participants: [""],
-      date: "",
-      start_time: "",
-      end_time: "",
-      meeting_room: roomId || "",
-    });
-
-    setIsViewMode(false);
     if (isBooked(date, hour)) return;
-
-    const selectedDate = new Date(date);
-    selectedDate.setHours(hour);
-    setSelectedDate(selectedDate);
-    setStartTime(hour.toString().padStart(2, "0") + ":00");
-    setEndTime((hour + 1).toString().padStart(2, "0") + ":00");
+    const d = new Date(date);
+    d.setHours(hour);
+    setSelectedDate(d);
+    setStartTime(`${String(hour).padStart(2, "0")}:00`);
+    setEndTime(`${String(hour + 1).padStart(2, "0")}:00`);
+    setIsViewMode(false);
+    setIsEditMode(false);
     setShowBookingForm(true);
-
-    setTimeout(() => {
-      const formElement = document.getElementById("bookingForm");
-      formElement?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
+    setTimeout(
+      () =>
+        document
+          .getElementById("bookingForm")
+          ?.scrollIntoView({ behavior: "smooth" }),
+      100
+    );
   };
 
   const handleCloseForm = () => {
@@ -861,139 +583,11 @@ const MeetingRoomsBooking: React.FC = () => {
       end_time: "",
       meeting_room: roomId || "",
     });
+    setFormError(null);
+    setTimeError(null);
   };
 
-  // เพิ่มฟังก์ชันสำหรับเปิดโหมดแก้ไข
-  const handleEditClick = () => {
-    console.log("เข้าสู่โหมดแก้ไข:", {
-      กำลังแก้ไขการจองID: editingBookingId,
-      ข้อมูลปัจจุบัน: {
-        หัวข้อ: formData.subject,
-        รายละเอียด: formData.description,
-        วันที่: selectedDate,
-        เวลาเริ่ม: startTime,
-        เวลาสิ้นสุด: endTime,
-        ผู้จอง: formData.contact_name,
-        อีเมล์ผู้จอง: formData.contact_email,
-        ผู้เข้าร่วม: formData.participants,
-      },
-    });
-    setIsViewMode(false);
-    setIsEditMode(true);
-  };
-
-  // เพิ่มฟังก์ชันสำหรับการอัพเดทการจอง
-  const handleUpdateBooking = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("เริ่มกระบวนการอัพเดทการจอง:", {
-      ID: editingBookingId,
-      DocumentID: editingBookingDocId,
-      ฟอร์มผ่านการตรวจสอบ: validateForm(),
-      ข้อมูลฟอร์ม: formData,
-    });
-
-    if (!validateForm() || !editingBookingDocId) {
-      console.log("การตรวจสอบฟอร์มไม่ผ่าน:", {
-        validateForm: validateForm(),
-        editingBookingDocId,
-        formErrors: error,
-      });
-      return;
-    }
-
-    try {
-      const filteredParticipants = formData.participants.filter(
-        (email) => email.trim() !== ""
-      );
-
-      const bookingDate = selectedDate?.toISOString().split("T")[0];
-      const bookingData = {
-        data: {
-          date: bookingDate,
-          start_time: `${startTime}:00.000`,
-          end_time: `${endTime}:00.000`,
-          subject: formData.subject,
-          description: formData.description,
-          contact_email: formData.contact_email,
-          contact_name: formData.contact_name,
-          contact_phone: formData.contact_phone || "",
-          meeting_room: roomId,
-          email: filteredParticipants.map((email) => ({ email })),
-        },
-      };
-
-      const updateEndpoint = `${apiUrl}/api/bookings/${editingBookingDocId}`;
-
-      console.log("กำลังส่งข้อมูลอัพเดทไปที่ API:", {
-        ID: editingBookingId,
-        DocumentID: editingBookingDocId,
-        Endpoint: updateEndpoint,
-        Method: "PUT",
-        Headers: {
-          "Content-Type": "application/json",
-        },
-        ข้อมูลที่ส่ง: bookingData,
-      });
-
-      const response = await fetch(updateEndpoint, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("การอัพเดทไม่สำเร็จ:", {
-          status: response.status,
-          statusText: response.statusText,
-          errorData,
-        });
-        throw new Error(errorData.error?.message || "การอัพเดทไม่สำเร็จ");
-      }
-
-      const responseData = await response.json();
-      console.log("อัพเดทการจองสำเร็จ:", {
-        ข้อมูลที่ได้รับ: responseData,
-        สถานะ: "สำเร็จ",
-      });
-
-      window.alert("อัพเดทการจองห้องประชุมสำเร็จ");
-
-      // รีเซ็ตฟอร์มและโหมดการแก้ไข
-      setIsEditMode(false);
-      setEditingBookingId(null);
-      setEditingBookingDocId(null);
-      setShowBookingForm(false);
-      setFormData({
-        subject: "",
-        description: "",
-        contact_email: "",
-        contact_name: "",
-        contact_phone: "",
-        participants: [""],
-        date: "",
-        start_time: "",
-        end_time: "",
-        meeting_room: roomId || "",
-      });
-
-      // รีเฟรชข้อมูล
-      setRefreshKey((prev) => prev + 1);
-    } catch (error) {
-      console.error("เกิดข้อผิดพลาดในการอัพเดท:", {
-        error,
-        message: error instanceof Error ? error.message : "ไม่ทราบสาเหตุ",
-      });
-      window.alert(
-        error instanceof Error
-          ? error.message
-          : "เกิดข้อผิดพลาดในการอัพเดท กรุณาลองใหม่อีกครั้ง"
-      );
-    }
-  };
-
+  /* -------------------- Render -------------------- */
   if (loading) {
     return (
       <div className={styles.meetingRoomsContainer}>
@@ -1002,10 +596,10 @@ const MeetingRoomsBooking: React.FC = () => {
     );
   }
 
-  if (error) {
+  if (fetchError) {
     return (
       <div className={styles.meetingRoomsContainer}>
-        <div className={styles.error}>{error}</div>
+        <div className={styles.error}>{fetchError}</div>
       </div>
     );
   }
@@ -1022,38 +616,42 @@ const MeetingRoomsBooking: React.FC = () => {
       "Sunday",
     ];
 
-    const isTimeOverlap = (
+    const isTimeOverlapForCell = (
       bookingStart: string,
       bookingEnd: string,
       cellHour: number
     ) => {
-      const start = parseInt(bookingStart.split(":")[0]);
-      const end = parseInt(bookingEnd.split(":")[0]);
-      return cellHour >= start && cellHour < end;
+      const sB = toMinutes(bookingStart);
+      const eB = toMinutes(bookingEnd);
+      const cS = cellHour * 60;
+      const cE = cS + 60;
+      return rangesOverlap(cS, cE, sB, eB);
     };
 
-    const formatDateToString = (date: Date) => {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    };
+    const formatDateToString = (d: Date) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+        d.getDate()
+      ).padStart(2, "0")}`;
 
     const bookingsByDate = bookings.reduce(
-      (acc: { [key: string]: Booking[] }, booking) => {
-        if (!acc[booking.date]) {
-          acc[booking.date] = [];
-        }
-        acc[booking.date].push(booking);
+      (acc: Record<string, Booking[]>, b) => {
+        (acc[b.date] ||= []).push(b);
         return acc;
       },
       {}
     );
 
-    const isPastDate = (date: Date) => {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return date < today;
+    const isPastDate = (d: Date) => {
+      const t = new Date();
+      t.setHours(0, 0, 0, 0);
+      return d < t;
+    };
+
+    const hhmm = (val: string) => {
+      const m = toMinutes(val);
+      const h = String(Math.floor(m / 60)).padStart(2, "0");
+      const mm = String(m % 60).padStart(2, "0");
+      return `${h}:${mm}`;
     };
 
     return (
@@ -1065,24 +663,25 @@ const MeetingRoomsBooking: React.FC = () => {
               &lt; สัปดาห์ก่อนหน้า
             </button>
             <span className={styles.weekRange}>
-              {formatDate(monday)} - {formatDate(sunday)}
+              {thDate(monday)} - {thDate(sunday)}
             </span>
             <button onClick={handleNextWeek} className={styles.navButton}>
               สัปดาห์ถัดไป &gt;
             </button>
           </div>
+
           <table>
             <thead>
               <tr>
                 <th>เวลา</th>
-                {days.map((day, index) => {
-                  const date = new Date(monday);
-                  date.setDate(monday.getDate() + index);
+                {days.map((day, idx) => {
+                  const d = new Date(monday);
+                  d.setDate(monday.getDate() + idx);
                   return (
                     <th key={day}>
                       {day}
                       <br />
-                      {formatDate(date)}
+                      {thDate(d)}
                     </th>
                   );
                 })}
@@ -1100,16 +699,19 @@ const MeetingRoomsBooking: React.FC = () => {
                 return (
                   <tr key={timeSlot}>
                     <td>{timeSlot}</td>
-                    {days.map((day, index) => {
-                      const currentDate = new Date(monday);
-                      currentDate.setDate(monday.getDate() + index);
-                      const dateStr = formatDateToString(currentDate);
-                      const todayBookings = bookingsByDate[dateStr] || [];
-                      const booking = todayBookings.find((b) =>
-                        isTimeOverlap(b.start_time, b.end_time, startHour)
+                    {days.map((day, idx) => {
+                      const d = new Date(monday);
+                      d.setDate(monday.getDate() + idx);
+                      const dateStr = formatDateToString(d);
+                      const list = bookingsByDate[dateStr] || [];
+                      const booking = list.find((b) =>
+                        isTimeOverlapForCell(
+                          b.start_time,
+                          b.end_time,
+                          startHour
+                        )
                       );
-
-                      const isPast = isPastDate(currentDate);
+                      const past = isPastDate(d);
 
                       return (
                         <td
@@ -1117,26 +719,28 @@ const MeetingRoomsBooking: React.FC = () => {
                           className={`${
                             booking ? styles.booked : styles.available
                           } ${
-                            !isPast && !booking
+                            !past && !booking
                               ? styles.clickable
                               : booking
                               ? styles.clickableBooked
                               : ""
                           }`}
                           onClick={() =>
-                            !isPast &&
+                            !past &&
                             (booking
-                              ? handleCellClick(currentDate, startHour, booking)
-                              : handleCellClick(currentDate, startHour))
+                              ? handleCellClick(d, startHour, booking)
+                              : handleCellClick(d, startHour))
                           }
                           style={{
-                            cursor: isPast ? "not-allowed" : "pointer",
-                            opacity: isPast ? 0.5 : 1,
+                            cursor: past ? "not-allowed" : "pointer",
+                            opacity: past ? 0.5 : 1,
                           }}
                           title={
                             booking
-                              ? `${booking.subject} (${booking.start_time}-${booking.end_time})`
-                              : isPast
+                              ? `${booking.subject} (${hhmm(
+                                  booking.start_time
+                                )}-${hhmm(booking.end_time)})`
+                              : past
                               ? "ไม่สามารถจองวันในอดีตได้"
                               : "คลิกเพื่อจอง"
                           }
@@ -1147,9 +751,7 @@ const MeetingRoomsBooking: React.FC = () => {
                               <div>{booking.description}</div>
                             </div>
                           ) : (
-                            <div className={styles.available}>
-                              {isPast ? "" : ""}
-                            </div>
+                            <div className={styles.available} />
                           )}
                         </td>
                       );
@@ -1192,28 +794,24 @@ const MeetingRoomsBooking: React.FC = () => {
               {isViewMode && (
                 <button
                   className={styles.editButton}
-                  onClick={handleEditClick}
-                  aria-label="แก้ไขการจอง"
+                  onClick={() => (setIsViewMode(false), setIsEditMode(true))}
                 >
                   แก้ไข
                 </button>
               )}
-              <button
-                className={styles.closeButton}
-                onClick={handleCloseForm}
-                aria-label="ปิดฟอร์ม"
-              >
+              <button className={styles.closeButton} onClick={handleCloseForm}>
                 ×
               </button>
             </div>
           </div>
+
           <form onSubmit={isEditMode ? handleUpdateBooking : handleSubmit}>
             <div className={styles.dateTimeContainer}>
               <div className={styles.formGroup}>
                 <label>วันที่จอง</label>
                 <DatePicker
                   selected={selectedDate}
-                  onChange={(date) => !isViewMode && setSelectedDate(date)}
+                  onChange={(d) => !isViewMode && setSelectedDate(d)}
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date()}
                   placeholderText="เลือกวันที่"
@@ -1234,9 +832,9 @@ const MeetingRoomsBooking: React.FC = () => {
                     disabled={isViewMode}
                   >
                     <option value="">เลือกเวลาเริ่มต้น</option>
-                    {timeOptions.map((time) => (
-                      <option key={`start-${time}`} value={time}>
-                        {time}
+                    {timeOptions.map((t) => (
+                      <option key={`start-${t}`} value={t}>
+                        {t}
                       </option>
                     ))}
                   </select>
@@ -1249,13 +847,13 @@ const MeetingRoomsBooking: React.FC = () => {
                     disabled={isViewMode}
                   >
                     <option value="">เลือกเวลาสิ้นสุด</option>
-                    {timeOptions.map((time) => (
+                    {timeOptions.map((t) => (
                       <option
-                        key={`end-${time}`}
-                        value={time}
-                        disabled={!!startTime && time <= startTime}
+                        key={`end-${t}`}
+                        value={t}
+                        disabled={!!startTime && t <= startTime}
                       >
-                        {time}
+                        {t}
                       </option>
                     ))}
                   </select>
@@ -1323,8 +921,9 @@ const MeetingRoomsBooking: React.FC = () => {
 
             <div className={styles.formGroup}>
               <label>อีเมล์ผู้เข้าร่วม</label>
+
               {isViewMode ? (
-                formData.participants && formData.participants.length > 0 ? (
+                formData.participants?.length ? (
                   <div className={styles.participantsList}>
                     <div className={styles.participantsHeader}>
                       <span>รายชื่อผู้เข้าร่วมทั้งหมด</span>
@@ -1332,34 +931,38 @@ const MeetingRoomsBooking: React.FC = () => {
                         {formData.participants.length} คน
                       </span>
                     </div>
-                    {formData.participants.map((email, index) => (
-                      <div key={index} className={styles.participantEmail}>
+                    {formData.participants.map((email, idx) => (
+                      <div key={idx} className={styles.participantEmail}>
                         {email}
                       </div>
                     ))}
                   </div>
                 ) : (
                   <div className={styles.noParticipants}>
-                    <span>ไม่มีผู้เข้าร่วมการประชุม</span>
+                    ไม่มีผู้เข้าร่วมการประชุม
                   </div>
                 )
               ) : (
                 <>
-                  {formData.participants.map((email, index) => (
-                    <input
-                      key={index}
-                      type="email"
-                      value={email}
-                      onChange={(e) =>
-                        handleParticipantChange(index, e.target.value)
-                      }
-                      placeholder="กรอกอีเมล์"
-                      className={styles.emailInput}
-                    />
-                  ))}
+                  <div className={styles.participantInputs}>
+                    {formData.participants.map((email, idx) => (
+                      <div key={idx} className={styles.participantRow}>
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) =>
+                            handleParticipantChange(idx, e.target.value)
+                          }
+                          placeholder="กรอกอีเมล์"
+                          className={styles.emailInput}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
                   <button
                     type="button"
-                    className={styles.addMore}
+                    className={`${styles.btn} ${styles.btnGhost} ${styles.addParticipant}`}
                     onClick={() =>
                       setFormData((prev) => ({
                         ...prev,
@@ -1367,17 +970,31 @@ const MeetingRoomsBooking: React.FC = () => {
                       }))
                     }
                   >
-                    + เพิ่มผู้เข้าร่วม
+                    <span className={styles.plusIcon}>＋</span>
+                    เพิ่มผู้เข้าร่วม
                   </button>
                 </>
               )}
             </div>
+
             <div className="w-100 text-center">
               {!isViewMode && (
                 <>
-                  {error && <div className={styles.errorMessage}>{error}</div>}
-                  <button type="submit" className={styles.confirmBooking}>
-                    {isEditMode ? "บันทึกการเปลี่ยนแปลง" : "ยืนยันการจอง"}
+                  {formError && (
+                    <div className={styles.errorMessage}>{formError}</div>
+                  )}
+                  <button
+                    type="submit"
+                    className={styles.confirmBooking}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting
+                      ? isEditMode
+                        ? "กำลังบันทึก..."
+                        : "กำลังจอง..."
+                      : isEditMode
+                      ? "บันทึกการเปลี่ยนแปลง"
+                      : "ยืนยันการจอง"}
                   </button>
                 </>
               )}
