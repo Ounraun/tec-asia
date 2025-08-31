@@ -6,19 +6,23 @@ import styles from "./MeetingRoomsBooking.module.css";
 import ParticlesComponent from "../../components/Particles/Particles";
 
 /* -------------------- Types -------------------- */
+
+type EmailNode =
+  | { id?: number; email?: string; attributes?: { email?: string } }
+  | undefined;
 interface Booking {
   id: number;
   documentId: string;
-  date: string; // "YYYY-MM-DD"
-  start_time: string; // "HH:mm[:ss[.SSS]]" หรือ ISO
-  end_time: string; // เช่น "08:00:00.000"
+  date: string;
+  start_time: string;
+  end_time: string;
   subject: string;
   description: string;
   contact_name: string;
   contact_phone: string;
   contact_email: string;
   meeting_room?: { documentId: string };
-  email?: { data: { id: number; attributes: { email: string } }[] };
+  email?: EmailNode[] | { data: EmailNode[] };
 }
 
 interface RoomDetails {
@@ -100,6 +104,27 @@ const validateTimeSelection = (start: string, end: string): boolean => {
   const s = toMinutes(start);
   const e = toMinutes(end);
   return s >= 7 * 60 && e <= 20 * 60 && s < e;
+};
+
+// ดึงรายชื่อผู้เข้าร่วมจาก booking.email (รองรับได้ทั้ง 2 shape)
+const extractParticipants = (b: Booking): string[] => {
+  const raw: any = b?.email;
+  const arr: any[] = Array.isArray(raw)
+    ? raw
+    : Array.isArray(raw?.data)
+    ? raw.data
+    : [];
+
+  const seen = new Set<string>(); // ✅ ประกาศให้ชัดเจน
+  return arr
+    .map((e: any) =>
+      (e?.email ?? e?.attributes?.email ?? "").trim().toLowerCase()
+    )
+    .filter((s: string) => {
+      if (!s || seen.has(s)) return false;
+      seen.add(s);
+      return true;
+    });
 };
 
 /* -------------------- Component -------------------- */
@@ -520,8 +545,7 @@ const MeetingRoomsBooking: React.FC = () => {
       setStartTime(sHH);
       setEndTime(eHH);
 
-      const participants =
-        existing.email?.data?.map((p) => p.attributes.email) || [];
+      const participants = extractParticipants(existing);
 
       setFormData({
         subject: existing.subject || "",
