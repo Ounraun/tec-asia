@@ -62,7 +62,6 @@ const SpinnerFallback = () => {
     </div>
   );
 };
-// const Fallback = () => <div className="text-light p-4">Loading…</div>;
 
 function App() {
   return (
