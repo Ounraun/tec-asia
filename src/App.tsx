@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from "react-router-dom"; // ⬅️ เพิ�
 import Navbar from "./components/Navbar";
 import { lazy, Suspense } from "react";
 import React from "react";
+import BookingEditConfirm from "./pages/Meeting/BookingEditConfirm";
+import BookingDeleteConfirm from "./pages/Meeting/BookingDeleteConfirm";
 
 const AboutUs = lazy(() => import("./pages/AboutUs/AboutUsPage"));
 const CentralizeManagement = lazy(
@@ -107,8 +109,16 @@ function App() {
               path="/rebooking"
               element={<Navigate to="/meeting-rooms" replace />}
             />
+            <Route
+              path="/booking-edit-confirm"
+              element={<BookingEditConfirm />}
+            />
 
             <Route path="/booking-confirm" element={<BookingConfirm />} />
+            <Route
+              path="/booking-delete-confirm"
+              element={<BookingDeleteConfirm />}
+            />
 
             <Route
               path="/community/company-events"

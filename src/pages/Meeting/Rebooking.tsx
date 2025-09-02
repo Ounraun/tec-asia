@@ -176,7 +176,7 @@ const Rebooking: React.FC = () => {
         { requestId: rid }
       );
 
-      navigate("/booking-confirm");
+      navigate("/booking-edit-confirm");
     } catch (e: any) {
       setError(e?.message || "อัปเดตไม่สำเร็จ");
     } finally {

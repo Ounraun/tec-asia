@@ -474,7 +474,7 @@ const MeetingRoomsBooking: React.FC = () => {
         throw new Error(body?.error?.message || "การอัพเดทไม่สำเร็จ");
       }
 
-      window.alert("อัพเดทการจองสำเร็จ");
+      navigate("/booking-edit-confirm");
       setIsEditMode(false);
       setEditingBookingId(null);
       setEditingBookingDocId(null);
@@ -482,6 +482,36 @@ const MeetingRoomsBooking: React.FC = () => {
       setRefreshKey((x) => x + 1);
     } catch (err: any) {
       window.alert(err?.message || "เกิดข้อผิดพลาดในการอัพเดท");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  const handleDeleteBooking = async () => {
+    if (!editingBookingDocId) return;
+
+    const ok = window.confirm(
+      "ยืนยันลบการจองนี้? การกระทำนี้ไม่สามารถยกเลิกได้"
+    );
+    if (!ok) return;
+
+    setIsSubmitting(true);
+    const rid = genRid();
+
+    try {
+      const url = `${apiUrl}/api/bookings/${editingBookingDocId}?locale=${LOCALE}&rid=${encodeURIComponent(
+        rid
+      )}`;
+      const res = await fetch(url, { method: "DELETE" });
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body?.error?.message || "ลบการจองไม่สำเร็จ");
+      }
+
+      // ✅ เปลี่ยนจาก alert เป็นไปหน้า confirm
+      navigate("/booking-delete-confirm");
+    } catch (err: any) {
+      window.alert(err?.message || "เกิดข้อผิดพลาดในการลบ");
     } finally {
       setIsSubmitting(false);
     }
@@ -969,24 +999,40 @@ const MeetingRoomsBooking: React.FC = () => {
               )}
             </div>
 
-            {!isViewMode && (
-              <div style={{ width: "100%", textAlign: "center" }}>
-                {formError && <div className={styles.error}>{formError}</div>}
-                <button
-                  type="submit"
-                  className={styles.confirmBooking}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting
-                    ? isEditMode
-                      ? "กำลังบันทึก..."
-                      : "กำลังจอง..."
-                    : isEditMode
-                    ? "บันทึกการเปลี่ยนแปลง"
-                    : "ยืนยันการจอง"}
-                </button>
-              </div>
-            )}
+            {/* ปุ่มหลัก: ลบ / บันทึกการเปลี่ยนแปลง / ยืนยันการจอง */}
+            <div style={{ width: "100%", textAlign: "center" }}>
+              {formError && <div className={styles.error}>{formError}</div>}
+
+              {isViewMode ? (
+                <div style={{ width: "100%", textAlign: "center" }}>
+                  <button
+                    type="button"
+                    className={`${styles.btn} ${styles.btnDanger}`}
+                    onClick={handleDeleteBooking}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "กำลังลบ..." : "ลบการจอง"}
+                  </button>
+                </div>
+              ) : (
+                <div style={{ width: "100%", textAlign: "center" }}>
+                  {formError && <div className={styles.error}>{formError}</div>}
+                  <button
+                    type="submit"
+                    className={styles.confirmBooking}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting
+                      ? isEditMode
+                        ? "กำลังบันทึก..."
+                        : "กำลังจอง..."
+                      : isEditMode
+                      ? "บันทึกการเปลี่ยนแปลง"
+                      : "ยืนยันการจอง"}
+                  </button>
+                </div>
+              )}
+            </div>
           </form>
         </div>
       )}

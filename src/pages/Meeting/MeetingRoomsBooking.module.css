@@ -610,6 +610,17 @@
   outline: 2px solid #3498db;
   outline-offset: 2px;
 }
+.btnDanger {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  padding: 0.9rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.btnDanger:hover {
+  background: #d32f2f;
+}
 
 @media (max-width: 640px) {
   .formGroup {
