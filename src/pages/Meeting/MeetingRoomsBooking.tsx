@@ -131,7 +131,7 @@ const MeetingRoomsBooking: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
-
+  const [roomEntryId, setRoomEntryId] = useState<number | null>(null);
   const [roomDetails, setRoomDetails] = useState<RoomDetails | null>(null);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -169,6 +169,46 @@ const MeetingRoomsBooking: React.FC = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  const validateRequiredFields = () => {
+    if (!roomEntryId) {
+      setFormError("ไม่พบห้องประชุม หรือระบบยังโหลดข้อมูลห้องไม่เสร็จ");
+      return false;
+    }
+    if (
+      !formData.subject ||
+      !formData.description ||
+      !formData.contact_email ||
+      !formData.contact_name
+    ) {
+      setFormError("กรุณากรอกข้อมูลให้ครบ");
+      return false;
+    }
+    if (!selectedDate || !startTime || !endTime) {
+      setFormError("กรุณาเลือกวันที่และเวลาให้ครบ");
+      return false;
+    }
+    return true;
+  };
+  useEffect(() => {
+    if (!roomId) return;
+    (async () => {
+      try {
+        const qs = new URLSearchParams({
+          "filters[documentId][$eq]": roomId,
+          "fields[0]": "id",
+          "fields[1]": "documentId",
+        });
+        const res = await fetch(`${apiUrl}/api/meeting-rooms?${qs.toString()}`);
+        const json = await res.json();
+        const id = json?.data?.[0]?.id ?? null;
+        setRoomEntryId(id);
+        if (!id) console.warn("ไม่พบ roomEntryId จาก documentId:", roomId);
+      } catch (e) {
+        console.error("โหลด roomEntryId ไม่สำเร็จ:", e);
+        setRoomEntryId(null);
+      }
+    })();
+  }, [roomId, apiUrl]);
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setRoomDetails({
@@ -288,23 +328,6 @@ const MeetingRoomsBooking: React.FC = () => {
 
   const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
-  const validateRequiredFields = () => {
-    if (
-      !formData.subject ||
-      !formData.description ||
-      !formData.contact_email ||
-      !formData.contact_name
-    ) {
-      setFormError("กรุณากรอกข้อมูลให้ครบ");
-      return false;
-    }
-    if (!selectedDate || !startTime || !endTime) {
-      setFormError("กรุณาเลือกวันที่และเวลาให้ครบ");
-      return false;
-    }
-    return true;
-  };
-
   const validateEmails = () => {
     if (!isEmail(formData.contact_email)) {
       setFormError("รูปแบบอีเมล์ผู้จองไม่ถูกต้อง");
@@ -381,9 +404,7 @@ const MeetingRoomsBooking: React.FC = () => {
           contact_email: formData.contact_email,
           contact_name: formData.contact_name,
           contact_phone: formData.contact_phone || "",
-          meeting_room: roomId
-            ? { connect: [{ documentId: roomId }] }
-            : undefined,
+          meeting_room: roomEntryId,
           email: participants.map((email) => ({ email })),
         },
       };
@@ -452,9 +473,7 @@ const MeetingRoomsBooking: React.FC = () => {
           contact_email: formData.contact_email,
           contact_name: formData.contact_name,
           contact_phone: formData.contact_phone || "",
-          meeting_room: roomId
-            ? { connect: [{ documentId: roomId }] }
-            : undefined,
+          meeting_room: roomEntryId,
           email: participants.map((email) => ({ email })),
         },
       };
@@ -1020,7 +1039,7 @@ const MeetingRoomsBooking: React.FC = () => {
                   <button
                     type="submit"
                     className={styles.confirmBooking}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !roomEntryId}
                   >
                     {isSubmitting
                       ? isEditMode
