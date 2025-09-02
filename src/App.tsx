@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route, Navigate } from "react-router-dom"; // ⬅️ เพิ่ม Navigate
 import Navbar from "./components/Navbar";
 import { lazy, Suspense } from "react";
+import React from "react";
 
 const AboutUs = lazy(() => import("./pages/AboutUs/AboutUsPage"));
 const CentralizeManagement = lazy(
@@ -35,15 +36,40 @@ const NetworkSolution = lazy(
 );
 const BlogDetail = lazy(() => import("./pages/Community/BlogDetail"));
 const KnowledgeDetail = lazy(() => import("./pages/Community/KnowledgeDetail"));
+const SpinnerFallback = () => {
+  const [show, setShow] = React.useState(false);
+  const [hold, setHold] = React.useState(true);
 
-const Fallback = () => <div className="text-light p-4">Loading…</div>;
+  React.useEffect(() => {
+    const t1 = setTimeout(() => setShow(true), 120); // หน่วงก่อนโผล่
+    const t2 = setTimeout(() => setHold(false), 420); // ค้างขั้นต่ำเพื่อกันแวบ
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, []);
+
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      className={`app-spinner-overlay ${show ? "is-visible" : ""} ${
+        hold ? "is-hold" : ""
+      }`}
+    >
+      <div className="app-spinner" />
+    </div>
+  );
+};
+// const Fallback = () => <div className="text-light p-4">Loading…</div>;
 
 function App() {
   return (
     <>
       <Navbar />
       <main className="flex-grow-1 bg-black h-100 w-100">
-        <Suspense fallback={<Fallback />}>
+        <Suspense fallback={<SpinnerFallback />}>
           <Routes>
             <Route path="/" element={<AboutUs />} />
             <Route

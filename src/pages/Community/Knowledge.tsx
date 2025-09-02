@@ -1,9 +1,6 @@
-// Knowledge.tsx
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Contact from "../../components/Contact";
-
-// เปลี่ยนเป็น import CSS Module แทน .css ปกติ
 import styles from "./Knowledge.module.css";
 import { useTranslation } from "react-i18next";
 import type { BlogPost } from "../../types/blogPost";
@@ -32,7 +29,6 @@ const Knowledge: React.FC = () => {
         }
       }, 100);
     };
-
     fetchVideo();
   }, []);
 
@@ -54,7 +50,6 @@ const Knowledge: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchPosts();
   }, [apiUrl]);
 
@@ -66,8 +61,6 @@ const Knowledge: React.FC = () => {
     <>
       <div className={styles.knowledgeContainer}>
         <h1>{t("knowledge:knowledge")}</h1>
-
-        {/* Top Section */}
         <div className={styles.knowledgeTopSection}>
           <div className={styles.knowledgeHeader}>
             <p className={styles.knowledgeSubtitle}>
@@ -93,7 +86,10 @@ const Knowledge: React.FC = () => {
               autoPlay
               poster="/path-to-video-thumbnail.jpg"
             >
-              <source src="/knowledge/knowledge.mp4" type="video/mp4" />
+              <source
+                src={bridgeVideo ?? "/knowledge/knowledge.mp4"}
+                type="video/mp4"
+              />
               Your browser does not support the video tag.
             </video>
           </div>

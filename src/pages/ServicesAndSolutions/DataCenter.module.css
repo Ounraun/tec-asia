@@ -1,10 +1,7 @@
-/* @import url("https://fonts.googleapis.com/css2?family=var(--font-heading):wght@400;500;600;700&display=swap"); */
-
 .container {
   min-height: 100vh;
   background-color: #000;
   color: white;
-
   display: flex;
   flex-direction: column;
 }
@@ -14,9 +11,23 @@
   padding: 5rem 0 0;
 }
 
+.data,
+.center {
+  font-family: var(--font-heading), "Sarabun", "Noto Sans Thai",
+    "IBM Plex Sans Thai", system-ui, sans-serif;
+  font-size: clamp(2rem, 8vw, 5rem);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25;
+  display: inline-block;
+  overflow: visible;
+  padding-top: 0.04em;
+  padding-bottom: 0.15em;
+  letter-spacing: 1px;
+}
+
 .data {
   text-align: center;
-  letter-spacing: 1px;
   background: var(
     --main-solution,
     linear-gradient(
@@ -27,27 +38,13 @@
       #bd6c0f 95.64%
     )
   );
-  -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  font-family: var(--font-heading);
-  font-size: 64px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 60.587px;
-  display: inline-block;
+  -webkit-text-fill-color: transparent;
 }
 
 .center {
   color: #fff;
-  text-align: center;
-  letter-spacing: 1px;
-  font-family: var(--font-heading);
-  font-size: 64px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 60.587px;
-  display: inline-block;
 }
 
 .subtitle {
@@ -116,7 +113,6 @@
   font-size: 36px;
   font-weight: 500;
   margin-bottom: 3rem;
-
   letter-spacing: 6.4px;
   text-transform: capitalize;
   background: var(
@@ -149,7 +145,6 @@
 .facilityCard:nth-child(odd) {
   margin-left: 3rem;
 }
-
 .facilityCard:nth-child(even) {
   margin-right: 3rem;
 }
@@ -208,6 +203,7 @@
   line-height: 170%;
   display: inline-block;
 }
+
 .cardWrapper {
   position: absolute;
   display: flex;
@@ -217,7 +213,6 @@
   transition: transform 0.3s ease-in-out;
   gap: 0;
 }
-
 .cardWrapper:hover {
   transform: scale(1.1);
   z-index: 1;
@@ -269,7 +264,6 @@
 .card:hover .cardLabel {
   display: none;
 }
-
 .card:hover .cardContent {
   display: flex;
   opacity: 1;
@@ -281,12 +275,12 @@
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
-
 .card p {
   color: #cbd5e1;
   font-size: 0.95rem;
   line-height: 1.6;
 }
+
 .Background_51_171 {
   background: linear-gradient(180deg, #007ec7 7.66%, #4ed4c3 90.51%);
   border-radius: 0 0 24011.3px 24011.3px;
@@ -338,7 +332,6 @@
     gap: 2rem;
     padding: 0 1rem;
   }
-
   .data,
   .center {
     font-size: 48px;
@@ -350,17 +343,14 @@
   .facilitiesGrid {
     flex-direction: column;
   }
-
   .data,
   .center {
     font-size: 36px;
     line-height: 36px;
   }
-
   .facilitiesTitle {
     font-size: 28px;
   }
-
   .navLink {
     font-size: 20px;
   }
@@ -402,11 +392,9 @@
   .container {
     padding: 1rem;
   }
-
   .facilitiesGrid {
     padding: 0;
   }
-
   .facilityCard {
     padding: 1rem;
   }

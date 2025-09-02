@@ -68,33 +68,113 @@ main.flex-grow-1 {
   padding: 0;
 }
 
-/* ===== Navigation ===== */
+/* Global Suspense spinner overlay */
+.app-spinner-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.45); /* ตัด backdrop-filter (กินแรง) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* fade-in/out */
+  pointer-events: none; /* กัน intercept ถ้ายังไม่ visible */
+  transition: opacity 0.18s ease;
+}
+.app-spinner-overlay.is-visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* วงกลมหมุน (เรนเดอร์ลื่นขึ้น) */
+.app-spinner {
+  width: 56px;
+  height: 56px;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #72d4ed;
+  border-radius: 50%;
+  animation: app-spin 0.8s linear infinite;
+  will-change: transform; /* hint ให้ compositor */
+  transform: translateZ(0); /* force GPU */
+}
+
+@keyframes app-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== Navigation (global) ===== */
 .navigation {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 6rem 7rem;
+  gap: 2rem;
+  padding: 3rem 4rem; /* ลดจากเดิมให้ยืดหยุ่นขึ้น */
 }
 
 .navLink {
   color: #fff;
   text-align: center;
   font-family: var(--font-heading);
-  font-size: 32px;
   font-weight: 400;
-  line-height: normal;
+  line-height: 1.2;
+  font-size: clamp(1rem, 1.6vw, 2rem); /* responsive base */
   display: inline-block;
+  transition: color 0.2s;
 }
-
 .navLink:hover {
   color: #72d4ed;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
+/* ===== Mobile ≤ 575.98px ===== */
+@media (max-width: 575.98px) {
+  .navigation {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 0.5rem;
+  }
   .navLink {
+    display: block;
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
     font-size: 1rem;
-    padding: 0 1rem;
+    padding: 0.6rem 1rem; /* เพิ่มพื้นที่กด */
+  }
+}
+
+/* ===== Tablet 768–991.98px ===== */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .navigation {
+    justify-content: center;
+    gap: 6rem;
+    padding: 2rem 1rem;
+  }
+  .navLink {
+    font-size: 1.25rem;
+  }
+}
+
+/* ===== Desktop 992–1199.98px ===== */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .navigation {
+    justify-content: center;
+    gap: 12rem;
+    padding: 2.5rem 2rem;
+  }
+  .navLink {
+    font-size: 1.25rem;
+  }
+}
+
+/* ===== Extra large ≥ 1200px ===== */
+@media (min-width: 1200px) {
+  .navigation {
+    justify-content: center;
+    gap: 20rem; /* ปรับได้ตามดีไซน์เดสก์ท็อปจริง */
+    margin: 3rem 0;
   }
 }

@@ -5,7 +5,6 @@
   padding-left: 0;
   display: flex;
   flex-direction: column;
-
   max-width: 1440px;
   margin: 0 auto;
   position: relative;
@@ -16,6 +15,7 @@
   text-align: center;
   margin-bottom: 2rem;
   padding: 5rem 0;
+  overflow: visible;
 }
 
 .header h1 {
@@ -24,12 +24,26 @@
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  align-items: center;
+  align-items: baseline;
+  overflow: visible;
+}
+
+.data,
+.management {
+  font-family: var(--font-heading), "Sarabun", "Noto Sans Thai",
+    "IBM Plex Sans Thai", system-ui, sans-serif;
+  letter-spacing: 1px;
+  font-size: clamp(2rem, 8vw, 5rem);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25;
+  display: inline-block;
+  overflow: visible;
+  padding-top: 0.04em;
 }
 
 .data {
   text-align: center;
-  letter-spacing: 1px;
   background: var(
     --main-solution,
     linear-gradient(
@@ -40,27 +54,14 @@
       #bd6c0f 95.64%
     )
   );
-  -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  font-family: var(--font-heading);
-  font-size: clamp(2rem, 8vw, 5rem);
-  font-style: normal;
-  font-weight: 600;
-  line-height: 60.587px;
-  display: inline-block;
+  -webkit-text-fill-color: transparent;
+  padding-bottom: 0.2em;
 }
 
 .management {
   color: #fff;
-  text-align: center;
-  letter-spacing: 1px;
-  font-family: var(--font-heading);
-  font-size: clamp(2rem, 8vw, 5rem);
-  font-style: normal;
-  font-weight: 600;
-  line-height: 60.587px;
-  display: inline-block;
 }
 
 .mainContent {
@@ -78,7 +79,6 @@
   max-width: 50%;
   position: relative;
   padding: 0;
-
   overflow: hidden;
 }
 
@@ -177,16 +177,17 @@
 .leftContent {
   color: #f5f5f5;
   text-align: center;
-  width: 30%;
+  max-width: 400px;
+  width: 100%;
   font-family: var(--font-subContent);
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: 50px;
-  display: inline-block;
-  margin-top: 38%;
-  margin-right: 70px;
-  margin-left: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
 .rightContent {
@@ -367,6 +368,7 @@
     margin: 30px auto;
   }
 }
+
 @media (max-width: 480px) {
   .navLink {
     font-size: clamp(0.9rem, 5vw, 1.2rem);

@@ -1,0 +1,93 @@
+/* ใช้ร่วมกับตัวแปร --font-body และ --navbar-h (กำหนดไว้ global ได้) */
+
+.container {
+  min-height: calc(100dvh - var(--navbar-h, 84px));
+  background: #000;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.box {
+  max-width: 600px;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.title {
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.message p {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.closeBtn {
+  background: #ffa500;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0.75rem 3rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: #ff8c00;
+}
+.closeBtn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.closeBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.redirect {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+/* ลด motion ให้ผู้ใช้ที่ตั้งค่า reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .closeBtn {
+    transition: none;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .title {
+    font-size: 24px;
+  }
+  .message p {
+    font-size: 14px;
+  }
+  .closeBtn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+}

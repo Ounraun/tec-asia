@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Contact from "../../components/Contact";
-
-// เปลี่ยนมาใช้ CSS Module
 import styles from "./KnowledgeDetail.module.css";
 import { getStrapiImageUrl } from "../../services/strapi";
 
@@ -15,7 +13,7 @@ interface KnowledgePost {
   mainImage: {
     url: string;
     alternativeText: string;
-  };
+  } | null;
   createdAt: string;
 }
 
@@ -30,64 +28,49 @@ const KnowledgeDetail: React.FC = () => {
     const fetchPost = async () => {
       try {
         setError(null);
-        const response = await fetch(
+        const res = await fetch(
           `${apiUrl}/api/blog-posts?populate=*&filters[documentId][$eq]=${documentId}`
         );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (
-          !data?.data ||
-          !Array.isArray(data.data) ||
-          data.data.length === 0
-        ) {
-          throw new Error("Post not found");
-        }
-
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const data = await res.json();
+        if (!data?.data?.length) throw new Error("Post not found");
         setPost(data.data[0]);
-      } catch (error) {
-        console.error("Error fetching post:", error);
-        setError(error instanceof Error ? error.message : "An error occurred");
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "An error occurred");
       } finally {
         setLoading(false);
       }
     };
 
-    if (documentId) {
-      fetchPost();
-    }
+    if (documentId) fetchPost();
   }, [documentId, apiUrl]);
 
-  if (loading) {
-    return <div className={styles.loading}>Loading...</div>;
-  }
-
-  if (error || !post) {
+  if (loading) return <div className={styles.loading}>Loading...</div>;
+  if (error || !post)
     return <div className={styles.error}>{error || "Post not found"}</div>;
-  }
+
+  const mainImageUrl = getStrapiImageUrl(post?.mainImage?.url);
 
   return (
     <div className={styles.knowledgeDetailContainer}>
-      {/* Header Section with Image */}
       <div className={styles.headerSection}>
         <div className={styles.knowledgeHeader}>
           <h1 className={styles.mainTitle}>{post.title}</h1>
         </div>
-
-        {/* Main Image */}
         <div className={styles.mainImageContainer}>
-          <img
-            src={getStrapiImageUrl(post?.mainImage?.url)}
-            alt={post.title}
-            className={styles.mainImage}
-          />
+          {mainImageUrl ? (
+            <img
+              src={mainImageUrl}
+              alt={post.mainImage?.alternativeText || post.title}
+              className={styles.mainImage}
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = "/placeholder.jpg";
+              }}
+            />
+          ) : null}
         </div>
       </div>
 
-      {/* Content Section */}
       <div className={styles.contentSection}>
         <div className={styles.contentWrapper}>
           <div
@@ -97,14 +80,12 @@ const KnowledgeDetail: React.FC = () => {
         </div>
       </div>
 
-      {/* All Knowledge Link */}
       <div className={styles.allKnowledgeSection}>
         <a href="/community/knowledge" className={styles.allKnowledgeLink}>
           All Knowledge
         </a>
       </div>
 
-      {/* Contact Section */}
       <Contact />
     </div>
   );

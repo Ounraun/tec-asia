@@ -1,5 +1,3 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"); */
-
 .container {
   min-height: 100vh;
   background-color: #000;
@@ -24,10 +22,24 @@
   margin-bottom: 1rem;
 }
 
+/* heading 2 คำ ให้เหมือน Data Management */
+.highlight,
+.Management_29_186 {
+  font-family: var(--font-heading), "Sarabun", "Noto Sans Thai",
+    "IBM Plex Sans Thai", system-ui, sans-serif;
+  font-size: clamp(2rem, 8vw, 5rem);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25;
+  display: inline-block;
+  overflow: visible;
+  padding-top: 0.04em;
+  padding-bottom: 0.15em;
+  letter-spacing: -0.606px;
+}
+
 .highlight {
   text-align: center;
-  letter-spacing: -0.606px;
-  -webkit-text-fill-color: transparent;
   background: linear-gradient(
     81deg,
     #236faf 0%,
@@ -37,24 +49,11 @@
   );
   -webkit-background-clip: text;
   background-clip: text;
-  font-family: var(--font-heading);
-  font-size: 72px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 72px;
-  display: inline-block;
+  -webkit-text-fill-color: transparent;
 }
 
 .Management_29_186 {
   color: #fff;
-  text-align: center;
-  letter-spacing: -0.606px;
-  font-family: var(--font-heading);
-  font-size: 72px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 72px;
-  display: inline-block;
 }
 
 .subtitle {
@@ -68,9 +67,8 @@
   font-weight: 500;
   line-height: 1.6;
   color: #f5f5f5;
-  white-space: normal;
-  word-break: break-word;
   white-space: pre-line;
+  word-break: break-word;
 }
 
 .cityBackground {
@@ -96,13 +94,11 @@
   filter: blur(5px);
   z-index: 2;
 }
-
 .cityBackground::before {
   top: 0;
   height: 150px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
 }
-
 .cityBackground::after {
   bottom: 0;
   height: 150px;
@@ -115,7 +111,6 @@
     rgba(23, 23, 23, 0.83) 79%,
     rgba(70, 70, 70, 0.04) 100%
   );
-
   width: 100vw;
   height: 280px;
   position: relative;
@@ -180,20 +175,17 @@
   box-shadow: 0 0 10px 4px #72d4ed;
   z-index: 10;
 }
-
 .featureCard:hover {
   transform: translateY(-5px);
   border-color: #42a5f5;
   box-shadow: 0 0 20px rgba(66, 165, 245, 0.3);
 }
-
 .featureCard h3 {
   color: #fff;
   font-size: 1rem;
   font-weight: 500;
   margin-top: 1rem;
 }
-
 .featureCard p {
   color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-heading);
@@ -204,16 +196,12 @@
 }
 
 .featureTitle {
-  background: var(
-    --tital-tone1,
-    linear-gradient(180deg, #005df9 0%, #a7daff 100%)
-  );
+  background: linear-gradient(180deg, #005df9 0%, #a7daff 100%);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
   font-family: var(--font-heading);
   font-size: 20px;
-  font-style: normal;
   font-weight: 700;
   line-height: 30px;
   display: inline-block;
@@ -231,7 +219,6 @@
   flex-wrap: wrap;
   gap: 1.5rem;
 }
-
 .slide {
   box-sizing: border-box;
   flex: 0 0 auto;
@@ -276,6 +263,7 @@
 .activeDot {
   background: #34a8d5;
 }
+
 .navigation {
   display: flex;
   justify-content: space-between;
@@ -284,7 +272,6 @@
   padding: 0 1rem;
   box-sizing: border-box;
 }
-
 .navLink {
   color: #fff;
   font-family: var(--font-heading);
@@ -294,13 +281,64 @@
 .navLink:hover {
   color: #34a8d5;
 }
-@media (min-width: 769px) {
-  .prevBtn,
-  .nextBtn,
-  .dots {
+
+/* =========================
+   Mobile ≤ 575.98px
+   ========================= */
+@media (max-width: 575.98px) {
+  .featuresGrid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .highlight,
+  .Management_29_186 {
+    font-size: 40px;
+    line-height: 40px;
+  }
+  .header {
+    margin: 2rem 0;
+    padding-top: 36px;
+  }
+  .featureTitle {
+    font-size: 14px;
+    line-height: 20px;
+    width: 140px;
+  }
+  .navigation {
+    padding: 1rem 0.2rem;
+    font-size: 0.95rem;
+  }
+  .navLink {
+    font-size: 1rem !important;
+  }
+}
+
+/* =========================
+   Tablet 768–991.98px
+   ========================= */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .featuresGrid {
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .highlight,
+  .Management_29_186 {
+    font-size: 40px;
+    line-height: 40px;
+  }
+  .featureTitle {
+    font-size: 16px;
+    line-height: 24px;
+    width: 160px;
+  }
+  .header {
+    padding: 2rem 0;
+  }
+  .carouselContainer .prevBtn,
+  .carouselContainer .nextBtn,
+  .carouselContainer .dots {
     display: none;
   }
-
   .slides {
     flex-wrap: wrap;
     transform: none !important;
@@ -320,12 +358,14 @@
   }
 }
 
-@media (max-width: 1200px) {
+/* =========================
+   Desktop 992–1199.98px
+   ========================= */
+@media (min-width: 992px) and (max-width: 1199.98px) {
   .featuresGrid {
     flex-wrap: wrap;
     gap: 2rem;
   }
-
   .highlight,
   .Management_29_186 {
     font-size: 50px;
@@ -339,62 +379,48 @@
   .navLink {
     font-size: 18px;
   }
-}
-
-@media (max-width: 768px) {
-  .highlight,
-  .Management_29_186 {
-    font-size: 40px;
-    line-height: 40px;
+  .carouselContainer .prevBtn,
+  .carouselContainer .nextBtn,
+  .carouselContainer .dots {
+    display: none;
   }
-
-  .header {
-    padding: 2rem 0;
+  .slides {
+    flex-wrap: wrap;
+    transform: none !important;
   }
-  .featureTitle {
-    font-size: 16px;
-    line-height: 24px;
-    width: 160px;
-  }
-  .container {
-    padding: 0 2rem;
-  }
-  .prevBtn,
-  .nextBtn,
-  .dots {
-    display: block;
+  .slide {
+    flex: 1 1 220px;
+    max-width: 260px;
   }
   .navigation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 2rem 0;
-  }
-  .navLink {
-    font-size: 1rem;
-    padding: 0 1rem;
+    flex-direction: row;
+    justify-content: center;
+    gap: 90rem;
+    margin: 3rem 0;
   }
 }
 
-@media (max-width: 480px) {
-  .featuresGrid {
-    flex-direction: column;
-    align-items: center;
+/* =========================
+   Extra large ≥ 1200px
+   ========================= */
+@media (min-width: 1200px) {
+  .carouselContainer .prevBtn,
+  .carouselContainer .nextBtn,
+  .carouselContainer .dots {
+    display: none;
   }
-
-  .highlight,
-  .Management_29_186 {
-    font-size: 40px;
-    line-height: 40px;
+  .slides {
+    flex-wrap: wrap;
+    transform: none !important;
   }
-
-  .header {
-    margin: 2rem 0;
+  .slide {
+    flex: 1 1 220px;
+    max-width: 260px;
   }
-  .featureTitle {
-    font-size: 14px;
-    line-height: 20px;
-    width: 140px;
+  .navigation {
+    flex-direction: row;
+    justify-content: center;
+    gap: 90rem;
+    margin: 3rem 0;
   }
 }

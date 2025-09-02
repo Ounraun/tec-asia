@@ -5,11 +5,10 @@ import "react-datepicker/dist/react-datepicker.min.css";
 import styles from "./MeetingRoomsBooking.module.css";
 import ParticlesComponent from "../../components/Particles/Particles";
 
-/* -------------------- Types -------------------- */
-
 type EmailNode =
   | { id?: number; email?: string; attributes?: { email?: string } }
   | undefined;
+
 interface Booking {
   id: number;
   documentId: string;
@@ -44,14 +43,12 @@ interface BookingFormData {
   end_time: string;
   meeting_room: string;
 }
+
 const genRid = () =>
   `fe_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 
-/* -------------------- Const -------------------- */
 const LOCALE = "en";
 
-/* -------------------- Helpers -------------------- */
-// 08:00 / 08:00:00 / ISO -> minutes since 00:00
 const toMinutes = (val: string): number => {
   if (!val) return 0;
   if (val.includes("T")) {
@@ -62,7 +59,6 @@ const toMinutes = (val: string): number => {
   return (parseInt(h || "0", 10) || 0) * 60 + (parseInt(m || "0", 10) || 0);
 };
 
-// overlap แบบ half-open ช่วง [aStart, aEnd) ชน [bStart, bEnd) ?
 const rangesOverlap = (
   aStart: number,
   aEnd: number,
@@ -72,7 +68,7 @@ const rangesOverlap = (
 
 const getWeekDates = (date?: Date) => {
   const today = date || new Date();
-  const currentDay = today.getDay(); // 0..6 (Sun..Sat)
+  const currentDay = today.getDay();
   const monday = new Date(today);
   const daysToMonday = currentDay === 0 ? 6 : currentDay - 1;
   monday.setDate(today.getDate() - daysToMonday);
@@ -106,7 +102,6 @@ const validateTimeSelection = (start: string, end: string): boolean => {
   return s >= 7 * 60 && e <= 20 * 60 && s < e;
 };
 
-// ดึงรายชื่อผู้เข้าร่วมจาก booking.email (รองรับได้ทั้ง 2 shape)
 const extractParticipants = (b: Booking): string[] => {
   const raw: any = b?.email;
   const arr: any[] = Array.isArray(raw)
@@ -114,8 +109,7 @@ const extractParticipants = (b: Booking): string[] => {
     : Array.isArray(raw?.data)
     ? raw.data
     : [];
-
-  const seen = new Set<string>(); // ✅ ประกาศให้ชัดเจน
+  const seen = new Set<string>();
   return arr
     .map((e: any) =>
       (e?.email ?? e?.attributes?.email ?? "").trim().toLowerCase()
@@ -127,7 +121,6 @@ const extractParticipants = (b: Booking): string[] => {
     });
 };
 
-/* -------------------- Component -------------------- */
 const MeetingRoomsBooking: React.FC = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const location = useLocation();
@@ -136,8 +129,8 @@ const MeetingRoomsBooking: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
-  const [fetchError, setFetchError] = useState<string | null>(null); // สำหรับโหลด bookings
-  const [formError, setFormError] = useState<string | null>(null); // สำหรับ validate ฟอร์ม
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const [roomDetails, setRoomDetails] = useState<RoomDetails | null>(null);
 
@@ -176,7 +169,6 @@ const MeetingRoomsBooking: React.FC = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  /* -------- room details from query string -------- */
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setRoomDetails({
@@ -187,28 +179,23 @@ const MeetingRoomsBooking: React.FC = () => {
     });
   }, [location.search]);
 
-  /* -------------------- Fetch bookings -------------------- */
   const fetchBookings = async () => {
     if (!roomId) return;
     try {
       const startDate = ymdd(currentDisplayedWeek.monday);
       const endDate = ymdd(currentDisplayedWeek.sunday);
-
-      // ✅ สร้าง query ด้วย URLSearchParams ให้ปลอดภัย/อ่านง่าย
       const qs = new URLSearchParams({
         locale: LOCALE,
         "filters[date][$gte]": startDate,
         "filters[date][$lte]": endDate,
-        "filters[meeting_room][documentId][$eq]": roomId, // ✅ filter ที่เซิร์ฟเวอร์
+        "filters[meeting_room][documentId][$eq]": roomId,
         populate: "*",
       });
-
       const url = `${apiUrl}/api/bookings?${qs.toString()}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error("โหลดข้อมูลการจองไม่สำเร็จ");
-
       const json = await res.json();
-      setBookings(json?.data || []); // ✅ ไม่ต้อง filter ซ้ำฝั่ง client
+      setBookings(json?.data || []);
     } catch (err: any) {
       setFetchError(err?.message || "เกิดข้อผิดพลาดในการโหลดข้อมูล");
     } finally {
@@ -220,7 +207,6 @@ const MeetingRoomsBooking: React.FC = () => {
     if (!roomId) return;
     setLoading(true);
     fetchBookings();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     roomId,
     currentDisplayedWeek.monday.toISOString(),
@@ -241,19 +227,15 @@ const MeetingRoomsBooking: React.FC = () => {
       document.removeEventListener("visibilitychange", onFocusOrVisible);
       window.removeEventListener("focus", onFocusOrVisible);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /* -------------------- Week nav -------------------- */
   const handlePreviousWeek = () => {
     const newMon = new Date(currentDisplayedWeek.monday);
     newMon.setDate(newMon.getDate() - 7);
     newMon.setHours(0, 0, 0, 0);
-
     const newSun = new Date(newMon);
     newSun.setDate(newMon.getDate() + 6);
     newSun.setHours(23, 59, 59, 999);
-
     setCurrentDisplayedWeek({ monday: newMon, sunday: newSun });
     setWeekDates({ monday: newMon, sunday: newSun });
   };
@@ -262,16 +244,13 @@ const MeetingRoomsBooking: React.FC = () => {
     const newMon = new Date(currentDisplayedWeek.monday);
     newMon.setDate(newMon.getDate() + 7);
     newMon.setHours(0, 0, 0, 0);
-
     const newSun = new Date(newMon);
     newSun.setDate(newMon.getDate() + 6);
     newSun.setHours(23, 59, 59, 999);
-
     setCurrentDisplayedWeek({ monday: newMon, sunday: newSun });
     setWeekDates({ monday: newMon, sunday: newSun });
   };
 
-  /* -------------------- Form handlers -------------------- */
   const handleStartTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const v = e.target.value;
     setStartTime(v);
@@ -307,7 +286,6 @@ const MeetingRoomsBooking: React.FC = () => {
     setFormData((prev) => ({ ...prev, participants: list }));
   };
 
-  /* -------------------- Validators -------------------- */
   const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
   const validateRequiredFields = () => {
@@ -356,15 +334,13 @@ const MeetingRoomsBooking: React.FC = () => {
     const day = selectedDate ? ymdd(selectedDate) : "";
     const sReq = toMinutes(startTime);
     const eReq = toMinutes(endTime);
-
     const clash = bookings.find((b) => {
-      if (b.documentId === editingBookingDocId) return false; // ข้ามเรคอร์ดที่กำลังแก้
+      if (b.documentId === editingBookingDocId) return false;
       if (b.date !== day) return false;
       const sB = toMinutes(b.start_time);
       const eB = toMinutes(b.end_time);
       return rangesOverlap(sReq, eReq, sB, eB);
     });
-
     if (clash) {
       setFormError("มีการจองในช่วงเวลานี้แล้ว");
       return false;
@@ -381,7 +357,7 @@ const MeetingRoomsBooking: React.FC = () => {
       validateBookingOverlap()
     );
   };
-  /* -------------------- Submit / Update -------------------- */
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -418,7 +394,7 @@ const MeetingRoomsBooking: React.FC = () => {
 
       const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" }, // ✅ พอแค่นี้
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
@@ -428,7 +404,6 @@ const MeetingRoomsBooking: React.FC = () => {
       }
 
       navigate("/booking-confirm");
-      // reset form
       setFormData({
         subject: "",
         description: "",
@@ -490,7 +465,7 @@ const MeetingRoomsBooking: React.FC = () => {
 
       const res = await fetch(url, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" }, // ✅ พอแค่นี้
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
@@ -512,7 +487,6 @@ const MeetingRoomsBooking: React.FC = () => {
     }
   };
 
-  /* -------------------- UI helpers -------------------- */
   const isBooked = (date: Date, hour: number) => {
     const day = ymdd(date);
     const cellStart = hour * 60;
@@ -538,7 +512,6 @@ const MeetingRoomsBooking: React.FC = () => {
       const pad = (n: number) => String(n).padStart(2, "0");
       const toHHmm = (min: number) =>
         `${pad(Math.floor(min / 60))}:${pad(min % 60)}`;
-
       const sHH = toHHmm(s);
       const eHH = toHHmm(e);
 
@@ -612,7 +585,6 @@ const MeetingRoomsBooking: React.FC = () => {
     setTimeError(null);
   };
 
-  /* -------------------- Render -------------------- */
   if (loading) {
     return (
       <div className={styles.meetingRoomsContainer}>
@@ -818,7 +790,7 @@ const MeetingRoomsBooking: React.FC = () => {
             <div className={styles.formActions}>
               {isViewMode && (
                 <button
-                  className={styles.editButton}
+                  className={`${styles.btn} ${styles.btnGhost}`}
                   onClick={() => (setIsViewMode(false), setIsEditMode(true))}
                 >
                   แก้ไข
@@ -852,7 +824,6 @@ const MeetingRoomsBooking: React.FC = () => {
                   <select
                     value={startTime}
                     onChange={handleStartTimeChange}
-                    className={styles.timeSelect}
                     required
                     disabled={isViewMode}
                   >
@@ -867,7 +838,6 @@ const MeetingRoomsBooking: React.FC = () => {
                   <select
                     value={endTime}
                     onChange={handleEndTimeChange}
-                    className={styles.timeSelect}
                     required
                     disabled={isViewMode}
                   >
@@ -883,9 +853,7 @@ const MeetingRoomsBooking: React.FC = () => {
                     ))}
                   </select>
                 </div>
-                {timeError && (
-                  <div className={styles.errorMessage}>{timeError}</div>
-                )}
+                {timeError && <div className={styles.error}>{timeError}</div>}
               </div>
             </div>
 
@@ -897,7 +865,6 @@ const MeetingRoomsBooking: React.FC = () => {
                 value={formData.subject}
                 onChange={handleInputChange}
                 placeholder="หัวข้อ"
-                className={styles.subjectInput}
                 required
                 readOnly={isViewMode}
               />
@@ -1002,28 +969,24 @@ const MeetingRoomsBooking: React.FC = () => {
               )}
             </div>
 
-            <div className="w-100 text-center">
-              {!isViewMode && (
-                <>
-                  {formError && (
-                    <div className={styles.errorMessage}>{formError}</div>
-                  )}
-                  <button
-                    type="submit"
-                    className={styles.confirmBooking}
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting
-                      ? isEditMode
-                        ? "กำลังบันทึก..."
-                        : "กำลังจอง..."
-                      : isEditMode
-                      ? "บันทึกการเปลี่ยนแปลง"
-                      : "ยืนยันการจอง"}
-                  </button>
-                </>
-              )}
-            </div>
+            {!isViewMode && (
+              <div style={{ width: "100%", textAlign: "center" }}>
+                {formError && <div className={styles.error}>{formError}</div>}
+                <button
+                  type="submit"
+                  className={styles.confirmBooking}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting
+                    ? isEditMode
+                      ? "กำลังบันทึก..."
+                      : "กำลังจอง..."
+                    : isEditMode
+                    ? "บันทึกการเปลี่ยนแปลง"
+                    : "ยืนยันการจอง"}
+                </button>
+              </div>
+            )}
           </form>
         </div>
       )}

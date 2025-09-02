@@ -1,9 +1,11 @@
+// src/pages/Community/CompanyEvents.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Contact from "../../components/Contact";
 import ParticlesComponent from "../../components/Particles/Particles";
-import "./Community.css";
+import styles from "./Community.module.css";
 import { getStrapiImageUrl } from "../../services/strapi";
+
 interface Category {
   createdAt: string;
   description: string | null;
@@ -44,55 +46,26 @@ const CompanyEvents = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        console.log("Fetching all blog posts...");
         const url = `${apiUrl}/api/blog-posts?filters[category][name][$eq]=Company%20events&populate=*`;
-        console.log("API URL:", url);
-
         const response = await fetch(url);
         const data = await response.json();
 
-        console.log("Raw API Response:", data);
-
         if (data.data && Array.isArray(data.data)) {
-          // แสดงข้อมูลดิบทั้งหมดก่อน
-          console.log("All raw posts:", JSON.stringify(data.data, null, 2));
-
-          // แสดงข้อมูลแต่ละโพสต์แบบละเอียด
-          data.data.forEach((item: any, index: number) => {
-            console.log(`\nPost ${index + 1} details:`, {
-              id: item.id,
-              title: item.title,
-              content: item.content,
-              category: item.category?.name,
-              mainImage: item.mainImage,
-              show_main: item.show_main,
-              documentId: item.documentId,
-            });
-          });
-
-          // ตรวจสอบโพสต์ที่เป็น company events
           const companyEvents = data.data.filter(
             (item: any) =>
               item.category?.name?.toLowerCase() === "company events"
           );
-
-          console.log("\nCompany Events posts:", companyEvents);
           setPosts(companyEvents);
         }
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching posts:", error);
+      } finally {
         setLoading(false);
       }
     };
 
     fetchPosts();
   }, [apiUrl]);
-
-  // Log when posts state changes
-  useEffect(() => {
-    console.log("Current posts state:", posts);
-  }, [posts]);
 
   const handlePostClick = (documentId: string) => {
     navigate(`/blog/doc/${documentId}`);
@@ -119,6 +92,7 @@ const CompanyEvents = () => {
       >
         <ParticlesComponent />
       </div>
+
       <div
         style={{
           position: "relative",
@@ -127,39 +101,43 @@ const CompanyEvents = () => {
         }}
       >
         <div
-          className="community-container"
+          className={styles.communityContainer}
           style={{ backgroundColor: "transparent" }}
         >
-          <div className="community-header">
-            <h1>COMPANY EVENTS</h1>
+          <div className={styles.communityHeader}>
+            <h1 className={styles.headerTitle}>COMPANY EVENTS</h1>
           </div>
 
-          <div className="events-grid">
+          <div className={styles.eventsGrid}>
             {loading ? (
-              <div className="loading">Loading...</div>
+              <div className={styles.loading}>Loading...</div>
             ) : posts.length === 0 ? (
-              <div className="no-posts">No company events found</div>
+              <div>No company events found</div>
             ) : (
               posts.map((post, index) => (
                 <div
                   key={post.id}
-                  className={`event-card ${index % 2 === 0 ? "left" : "right"}`}
+                  className={`${styles.eventCard} ${
+                    index % 2 === 0 ? styles.left : styles.right
+                  }`}
                   onClick={() => handlePostClick(post.documentId)}
                   style={{ cursor: "pointer" }}
                 >
-                  <div className="event-content">
-                    <h3>{post.title}</h3>
-                    <p>{post.content}</p>
+                  <div className={styles.eventContent}>
+                    <h3 className={styles.eventTitle}>{post.title}</h3>
+                    <p className={styles.eventText}>{post.content}</p>
                   </div>
+
                   {getStrapiImageUrl(post?.mainImage?.url) && (
-                    <div className="event-image-container">
+                    <div className={styles.eventImageContainer}>
                       <img
                         src={getStrapiImageUrl(post?.mainImage?.url)}
                         alt={post.title}
-                        className="event-image"
+                        className={styles.eventImage}
                         onError={(e) => {
                           console.error("Image failed to load:", e);
-                          e.currentTarget.src = "/placeholder.jpg";
+                          (e.currentTarget as HTMLImageElement).src =
+                            "/placeholder.jpg";
                         }}
                       />
                     </div>
@@ -169,17 +147,19 @@ const CompanyEvents = () => {
             )}
           </div>
 
-          <div className="w100 text-center">
+          {/* ถ้ายังอยากใช้ Bootstrap class อย่าง text-center ต่อไป ก็ผสมได้แบบนี้ */}
+          <div className={`${styles.fullWidth} text-center`}>
             <button
-              className="more-btn"
+              className={styles.moreBtn}
               onClick={() =>
                 window.open("https://www.facebook.com/TecAsiaSupport", "_blank")
               }
             >
-              <span>More from our page</span>
+              <span className={styles.moreBtnLabel}>More from our page</span>
             </button>
           </div>
         </div>
+
         <Contact />
       </div>
     </div>

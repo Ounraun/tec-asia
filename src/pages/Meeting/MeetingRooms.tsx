@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./MeetingRooms.css";
+import styles from "./MeetingRooms.module.css";
 import { getStrapiImageUrl } from "../../services/strapi";
 import { useTranslation } from "react-i18next";
 
-// กำหนด Interface สำหรับห้องประชุม
 interface MeetingRoom {
   max: number;
   min: number;
   description: string;
   name: string;
-  picture: {
-    url: string;
-  };
+  picture: { url: string };
   documentId: string;
   id: number;
   attributes: {
@@ -20,13 +17,7 @@ interface MeetingRoom {
     subtitle: string;
     capacity: string;
     buttonText: string;
-    image: {
-      data: {
-        attributes: {
-          url: string;
-        };
-      };
-    };
+    image: { data: { attributes: { url: string } } };
   };
 }
 
@@ -35,19 +26,16 @@ const MeetingRooms: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { t, i18n } = useTranslation(["common", "meetingRoom"]);
-
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetch(`${apiUrl}/api/meeting-rooms?populate=*`)
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => {
-        console.log("Meeting Rooms:", data.data);
-        setMeetingRooms(data.data);
+        setMeetingRooms(data.data || []);
         setLoading(false);
       })
-      .catch((error) => {
-        console.error("Error fetching Meeting Rooms:", error);
+      .catch(() => {
         setError("เกิดข้อผิดพลาดในการโหลดข้อมูล");
         setLoading(false);
       });
@@ -55,35 +43,45 @@ const MeetingRooms: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="meeting-rooms-container">
-        <div className="loading">กำลังโหลดข้อมูล...</div>
+      <div className={styles.pageContainer}>
+        <div>กำลังโหลดข้อมูล...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="meeting-rooms-container">
-        <div className="error">{error}</div>
+      <div className={styles.pageContainer}>
+        <div>{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="meeting-rooms-container">
-      <h1 className="page-title">{t("meetingRoom:meetingRoomServices")}</h1>
-      <div className="rooms-grid">
+    <div className={styles.pageContainer}>
+      <h1 className={styles.pageTitle}>
+        {t("meetingRoom:meetingRoomServices")}
+      </h1>
+
+      <div className={styles.roomsGrid}>
         {meetingRooms.map((room) => (
-          <div key={room.id} className="room-card">
-            <div className="room-image">
-              <img src={getStrapiImageUrl(room.picture.url)} alt={room.name} />
+          <div key={room.id} className={styles.roomCard}>
+            <div className={styles.roomImage}>
+              <img
+                src={getStrapiImageUrl(room.picture.url)}
+                alt={room.name}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
-            <div className="room-info">
-              <h2>{room.name}</h2>
-              <p className="subtitle">{room.description}</p>
-              <p className="capacity">
+
+            <div className={styles.roomInfo}>
+              <h2 className={styles.roomTitle}>{room.name}</h2>
+              <p className={styles.roomSubtitle}>{room.description}</p>
+              <p className={styles.roomCapacity}>
                 สำหรับ {room.min} - {room.max} ท่าน
               </p>
+
               <Link
                 to={`/meeting-rooms-booking/${
                   room.documentId
@@ -91,10 +89,10 @@ const MeetingRooms: React.FC = () => {
                   room.name || ""
                 )}&description=${encodeURIComponent(
                   room.description || ""
-                )}&min=${room.min?.toString() || "0"}&max=${
+                )}&min=${room.max?.toString() || "0"}&max=${
                   room.max?.toString() || "0"
                 }`}
-                className="booking-button"
+                className={styles.bookingButton}
               >
                 จองห้องประชุม
               </Link>
@@ -102,8 +100,9 @@ const MeetingRooms: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="Ellipse_12_8_725"></div>
-      <div className="Ellipse_11_8_727"></div>
+
+      <div className={styles["Ellipse_12_8_725"]} />
+      <div className={styles["Ellipse_11_8_727"]} />
     </div>
   );
 };

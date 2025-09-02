@@ -1,17 +1,13 @@
+// src/pages/Community/BlogDetail.tsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Contact from "../../components/Contact";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import required modules
 import { Navigation, Pagination } from "swiper/modules";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "./BlogDetail.css";
+import styles from "./BlogDetail.module.css";
 import { getStrapiImageUrl } from "../../services/strapi";
 
 interface BlogPost {
@@ -48,12 +44,10 @@ const BlogDetail = () => {
           `${apiUrl}/api/blog-posts?populate=*&filters[documentId][$eq]=${documentId}`
         );
 
-        if (!response.ok) {
+        if (!response.ok)
           throw new Error(`HTTP error! status: ${response.status}`);
-        }
 
         const data = await response.json();
-
         if (
           !data?.data ||
           !Array.isArray(data.data) ||
@@ -70,34 +64,27 @@ const BlogDetail = () => {
             const relatedResponse = await fetch(
               `${apiUrl}/api/blog-posts?populate=*&filters[category][name][$eq]=${postData.category.name}&filters[documentId][$ne]=${documentId}`
             );
-
-            if (!relatedResponse.ok) {
-              console.error("Failed to fetch related posts");
-              return;
-            }
+            if (!relatedResponse.ok) return;
 
             const relatedData = await relatedResponse.json();
-            if (relatedData?.data) {
+            if (relatedData?.data)
               setRelatedPosts(relatedData.data.slice(0, 3));
-            }
-          } catch (relatedError) {
-            console.error("Error fetching related posts:", relatedError);
+          } catch (err) {
+            console.error("Error fetching related posts:", err);
           }
         }
-      } catch (error) {
-        console.error("Error fetching post:", error);
-        setError(error instanceof Error ? error.message : "An error occurred");
+      } catch (err) {
+        console.error("Error fetching post:", err);
+        setError(err instanceof Error ? err.message : "An error occurred");
       }
     };
 
-    if (documentId) {
-      fetchPost();
-    }
+    if (documentId) fetchPost();
   }, [documentId, apiUrl]);
 
   if (error) {
     return (
-      <div className="error-container">
+      <div className={styles.errorContainer}>
         <h2>Error loading post</h2>
         <p>{error}</p>
         <button onClick={() => navigate(-1)}>Go Back</button>
@@ -106,17 +93,16 @@ const BlogDetail = () => {
   }
 
   if (!post) {
-    return <div className="loading">Loading...</div>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   return (
     <>
-      <div className="blog-detail-container">
-        <h1 className="blog-title">{post.title}</h1>
+      <div className={styles.blogDetailContainer}>
+        <h1 className={styles.blogTitle}>{post.title}</h1>
 
-        <div className="main-content">
-          {/* Main Image */}
-          <div className="main-image">
+        <div className={styles.mainContent}>
+          <div className={styles.mainImage}>
             {getStrapiImageUrl(post?.mainImage?.url) ? (
               <img
                 src={getStrapiImageUrl(post?.mainImage?.url)}
@@ -126,48 +112,34 @@ const BlogDetail = () => {
                 }}
               />
             ) : (
-              <div className="no-image">No image available</div>
+              <div className={styles.noImage}>No image available</div>
             )}
           </div>
 
-          {/* Content */}
-          <div className="blog-content">
+          <div className={styles.blogContent}>
             <p>{post.content}</p>
           </div>
         </div>
 
-        {/* Gallery Section */}
         {post.gallery_image && post.gallery_image.length > 0 && (
-          <div className="gallery-section">
+          <div className={styles.gallerySection}>
             <Swiper
               modules={[Navigation, Pagination]}
               spaceBetween={20}
               slidesPerView={4}
-              autoHeight={true}
+              autoHeight
               navigation
               pagination={{ clickable: true }}
               breakpoints={{
-                320: {
-                  slidesPerView: 1,
-                  spaceBetween: 10,
-                },
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 15,
-                },
-                768: {
-                  slidesPerView: 3,
-                  spaceBetween: 15,
-                },
-                1024: {
-                  slidesPerView: 4,
-                  spaceBetween: 20,
-                },
+                320: { slidesPerView: 1, spaceBetween: 10 },
+                640: { slidesPerView: 2, spaceBetween: 15 },
+                768: { slidesPerView: 3, spaceBetween: 15 },
+                1024: { slidesPerView: 4, spaceBetween: 20 },
               }}
             >
               {post.gallery_image.map((image, index) => (
                 <SwiperSlide key={index}>
-                  <div className="gallery-item">
+                  <div className={styles.galleryItem}>
                     <img
                       src={getStrapiImageUrl(image?.url)}
                       alt={`Gallery ${index + 1}`}
@@ -183,37 +155,27 @@ const BlogDetail = () => {
           </div>
         )}
 
-        {/* Related Posts */}
         {post.category && relatedPosts.length > 0 && (
-          <div className="other-events">
+          <div className={styles.otherEvents}>
             <h2>Other {post.category.name}</h2>
-            <div className="related-posts-swiper">
+            <div className={styles.relatedPostsSwiper}>
               <Swiper
                 modules={[Navigation, Pagination]}
                 spaceBetween={30}
                 slidesPerView={3}
-                autoHeight={true}
+                autoHeight
                 navigation
                 pagination={{ clickable: true }}
                 breakpoints={{
-                  320: {
-                    slidesPerView: 1,
-                    spaceBetween: 20,
-                  },
-                  768: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
-                  },
-                  1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 30,
-                  },
+                  320: { slidesPerView: 1, spaceBetween: 20 },
+                  768: { slidesPerView: 2, spaceBetween: 30 },
+                  1024: { slidesPerView: 3, spaceBetween: 30 },
                 }}
               >
                 {relatedPosts.map((relatedPost) => (
                   <SwiperSlide key={relatedPost.id}>
                     <div
-                      className="related-post-card"
+                      className={styles.relatedPostCard}
                       onClick={() =>
                         navigate(`/blog/doc/${relatedPost.documentId}`)
                       }
@@ -229,7 +191,7 @@ const BlogDetail = () => {
                           }}
                         />
                       )}
-                      <div className="card-content">
+                      <div className={styles.cardContent}>
                         <h3>{relatedPost.title}</h3>
                         <p>{relatedPost.content}</p>
                         <span className="read-more">Read more »</span>
@@ -240,7 +202,7 @@ const BlogDetail = () => {
               </Swiper>
             </div>
             <button
-              className="all-events-btn"
+              className={styles.allEventsBtn}
               onClick={() =>
                 navigate(
                   `/community/${post.category?.name

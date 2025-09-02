@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./BookingConfirm.css";
+import styles from "./BookingConfirm.module.css";
+
+const REDIRECT_MS = 3000;
 
 const BookingConfirm = () => {
   const navigate = useNavigate();
@@ -9,32 +11,30 @@ const BookingConfirm = () => {
     navigate("/meeting-rooms");
   };
 
-  // Auto redirect after 3 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/meeting-rooms");
-    }, 3000);
-
+    }, REDIRECT_MS);
     return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
-    <div className="booking-confirm-container">
-      <div className="booking-confirm-box">
-        <h1 className="confirm-title">Meeting Room Booking Confirmed</h1>
+    <div className={styles.container}>
+      <div className={styles.box}>
+        <h1 className={styles.title}>Meeting Room Booking Confirmed</h1>
 
-        <div className="confirm-message">
+        <div className={styles.message}>
           <p>Your booking has been successfully completed!</p>
           <p>
             The confirmation details have been sent to the email address
             provided.
           </p>
-          <p className="redirect-message">
+          <p className={styles.redirect}>
             Redirecting to meeting rooms in 3 seconds...
           </p>
         </div>
 
-        <button className="close-button" onClick={handleClose}>
+        <button className={styles.closeBtn} onClick={handleClose}>
           Back to Meeting Rooms
         </button>
       </div>

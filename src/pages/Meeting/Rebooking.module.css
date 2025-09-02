@@ -20,7 +20,6 @@
   margin: 0 auto;
 }
 
-/* blocks */
 .formGroup {
   margin-bottom: 1.5rem;
 }
@@ -31,7 +30,6 @@
   gap: 2rem;
 }
 
-/* scope element styles under the form */
 .rebookingForm label {
   display: block;
   margin-bottom: 0.5rem;
@@ -134,7 +132,6 @@
   background-size: 1.2rem;
 }
 
-/* small helpers used in the component */
 .errorBanner {
   margin-bottom: 1rem;
   padding: 0.75rem 1rem;
@@ -150,7 +147,7 @@
   color: #ffcc66;
   font-size: 0.95rem;
 }
-/* ปุ่ม base */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -164,15 +161,14 @@
   border: 1px solid transparent;
 }
 
-/* ปุ่มโปร่งใส กลืนพื้นหลัง */
 .btnGhost {
   background: transparent;
-  color: #3498db; /* ตัวอักษรน้ำเงินอ่อน */
+  color: #3498db;
   border-color: transparent;
 }
 
 .btnGhost:hover {
-  background: #3498db; /* hover น้ำเงิน */
+  background: #3498db;
   color: #fff;
   border-color: #3498db;
   transform: translateY(-1px);
@@ -189,19 +185,18 @@
   cursor: not-allowed;
 }
 
-/* ระยะห่างเฉพาะปุ่มเพิ่มผู้เข้าร่วม */
 .addMore {
   margin: 1rem 0;
-  padding: 0; /* ให้ ghost คุม padding เองผ่าน .btn */
+  padding: 0;
 }
 
-/* ไอคอน + ให้กลืนพื้นหลัง และเป็นขาวตอน hover */
 .plusIcon {
   font-size: 1.1rem;
   line-height: 1;
   color: #3498db;
   transition: color 0.2s ease;
 }
+
 .btnGhost:hover .plusIcon {
   color: #fff;
 }

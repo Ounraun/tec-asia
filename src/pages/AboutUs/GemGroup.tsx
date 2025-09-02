@@ -52,7 +52,7 @@ const GemGroup = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={aboutStyles.gemGroup}>
+    <div className={aboutStyles["gemGroup"]}>
       {gemData.map((gem, index) => (
         <button
           key={gem.id}

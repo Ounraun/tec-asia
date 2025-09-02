@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, lazy } from "react";
+import React, { useState, useMemo, useEffect, Suspense, lazy } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ParticlesComponent from "../../components/Particles/Particles";
@@ -7,7 +7,6 @@ import aboutStyles from "./AboutUs.module.css";
 import { getAboutUs } from "../../services/strapi";
 import type { AboutUs } from "../../types/aboutUs";
 import GemGroup from "./GemGroup";
-// Importing SVG assets
 import BG_Service from "@/assets/AboutUs/bg_service.webp";
 import GemFloor from "@/assets/AboutUs/Gem-floor.svg";
 import BG_Wave from "@/assets/AboutUs/bg-wave.svg";
@@ -17,13 +16,62 @@ import {
   getStrapiImageUrl,
 } from "../../services/strapi";
 
+function usePreloadImages(urls: string[]) {
+  const [ready, setReady] = React.useState(false);
+
+  React.useEffect(() => {
+    let cancelled = false;
+
+    const jobs = urls.filter(Boolean).map(
+      (src) =>
+        new Promise<void>((resolve) => {
+          const img = new Image();
+          img.onload = img.onerror = () => resolve();
+          img.src = src;
+          const d = (img as any).decode?.();
+          if (d && typeof d.then === "function") {
+            d.catch(() => {}).finally(() => resolve());
+          }
+        })
+    );
+
+    Promise.all(jobs).finally(() => {
+      if (!cancelled) setReady(true);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [urls.join("|")]);
+
+  return ready;
+}
+
 const CommunityCard = lazy(() => import("./CommunityCard"));
 type Key = "company" | "knowledge" | "society";
 
 const AboutUs = () => {
+  const keys: Key[] = ["company", "knowledge", "society"];
   const [currentIdx, setCurrentIdx] = useState(0);
   const navigate = useNavigate();
   const [posts, setPosts] = useState<Record<Key, any>>({} as any);
+
+  const imagesReady = usePreloadImages([
+    BG_Service,
+    BG_Wave,
+    BG_Wave_Service,
+    GemFloor,
+  ]);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const ready = !isLoading && imagesReady;
+
+  const particles = useMemo(() => {
+    return isLoading ? null : <ParticlesComponent />;
+  }, [isLoading]);
+
+  const { t, i18n } = useTranslation(["common", "aboutUs", "communityCard"]);
+  const [aboutUs, setAboutUs] = useState<AboutUs | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -32,9 +80,6 @@ const AboutUs = () => {
       getLatestPostByCategory("Society"),
     ])
       .then(([cRes, kRes, sRes]) => {
-        console.log("API company:", cRes);
-        console.log("API knowledge:", kRes);
-        console.log("API society:", sRes);
         setPosts({
           company: cRes.data ? cRes.data[0] : null,
           knowledge: kRes.data ? kRes.data[0] : null,
@@ -45,40 +90,30 @@ const AboutUs = () => {
         console.error("API ERROR:", err);
       });
   }, []);
+
   useEffect(() => {
-    const interval = setInterval(() => {
+    if (!ready) return;
+    const id = setInterval(() => {
       setCurrentIdx((idx) => (idx + 1) % keys.length);
     }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const keys: Key[] = ["company", "knowledge", "society"];
-
-  const prevIdx = (currentIdx + keys.length - 1) % keys.length;
-  const nextIdx = (currentIdx + 1) % keys.length;
-  const [isLoading, setIsLoading] = useState(true);
-  const particles = useMemo(() => {
-    return <ParticlesComponent />;
-  }, []);
-
-  const { t, i18n } = useTranslation(["common", "aboutUs", "communityCard"]);
-
-  const [aboutUs, setAboutUs] = useState<AboutUs | null>(null);
+    return () => clearInterval(id);
+  }, [ready, keys.length]);
 
   useEffect(() => {
     setIsLoading(true);
     getAboutUs()
       .then((res) => {
         setAboutUs(res.data);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 500);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.error("Failed fetching AboutUs:", err);
         setIsLoading(false);
       });
   }, [i18n.language]);
+
+  const prevIdx = (currentIdx + keys.length - 1) % keys.length;
+  const nextIdx = (currentIdx + 1) % keys.length;
 
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -97,23 +132,10 @@ const AboutUs = () => {
   };
 
   useEffect(() => {
-    if (!isLoading && window.location.hash === "#contact-section") {
+    if (ready && window.location.hash === "#contact-section") {
       scrollToContact();
     }
-  }, [isLoading]);
-
-  if (isLoading) {
-    return (
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "100vh" }}
-      >
-        <div className="spinner-border text-light" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
-  }
+  }, [ready]);
 
   function truncate(text: string, maxLength = 100): string {
     if (!text) return "";
@@ -131,42 +153,64 @@ const AboutUs = () => {
   }
 
   return (
-    <div className={aboutStyles["container"]}>
+    <div
+      className={`${aboutStyles["container"]} ${
+        ready ? aboutStyles["fadeIn"] : ""
+      }`}
+      aria-hidden={!ready}
+    >
+      {!ready && (
+        <div
+          className={aboutStyles["loadingOverlay"]}
+          role="status"
+          aria-live="polite"
+          aria-busy="true"
+        >
+          <div className={aboutStyles["spinner"]} />
+        </div>
+      )}
+
       <div
         className="overflow-x-hidden overflow-y-visible"
         style={{ scrollBehavior: "smooth", backgroundColor: "#000" }}
       >
         <div
-          className={`bg-dark ${aboutStyles.heroSection}`}
+          className={`bg-dark ${aboutStyles["heroSection"]}`}
           style={{ scrollSnapAlign: "start", width: "100%" }}
         >
-          <div className={aboutStyles.particleWrapper}>{particles}</div>
-          <div className={`${aboutStyles.contentLayout}`}>
+          <div className={aboutStyles["particleWrapper"]}>{particles}</div>
+          <div className={aboutStyles["contentLayout"]}>
             <div style={{ width: "100%" }}>
-              <h1 className={aboutStyles.mainTitle}>{aboutUs?.heroTitle}</h1>
+              <h1 className={aboutStyles["main-title"]}>
+                {aboutUs?.heroTitle}
+              </h1>
               <p
-                className={`${aboutStyles.mainText} ${aboutStyles.mainTextS32}`}
+                className={`${aboutStyles["main-text"]} ${aboutStyles["main-text-s32"]}`}
               >
                 {aboutUs?.heroContent}
               </p>
             </div>
           </div>
         </div>
+
         <div
-          className={`position-relative ${aboutStyles.serviceSection}`}
-          style={{
-            overflow: "hidden",
-            scrollSnapAlign: "start",
-          }}
+          className={`position-relative ${aboutStyles["serviceSection"]}`}
+          style={{ overflow: "hidden", scrollSnapAlign: "start" }}
         >
-          {" "}
-          <img
-            src={BG_Service}
-            alt="Background"
-            className={`${aboutStyles.bgFade}`}
-            aria-hidden="true"
-          />
-          <div className={aboutStyles.serviceHeading}>
+          {imagesReady ? (
+            <img
+              src={BG_Service}
+              alt="Background"
+              className={aboutStyles["bgFade"]}
+              aria-hidden="true"
+              decoding="async"
+              fetchPriority="high"
+            />
+          ) : (
+            <div style={{ width: "100%", height: 600 }} />
+          )}
+
+          <div className={aboutStyles["serviceHeading"]}>
             <h2>
               {t("aboutUs:service")}
               <br />
@@ -174,15 +218,22 @@ const AboutUs = () => {
               {t("aboutUs:solutions")}
             </h2>
           </div>
-          <GemGroup />
-          <div className={aboutStyles.gemFloorWrapper}>
-            <img
-              className={aboutStyles["gem-floor-img"]}
-              src={GemFloor}
-              aria-hidden="true"
-            />
+
+          {imagesReady && <GemGroup />}
+
+          <div className={aboutStyles["gemFloorWrapper"]}>
+            {imagesReady && (
+              <img
+                className={aboutStyles["gem-floor-img"]}
+                src={GemFloor}
+                aria-hidden="true"
+                decoding="async"
+              />
+            )}
           </div>
-          <div className={`${aboutStyles.vl}`}></div>
+
+          <div className={aboutStyles["vl"]}></div>
+
           <div className={aboutStyles["iso-layout"]}>
             <div className={aboutStyles["iso-item"]}>
               <div className={`${aboutStyles["iso-item-content"]} text-white`}>
@@ -212,79 +263,81 @@ const AboutUs = () => {
           className={`${aboutStyles["community-layout"]} ${aboutStyles["bg-community"]}`}
         >
           <div
-            className={`${aboutStyles.communityTitle} text-white position-absolute`}
+            className={`${aboutStyles["communityTitle"]} text-white position-absolute`}
           >
             <h1 className={aboutStyles["main-text-s64"]}>
               {t("aboutUs:ourCommunity")}
             </h1>
           </div>
+
           <div className={aboutStyles["filter-bg-community-1"]}></div>
           <div className={aboutStyles["filter-bg-community-2"]}></div>
           <div className={aboutStyles["circle-bg-community-1"]}></div>
           <div className={aboutStyles["circle-bg-community-2"]}></div>
 
           <div className="position-absolute w-100 h-100">
-            <div
-              className={`${aboutStyles["wave-bg-community"]} position-relative  w-100 h-100`}
-            >
-              <img
-                className={`${aboutStyles["bg-wave-filter"]} position-absolute`}
-                src={BG_Wave_Service}
-                alt=""
-                loading="lazy"
-                aria-hidden="true"
-              />
-              <img
-                className={`${aboutStyles["bg-wave"]} position-absolute`}
-                src={BG_Wave}
-                alt=""
-                loading="lazy"
-                aria-hidden="true"
-              />
-            </div>
+            {imagesReady && (
+              <div
+                className={`${aboutStyles["wave-bg-community"]} position-relative w-100 h-100`}
+              >
+                <img
+                  className={`${aboutStyles["bg-wave-filter"]} position-absolute`}
+                  src={BG_Wave_Service}
+                  alt=""
+                  loading="eager"
+                  decoding="async"
+                  aria-hidden="true"
+                />
+                <img
+                  className={`${aboutStyles["bg-wave"]} position-absolute`}
+                  src={BG_Wave}
+                  alt=""
+                  loading="eager"
+                  decoding="async"
+                  aria-hidden="true"
+                />
+              </div>
+            )}
           </div>
-          <div className={aboutStyles.carouselContainer}>
+
+          <div className={aboutStyles["carouselContainer"]}>
             {keys.map((key, i) => {
               let posClass = "";
-              if (i === currentIdx) posClass = aboutStyles.current;
-              else if (i === prevIdx) posClass = aboutStyles.prev;
-              else if (i === nextIdx) posClass = aboutStyles.next;
-              else posClass = "";
+              if (i === currentIdx) posClass = aboutStyles["current"];
+              else if (i === prevIdx) posClass = aboutStyles["prev"];
+              else if (i === nextIdx) posClass = aboutStyles["next"];
 
-              const rawUrl = posts[key]?.mainImage?.url; 
-              const imageUrl = getStrapiImageUrl(rawUrl); 
-              console.log("[AboutUs] image", {
-                key,
-                rawUrl,
-                imageUrl,
-                base: import.meta.env.VITE_API_URL,
-              });
+              const rawUrl = posts[key]?.mainImage?.url;
+              const imageUrl = getStrapiImageUrl(rawUrl);
 
               return (
                 <div
                   key={key}
-                  className={`${aboutStyles.slide} ${posClass}`}
+                  className={`${aboutStyles["slide"]} ${posClass}`}
                   onClick={() => {
                     if (i === prevIdx) setCurrentIdx(prevIdx);
                     if (i === nextIdx) setCurrentIdx(nextIdx);
                   }}
                 >
-                  <CommunityCard
-                    title={t(`communityCard:${key}`)}
-                    imageUrl={imageUrl}
-                    excerpt={truncate(posts[key]?.content)}
-                    date={formatDate(posts[key]?.createdAt)}
-                    onReadMore={() =>
-                      navigate(`/blog/doc/${posts[key].documentId}`)
-                    }
-                  />
-                  <div className={aboutStyles.cardCategoryTitle}>
+                  <Suspense fallback={null}>
+                    <CommunityCard
+                      title={t(`communityCard:${key}`)}
+                      imageUrl={imageUrl}
+                      excerpt={truncate(posts[key]?.content)}
+                      date={formatDate(posts[key]?.createdAt)}
+                      onReadMore={() =>
+                        navigate(`/blog/doc/${posts[key].documentId}`)
+                      }
+                    />
+                  </Suspense>
+                  <div className={aboutStyles["cardCategoryTitle"]}>
                     {t(`communityCard:${key}`)}
                   </div>
                 </div>
               );
             })}
           </div>
+
           <div
             className="position-absolute text-white"
             style={{
