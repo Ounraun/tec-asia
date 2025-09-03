@@ -1,10 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Routes, Route, Navigate } from "react-router-dom"; // ⬅️ เพิ่ม Navigate
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import { lazy, Suspense } from "react";
-import React from "react";
-import BookingEditConfirm from "./pages/Meeting/BookingEditConfirm";
-import BookingDeleteConfirm from "./pages/Meeting/BookingDeleteConfirm";
+import React, { lazy, Suspense } from "react";
 
 const AboutUs = lazy(() => import("./pages/AboutUs/AboutUsPage"));
 const CentralizeManagement = lazy(
@@ -13,7 +10,6 @@ const CentralizeManagement = lazy(
 const Multimedia = lazy(
   () => import("./pages/ServicesAndSolutions/Multimedia")
 );
-// ⛏️ แก้บั๊กเดิม: DataManagement ถูก import ไปที่ Multimedia
 const DataManagement = lazy(
   () => import("./pages/ServicesAndSolutions/DataManagement")
 );
@@ -25,8 +21,13 @@ const DataCenter = lazy(
 );
 const NAS = lazy(() => import("./pages/NAS"));
 const MeetingRooms = lazy(() => import("./pages/Meeting/MeetingRooms"));
-const Rebooking = lazy(() => import("./pages/Meeting/Rebooking")); // ตำแหน่งตามโปรเจกต์คุณ
 const BookingConfirm = lazy(() => import("./pages/Meeting/BookingConfirm"));
+const BookingEditConfirm = lazy(
+  () => import("./pages/Meeting/BookingEditConfirm")
+);
+const BookingDeleteConfirm = lazy(
+  () => import("./pages/Meeting/BookingDeleteConfirm")
+);
 const CompanyEvents = lazy(() => import("./pages/Community/CompanyEvents"));
 const Society = lazy(() => import("./pages/Community/Society"));
 const Knowledge = lazy(() => import("./pages/Community/Knowledge"));
@@ -43,8 +44,8 @@ const SpinnerFallback = () => {
   const [hold, setHold] = React.useState(true);
 
   React.useEffect(() => {
-    const t1 = setTimeout(() => setShow(true), 120); // หน่วงก่อนโผล่
-    const t2 = setTimeout(() => setHold(false), 420); // ค้างขั้นต่ำเพื่อกันแวบ
+    const t1 = setTimeout(() => setShow(true), 120);
+    const t2 = setTimeout(() => setHold(false), 420);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
@@ -101,10 +102,6 @@ function App() {
               path="/meeting-rooms-booking/:roomId"
               element={<MeetingRoomsBooking />}
             />
-
-            {/* ⬇️ เปลี่ยนให้ Rebooking รับ documentId */}
-            <Route path="/rebooking/:docId" element={<Rebooking />} />
-            {/* เข้าทางเดิม /rebooking ให้รีไดเรกต์ไปเลือกห้องหรือหน้าอื่น */}
             <Route
               path="/rebooking"
               element={<Navigate to="/meeting-rooms" replace />}

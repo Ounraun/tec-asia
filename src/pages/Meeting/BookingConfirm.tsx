@@ -1,22 +1,27 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./BookingConfirm.module.css";
 
 const REDIRECT_MS = 3000;
 
-const BookingConfirm = () => {
+const BookingConfirm: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectTo =
+    (location.state as { redirectTo?: string } | null)?.redirectTo ||
+    new URLSearchParams(location.search).get("redirectTo") ||
+    "/meeting-rooms";
 
   const handleClose = () => {
-    navigate("/meeting-rooms");
+    navigate(redirectTo);
   };
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/meeting-rooms");
+      navigate(redirectTo);
     }, REDIRECT_MS);
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, [navigate, redirectTo]);
 
   return (
     <div className={styles.container}>
@@ -30,12 +35,12 @@ const BookingConfirm = () => {
             provided.
           </p>
           <p className={styles.redirect}>
-            Redirecting to meeting rooms in 3 seconds...
+            Redirecting to the room timetable in 3 seconds...
           </p>
         </div>
 
         <button className={styles.closeBtn} onClick={handleClose}>
-          Back to Meeting Rooms
+          Back to timetable
         </button>
       </div>
     </div>

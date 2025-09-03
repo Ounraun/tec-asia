@@ -622,6 +622,9 @@
   background: #d32f2f;
 }
 
+.bookingInfo {
+  pointer-events: none;
+}
 @media (max-width: 640px) {
   .formGroup {
     flex-direction: column;

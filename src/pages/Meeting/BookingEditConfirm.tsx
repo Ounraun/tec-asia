@@ -1,20 +1,23 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./BookingEditConfirm.module.css";
+
+const REDIRECT_MS = 3000;
 
 const BookingEditConfirm: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectTo =
+    (location.state as { redirectTo?: string } | null)?.redirectTo ||
+    new URLSearchParams(location.search).get("redirectTo") ||
+    "/meeting-rooms";
 
-  const handleClose = () => {
-    navigate("/meeting-rooms");
-  };
+  const handleClose = () => navigate(redirectTo);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigate("/meeting-rooms");
-    }, 3000);
+    const timer = setTimeout(() => navigate(redirectTo), REDIRECT_MS);
     return () => clearTimeout(timer);
-  }, [navigate]);
+  }, [navigate, redirectTo]);
 
   return (
     <div className={styles.bookingConfirmContainer}>
@@ -25,12 +28,12 @@ const BookingEditConfirm: React.FC = () => {
           <p>Your booking changes have been saved successfully.</p>
           <p>The updated details have been sent to the provided email.</p>
           <p className={styles.redirectMessage}>
-            Redirecting to meeting rooms in 3 seconds...
+            Redirecting to the room timetable in 3 seconds...
           </p>
         </div>
 
         <button className={styles.closeButton} onClick={handleClose}>
-          Back to Meeting Rooms
+          Back to timetable
         </button>
       </div>
     </div>

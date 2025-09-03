@@ -1,14 +1,19 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./BookingDeleteConfirm.module.css";
 
 const BookingDeleteConfirm: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectTo =
+    (location.state as { redirectTo?: string } | null)?.redirectTo ||
+    new URLSearchParams(location.search).get("redirectTo") ||
+    "/meeting-rooms";
 
   useEffect(() => {
-    const id = setTimeout(() => navigate("/meeting-rooms"), 3000);
+    const id = setTimeout(() => navigate(redirectTo), 3000);
     return () => clearTimeout(id);
-  }, [navigate]);
+  }, [navigate, redirectTo]);
 
   return (
     <div className={styles.container}>
@@ -17,14 +22,14 @@ const BookingDeleteConfirm: React.FC = () => {
         <div className={styles.message}>
           <p>ลบการจองเรียบร้อยแล้ว</p>
           <p className={styles.redirectNote}>
-            กำลังกลับไปหน้าห้องประชุมใน 3 วินาที…
+            กำลังกลับไปตารางห้องประชุมใน 3 วินาที…
           </p>
         </div>
         <button
           className={styles.closeButton}
-          onClick={() => navigate("/meeting-rooms")}
+          onClick={() => navigate(redirectTo)}
         >
-          Back to Meeting Rooms
+          Back to timetable
         </button>
       </div>
     </div>
