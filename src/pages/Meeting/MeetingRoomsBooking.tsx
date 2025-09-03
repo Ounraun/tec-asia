@@ -44,10 +44,6 @@ interface BookingFormData {
   meeting_room: string;
 }
 
-const DEBUG = true;
-const dbg = (...args: any[]) => DEBUG && console.log("[MRB]", ...args);
-const fmtDate = (d: Date) => d.toISOString().slice(0, 10);
-
 const genRid = () =>
   `fe_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 
@@ -98,6 +94,7 @@ const ymdd = (d: Date) => {
   const day = String(d.getDate()).padStart(2, "0");
   return `${y}-${m}-${day}`;
 };
+
 const parseLocalYmd = (s: string) => {
   const [y, m, d] = s.split("-").map(Number);
   return new Date(y, m - 1, d, 0, 0, 0, 0); // local midnight
@@ -175,7 +172,6 @@ const MeetingRoomsBooking: React.FC = () => {
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [isViewMode, setIsViewMode] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  // const [editingBookingId, setEditingBookingId] = useState<number | null>(null);
   const [editingBookingDocId, setEditingBookingDocId] = useState<string | null>(
     null
   );
@@ -250,25 +246,6 @@ const MeetingRoomsBooking: React.FC = () => {
       const res = await fetch(url);
       if (!res.ok) throw new Error("โหลดข้อมูลการจองไม่สำเร็จ");
       const json = await res.json();
-
-      // ✅ DEBUG
-      if (DEBUG) {
-        dbg("FETCH_BOOKINGS", {
-          roomId,
-          range: `${startDate}..${endDate}`,
-          count: json?.data?.length ?? 0,
-        });
-        console.table(
-          (json?.data ?? []).map((b: any) => ({
-            date: b.date,
-            start: b.start_time,
-            end: b.end_time,
-            subject: b.subject,
-            doc: b.documentId,
-          }))
-        );
-      }
-
       setBookings(json?.data || []);
     } catch (err: any) {
       setFetchError(err?.message || "เกิดข้อผิดพลาดในการโหลดข้อมูล");
@@ -548,7 +525,6 @@ const MeetingRoomsBooking: React.FC = () => {
         state: { redirectTo: roomBookingUrl },
       });
       setIsEditMode(false);
-      // setEditingBookingId(null);
       setEditingBookingDocId(null);
       setShowBookingForm(false);
       setRefreshKey((x) => x + 1);
@@ -558,9 +534,9 @@ const MeetingRoomsBooking: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+
   const handleDeleteBooking = async () => {
     if (!editingBookingDocId) return;
-
     const ok = window.confirm(
       "ยืนยันลบการจองนี้? การกระทำนี้ไม่สามารถยกเลิกได้"
     );
@@ -605,7 +581,6 @@ const MeetingRoomsBooking: React.FC = () => {
   const handleCellClick = (date: Date, hour: number, existing?: Booking) => {
     if (existing) {
       setEditingBookingDocId(existing.documentId);
-      // setEditingBookingId(existing.id);
       setIsViewMode(true);
       setIsEditMode(false);
       setSelectedDate(parseLocalYmd(existing.date));
@@ -653,14 +628,7 @@ const MeetingRoomsBooking: React.FC = () => {
     d.setHours(0, 0, 0, 0);
     const start = `${pad(hour)}:00`;
     const end = `${pad(hour + 1)}:00`;
-    if (DEBUG) {
-      dbg("CLICK_EMPTY->SET_STATE", {
-        dateCell: ymdd(d), // ✅ ใช้ ymdd(d) แทน toISOString()
-        hour,
-        start,
-        end,
-      });
-    }
+
     setSelectedDate(new Date(d));
     setStartTime(start);
     setEndTime(end);
@@ -679,62 +647,17 @@ const MeetingRoomsBooking: React.FC = () => {
     }, 0);
   };
 
-  const handleCloseForm = () => {
-    setShowBookingForm(false);
-    setSelectedDate(null);
-    setStartTime("");
-    setEndTime("");
-    setIsViewMode(false);
-    setIsEditMode(false);
-    setFormData({
-      subject: "",
-      description: "",
-      contact_email: "",
-      contact_name: "",
-      contact_phone: "",
-      participants: [""],
-      date: "",
-      start_time: "",
-      end_time: "",
-      meeting_room: roomId || "",
-    });
-    setFormError(null);
-    setTimeError(null);
+  const isTimeOverlapForCell = (
+    bookingStart: string,
+    bookingEnd: string,
+    cellHour: number
+  ) => {
+    const sB = toMinutes(bookingStart);
+    const eB = toMinutes(bookingEnd);
+    const cS = cellHour * 60;
+    const cE = cS + 60;
+    return rangesOverlap(cS, cE, sB, eB);
   };
-  useEffect(() => {
-    if (!DEBUG) return;
-    console.log("[MRB] STATE_CHANGE", {
-      selectedDate: selectedDate ? selectedDate.toISOString() : null,
-      startTime,
-      endTime,
-      isViewMode,
-      isEditMode,
-      showBookingForm,
-    });
-  }, [
-    selectedDate,
-    startTime,
-    endTime,
-    isViewMode,
-    isEditMode,
-    showBookingForm,
-  ]);
-
-  if (loading) {
-    return (
-      <div className={styles.meetingRoomsContainer}>
-        <div className={styles.loading}>กำลังโหลดข้อมูล...</div>
-      </div>
-    );
-  }
-
-  if (fetchError) {
-    return (
-      <div className={styles.meetingRoomsContainer}>
-        <div className={styles.error}>{fetchError}</div>
-      </div>
-    );
-  }
 
   const renderBookingTable = () => {
     const { monday, sunday } = weekDates;
@@ -747,33 +670,6 @@ const MeetingRoomsBooking: React.FC = () => {
       "Saturday",
       "Sunday",
     ];
-
-    const isTimeOverlapForCell = (
-      bookingStart: string,
-      bookingEnd: string,
-      cellHour: number
-    ) => {
-      const sB = toMinutes(bookingStart);
-      const eB = toMinutes(bookingEnd);
-      const cS = cellHour * 60;
-      const cE = cS + 60;
-      const overlap = rangesOverlap(cS, cE, sB, eB);
-
-      // [DEBUG #3]
-      if (DEBUG && overlap) {
-        dbg("SLOT_OVERLAP", {
-          cellHour,
-          cellStart: cS,
-          cellEnd: cE,
-          bookingStart,
-          bookingEnd,
-          sB,
-          eB,
-        });
-      }
-
-      return overlap;
-    };
 
     const formatDateToString = (d: Date) =>
       `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
@@ -860,17 +756,6 @@ const MeetingRoomsBooking: React.FC = () => {
                       );
                       const past = isPastDate(d);
 
-                      if (DEBUG) {
-                        dbg("CELL", {
-                          day,
-                          dateStr,
-                          hour: `${String(startHour).padStart(2, "0")}:00`,
-                          past,
-                          hasBooking: !!booking,
-                          listCount: list.length,
-                        });
-                      }
-
                       return (
                         <td
                           key={`${day}-${dateStr}-${startHour}`}
@@ -883,33 +768,12 @@ const MeetingRoomsBooking: React.FC = () => {
                               ? styles.clickableBooked
                               : ""
                           }`}
-                          onClick={() => {
-                            if (past) return;
-
-                            if (booking) {
-                              // [DEBUG #4] คลิกช่องที่มี booking
-                              if (DEBUG) {
-                                dbg("CLICK_BOOKED", {
-                                  cell: { date: dateStr, hour: startHour },
-                                  booking: {
-                                    date: booking.date,
-                                    start: booking.start_time,
-                                    end: booking.end_time,
-                                    doc: booking.documentId,
-                                  },
-                                });
-                              }
-                              handleCellClick(d, startHour, booking);
-                            } else {
-                              // [DEBUG #4] คลิกช่องว่าง
-                              if (DEBUG) {
-                                dbg("CLICK_EMPTY", {
-                                  cell: { date: dateStr, hour: startHour },
-                                });
-                              }
-                              handleCellClick(d, startHour);
-                            }
-                          }}
+                          onClick={() =>
+                            !past &&
+                            (booking
+                              ? handleCellClick(d, startHour, booking)
+                              : handleCellClick(d, startHour))
+                          }
                           style={{
                             cursor: past ? "not-allowed" : "pointer",
                             opacity: past ? 0.5 : 1,
@@ -1151,7 +1015,6 @@ const MeetingRoomsBooking: React.FC = () => {
               )}
             </div>
 
-            {/* ปุ่มหลัก: ลบ / บันทึกการเปลี่ยนแปลง / ยืนยันการจอง */}
             <div style={{ width: "100%", textAlign: "center" }}>
               {formError && <div className={styles.error}>{formError}</div>}
 
