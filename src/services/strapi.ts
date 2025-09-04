@@ -186,7 +186,7 @@ export async function createBooking(
       date: p.date,
       start_time: p.start_time,
       end_time: p.end_time,
-      meeting_room: { connect: [{ documentId: p.meeting_roomDocumentId }] },
+      meeting_room: { connect: { documentId: p.meeting_roomDocumentId } },
       email: p.participants.map((e) => ({ email: e })),
     },
   };
@@ -239,7 +239,7 @@ export async function updateBooking(
       start_time: payload.start_time,
       end_time: payload.end_time,
       meeting_room: payload.meeting_roomDocumentId
-        ? { connect: [{ documentId: payload.meeting_roomDocumentId }] }
+        ? { connect: { documentId: payload.meeting_roomDocumentId } }
         : undefined,
       email: (payload.participants || []).map((e) => ({ email: e })),
     },

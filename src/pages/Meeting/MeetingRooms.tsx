@@ -83,15 +83,14 @@ const MeetingRooms: React.FC = () => {
               </p>
 
               <Link
-                to={`/meeting-rooms-booking/${
-                  room.documentId
-                }?name=${encodeURIComponent(
-                  room.name || ""
-                )}&description=${encodeURIComponent(
-                  room.description || ""
-                )}&min=${room.max?.toString() || "0"}&max=${
-                  room.max?.toString() || "0"
-                }`}
+                to={`/meeting-rooms-booking/${room.documentId}`}
+                state={{
+                  mid: room.id, // ✅ numeric id ของห้อง
+                  name: room.name,
+                  description: room.description,
+                  min: room.min, // ✅ แก้ให้ถูกแล้ว
+                  max: room.max,
+                }}
                 className={styles.bookingButton}
               >
                 จองห้องประชุม
