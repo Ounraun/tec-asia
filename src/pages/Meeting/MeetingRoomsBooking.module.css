@@ -3,6 +3,7 @@
   background-color: #0e0e0e;
   min-height: 100vh;
   color: white;
+  color-scheme: dark;
 }
 
 .pageTitle {
@@ -625,6 +626,31 @@
 .bookingInfo {
   pointer-events: none;
 }
+
+/* หน้าตาช่อง select เอง (ขณะยังไม่กางเมนู) */
+.timeInputs select {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+/* สีของรายการในเมนู dropdown */
+.timeInputs select option {
+  background: #fff;
+  color: #111;
+}
+
+/* เน้นรายการที่ hover/เลือกอยู่ (บางเบราว์เซอร์รองรับ) */
+.timeInputs select option:hover,
+.timeInputs select option:checked {
+  background: #e6f0ff !important;
+  color: #111 !important;
+}
+
+/* เผื่อบางเบราว์เซอร์ไม่กิน scope ของ CSS modules */
+/* :global(select option) {
+  background: #fff;
+  color: #111;
+} */
 @media (max-width: 640px) {
   .formGroup {
     flex-direction: column;
