@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./MeetingRooms.module.css";
 import { getStrapiImageUrl } from "../../services/strapi";
 import { useTranslation } from "react-i18next";
@@ -27,6 +27,26 @@ const MeetingRooms: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { t, i18n } = useTranslation(["common", "meetingRoom"]);
   const apiUrl = import.meta.env.VITE_API_URL;
+
+  const navigate = useNavigate();
+  const goBook = (room: {
+    id: number;
+    name: string;
+    description: string;
+    min: number;
+    max: number;
+  }) => {
+    navigate(`/meeting/${room.id}/booking`, {
+      // จะส่ง state ไปก็ได้เป็น bonus แต่ไม่พึ่งมันแล้ว
+      state: {
+        mid: room.id,
+        name: room.name,
+        description: room.description,
+        min: room.min,
+        max: room.max,
+      },
+    });
+  };
 
   useEffect(() => {
     fetch(`${apiUrl}/api/meeting-rooms?populate=*`)
@@ -68,7 +88,7 @@ const MeetingRooms: React.FC = () => {
           <div key={room.id} className={styles.roomCard}>
             <div className={styles.roomImage}>
               <img
-                src={getStrapiImageUrl(room.picture.url)}
+                src={getStrapiImageUrl(room.picture?.url)}
                 alt={room.name}
                 loading="lazy"
                 decoding="async"
@@ -83,9 +103,9 @@ const MeetingRooms: React.FC = () => {
               </p>
 
               <Link
-                to={`/meeting-rooms-booking/${room.documentId}`}
+                to={`/meeting-rooms-booking/${room.documentId}`} // ✅ ใช้ documentId
                 state={{
-                  mid: room.id, // ✅ numeric id ของห้อง
+                  did: room.documentId,
                   name: room.name,
                   description: room.description,
                   min: room.min, // ✅ แก้ให้ถูกแล้ว

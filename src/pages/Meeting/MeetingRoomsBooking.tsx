@@ -5,12 +5,8 @@ import "react-datepicker/dist/react-datepicker.min.css";
 import styles from "./MeetingRoomsBooking.module.css";
 import ParticlesComponent from "../../components/Particles/Particles";
 
-type NavState = {
-  name: string;
-  description: string;
-  min: number;
-  max: number;
-};
+// ---------- Types ----------
+type NavState = { name: string; description: string; min: number; max: number };
 type EmailNode =
   | { id?: number; email?: string; attributes?: { email?: string } }
   | undefined;
@@ -50,9 +46,10 @@ interface BookingFormData {
   meeting_room: string;
 }
 
-const DEBUG = false;
+// ---------- Const / utils ----------
+const ROOM_CACHE_KEY = (id: string) => `mr:${id}`;
+const DEBUG = true;
 const dbg = (...args: any[]) => DEBUG && console.log("[MRB]", ...args);
-const fmtDate = (d: Date) => d.toISOString().slice(0, 10);
 const genRid = () =>
   `fe_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 const LOCALE = "en";
@@ -66,7 +63,6 @@ const toMinutes = (val: string): number => {
   const [h, m] = val.split(":");
   return (parseInt(h || "0", 10) || 0) * 60 + (parseInt(m || "0", 10) || 0);
 };
-
 const rangesOverlap = (
   aStart: number,
   aEnd: number,
@@ -81,21 +77,17 @@ const getWeekDates = (date?: Date) => {
   const daysToMonday = currentDay === 0 ? 6 : currentDay - 1;
   monday.setDate(today.getDate() - daysToMonday);
   monday.setHours(0, 0, 0, 0);
-
   const sunday = new Date(monday);
   sunday.setDate(monday.getDate() + 6);
   sunday.setHours(23, 59, 59, 999);
-
   return { monday, sunday };
 };
-
 const thDate = (d: Date) =>
   d.toLocaleDateString("th-TH", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   });
-
 const ymdd = (d: Date) => {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -106,19 +98,16 @@ const parseLocalYmd = (s: string) => {
   const [y, m, d] = s.split("-").map(Number);
   return new Date(y, m - 1, d, 0, 0, 0, 0);
 };
-
 const generateTimeOptions = () => {
   const t: string[] = [];
   for (let h = 7; h <= 20; h++) t.push(`${String(h).padStart(2, "0")}:00`);
   return t;
 };
-
-const validateTimeSelection = (start: string, end: string): boolean => {
+const validateTimeSelection = (start: string, end: string) => {
   const s = toMinutes(start);
   const e = toMinutes(end);
   return s >= 7 * 60 && e <= 20 * 60 && s < e;
 };
-
 const extractParticipants = (b: Booking): string[] => {
   const raw: any = b?.email;
   const arr: any[] = Array.isArray(raw)
@@ -138,8 +127,9 @@ const extractParticipants = (b: Booking): string[] => {
     });
 };
 
+// ================= Component =================
 const MeetingRoomsBooking: React.FC = () => {
-  const { roomId } = useParams<{ roomId: string }>(); // documentId ของห้อง
+  const { roomId } = useParams<{ roomId: string }>();
   const location = useLocation();
   const navigate = useNavigate();
   const navState = (location.state as NavState | undefined) ?? undefined;
@@ -150,17 +140,10 @@ const MeetingRoomsBooking: React.FC = () => {
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
 
-  // numeric id ของ room (ใช้เพื่อ enable ปุ่ม/validation)
-  const [roomEntryId, setRoomEntryId] = useState<number | null>(null);
-
   const [roomDetails, setRoomDetails] = useState<RoomDetails | null>(null);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [weekDates, setWeekDates] = useState(getWeekDates());
-  const [currentDisplayedWeek, setCurrentDisplayedWeek] = useState(
-    getWeekDates()
-  );
-
+  const [currentWeek, setCurrentWeek] = useState(getWeekDates());
   const [refreshKey, setRefreshKey] = useState(0);
 
   const [startTime, setStartTime] = useState("");
@@ -177,7 +160,7 @@ const MeetingRoomsBooking: React.FC = () => {
     date: "",
     start_time: "",
     end_time: "",
-    meeting_room: roomId || "",
+    meeting_room: "",
   });
 
   const [showBookingForm, setShowBookingForm] = useState(false);
@@ -189,35 +172,79 @@ const MeetingRoomsBooking: React.FC = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  const validateRequiredFields = () => {
-    if (!roomEntryId) {
-      setFormError("ไม่พบห้องประชุม หรือระบบยังโหลดข้อมูลห้องไม่เสร็จ");
-      return false;
-    }
-    if (
-      !formData.subject ||
-      !formData.description ||
-      !formData.contact_email ||
-      !formData.contact_name
-    ) {
-      setFormError("กรุณากรอกข้อมูลให้ครบ");
-      return false;
-    }
-    if (!selectedDate || !startTime || !endTime) {
-      setFormError("กรุณาเลือกวันที่และเวลาให้ครบ");
-      return false;
-    }
-    return true;
-  };
+  // --- debug init ---
+  useEffect(() => {
+    dbg("INIT", { roomId, navState, query: location.search });
+  }, [roomId]); // eslint-disable-line
 
-  // โหลด "ชื่อห้อง + numeric id" จาก Strapi ด้วย roomId (documentId)
+  useEffect(() => {
+    dbg("roomDetails changed", roomDetails);
+  }, [roomDetails]);
+
+  // ---------- 1) Loader: navState -> sessionStorage -> querystring ----------
+  useEffect(() => {
+    if (!roomId) return;
+
+    dbg("loader:start", {
+      roomId,
+      hasNavState: !!navState,
+      search: location.search,
+    });
+
+    // a) navState
+    if (navState) {
+      const v = {
+        name: navState.name ?? "",
+        description: navState.description ?? "",
+        min: Number(navState.min ?? 1),
+        max: Number(navState.max ?? 999),
+      };
+      dbg("loader:navState -> setRoomDetails & cache", v);
+      setRoomDetails(v);
+      sessionStorage.setItem(ROOM_CACHE_KEY(roomId), JSON.stringify(v));
+      setLoading(false);
+      return;
+    }
+
+    // b) sessionStorage
+    const raw = sessionStorage.getItem(ROOM_CACHE_KEY(roomId));
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        dbg("loader:sessionStorage -> setRoomDetails", parsed);
+        setRoomDetails(parsed);
+        setLoading(false);
+        return;
+      } catch (e) {
+        dbg("loader:sessionStorage parse failed", e);
+      }
+    }
+
+    // c) querystring (fallback)
+    const sp = new URLSearchParams(location.search);
+    const v = {
+      name: sp.get("name") || "",
+      description: sp.get("description") || "",
+      min: Number(sp.get("min") || 1),
+      max: Number(sp.get("max") || 999),
+    };
+    if (v.name || v.description) {
+      dbg("loader:querystring -> setRoomDetails", v);
+      setRoomDetails(v);
+      setLoading(false);
+    } else {
+      dbg("loader:no immediate data, wait for fetch");
+    }
+  }, [roomId, location.search, navState]);
+
+  // ---------- 2) Fetch from Strapi ----------
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
         if (!roomId) return;
+        dbg("fetchRoom:start", { roomId });
 
-        // 1) ใช้ state จาก Nav ถ้ามี เพื่อให้หัวข้อแสดงเร็วขึ้น
         if (navState) {
           setRoomDetails({
             name: navState.name ?? "",
@@ -227,40 +254,39 @@ const MeetingRoomsBooking: React.FC = () => {
           });
         }
 
-        // 2) ดึงจาก Strapi เพื่อความแน่นอน + เอา numeric id
         const qs = new URLSearchParams({
-          "filters[documentId][$eq]": roomId,
-          "filters[locale][$eq]": LOCALE,
-          "fields[0]": "name",
-          "fields[1]": "description",
-          "fields[2]": "min",
-          "fields[3]": "max",
+          "filters[documentId][$eq]": String(roomId),
           "pagination[page]": "1",
           "pagination[pageSize]": "1",
+          publicationState: "preview",
+          locale: "all",
+          populate: "*",
         });
         const res = await fetch(`${apiUrl}/api/meeting-rooms?${qs.toString()}`);
         if (!res.ok) throw new Error("โหลดข้อมูลห้องไม่สำเร็จ");
-        const json = await res.json();
 
+        const json = await res.json();
         const row = json?.data?.[0];
-        const id = row?.id ?? null;
         const attrs = row?.attributes ?? null;
 
+        dbg("fetchRoom:result", { rowId: row?.id, attrs });
         if (!alive) return;
+        if (!attrs) {
+          dbg("fetchRoom: empty attrs -> keep current");
+          return;
+        }
 
-        setRoomEntryId(id);
-        setRoomDetails({
-          name: attrs?.name ?? navState?.name ?? "",
-          description: attrs?.description ?? navState?.description ?? "",
-          min: Number(attrs?.min ?? navState?.min ?? 1),
-          max: Number(attrs?.max ?? navState?.max ?? 999),
-        });
+        const v: RoomDetails = {
+          name: attrs?.name ?? "",
+          description: attrs?.description ?? "",
+          min: Number(attrs?.min ?? 1),
+          max: Number(attrs?.max ?? 999),
+        };
+        setRoomDetails(v);
+        sessionStorage.setItem(ROOM_CACHE_KEY(roomId), JSON.stringify(v));
+        dbg("fetchRoom:cache saved", { key: ROOM_CACHE_KEY(roomId), v });
       } catch (e: any) {
         if (!alive) return;
-        // ยังแสดงหน้าต่อได้ แต่หัวข้ออาจเป็น fallback
-        setRoomEntryId(null);
-        if (!navState)
-          setRoomDetails({ name: "", description: "", min: 1, max: 999 });
         dbg("LOAD_ROOM_FAILED", e?.message || e);
       } finally {
         if (alive) setLoading(false);
@@ -269,26 +295,40 @@ const MeetingRoomsBooking: React.FC = () => {
     return () => {
       alive = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roomId, apiUrl]);
+  }, [roomId, apiUrl, navState]);
 
+  // ---------- Booking list ----------
   const fetchBookings = async () => {
     if (!roomId) return;
     try {
-      const startDate = ymdd(currentDisplayedWeek.monday);
-      const endDate = ymdd(currentDisplayedWeek.sunday);
+      const startDate = ymdd(currentWeek.monday);
+      const endDate = ymdd(currentWeek.sunday);
       const qs = new URLSearchParams({
         locale: LOCALE,
         "filters[date][$gte]": startDate,
         "filters[date][$lte]": endDate,
-        "filters[meeting_room][documentId][$eq]": roomId,
+        "filters[meeting_room][documentId][$eq]": String(roomId),
         populate: "*",
       });
       const url = `${apiUrl}/api/bookings?${qs.toString()}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error("โหลดข้อมูลการจองไม่สำเร็จ");
       const json = await res.json();
-      setBookings(json?.data || []);
+
+      const rows: Booking[] = json?.data || [];
+      setBookings(rows);
+      // log ให้เห็นรายการที่โหลด
+      dbg(
+        "BOOKINGS:loaded",
+        rows.map((b) => ({
+          id: b.id,
+          documentId: b.documentId,
+          date: b.date,
+          start: b.start_time,
+          end: b.end_time,
+          subject: b.subject,
+        }))
+      );
     } catch (err: any) {
       setFetchError(err?.message || "เกิดข้อผิดพลาดในการโหลดข้อมูล");
     }
@@ -301,8 +341,8 @@ const MeetingRoomsBooking: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     roomId,
-    currentDisplayedWeek.monday.toISOString(),
-    currentDisplayedWeek.sunday.toISOString(),
+    currentWeek.monday.toISOString(),
+    currentWeek.sunday.toISOString(),
     apiUrl,
     refreshKey,
   ]);
@@ -324,43 +364,28 @@ const MeetingRoomsBooking: React.FC = () => {
 
   const roomBookingUrl = React.useMemo(() => {
     if (!roomId) return "/meeting-rooms";
-    const qs = new URLSearchParams({
-      name: roomDetails?.name ?? "",
-      description: roomDetails?.description ?? "",
-      min: String(roomDetails?.min ?? 0),
-      max: String(roomDetails?.max ?? 0),
-    });
-    return `/meeting-rooms-booking/${roomId}?${qs.toString()}`;
-  }, [
-    roomId,
-    roomDetails?.name,
-    roomDetails?.description,
-    roomDetails?.min,
-    roomDetails?.max,
-  ]);
+    return `/meeting-rooms-booking/${roomId}`;
+  }, [roomId]);
 
+  // ---------- Form handlers ----------
   const handlePreviousWeek = () => {
-    const newMon = new Date(currentDisplayedWeek.monday);
+    const newMon = new Date(currentWeek.monday);
     newMon.setDate(newMon.getDate() - 7);
     newMon.setHours(0, 0, 0, 0);
     const newSun = new Date(newMon);
     newSun.setDate(newMon.getDate() + 6);
     newSun.setHours(23, 59, 59, 999);
-    setCurrentDisplayedWeek({ monday: newMon, sunday: newSun });
-    setWeekDates({ monday: newMon, sunday: newSun });
+    setCurrentWeek({ monday: newMon, sunday: newSun });
   };
-
   const handleNextWeek = () => {
-    const newMon = new Date(currentDisplayedWeek.monday);
+    const newMon = new Date(currentWeek.monday);
     newMon.setDate(newMon.getDate() + 7);
     newMon.setHours(0, 0, 0, 0);
     const newSun = new Date(newMon);
     newSun.setDate(newMon.getDate() + 6);
     newSun.setHours(23, 59, 59, 999);
-    setCurrentDisplayedWeek({ monday: newMon, sunday: newSun });
-    setWeekDates({ monday: newMon, sunday: newSun });
+    setCurrentWeek({ monday: newMon, sunday: newSun });
   };
-
   const handleStartTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const v = e.target.value;
     setStartTime(v);
@@ -370,7 +395,6 @@ const MeetingRoomsBooking: React.FC = () => {
         : null
     );
   };
-
   const handleEndTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const v = e.target.value;
     setEndTime(v);
@@ -380,24 +404,40 @@ const MeetingRoomsBooking: React.FC = () => {
         : null
     );
   };
-
   const timeOptions = React.useMemo(generateTimeOptions, []);
-
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
   const handleParticipantChange = (idx: number, value: string) => {
     const list = [...formData.participants];
     list[idx] = value;
     setFormData((prev) => ({ ...prev, participants: list }));
   };
-
   const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
+  const validateRequiredFields = () => {
+    if (!roomId) {
+      setFormError("ไม่พบห้องประชุม");
+      return false;
+    }
+    if (
+      !formData.subject ||
+      !formData.description ||
+      !formData.contact_email ||
+      !formData.contact_name
+    ) {
+      setFormError("กรุณากรอกข้อมูลให้ครบ");
+      return false;
+    }
+    if (!selectedDate || !startTime || !endTime) {
+      setFormError("กรุณาเลือกวันที่และเวลาให้ครบ");
+      return false;
+    }
+    return true;
+  };
   const validateEmails = () => {
     if (!isEmail(formData.contact_email)) {
       setFormError("รูปแบบอีเมล์ผู้จองไม่ถูกต้อง");
@@ -412,7 +452,6 @@ const MeetingRoomsBooking: React.FC = () => {
     }
     return true;
   };
-
   const validateTime = () => {
     if (!validateTimeSelection(startTime, endTime)) {
       setFormError(
@@ -422,7 +461,6 @@ const MeetingRoomsBooking: React.FC = () => {
     }
     return true;
   };
-
   const validateBookingOverlap = () => {
     const day = selectedDate ? ymdd(selectedDate) : "";
     const sReq = toMinutes(startTime);
@@ -440,7 +478,6 @@ const MeetingRoomsBooking: React.FC = () => {
     }
     return true;
   };
-
   const validateForm = () => {
     setFormError(null);
     return (
@@ -449,6 +486,14 @@ const MeetingRoomsBooking: React.FC = () => {
       validateTime() &&
       validateBookingOverlap()
     );
+  };
+
+  const roomSnapshot = {
+    id: roomId,
+    name: roomDetails?.name || navState?.name || "",
+    description: roomDetails?.description || navState?.description || "",
+    min: roomDetails?.min ?? navState?.min ?? 1,
+    max: roomDetails?.max ?? navState?.max ?? 999,
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -481,22 +526,31 @@ const MeetingRoomsBooking: React.FC = () => {
         },
       };
 
+      dbg("CREATE:url", `${apiUrl}/api/bookings?locale=${LOCALE}&rid=${rid}`);
+      dbg("CREATE:payload", payload);
+
       const url = `${apiUrl}/api/bookings?locale=${LOCALE}&rid=${encodeURIComponent(
         rid
       )}`;
-
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
         throw new Error(body?.error?.message || "การจองไม่สำเร็จ");
       }
 
-      navigate("/booking-confirm", { state: { redirectTo: roomBookingUrl } });
+      navigate("/booking-confirm", {
+        state: { redirectTo: roomBookingUrl, room: roomSnapshot },
+      });
+      dbg("navigate -> /booking-confirm", {
+        redirectTo: roomBookingUrl,
+        roomSnapshot,
+      });
+
+      // reset
       setFormData({
         subject: "",
         description: "",
@@ -507,7 +561,7 @@ const MeetingRoomsBooking: React.FC = () => {
         date: "",
         start_time: "",
         end_time: "",
-        meeting_room: roomId || "",
+        meeting_room: "",
       });
       setSelectedDate(null);
       setStartTime("");
@@ -521,6 +575,7 @@ const MeetingRoomsBooking: React.FC = () => {
     }
   };
 
+  // ---------- UPDATE (PUT with documentId) ----------
   const handleUpdateBooking = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -554,6 +609,8 @@ const MeetingRoomsBooking: React.FC = () => {
       const url = `${apiUrl}/api/bookings/${editingBookingDocId}?locale=${LOCALE}&rid=${encodeURIComponent(
         rid
       )}`;
+      dbg("UPDATE:url", url);
+      dbg("UPDATE:payload", payload);
 
       const res = await fetch(url, {
         method: "PUT",
@@ -561,28 +618,35 @@ const MeetingRoomsBooking: React.FC = () => {
         body: JSON.stringify(payload),
       });
 
+      dbg("UPDATE:status", res.status);
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
+        dbg("UPDATE:error body", body);
         throw new Error(body?.error?.message || "การอัพเดทไม่สำเร็จ");
       }
 
       navigate("/booking-edit-confirm", {
-        state: { redirectTo: roomBookingUrl },
+        state: { redirectTo: roomBookingUrl, room: roomSnapshot },
+      });
+      dbg("navigate -> /booking-edit-confirm", {
+        redirectTo: roomBookingUrl,
+        roomSnapshot,
       });
       setIsEditMode(false);
       setEditingBookingDocId(null);
       setShowBookingForm(false);
       setRefreshKey((x) => x + 1);
     } catch (err: any) {
+      dbg("UPDATE:catch", err?.message || err);
       window.alert(err?.message || "เกิดข้อผิดพลาดในการอัพเดท");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  // ---------- DELETE (with documentId) ----------
   const handleDeleteBooking = async () => {
     if (!editingBookingDocId) return;
-
     const ok = window.confirm(
       "ยืนยันลบการจองนี้? การกระทำนี้ไม่สามารถยกเลิกได้"
     );
@@ -592,34 +656,26 @@ const MeetingRoomsBooking: React.FC = () => {
     const rid = genRid();
 
     try {
-      // 1) หา numeric id จาก documentId (locale en)
-      const qs = new URLSearchParams({
-        "filters[documentId][$eq]": editingBookingDocId,
-        "filters[locale][$eq]": LOCALE,
-        "fields[0]": "id",
-        "pagination[page]": "1",
-        "pagination[pageSize]": "1",
-      });
-      const resList = await fetch(`${apiUrl}/api/bookings?${qs.toString()}`);
-      if (!resList.ok) throw new Error("ค้นหา booking ไม่สำเร็จ");
-
-      const listJson = await resList.json();
-      const numericId = listJson?.data?.[0]?.id;
-      if (!numericId) throw new Error("ไม่พบ booking ที่จะลบ");
-
-      // 2) ลบด้วย numeric id
-      const url = `${apiUrl}/api/bookings/${numericId}?rid=${encodeURIComponent(
+      const url = `${apiUrl}/api/bookings/${editingBookingDocId}?locale=${LOCALE}&rid=${encodeURIComponent(
         rid
       )}`;
+      dbg("DELETE:url", url);
+
       const res = await fetch(url, { method: "DELETE" });
+      dbg("DELETE:status", res.status);
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
+        dbg("DELETE:error body", body);
         throw new Error(body?.error?.message || "ลบการจองไม่สำเร็จ");
       }
 
       navigate("/booking-delete-confirm", {
-        state: { redirectTo: roomBookingUrl },
+        state: { redirectTo: roomBookingUrl, room: roomSnapshot },
+      });
+      dbg("navigate -> /booking-delete-confirm", {
+        redirectTo: roomBookingUrl,
+        roomSnapshot,
       });
       setShowBookingForm(false);
       setRefreshKey((x) => x + 1);
@@ -630,6 +686,7 @@ const MeetingRoomsBooking: React.FC = () => {
     }
   };
 
+  // ---------- Table helpers ----------
   const isBooked = (date: Date, hour: number) => {
     const day = ymdd(date);
     const cellStart = hour * 60;
@@ -643,6 +700,21 @@ const MeetingRoomsBooking: React.FC = () => {
   };
 
   const handleCellClick = (date: Date, hour: number, existing?: Booking) => {
+    dbg("CELL:click", {
+      date: ymdd(date),
+      hour,
+      existing: existing
+        ? {
+            id: existing.id,
+            documentId: existing.documentId,
+            date: existing.date,
+            start: existing.start_time,
+            end: existing.end_time,
+            subject: existing.subject,
+          }
+        : null,
+    });
+
     if (existing) {
       setEditingBookingDocId(existing.documentId);
       setIsViewMode(true);
@@ -672,7 +744,7 @@ const MeetingRoomsBooking: React.FC = () => {
         date: existing.date,
         start_time: sHH,
         end_time: eHH,
-        meeting_room: roomId || "",
+        meeting_room: "",
       });
 
       setShowBookingForm(true);
@@ -704,10 +776,13 @@ const MeetingRoomsBooking: React.FC = () => {
       start_time: start,
       end_time: end,
     }));
-    setTimeout(() => {
-      const el = document.getElementById("bookingForm");
-      el?.scrollIntoView({ behavior: "smooth" });
-    }, 0);
+    setTimeout(
+      () =>
+        document
+          .getElementById("bookingForm")
+          ?.scrollIntoView({ behavior: "smooth" }),
+      0
+    );
   };
 
   const handleCloseForm = () => {
@@ -727,12 +802,17 @@ const MeetingRoomsBooking: React.FC = () => {
       date: "",
       start_time: "",
       end_time: "",
-      meeting_room: roomId || "",
+      meeting_room: "",
     });
     setFormError(null);
     setTimeError(null);
   };
 
+  // ---------- Render ----------
+  if (!roomId) {
+    navigate("/meeting-rooms", { replace: true });
+    return null;
+  }
   if (loading) {
     return (
       <div className={styles.meetingRoomsContainer}>
@@ -740,7 +820,6 @@ const MeetingRoomsBooking: React.FC = () => {
       </div>
     );
   }
-
   if (fetchError) {
     return (
       <div className={styles.meetingRoomsContainer}>
@@ -750,7 +829,7 @@ const MeetingRoomsBooking: React.FC = () => {
   }
 
   const renderBookingTable = () => {
-    const { monday, sunday } = weekDates;
+    const { monday, sunday } = currentWeek;
     const days = [
       "Monday",
       "Tuesday",
@@ -978,7 +1057,7 @@ const MeetingRoomsBooking: React.FC = () => {
                     disabled={isViewMode}
                   >
                     <option value="">เลือกเวลาเริ่มต้น</option>
-                    {generateTimeOptions().map((t) => (
+                    {timeOptions.map((t) => (
                       <option key={`start-${t}`} value={t}>
                         {t}
                       </option>
@@ -992,7 +1071,7 @@ const MeetingRoomsBooking: React.FC = () => {
                     disabled={isViewMode}
                   >
                     <option value="">เลือกเวลาสิ้นสุด</option>
-                    {generateTimeOptions().map((t) => (
+                    {timeOptions.map((t) => (
                       <option
                         key={`end-${t}`}
                         value={t}
@@ -1063,7 +1142,6 @@ const MeetingRoomsBooking: React.FC = () => {
 
             <div className={styles.formGroup}>
               <label>อีเมล์ผู้เข้าร่วม</label>
-
               {isViewMode ? (
                 formData.participants?.length ? (
                   <div className={styles.participantsList}>
@@ -1135,11 +1213,10 @@ const MeetingRoomsBooking: React.FC = () => {
                 </div>
               ) : (
                 <div style={{ width: "100%", textAlign: "center" }}>
-                  {formError && <div className={styles.error}>{formError}</div>}
                   <button
                     type="submit"
                     className={styles.confirmBooking}
-                    disabled={isSubmitting || !roomEntryId}
+                    disabled={isSubmitting || !roomId}
                   >
                     {isSubmitting
                       ? isEditMode
