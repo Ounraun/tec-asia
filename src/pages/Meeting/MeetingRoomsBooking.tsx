@@ -6,7 +6,6 @@ import styles from "./MeetingRoomsBooking.module.css";
 import ParticlesComponent from "../../components/Particles/Particles";
 
 type NavState = {
-  mid: number; // numeric id ของห้อง (สำคัญสุด)
   name: string;
   description: string;
   min: number;
@@ -51,13 +50,11 @@ interface BookingFormData {
   meeting_room: string;
 }
 
-const DEBUG = true;
+const DEBUG = false;
 const dbg = (...args: any[]) => DEBUG && console.log("[MRB]", ...args);
 const fmtDate = (d: Date) => d.toISOString().slice(0, 10);
-
 const genRid = () =>
   `fe_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
-
 const LOCALE = "en";
 
 const toMinutes = (val: string): number => {
@@ -107,7 +104,7 @@ const ymdd = (d: Date) => {
 };
 const parseLocalYmd = (s: string) => {
   const [y, m, d] = s.split("-").map(Number);
-  return new Date(y, m - 1, d, 0, 0, 0, 0); // local midnight
+  return new Date(y, m - 1, d, 0, 0, 0, 0);
 };
 
 const generateTimeOptions = () => {
@@ -142,7 +139,7 @@ const extractParticipants = (b: Booking): string[] => {
 };
 
 const MeetingRoomsBooking: React.FC = () => {
-  const { roomId } = useParams<{ roomId: string }>();
+  const { roomId } = useParams<{ roomId: string }>(); // documentId ของห้อง
   const location = useLocation();
   const navigate = useNavigate();
   const navState = (location.state as NavState | undefined) ?? undefined;
@@ -152,7 +149,10 @@ const MeetingRoomsBooking: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
+
+  // numeric id ของ room (ใช้เพื่อ enable ปุ่ม/validation)
   const [roomEntryId, setRoomEntryId] = useState<number | null>(null);
+
   const [roomDetails, setRoomDetails] = useState<RoomDetails | null>(null);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -183,7 +183,6 @@ const MeetingRoomsBooking: React.FC = () => {
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [isViewMode, setIsViewMode] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  // const [editingBookingId, setEditingBookingId] = useState<number | null>(null);
   const [editingBookingDocId, setEditingBookingDocId] = useState<string | null>(
     null
   );
@@ -211,75 +210,67 @@ const MeetingRoomsBooking: React.FC = () => {
     return true;
   };
 
-  // ✅ ใช้ state เป็นหลัก และเก็บลง sessionStorage กันหายเวลา refresh
+  // โหลด "ชื่อห้อง + numeric id" จาก Strapi ด้วย roomId (documentId)
   useEffect(() => {
-    // 1) ลองอ่านจาก state ก่อน
-    let s = navState;
-
-    // 2) ถ้าไม่มี (เช่นเข้าหน้าโดยพิมพ์ URL ตรง) ลองหยิบจาก sessionStorage
-    if (!s) {
+    let alive = true;
+    (async () => {
       try {
-        const raw = sessionStorage.getItem("roomState");
-        if (raw) s = JSON.parse(raw);
-      } catch {}
-    }
+        if (!roomId) return;
 
-    if (s?.mid) {
-      setRoomEntryId(s.mid);
-      setRoomDetails({
-        name: s.name || "",
-        description: s.description || "",
-        min: s.min || 0,
-        max: s.max || 0,
-      });
-      // เก็บสำรองไว้กันรีเฟรช
-      sessionStorage.setItem("roomState", JSON.stringify(s));
-      return;
-    }
+        // 1) ใช้ state จาก Nav ถ้ามี เพื่อให้หัวข้อแสดงเร็วขึ้น
+        if (navState) {
+          setRoomDetails({
+            name: navState.name ?? "",
+            description: navState.description ?? "",
+            min: Number(navState.min ?? 1),
+            max: Number(navState.max ?? 999),
+          });
+        }
 
-    // 3) Fallback สุดท้าย: ถ้าไม่มี state เลย ค่อยอ่านจาก query string (เผื่อกรณีแชร์ลิงก์)
-    const params = new URLSearchParams(location.search);
-    setRoomDetails({
-      name: params.get("name") || "",
-      description: params.get("description") || "",
-      min: parseInt(params.get("min") || "0"),
-      max: parseInt(params.get("max") || "0"),
-    });
+        // 2) ดึงจาก Strapi เพื่อความแน่นอน + เอา numeric id
+        const qs = new URLSearchParams({
+          "filters[documentId][$eq]": roomId,
+          "filters[locale][$eq]": LOCALE,
+          "fields[0]": "name",
+          "fields[1]": "description",
+          "fields[2]": "min",
+          "fields[3]": "max",
+          "pagination[page]": "1",
+          "pagination[pageSize]": "1",
+        });
+        const res = await fetch(`${apiUrl}/api/meeting-rooms?${qs.toString()}`);
+        if (!res.ok) throw new Error("โหลดข้อมูลห้องไม่สำเร็จ");
+        const json = await res.json();
 
-    // ถ้าอยากให้ทำงานได้ 100% แม้เปิดจากลิงก์ตรงจริง ๆ
-    // และจำเป็นต้องมี numeric id => ค่อย fetch หา id จาก documentId ที่นี่ (ไม่ใช่ทุกครั้ง)
-    // (ปล่อยไว้ ถ้าไม่จำเป็น)
-  }, [navState, location.search]);
-  // useEffect(() => {
-  //   if (!roomId) return;
-  //   (async () => {
-  //     try {
-  //       const qs = new URLSearchParams({
-  //         "filters[documentId][$eq]": roomId,
-  //         "fields[0]": "id",
-  //         "fields[1]": "documentId",
-  //       });
-  //       const res = await fetch(`${apiUrl}/api/meeting-rooms?${qs.toString()}`);
-  //       const json = await res.json();
-  //       const id = json?.data?.[0]?.id ?? null;
-  //       setRoomEntryId(id);
-  //       if (!id) console.warn("ไม่พบ roomEntryId จาก documentId:", roomId);
-  //     } catch (e) {
-  //       console.error("โหลด roomEntryId ไม่สำเร็จ:", e);
-  //       setRoomEntryId(null);
-  //     }
-  //   })();
-  // }, [roomId, apiUrl]);
+        const row = json?.data?.[0];
+        const id = row?.id ?? null;
+        const attrs = row?.attributes ?? null;
 
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    setRoomDetails({
-      name: params.get("name") || "",
-      description: params.get("description") || "",
-      min: parseInt(params.get("min") || "0"),
-      max: parseInt(params.get("max") || "0"),
-    });
-  }, [location.search]);
+        if (!alive) return;
+
+        setRoomEntryId(id);
+        setRoomDetails({
+          name: attrs?.name ?? navState?.name ?? "",
+          description: attrs?.description ?? navState?.description ?? "",
+          min: Number(attrs?.min ?? navState?.min ?? 1),
+          max: Number(attrs?.max ?? navState?.max ?? 999),
+        });
+      } catch (e: any) {
+        if (!alive) return;
+        // ยังแสดงหน้าต่อได้ แต่หัวข้ออาจเป็น fallback
+        setRoomEntryId(null);
+        if (!navState)
+          setRoomDetails({ name: "", description: "", min: 1, max: 999 });
+        dbg("LOAD_ROOM_FAILED", e?.message || e);
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomId, apiUrl]);
 
   const fetchBookings = async () => {
     if (!roomId) return;
@@ -297,37 +288,17 @@ const MeetingRoomsBooking: React.FC = () => {
       const res = await fetch(url);
       if (!res.ok) throw new Error("โหลดข้อมูลการจองไม่สำเร็จ");
       const json = await res.json();
-
-      // ✅ DEBUG
-      if (DEBUG) {
-        dbg("FETCH_BOOKINGS", {
-          roomId,
-          range: `${startDate}..${endDate}`,
-          count: json?.data?.length ?? 0,
-        });
-        console.table(
-          (json?.data ?? []).map((b: any) => ({
-            date: b.date,
-            start: b.start_time,
-            end: b.end_time,
-            subject: b.subject,
-            doc: b.documentId,
-          }))
-        );
-      }
-
       setBookings(json?.data || []);
     } catch (err: any) {
       setFetchError(err?.message || "เกิดข้อผิดพลาดในการโหลดข้อมูล");
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
     if (!roomId) return;
-    setLoading(true);
+    setFetchError(null);
     fetchBookings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     roomId,
     currentDisplayedWeek.monday.toISOString(),
@@ -348,6 +319,7 @@ const MeetingRoomsBooking: React.FC = () => {
       document.removeEventListener("visibilitychange", onFocusOrVisible);
       window.removeEventListener("focus", onFocusOrVisible);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const roomBookingUrl = React.useMemo(() => {
@@ -541,7 +513,6 @@ const MeetingRoomsBooking: React.FC = () => {
       setStartTime("");
       setEndTime("");
       setShowBookingForm(false);
-      setLoading(true);
       setRefreshKey((x) => x + 1);
     } catch (err: any) {
       window.alert(err?.message || "เกิดข้อผิดพลาดในการจอง");
@@ -599,7 +570,6 @@ const MeetingRoomsBooking: React.FC = () => {
         state: { redirectTo: roomBookingUrl },
       });
       setIsEditMode(false);
-      // setEditingBookingId(null);
       setEditingBookingDocId(null);
       setShowBookingForm(false);
       setRefreshKey((x) => x + 1);
@@ -609,6 +579,7 @@ const MeetingRoomsBooking: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+
   const handleDeleteBooking = async () => {
     if (!editingBookingDocId) return;
 
@@ -621,7 +592,23 @@ const MeetingRoomsBooking: React.FC = () => {
     const rid = genRid();
 
     try {
-      const url = `${apiUrl}/api/bookings/${editingBookingDocId}?locale=${LOCALE}&rid=${encodeURIComponent(
+      // 1) หา numeric id จาก documentId (locale en)
+      const qs = new URLSearchParams({
+        "filters[documentId][$eq]": editingBookingDocId,
+        "filters[locale][$eq]": LOCALE,
+        "fields[0]": "id",
+        "pagination[page]": "1",
+        "pagination[pageSize]": "1",
+      });
+      const resList = await fetch(`${apiUrl}/api/bookings?${qs.toString()}`);
+      if (!resList.ok) throw new Error("ค้นหา booking ไม่สำเร็จ");
+
+      const listJson = await resList.json();
+      const numericId = listJson?.data?.[0]?.id;
+      if (!numericId) throw new Error("ไม่พบ booking ที่จะลบ");
+
+      // 2) ลบด้วย numeric id
+      const url = `${apiUrl}/api/bookings/${numericId}?rid=${encodeURIComponent(
         rid
       )}`;
       const res = await fetch(url, { method: "DELETE" });
@@ -634,6 +621,8 @@ const MeetingRoomsBooking: React.FC = () => {
       navigate("/booking-delete-confirm", {
         state: { redirectTo: roomBookingUrl },
       });
+      setShowBookingForm(false);
+      setRefreshKey((x) => x + 1);
     } catch (err: any) {
       window.alert(err?.message || "เกิดข้อผิดพลาดในการลบ");
     } finally {
@@ -656,7 +645,6 @@ const MeetingRoomsBooking: React.FC = () => {
   const handleCellClick = (date: Date, hour: number, existing?: Booking) => {
     if (existing) {
       setEditingBookingDocId(existing.documentId);
-      // setEditingBookingId(existing.id);
       setIsViewMode(true);
       setIsEditMode(false);
       setSelectedDate(parseLocalYmd(existing.date));
@@ -704,14 +692,6 @@ const MeetingRoomsBooking: React.FC = () => {
     d.setHours(0, 0, 0, 0);
     const start = `${pad(hour)}:00`;
     const end = `${pad(hour + 1)}:00`;
-    if (DEBUG) {
-      dbg("CLICK_EMPTY->SET_STATE", {
-        dateCell: ymdd(d), // ✅ ใช้ ymdd(d) แทน toISOString()
-        hour,
-        start,
-        end,
-      });
-    }
     setSelectedDate(new Date(d));
     setStartTime(start);
     setEndTime(end);
@@ -752,24 +732,6 @@ const MeetingRoomsBooking: React.FC = () => {
     setFormError(null);
     setTimeError(null);
   };
-  useEffect(() => {
-    if (!DEBUG) return;
-    console.log("[MRB] STATE_CHANGE", {
-      selectedDate: selectedDate ? selectedDate.toISOString() : null,
-      startTime,
-      endTime,
-      isViewMode,
-      isEditMode,
-      showBookingForm,
-    });
-  }, [
-    selectedDate,
-    startTime,
-    endTime,
-    isViewMode,
-    isEditMode,
-    showBookingForm,
-  ]);
 
   if (loading) {
     return (
@@ -808,22 +770,7 @@ const MeetingRoomsBooking: React.FC = () => {
       const eB = toMinutes(bookingEnd);
       const cS = cellHour * 60;
       const cE = cS + 60;
-      const overlap = rangesOverlap(cS, cE, sB, eB);
-
-      // [DEBUG #3]
-      if (DEBUG && overlap) {
-        dbg("SLOT_OVERLAP", {
-          cellHour,
-          cellStart: cS,
-          cellEnd: cE,
-          bookingStart,
-          bookingEnd,
-          sB,
-          eB,
-        });
-      }
-
-      return overlap;
+      return rangesOverlap(cS, cE, sB, eB);
     };
 
     const formatDateToString = (d: Date) =>
@@ -911,17 +858,6 @@ const MeetingRoomsBooking: React.FC = () => {
                       );
                       const past = isPastDate(d);
 
-                      if (DEBUG) {
-                        dbg("CELL", {
-                          day,
-                          dateStr,
-                          hour: `${String(startHour).padStart(2, "0")}:00`,
-                          past,
-                          hasBooking: !!booking,
-                          listCount: list.length,
-                        });
-                      }
-
                       return (
                         <td
                           key={`${day}-${dateStr}-${startHour}`}
@@ -936,28 +872,9 @@ const MeetingRoomsBooking: React.FC = () => {
                           }`}
                           onClick={() => {
                             if (past) return;
-
                             if (booking) {
-                              // [DEBUG #4] คลิกช่องที่มี booking
-                              if (DEBUG) {
-                                dbg("CLICK_BOOKED", {
-                                  cell: { date: dateStr, hour: startHour },
-                                  booking: {
-                                    date: booking.date,
-                                    start: booking.start_time,
-                                    end: booking.end_time,
-                                    doc: booking.documentId,
-                                  },
-                                });
-                              }
                               handleCellClick(d, startHour, booking);
                             } else {
-                              // [DEBUG #4] คลิกช่องว่าง
-                              if (DEBUG) {
-                                dbg("CLICK_EMPTY", {
-                                  cell: { date: dateStr, hour: startHour },
-                                });
-                              }
                               handleCellClick(d, startHour);
                             }
                           }}
@@ -1061,7 +978,7 @@ const MeetingRoomsBooking: React.FC = () => {
                     disabled={isViewMode}
                   >
                     <option value="">เลือกเวลาเริ่มต้น</option>
-                    {timeOptions.map((t) => (
+                    {generateTimeOptions().map((t) => (
                       <option key={`start-${t}`} value={t}>
                         {t}
                       </option>
@@ -1075,7 +992,7 @@ const MeetingRoomsBooking: React.FC = () => {
                     disabled={isViewMode}
                   >
                     <option value="">เลือกเวลาสิ้นสุด</option>
-                    {timeOptions.map((t) => (
+                    {generateTimeOptions().map((t) => (
                       <option
                         key={`end-${t}`}
                         value={t}
@@ -1202,7 +1119,6 @@ const MeetingRoomsBooking: React.FC = () => {
               )}
             </div>
 
-            {/* ปุ่มหลัก: ลบ / บันทึกการเปลี่ยนแปลง / ยืนยันการจอง */}
             <div style={{ width: "100%", textAlign: "center" }}>
               {formError && <div className={styles.error}>{formError}</div>}
 
