@@ -1,12 +1,4 @@
-/* =========================
-   FONT CHANGE LOG
-   - Before:
-     :root, html[lang="en"] -> --font-heading: "Orbitron", --font-body: "Saira", --font-subContent: "Poppins"
-     html[lang="th"]        -> --font-heading/body/subContent: "Sarabun"
-   - Now (all locales):
-     :root, html[lang="en"], html[lang="th"] -> --font-heading/body/subContent: "Sarabun"
-   (หมายเหตุ: ตรวจให้แน่ใจว่าได้โหลดฟอนต์ Sarabun ใน index.html แล้ว)
-   ========================= */
+/* Global typography: force Sarabun across all locales */
 
 /* ===== Global reset & base ===== */
 html,
@@ -37,18 +29,8 @@ body {
 }
 
 /* ===== Typography variables ===== */
-:root {
-  --font-heading: "Sarabun", sans-serif;
-  --font-body: "Sarabun", sans-serif;
-  --font-subContent: "Sarabun", sans-serif;
-}
-
-html[lang="en"] {
-  --font-heading: "Sarabun", sans-serif;
-  --font-body: "Sarabun", sans-serif;
-  --font-subContent: "Sarabun", sans-serif;
-}
-
+:root,
+html[lang="en"],
 html[lang="th"] {
   --font-heading: "Sarabun", sans-serif;
   --font-body: "Sarabun", sans-serif;

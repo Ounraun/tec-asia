@@ -25,7 +25,7 @@ const Navigationbar = () => {
   };
 
   const navLinkStyle = {
-    fontFamily: "Orbitron",
+    fontFamily: "var(--font-heading)",
     fontWeight: 500,
     fontSize: "17.88px",
     letterSpacing: "2%",
@@ -407,7 +407,7 @@ const Navigationbar = () => {
                 title={
                   <span
                     style={{
-                      fontFamily: "Orbitron",
+                      fontFamily: "var(--font-heading)",
                       fontWeight: 500,
                       fontSize: "18px",
                     }}
@@ -422,14 +422,14 @@ const Navigationbar = () => {
                 <NavDropdown.Item
                   active={i18n.language === "en"}
                   onClick={() => switchLang("en")}
-                  style={{ fontFamily: "Orbitron", fontSize: "16px" }}
+                  style={{ fontFamily: "var(--font-heading)", fontSize: "16px" }}
                 >
                   English
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   active={i18n.language === "th"}
                   onClick={() => switchLang("th")}
-                  style={{ fontFamily: "Orbitron", fontSize: "16px" }}
+                  style={{ fontFamily: "var(--font-heading)", fontSize: "16px" }}
                 >
                   ไทย
                 </NavDropdown.Item>
@@ -710,7 +710,7 @@ const Navigationbar = () => {
               title={
                 <span
                   style={{
-                    fontFamily: "Orbitron",
+                    fontFamily: "var(--font-heading)",
                     fontWeight: 500,
                     fontSize: "18px",
                   }}
@@ -725,14 +725,14 @@ const Navigationbar = () => {
               <NavDropdown.Item
                 active={i18n.language === "en"}
                 onClick={() => switchLang("en")}
-                style={{ fontFamily: "Orbitron", fontSize: "16px" }}
+                style={{ fontFamily: "var(--font-heading)", fontSize: "16px" }}
               >
                 English
               </NavDropdown.Item>
               <NavDropdown.Item
                 active={i18n.language === "th"}
                 onClick={() => switchLang("th")}
-                style={{ fontFamily: "Orbitron", fontSize: "16px" }}
+                style={{ fontFamily: "var(--font-heading)", fontSize: "16px" }}
               >
                 ไทย
               </NavDropdown.Item>

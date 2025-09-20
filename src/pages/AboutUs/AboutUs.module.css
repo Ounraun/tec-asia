@@ -1,14 +1,11 @@
 :root {
   --color-white: #ffffff;
   --page-max-width: 1440px;
-  --font-heading: "Orbitron", sans-serif;
-  --font-body: "Saira", sans-serif;
-}
-
-html[lang="th"] {
   --font-heading: "Sarabun", sans-serif;
   --font-body: "Sarabun", sans-serif;
 }
+
+/* Ensured globally in index.css; redundant locale override removed */
 
 .container {
   position: relative;
@@ -420,6 +417,7 @@ html[lang="th"] {
   margin: 0.5rem 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
