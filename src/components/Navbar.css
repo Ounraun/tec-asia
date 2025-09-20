@@ -113,7 +113,7 @@
   align-items: center;
   height: 84px;
   padding: 0 15px;
-  font-family: var(--font-heading), sans-serif;
+  font-family: var(--font-heading);
   box-sizing: border-box;
 }
 .tec-nav-link.active {

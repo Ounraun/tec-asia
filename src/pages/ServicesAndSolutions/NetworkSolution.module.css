@@ -40,8 +40,7 @@
 
 .network,
 .solution {
-  font-family: var(--font-heading), "Sarabun", "Noto Sans Thai",
-    "IBM Plex Sans Thai", system-ui, sans-serif;
+  font-family: var(--font-heading);
   letter-spacing: 0;
   letter-spacing: 1px;
   font-size: clamp(2rem, 8vw, 5rem);
@@ -98,7 +97,7 @@
 
 .introText p {
   color: #fff;
-  font-family: var(--font-subContent), sans-serif;
+  font-family: var(--font-subContent);
   font-size: 18px;
   line-height: 1.5;
   margin-bottom: 1rem;
@@ -114,7 +113,7 @@
   margin: 30px auto;
   color: #fff;
   letter-spacing: -0.38px;
-  font-family: var(--font-subContent), sans-serif;
+  font-family: var(--font-subContent);
   font-size: 20px;
   font-weight: 400;
   line-height: 250%;
@@ -139,7 +138,7 @@
 
 .section h2 {
   color: var(--secondary-color);
-  font-family: var(--font-heading), sans-serif;
+  font-family: var(--font-heading);
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 1.5rem;
@@ -152,7 +151,7 @@
 
 .sectionContent p {
   color: rgba(255, 255, 255, 0.8);
-  font-family: var(--font-subContent), sans-serif;
+  font-family: var(--font-subContent);
   font-size: 14px;
   line-height: 1.6;
   margin: 0.5rem 0;

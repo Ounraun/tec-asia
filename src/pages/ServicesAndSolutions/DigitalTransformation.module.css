@@ -28,8 +28,7 @@
 
 .digital,
 .transformation {
-  font-family: var(--font-heading), "Sarabun", "Noto Sans Thai",
-    "IBM Plex Sans Thai", system-ui, sans-serif;
+  font-family: var(--font-heading);
   letter-spacing: 1px;
   font-size: clamp(2rem, 8vw, 5rem);
   font-style: normal;

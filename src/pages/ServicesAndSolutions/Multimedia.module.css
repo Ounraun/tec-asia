@@ -27,8 +27,7 @@
 
 .gradientText,
 .solution {
-  font-family: var(--font-heading), "Sarabun", "Noto Sans Thai",
-    "IBM Plex Sans Thai", system-ui, sans-serif;
+  font-family: var(--font-heading);
   letter-spacing: 1px;
   font-size: clamp(2rem, 8vw, 5rem);
   font-style: normal;
@@ -44,7 +43,6 @@
   -webkit-background-clip: text !important;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
   background: linear-gradient(
     15deg,
     rgba(52, 168, 213, 1) 19%,
@@ -281,7 +279,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
   font-size: 1.6rem;
   font-family: var(--font-heading);
   font-weight: 700;
