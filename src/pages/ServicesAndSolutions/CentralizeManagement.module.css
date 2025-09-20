@@ -18,6 +18,29 @@
   z-index: 2;
 }
 .header h1 {
+  display: inline-block; /* shrink to content width */
+}
+.header h1 {
+  background: var(
+    --main-solution,
+    linear-gradient(
+      81deg,
+      #34a8d5 19.23%,
+      #a1e8ee 34.62%,
+      #c98d8c 54.33%,
+      #bd6c0f 95.64%
+    )
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+/* Ensure child spans inherit transparent fill so parent's gradient is continuous */
+.header h1 * {
+  -webkit-text-fill-color: transparent;
+}
+.header h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
@@ -39,20 +62,6 @@
 
 .highlight {
   text-align: center;
-  background: linear-gradient(
-    81deg,
-    #236faf 0%,
-    #a1e8ee 31.28%,
-    #c98d8c 77.97%,
-    #713837 95.64%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.Management_29_186 {
-  color: #fff;
 }
 
 .subtitle {
@@ -195,10 +204,19 @@
 }
 
 .featureTitle {
-  background: linear-gradient(180deg, #005df9 0%, #a7daff 100%);
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
+  background: var(
+    --main-solution,
+    linear-gradient(
+      81deg,
+      #34a8d5 19.23%,
+      #a1e8ee 34.62%,
+      #c98d8c 54.33%,
+      #bd6c0f 95.64%
+    )
+  );
   background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-family: var(--font-heading);
   font-size: 20px;
   font-weight: 700;

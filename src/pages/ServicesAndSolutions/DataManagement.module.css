@@ -18,10 +18,33 @@
   overflow: visible;
 }
 
+/* Single gradient across the entire title */
+.header h1 {
+  background: var(
+    --main-solution,
+    linear-gradient(
+      81deg,
+      #34a8d5 19.23%,
+      #a1e8ee 34.62%,
+      #c98d8c 54.33%,
+      #bd6c0f 95.64%
+    )
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Ensure child spans inherit transparent fill so parent's gradient is continuous */
+.header h1 * {
+  -webkit-text-fill-color: transparent;
+}
+
 .header h1 {
   font-family: var(--font-heading);
   font-size: clamp(2rem, 6vw, 4rem);
-  display: flex;
+  display: inline-flex; /* shrink to content width */
   justify-content: center;
   gap: 0.5rem;
   align-items: baseline;
@@ -43,24 +66,7 @@
 
 .data {
   text-align: center;
-  background: var(
-    --main-solution,
-    linear-gradient(
-      81deg,
-      #34a8d5 19.23%,
-      #a1e8ee 34.62%,
-      #c98d8c 54.33%,
-      #bd6c0f 95.64%
-    )
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
   padding-bottom: 0.2em;
-}
-
-.management {
-  color: #fff;
 }
 
 .mainContent {
@@ -147,18 +153,18 @@
 .servicesTitle {
   letter-spacing: 6.4px;
   background: var(
-    --main-content-C,
+    --main-solution,
     linear-gradient(
-      90deg,
-      #005a8e 12.38%,
-      #0497ec 27.84%,
-      #0497ec 89.54%,
-      #005a8e 100%
+      81deg,
+      #34a8d5 19.23%,
+      #a1e8ee 34.62%,
+      #c98d8c 54.33%,
+      #bd6c0f 95.64%
     )
   );
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
   background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-family: var(--font-heading);
   font-size: clamp(1.5rem, 4vw, 2rem);
   font-style: normal;
@@ -235,12 +241,18 @@
 .serviceContent h3 {
   text-transform: uppercase;
   background: var(
-    --graph,
-    linear-gradient(91deg, #157ddb 6.62%, #fff7df 88.79%)
+    --main-solution,
+    linear-gradient(
+      81deg,
+      #34a8d5 19.23%,
+      #a1e8ee 34.62%,
+      #c98d8c 54.33%,
+      #bd6c0f 95.64%
+    )
   );
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
   background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-family: var(--font-heading);
   font-size: clamp(1rem, 3vw, 1.5rem);
   font-style: normal;

@@ -45,7 +45,19 @@
   font-family: var(--font-heading);
   font-weight: bold;
   font-size: clamp(2rem, 8vw, 4rem);
-  color: white;
+  background: var(
+    --main-solution,
+    linear-gradient(
+      81deg,
+      #34a8d5 19.23%,
+      #a1e8ee 34.62%,
+      #c98d8c 54.33%,
+      #bd6c0f 95.64%
+    )
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
@@ -182,8 +194,41 @@
   line-height: 120%;
 }
 
+/* ISO button (matches Knowledge.moreKnowledgeBtn styling) */
+.isoButton {
+  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  border: none;
+  border-radius: 19820.6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 62px;
+  padding: 11px 78px;
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.isoButton:hover {
+  background-color: #0077ff;
+}
+
 .color-gradient-1 {
-  background: linear-gradient(#007ec7 0%, #4ed4c3 100%);
+  background: var(
+    --main-solution,
+    linear-gradient(
+      81deg,
+      #34a8d5 19.23%,
+      #a1e8ee 34.62%,
+      #c98d8c 54.33%,
+      #bd6c0f 95.64%
+    )
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

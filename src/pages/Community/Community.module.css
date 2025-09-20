@@ -24,9 +24,9 @@
       #bd6c0f 95.64%
     )
   );
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
   background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-family: var(--font-heading);
   font-size: 69.751px;
   font-weight: 700;

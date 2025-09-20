@@ -19,9 +19,9 @@
       #bd6c0f 95.64%
     )
   );
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
   background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-family: var(--font-heading);
   font-size: 69.751px;
   font-style: normal;
@@ -179,6 +179,7 @@
   opacity: 0.8;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

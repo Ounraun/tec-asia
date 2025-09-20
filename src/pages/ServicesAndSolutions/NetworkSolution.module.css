@@ -29,6 +29,31 @@
   padding: 5rem 0;
 }
 
+/* Apply a single gradient across the entire title */
+.header h1 {
+  background: var(
+    --main-solution,
+    linear-gradient(
+      81deg,
+      #34a8d5 19.23%,
+      #a1e8ee 34.62%,
+      #c98d8c 54.33%,
+      #bd6c0f 95.64%
+    )
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* Make the entire title use one continuous gradient */
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  display: inline-block; /* shrink to content width */
+}
+
+/* Ensure child spans don't paint their own color, so the H1 gradient shows through */
+.header h1 * {
+  -webkit-text-fill-color: transparent;
+}
+
 .header p {
   color: #fff;
   font-family: var(--font-subContent);
@@ -51,17 +76,8 @@
   overflow: visible;
   padding-top: 0.04em;
 }
-
 .network {
   text-align: center;
-  background: linear-gradient(81deg, #34a8d5, #a1e8ee, #c98d8c, #bd6c0f);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.solution {
-  color: #fff;
 }
 
 .mainContent {

@@ -17,10 +17,32 @@
   padding: 5rem 0;
 }
 
+/* Single gradient across the entire title */
+.header h1 {
+  background: var(
+    --main-solution,
+    linear-gradient(
+      81deg,
+      #34a8d5 19.23%,
+      #a1e8ee 34.62%,
+      #c98d8c 54.33%,
+      #bd6c0f 95.64%
+    )
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+/* Ensure child spans inherit transparent fill so parent's gradient is continuous */
+.header h1 * {
+  -webkit-text-fill-color: transparent;
+}
+
 .header h1 {
   font-family: var(--font-heading);
   font-size: 2.5rem;
-  display: flex;
+  display: inline-flex; /* shrink to content width */
   justify-content: center;
   gap: 0.5rem;
   align-items: center;
@@ -42,24 +64,8 @@
 
 .digital {
   text-align: center;
-  background: var(
-    --main-solution,
-    linear-gradient(
-      81deg,
-      #34a8d5 19.23%,
-      #a1e8ee 34.62%,
-      #c98d8c 54.33%,
-      #bd6c0f 95.64%
-    )
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
-.transformation {
-  color: #fff;
-}
 
 .mainContent {
   display: flex;
