@@ -1,0 +1,73 @@
+{
+  "common": {
+    "navbar": {
+      "home": "Home",
+      "about": "About Us",
+      "services": "Services",
+      "contact": "Contact"
+    },
+    "language": { "en": "English", "th": "ไทย" }
+  },
+  "navbar": {
+    "home": "Home",
+    "serviceAndSolutions": "Service & Solutions",
+    "centralizeManagement": "Centralize Management",
+    "dataCenter": "Data Center",
+    "multimediaSolutions": "Multimedia Solutions",
+    "digitalTransformation": "Digital Transformation",
+    "dataManagement": "Data Management",
+    "networkSolution": "Network Solution",
+    "ourCommunity": "Our Community",
+    "companyEvent": "Company Event",
+    "society": "Society",
+    "knowledge": "Knowledge",
+    "contact": "Contact",
+    "nas": "NAS",
+    "meettingRoom": "Meeting Room",
+    "meetingRoom": "Meeting Room"
+  },
+  "aboutUs": {
+    "service": "SERVICE",
+    "and": "and",
+    "solutions": "SOLUTIONS",
+    "isoLineOne": "Empower your business with IT solutions by",
+    "isoLineTwo": "Experts understand your every need.",
+    "isoLineThree": "Guarantees with The",
+    "ourCommunity": "Our Community",
+    "endLineOne": "“ Tailored IT solutions ",
+    "endLineTwo": "we're ready to consult and serve you. ”"
+  },
+  "centralize": { "centralize": "CENTRALIZE", "management": "MANAGEMENT" },
+  "communityCard": {
+    "readMore": "Read more",
+    "company": "Company events",
+    "knowledge": "Knowledge",
+    "society": "Society"
+  },
+  "contact": {
+    "menu": "menu",
+    "serviceAndSolutions": "Service and Solutions",
+    "networkAndSolution": "Network and Security",
+    "dataCenter": "Data Center",
+    "dataManagement": "Data Management",
+    "centralizeManagement": "Centralize Management",
+    "multimediaSolution": "Multimedia Solution",
+    "digitalTransformation": "Digital Transformation",
+    "ourCommunity": "Our Community",
+    "companyEvents": "Company Events",
+    "knowledge": "Knowledge",
+    "society": "Society"
+  },
+  "dataCenter": { "data": "DATA", "center": "CENTER", "facilitiesSystem": "FACILITIES SYSTEM" },
+  "dataManagement": { "data": "DATA", "management": "MANAGEMENT", "ourService": "OUR SERVICE" },
+  "digitalTransformation": { "digital": "DIGITAL", "transformation": "TRANSFORMATION" },
+  "knowledge": {
+    "knowledge": "KNOWLEDGE",
+    "subTitle": "The Excellent communication, we place great importance on knowledge and believe that delivering accurate and high-quality insights enables our clients to access valuable information and truly understand the value of our services. This not only empowers them to make informed decisions but also fosters trust and confidence in our expertise. We are committed to sharing our knowledge and expertise to help our clients achieve their goals and succeed in their endeavors.",
+    "moreKnowledge": "More Knowledge",
+    "readMore": "Read More"
+  },
+  "meetingRoom": { "meetingRoomServices": "Meeting room services" },
+  "multimedia": { "multimedia": "MULTIMEDIA", "solution": "SOLUTION" },
+  "networkSolution": { "network": "NETWORK", "solution": "AND SOLUTION" }
+}

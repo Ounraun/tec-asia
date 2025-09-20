@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Contact.css";
-import emailIcon from "../assets/AboutUs/icon-email.svg";
 import facebookIcon from "../assets/AboutUs/icon-facebook.svg";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +11,15 @@ const Contact = () => {
   const [companyInfo, setCompanyInfo] = useState<CompanyInfo | null>(null);
   const { t, i18n } = useTranslation(["common", "contact"]);
   const navigate = useNavigate();
+
+  // Normalize external URLs (ensure protocol)
+  const getSafeUrl = (url?: string | null) => {
+    if (!url) return "";
+    const trimmed = url.trim();
+    if (!trimmed) return "";
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    return `https://${trimmed.replace(/^\/+/, "")}`;
+  };
 
   useEffect(() => {
     getCompanyInfo()
@@ -30,13 +38,25 @@ const Contact = () => {
             <p className="text-white fs-5 mb-3">
               {companyInfo?.phone ?? "Loading..."}
             </p>
+            <p className="text-white fs-5 mb-3">
+              {companyInfo?.email ?? "Loading..."}
+            </p>
             <div className="mb-4">
-              <img src={emailIcon} alt="Email" />
-              <img src={facebookIcon} alt="Facebook" />
+              {getSafeUrl(companyInfo?.facebook) && (
+                <a
+                  href={getSafeUrl(companyInfo?.facebook)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                >
+                  <img src={facebookIcon} alt="Facebook" />
+                </a>
+              )}
             </div>
             <p className="text-white">
               {companyInfo?.address ?? "Loading..."}
-              <br />
+            </p>
+            <p className="text-white mt-3">
               {companyInfo?.location ?? "Loading..."}
             </p>
           </div>

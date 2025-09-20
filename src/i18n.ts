@@ -1,18 +1,38 @@
 // src/i18n.ts
 import i18n from 'i18next';
-import Backend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
+import en from './locales/en.json';
+import th from './locales/th.json';
 
+// We'll expose multiple namespaces but from a single file per language.
+// Keep existing t('ns:key') usage by providing resources under their namespaces.
 i18n
-  .use(Backend)
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
     supportedLngs: ['en', 'th'],
-    ns: ['common'],
+    ns: [
+      'common',
+      'navbar',
+      'aboutUs',
+      'centralize',
+      'communityCard',
+      'contact',
+      'dataCenter',
+      'dataManagement',
+      'digitalTransformation',
+      'knowledge',
+      'meetingRoom',
+      'multimedia',
+      'networkSolution'
+    ],
     defaultNS: 'common',
-    backend: { loadPath: '/locales/{{lng}}/{{ns}}.json' },
+    resources: {
+      en,
+      th,
+    },
     react: { useSuspense: false },
+    interpolation: { escapeValue: false },
   })
   .then(() => applyHtmlLang(i18n.language));
 

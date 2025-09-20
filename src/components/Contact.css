@@ -20,7 +20,7 @@
 }
 
 .contact-title {
-  color: #39a6de;
+  color: #fff;
   font-family: var(--font-body);
   font-size: 2.5rem;
   margin-bottom: 2rem;
@@ -67,9 +67,7 @@
   --bs-gutter-x: 8.5rem !important;
 }
 @media (max-width: 992px) {
-  .map-container iframe {
-    /* height: 250px; */
-  }
+  /* reserved for map responsive tweaks */
 }
 
 @media (max-width: 768px) {

@@ -1,0 +1,73 @@
+{
+  "common": {
+    "navbar": {
+      "home": "หน้าแรก",
+      "about": "เกี่ยวกับเรา",
+      "services": "บริการ",
+      "contact": "ติดต่อเรา"
+    },
+    "language": { "en": "English", "th": "ไทย" }
+  },
+  "navbar": {
+    "home": "Home",
+    "serviceAndSolutions": "Service & Solutions",
+    "centralizeManagement": "Centralize Management",
+    "dataCenter": "Data Center",
+    "multimediaSolutions": "Multimedia Solutions",
+    "digitalTransformation": "Digital Transformation",
+    "dataManagement": "Data Management",
+    "networkSolution": "Network Solution",
+    "ourCommunity": "Our Community",
+    "companyEvent": "Company Event",
+    "society": "Society",
+    "knowledge": "Knowledge",
+    "contact": "Contact",
+    "nas": "NAS",
+    "meetingRoom": "Meeting Room",
+    "meettingRoom": "Meeting Room"
+  },
+  "aboutUs": {
+    "service": "เซอร์วิส",
+    "and": "และ",
+    "solutions": "โซลูชัน",
+    "isoLineOne": "เสริมศักยภาพธุรกิจของคุณด้วยโซลูชันด้านไอที",
+    "isoLineTwo": "จากผู้เชี่ยวชาญที่เข้าใจทุกความต้องการของคุณ",
+    "isoLineThree": "รับประกันคุณภาพด้วย",
+    "ourCommunity": "เครือข่ายของเรา",
+    "endLineOne": "“ โซลูชันด้าน IT ที่ออกแบบเฉพาะสำหรับคุณ",
+    "endLineTwo": "พร้อมให้คำปรึกษาและบริการอย่างเต็มที่ ”"
+  },
+  "centralize": { "centralize": "การจัดการ", "management": "แบบศูนย์กลาง" },
+  "communityCard": {
+    "readMore": "อ่านเพิ่มเติม",
+    "company": "กิจกรรมองค์กร",
+    "knowledge": "คลังความรู้",
+    "society": "สังคม"
+  },
+  "contact": {
+    "menu": "menu",
+    "serviceAndSolution": "Service and Solution",
+    "networkAndSolution": "Network and Security",
+    "dataCenter": "Data Center",
+    "dataManagement": "Data Management",
+    "centralizeManagement": "Centralize Management",
+    "multimediaSolution": "Multimedia Solution",
+    "digitalTransformation": "Digital Transformation",
+    "ourCommunity": "Our Community",
+    "companyEvents": "Company Events",
+    "knowledge": "Knowledge",
+    "society": "Society"
+  },
+  "dataCenter": { "data": "ข้อมูล", "center": "ศูนย์ข้อมูล", "facilitiesSystem": "FACILITIES SYSTEM" },
+  "dataManagement": { "data": "ข้อมูล", "management": "และระบบการจัดการ", "ourService": "บริการของเรา" },
+  "digitalTransformation": { "digital": "การปฏิรูปดิจิตอล", "transformation": "ด้วยเทคโนโลยี" },
+  "knowledge": {
+    "knowledge": "คลังความรู้",
+    "subTitle": "ดิเอกเซลเลน เราให้ความสำคัญกับองค์ความรู้และเชื่อว่าการส่งมอบองค์ความรู้ที่ถูกต้องและมีคุณภาพจะช่วยให้ลูกค้าเข้าถึงข้อมูลที่เป็นประโยชน์และเข้าใจถึงคุณค่าจากบริการ ไม่เพียงแต่เพื่อการตัดสินใจที่ชัดเจน แต่ยังทำให้เห็นว่าบริการด้าน IT Solutions ของเรา สามารถตอบโจทย์ความต้องการ และสนับสนุนการเติบโตของธุรกิจได้อย่างแท้จริง",
+    "moreKnowledge": "More Knowledge",
+    "readMore": "Read More"
+  },
+  "meetingRoom": { "meetingRoomServices": "บริการใช้งานห้องประชุม" },
+  "multimedia": { "multimedia": "มัลติมีเดีย", "solution": "โซลูชัน" },
+  "networkSolution": { "network": "บริการวางระบบ", "solution": "และเครือข่าย" }
+}

@@ -26,7 +26,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          i18n: ['i18next', 'react-i18next', 'i18next-http-backend'],
+          i18n: ['i18next', 'react-i18next'],
           ui: ['react-bootstrap'],
         },
         // หรือแบบฟังก์ชัน (ยืดหยุ่นกว่า)
