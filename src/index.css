@@ -12,6 +12,13 @@ body,
   background: #000;
 }
 
+/* Prevent scroll anchoring from overriding manual scrollToTop, especially on Edge */
+html,
+body,
+main {
+  overflow-anchor: none;
+}
+
 *,
 *::before,
 *::after {

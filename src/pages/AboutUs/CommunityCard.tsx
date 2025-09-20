@@ -33,7 +33,18 @@ const CommunityCard: React.FC<CommunityCardProps> = ({
       <button
         type="button"
         className={styles["readMore"]}
-        onClick={onReadMore}
+        onClick={() => {
+          try {
+            window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+            const docEl = document.documentElement;
+            const body = document.body;
+            if (docEl) docEl.scrollTop = 0;
+            if (body) body.scrollTop = 0;
+          } catch {
+            /* ignore */
+          }
+          onReadMore();
+        }}
         aria-label={`Read more about ${title}`}
       >
         Read more

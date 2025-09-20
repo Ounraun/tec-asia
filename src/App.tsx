@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import React, { lazy, Suspense } from "react";
+import ScrollToTop from "./components/ScrollToTop";
 
 const AboutUs = lazy(() => import("./pages/AboutUs/AboutUsPage"));
 const CentralizeManagement = lazy(
@@ -72,6 +73,7 @@ function App() {
       <Navbar />
       <main className="flex-grow-1 bg-black h-100 w-100">
         <Suspense fallback={<SpinnerFallback />}>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<AboutUs />} />
             <Route

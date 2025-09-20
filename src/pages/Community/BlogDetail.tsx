@@ -36,6 +36,23 @@ const BlogDetail = () => {
   const [error, setError] = useState<string | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  // Always start at top when opening this page
+  useEffect(() => {
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      const docEl = document.documentElement;
+      const body = document.body;
+      if (docEl) docEl.scrollTop = 0;
+      if (body) body.scrollTop = 0;
+      const mainEl = document.querySelector("main");
+      if (mainEl && (mainEl as HTMLElement).scrollTop !== undefined) {
+        (mainEl as HTMLElement).scrollTop = 0;
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -81,6 +98,34 @@ const BlogDetail = () => {
 
     if (documentId) fetchPost();
   }, [documentId, apiUrl]);
+
+  // After content is ready, nudge scroll to top again (Edge reliability)
+  useEffect(() => {
+    if (!post) return;
+    const doScroll = () => {
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        const docEl = document.documentElement;
+        const body = document.body;
+        if (docEl) docEl.scrollTop = 0;
+        if (body) body.scrollTop = 0;
+        const mainEl = document.querySelector("main");
+        if (mainEl && (mainEl as HTMLElement).scrollTop !== undefined) {
+          (mainEl as HTMLElement).scrollTop = 0;
+        }
+      } catch {
+        /* ignore */
+      }
+    };
+    const raf = requestAnimationFrame(doScroll);
+    const t1 = setTimeout(doScroll, 80);
+    const t2 = setTimeout(doScroll, 240);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [post]);
 
   if (error) {
     return (
