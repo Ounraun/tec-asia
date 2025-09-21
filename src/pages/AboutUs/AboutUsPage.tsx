@@ -180,7 +180,7 @@ const AboutUs = () => {
         >
           <div className={aboutStyles["particleWrapper"]}>{particles}</div>
           <div className={aboutStyles["contentLayout"]}>
-            <div style={{ width: "100%" }}>
+            <div className={aboutStyles["heroInner"]}>
               <h1 className={aboutStyles["main-title"]}>
                 {aboutUs?.heroTitle}
               </h1>

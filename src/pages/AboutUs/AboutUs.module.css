@@ -38,7 +38,19 @@
   padding: 0 20px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+}
+
+/* Shared inner wrapper so title and paragraph align to the same visual center */
+.heroInner {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  /* Keep content centered within wide viewports similar to paragraph's old padding */
+  padding-left: clamp(1rem, 8vw, 15rem);
+  padding-right: clamp(1rem, 8vw, 15rem);
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .main-title {
@@ -64,7 +76,17 @@
   text-align: center;
   max-width: 100%;
   overflow-wrap: anywhere;
-  display: block;
+  /* Use inline-block so padding affects text box and avoids clipping */
+  display: inline-block;
+  /* Looser line-height for Thai diacritics */
+  line-height: 1.5;
+  /* Small bottom padding as guard */
+  padding-bottom: 0.1em;
+  /* Center this title within the flex column container */
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
 }
 
 .main-text {
@@ -74,7 +96,8 @@
   line-height: 1.7;
   letter-spacing: -1.9%;
   margin-top: 60px;
-  padding: 0 15rem;
+  /* Padding moved to .heroInner to keep heading and text aligned */
+  padding: 0;
   width: 100%;
   text-align: center;
 }
@@ -627,6 +650,11 @@ button.position-absolute {
     flex-direction: column;
     align-items: center;
     padding: 0 1rem;
+  }
+
+  .heroInner {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .main-title {

@@ -30,7 +30,10 @@
   font-family: var(--font-heading);
   font-size: 69.751px;
   font-weight: 700;
-  line-height: 101.523%;
+  /* Looser line-height to avoid clipping Thai descenders with background-clip */
+  line-height: 1.25;
+  /* Small bottom padding as extra guard for script-specific glyphs */
+  padding-bottom: 0.1em;
   display: inline-block;
 }
 

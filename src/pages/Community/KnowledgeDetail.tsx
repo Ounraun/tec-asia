@@ -52,42 +52,44 @@ const KnowledgeDetail: React.FC = () => {
   const mainImageUrl = getStrapiImageUrl(post?.mainImage?.url);
 
   return (
-    <div className={styles.knowledgeDetailContainer}>
-      <div className={styles.headerSection}>
-        <div className={styles.knowledgeHeader}>
-          <h1 className={styles.mainTitle}>{post.title}</h1>
+    <> 
+      <div className={styles.knowledgeDetailContainer}>
+        <div className={styles.headerSection}>
+          <div className={styles.knowledgeHeader}>
+            <h1 className={styles.mainTitle}>{post.title}</h1>
+          </div>
+          <div className={styles.mainImageContainer}>
+            {mainImageUrl ? (
+              <img
+                src={mainImageUrl}
+                alt={post.mainImage?.alternativeText || post.title}
+                className={styles.mainImage}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src =
+                    "/placeholder.jpg";
+                }}
+              />
+            ) : null}
+          </div>
         </div>
-        <div className={styles.mainImageContainer}>
-          {mainImageUrl ? (
-            <img
-              src={mainImageUrl}
-              alt={post.mainImage?.alternativeText || post.title}
-              className={styles.mainImage}
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = "/placeholder.jpg";
-              }}
+
+        <div className={styles.contentSection}>
+          <div className={styles.contentWrapper}>
+            <div
+              className={styles.articleContent}
+              dangerouslySetInnerHTML={{ __html: post.content }}
             />
-          ) : null}
+          </div>
+        </div>
+
+        <div className={styles.allKnowledgeSection}>
+          <a href="/community/knowledge" className={styles.allKnowledgeLink}>
+            All Knowledge
+          </a>
         </div>
       </div>
-
-      <div className={styles.contentSection}>
-        <div className={styles.contentWrapper}>
-          <div
-            className={styles.articleContent}
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-        </div>
-      </div>
-
-      <div className={styles.allKnowledgeSection}>
-        <a href="/community/knowledge" className={styles.allKnowledgeLink}>
-          All Knowledge
-        </a>
-      </div>
-
       <Contact />
-    </div>
+    </>
   );
 };
 
