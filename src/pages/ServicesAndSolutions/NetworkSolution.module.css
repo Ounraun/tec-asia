@@ -133,6 +133,8 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 250%;
+  /* Preserve line breaks from API (\n) */
+  white-space: pre-line;
 }
 
 .section {

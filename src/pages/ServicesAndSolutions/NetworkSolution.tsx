@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import styles from "./NetworkSolution.module.css";
 import ContentCard from "../../components/NetworkSolutions/Card";
@@ -6,13 +6,13 @@ import ContentCard from "../../components/NetworkSolutions/Card";
 import BackgroudCity from "../../assets/NetworkSolution/backgroudCity.webp";
 
 import { useTranslation } from "react-i18next";
-import type { NetworkSolution } from "../../types/networkSolution";
+import type { networkSecurity } from "../../types/networkSecurity";
 import { getNetworkSolution } from "../../services/strapi";
 
 const NetworkSolution: React.FC = () => {
-  const [networkData, setNetworkData] = useState<NetworkSolution | null>(null);
+  const [networkData, setNetworkData] = useState<networkSecurity | null>(null);
   const [loading, setLoading] = useState(true);
-  const { t, i18n } = useTranslation(["common", "networkSolution"]);
+  const { t, i18n } = useTranslation(["common", "networkSecurity"]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,6 +28,26 @@ const NetworkSolution: React.FC = () => {
       });
   }, [i18n.language]);
 
+  const items = networkData?.content || [];
+
+  // Normalize API newlines/BRs so visual line breaks match editor "Enter"
+  const normalizedSubTitle2 = useMemo(() => {
+    const raw = networkData?.subTitle2 ?? "";
+    if (!raw) return null;
+    // Convert <br> (any casing, optional slash) to newline characters
+    const withNewlines = raw.replace(/<br\s*\/?>(\r?\n)?/gi, "\n");
+    // Also convert escaped newlines ("\\n") to real newlines
+    const normalized = withNewlines.replace(/\\n/g, "\n");
+    const parts = normalized.split(/\r?\n/);
+    return parts.map((p, idx) => (
+      <React.Fragment key={idx}>
+        {p}
+        {idx < parts.length - 1 ? "\n" : null}
+      </React.Fragment>
+    ));
+  }, [networkData?.subTitle2]);
+
+  // Keep hook order stable; render loading UI after hooks
   if (loading) {
     return (
       <div
@@ -40,15 +60,13 @@ const NetworkSolution: React.FC = () => {
       </div>
     );
   }
-
-  const items = networkData?.content || [];
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <h1>
-          <span className={styles.network}>{t("networkSolution:network")}</span>{" "}
+          <span className={styles.network}>{t("networkSecurity:network")}</span>{" "}
           <span className={styles.solution}>
-            {t("networkSolution:solution")}
+            {t("networkSecurity:security")}
           </span>
         </h1>
         <p className={styles.subtitle}>{networkData?.subTitle}</p>
@@ -63,7 +81,7 @@ const NetworkSolution: React.FC = () => {
       </div>
 
       <div className={styles.description}>
-        <p>{networkData?.subTitle2}</p>
+        <p>{normalizedSubTitle2}</p>
       </div>
 
       <div className={styles.contentSections}>
