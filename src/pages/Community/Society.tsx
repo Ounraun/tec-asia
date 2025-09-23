@@ -4,7 +4,10 @@ import { useTranslation } from "react-i18next";
 import Contact from "../../components/Contact";
 import ParticlesComponent from "../../components/Particles/Particles";
 import styles from "./Community.module.css";
-import { getStrapiImageUrl, getBlogPostsByCategory } from "../../services/strapi";
+import {
+  getStrapiImageUrl,
+  getBlogPostsByCategory,
+} from "../../services/strapi";
 import type { BlogPost } from "../../types/blogPost";
 
 const Society = () => {
@@ -19,28 +22,29 @@ const Society = () => {
         console.log("=== Society Page Debug ===");
         console.log("Current i18n.language:", i18n.language);
         setLoading(true);
-        
+
         // ใช้ชื่อ category ตาม locale
-        const categoryName = i18n.language === 'th' ? 'สังคม' : 'Society';
+        const categoryName = i18n.language === "th" ? "สังคม" : "Society";
         console.log("Using category name:", categoryName);
-        
+
         console.log(`Calling getBlogPostsByCategory('${categoryName}')...`);
         const response = await getBlogPostsByCategory(categoryName);
         console.log("API Response:", response);
         console.log("Response data:", response.data);
         console.log("Is array?", Array.isArray(response.data));
-        
+
         if (response.data && Array.isArray(response.data)) {
           console.log("Raw data before filter:", response.data);
-          
-          const societyPosts = response.data.filter(
-            (item: BlogPost) => {
-              const expectedCategory = i18n.language === 'th' ? 'สังคม' : 'Society';
-              console.log(`Checking item: ${item.title} - Category: ${item.category?.name} (expected: ${expectedCategory})`);
-              return item.category?.name === expectedCategory;
-            }
-          );
-          
+
+          const societyPosts = response.data.filter((item: BlogPost) => {
+            const expectedCategory =
+              i18n.language === "th" ? "สังคม" : "Society";
+            console.log(
+              `Checking item: ${item.title} - Category: ${item.category?.name} (expected: ${expectedCategory})`
+            );
+            return item.category?.name === expectedCategory;
+          });
+
           console.log("Filtered societyPosts:", societyPosts);
           console.log("Number of posts after filter:", societyPosts.length);
           setPosts(societyPosts);
@@ -141,12 +145,12 @@ const Society = () => {
           {/* ใช้ util fullWidth จาก module + bootstrap text-center ได้ */}
           <div className={`${styles.fullWidth} text-center`}>
             <button
-              className={styles.moreBtn}
+              className={styles.moreKnowledgeBtn}
               onClick={() =>
                 window.open("https://www.facebook.com/TecAsiaSupport", "_blank")
               }
             >
-              <span className={styles.moreBtnLabel}>{t("society:moreFromPage")}</span>
+              {t("society:moreFromPage")}
             </button>
           </div>
         </div>

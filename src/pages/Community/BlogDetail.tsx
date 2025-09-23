@@ -281,7 +281,7 @@ const BlogDetail = () => {
               </Swiper>
             </div>
             <button
-              className={styles.allEventsBtn}
+              className={styles.moreKnowledgeBtn}
               onClick={() =>
                 navigate(
                   `/community/${post.category?.name

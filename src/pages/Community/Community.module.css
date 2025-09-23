@@ -158,6 +158,31 @@
   color: #00a3ff;
 }
 
+.moreKnowledgeBtn {
+  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  border: none;
+  border-radius: 19820.6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 62px;
+  width: 400px;
+  padding: 13px 78px;
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.moreKnowledgeBtn:hover {
+  background-color: #0077ff;
+}
+
 /* ยูทิลิตี้เล็ก ๆ */
 .fullWidth {
   width: 100%;
@@ -196,5 +221,13 @@
 
   .footerInfo {
     grid-template-columns: 1fr;
+  }
+
+  .moreKnowledgeBtn {
+    padding: 14px 25px;
+    font-size: 1rem;
+    line-height: 1.8;
+    width: 300px;
+    height: 50px;
   }
 }
