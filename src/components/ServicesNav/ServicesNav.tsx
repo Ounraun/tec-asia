@@ -28,19 +28,20 @@ export const ServicesPager: React.FC<Props> = ({ items, className }) => {
   const prev = items[prevIndex];
   const next = items[nextIndex];
 
-  const onKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        // Navigate left
-        const a = document.getElementById("services-pager-prev") as HTMLAnchorElement | null;
-        a?.click();
-      } else if (e.key === "ArrowRight") {
-        const a = document.getElementById("services-pager-next") as HTMLAnchorElement | null;
-        a?.click();
-      }
-    },
-    []
-  );
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "ArrowLeft") {
+      // Navigate left
+      const a = document.getElementById(
+        "services-pager-prev"
+      ) as HTMLAnchorElement | null;
+      a?.click();
+    } else if (e.key === "ArrowRight") {
+      const a = document.getElementById(
+        "services-pager-next"
+      ) as HTMLAnchorElement | null;
+      a?.click();
+    }
+  }, []);
 
   useEffect(() => {
     window.addEventListener("keydown", onKeyDown);
@@ -48,7 +49,10 @@ export const ServicesPager: React.FC<Props> = ({ items, className }) => {
   }, [onKeyDown]);
 
   return (
-    <nav className={`services-pager ${className ?? ""}`.trim()} aria-label="Services navigation">
+    <nav
+      className={`services-pager ${className ?? ""}`.trim()}
+      aria-label="Services navigation"
+    >
       <Link
         id="services-pager-prev"
         to={prev.path}
