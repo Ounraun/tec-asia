@@ -82,6 +82,20 @@
     "noEvents": "ไม่พบข้อมูลสังคม",
     "moreFromPage": "ดูเพิ่มเติมจากเพจของเรา"
   },
+  "blogDetail": {
+    "loading": "กำลังโหลด...",
+    "errorLoading": "เกิดข้อผิดพลาดในการโหลดบทความ",
+    "goBack": "กลับไป",
+    "noImageAvailable": "ไม่มีรูปภาพ",
+    "other": "อื่นๆ ใน",
+    "readMore": "อ่านเพิ่มเติม »",
+    "all": "ทั้งหมดใน"
+  },
+  "knowledgeDetail": {
+    "loading": "กำลังโหลด...",
+    "postNotFound": "ไม่พบโพสต์",
+    "allKnowledge": "ความรู้ทั้งหมด"
+  },
   "meetingRoom": { "meetingRoomServices": "บริการใช้งานห้องประชุม" },
   "multimedia": { "multimedia": "มัลติมีเดีย", "solution": "โซลูชัน" },
   "networkSolution": { "network": "บริการวางระบบ", "solution": "และเครือข่าย" },

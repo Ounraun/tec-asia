@@ -33,7 +33,7 @@ interface BlogPost {
 const BlogDetail = () => {
   const { documentId } = useParams();
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -162,15 +162,15 @@ const BlogDetail = () => {
   if (error) {
     return (
       <div className={styles.errorContainer}>
-        <h2>Error loading post</h2>
+        <h2>{t('errorLoading', { ns: 'blogDetail' })}</h2>
         <p>{error}</p>
-        <button onClick={() => navigate(-1)}>Go Back</button>
+        <button onClick={() => navigate(-1)}>{t('goBack', { ns: 'blogDetail' })}</button>
       </div>
     );
   }
 
   if (!post) {
-    return <div className={styles.loading}>Loading...</div>;
+    return <div className={styles.loading}>{t('loading', { ns: 'blogDetail' })}</div>;
   }
 
   return (
@@ -189,7 +189,7 @@ const BlogDetail = () => {
                 }}
               />
             ) : (
-              <div className={styles.noImage}>No image available</div>
+              <div className={styles.noImage}>{t('noImageAvailable', { ns: 'blogDetail' })}</div>
             )}
           </div>
 
@@ -234,7 +234,7 @@ const BlogDetail = () => {
 
         {post.category && relatedPosts.length > 0 && (
           <div className={styles.otherEvents}>
-            <h2>Other {post.category.name}</h2>
+            <h2>{t('other', { ns: 'blogDetail' })} {post.category.name}</h2>
             <div className={styles.relatedPostsSwiper}>
               <Swiper
                 modules={[Navigation, Pagination]}
@@ -270,10 +270,10 @@ const BlogDetail = () => {
                       )}
                       <div className={styles.cardContent}>
                         <h3>{relatedPost.title}</h3>
-                        <div>
+                        <div className={styles.contentText}>
                           {formatTextWithLineBreaks(relatedPost.content)}
                         </div>
-                        <span className="read-more">Read more »</span>
+                        <span className={styles.readMore}>{t('readMore', { ns: 'blogDetail' })}</span>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -290,7 +290,7 @@ const BlogDetail = () => {
                 )
               }
             >
-              All {post.category.name}
+              {t('all', { ns: 'blogDetail' })} {post.category.name}
             </button>
           </div>
         )}

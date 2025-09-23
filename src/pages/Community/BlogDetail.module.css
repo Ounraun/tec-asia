@@ -224,16 +224,31 @@
   margin-bottom: 1rem;
 }
 
-.cardContent p {
+.contentText {
   color: #fff;
   font-family: var(--font-body);
   font-size: 0.95rem;
   font-weight: 300;
-  line-height: normal;
+  line-height: 1.4;
   margin-bottom: 1rem;
   display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  height: 151.957px;
+  text-overflow: ellipsis;
+  height: auto;
+  max-height: 5.6em; /* 4 lines × 1.4 line-height */
+}
+
+.readMore {
+  color: #4a7dff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  margin-top: 0.5rem;
 }
 
 .allEventsBtn {

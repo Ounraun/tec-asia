@@ -1,6 +1,7 @@
 // KnowledgeDetail.tsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Contact from "../../components/Contact";
 import styles from "./KnowledgeDetail.module.css";
 import { getStrapiImageUrl } from "../../services/strapi";
@@ -23,6 +24,7 @@ const KnowledgeDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -45,9 +47,9 @@ const KnowledgeDetail: React.FC = () => {
     if (documentId) fetchPost();
   }, [documentId, apiUrl]);
 
-  if (loading) return <div className={styles.loading}>Loading...</div>;
+  if (loading) return <div className={styles.loading}>{t('loading', { ns: 'knowledgeDetail' })}</div>;
   if (error || !post)
-    return <div className={styles.error}>{error || "Post not found"}</div>;
+    return <div className={styles.error}>{error || t('postNotFound', { ns: 'knowledgeDetail' })}</div>;
 
   const mainImageUrl = getStrapiImageUrl(post?.mainImage?.url);
 
@@ -84,7 +86,7 @@ const KnowledgeDetail: React.FC = () => {
 
         <div className={styles.allKnowledgeSection}>
           <a href="/community/knowledge" className={styles.allKnowledgeLink}>
-            All Knowledge
+            {t('allKnowledge', { ns: 'knowledgeDetail' })}
           </a>
         </div>
       </div>

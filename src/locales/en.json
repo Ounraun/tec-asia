@@ -93,6 +93,20 @@
     "noEvents": "No society posts found",
     "moreFromPage": "More from our page"
   },
+  "blogDetail": {
+    "loading": "Loading...",
+    "errorLoading": "Error loading post",
+    "goBack": "Go Back",
+    "noImageAvailable": "No image available",
+    "other": "Other",
+    "readMore": "Read more »",
+    "all": "All"
+  },
+  "knowledgeDetail": {
+    "loading": "Loading...",
+    "postNotFound": "Post not found",
+    "allKnowledge": "All Knowledge"
+  },
   "meetingRoom": { "meetingRoomServices": "Meeting room services" },
   "multimedia": { "multimedia": "MULTIMEDIA", "solution": "SOLUTION" },
   "networkSecurity": { "network": "NETWORK", "security": "AND SECURITY" }

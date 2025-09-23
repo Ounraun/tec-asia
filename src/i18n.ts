@@ -22,9 +22,13 @@ i18n
       'dataManagement',
       'digitalTransformation',
       'knowledge',
+      'knowledgeDetail',
+      'companyEvents',
+      'society',
+      'blogDetail',
       'meetingRoom',
       'multimedia',
-      'networkSolution'
+      'networkSecurity'
     ],
     defaultNS: 'common',
     resources: {
