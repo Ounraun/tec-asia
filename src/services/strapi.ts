@@ -6,7 +6,7 @@ import type { Facility } from "../types/dataCenter";
 import type { Service } from "../types/dataManagement";
 import type { Transformation } from "../types/digitalTransformation";
 import type { MultimediaService } from "../types/multimedia";
-import type { NetworkSolution } from "../types/networkSolution";
+import type { NetworkSolution } from "../types/networkSecurity";
 import type { CompanyInfo } from "../types/contact";
 import type { BlogPost } from "../types/blogPost";
 import {

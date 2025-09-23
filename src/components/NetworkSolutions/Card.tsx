@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Card.module.css";
 // import type { NetworkContent } from "../../pages/ServicesAndSolutions/NetworkSolution";
-import type { NetworkContent } from "../../types/networkSolution";
+import type { NetworkContent } from "../../types/networkSecurity";
 
 interface Props {
   item: NetworkContent;

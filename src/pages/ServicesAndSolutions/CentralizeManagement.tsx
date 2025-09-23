@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { ServicesPager } from "@/components/ServicesNav";
+import { servicesNavItems } from "@/features/services/navItems";
 import styles from "./CentralizeManagement.module.css";
 
 import { getCentralizeManagement } from "../../services/strapi";
@@ -124,14 +125,7 @@ const CentralizeManagement = () => {
       </div>
 
       <div className={styles.SolutionsCardBackground}></div>
-      <div className="navigation">
-        <Link to="/services/data-management" className="navLink">
-          &lt; DATA MANAGEMENT
-        </Link>
-        <Link to="/services/multimedia-solution" className="navLink">
-          MULTI MEDIA SOLUTION &gt;
-        </Link>
-      </div>
+      <ServicesPager items={servicesNavItems} />
     </div>
   );
 };

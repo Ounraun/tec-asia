@@ -1,0 +1,56 @@
+/* Shared Services pager styles, visually aligned with Knowledge.moreKnowledgeBtn */
+.services-pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin: 40px auto 0;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+.services-btn {
+  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  border: none;
+  border-radius: 19820.6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 10px 28px;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.15s ease;
+  user-select: none;
+}
+
+.services-btn:hover {
+  background-color: #0077ff;
+}
+
+.services-btn:active {
+  transform: translateY(1px);
+}
+
+/* Allow page-specific layout tweaks */
+.services-btn--prev {
+  /* reserved for future adjustments */
+}
+.services-btn--next {
+  margin-left: auto; /* avoid empty ruleset for lint */
+}
+
+@media (max-width: 768px) {
+  .services-pager {
+    padding: 0 12px;
+  }
+  .services-btn {
+    padding: 10px 18px;
+    font-size: 1rem;
+    min-height: 48px;
+  }
+}

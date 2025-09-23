@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { ServicesPager } from "@/components/ServicesNav";
+import { servicesNavItems } from "@/features/services/navItems";
 import styles from "./DigitalTransformation.module.css";
 import { useTranslation } from "react-i18next";
 
@@ -88,14 +89,7 @@ const DigitalTransformation: React.FC = () => {
         </div>
       </div>
 
-      <div className="navigation">
-        <Link to="/services/multimedia-solution" className="navLink">
-          &lt; MULTIMEDIA SOLUTION
-        </Link>
-        <Link to="/services/network-solution" className="navLink">
-          NETWORK SOLUTION &gt;
-        </Link>
-      </div>
+      <ServicesPager items={servicesNavItems} />
     </div>
   );
 };

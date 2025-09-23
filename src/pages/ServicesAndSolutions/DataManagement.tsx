@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ServicesPager } from "@/components/ServicesNav";
+import { servicesNavItems } from "@/features/services/navItems";
 import styles from "./DataManagement.module.css";
 import DataImage from "@/assets/DataManagement/87.webp";
 
@@ -80,14 +82,7 @@ const DataManagement: React.FC = () => {
         </div>
       </div>
 
-      <div className="navigation">
-        <a href="/services/data-center" className="navLink">
-          {"< DATA CENTER"}
-        </a>
-        <a href="/services/centralize-management" className="navLink">
-          {"CENTRALIZE MANAGEMENT >"}
-        </a>
-      </div>
+      <ServicesPager items={servicesNavItems} />
     </div>
   );
 };

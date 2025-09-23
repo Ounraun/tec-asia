@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { ServicesPager } from "@/components/ServicesNav";
+import { servicesNavItems } from "@/features/services/navItems";
 import { useTranslation } from "react-i18next";
 
 import styles from "./DataCenter.module.css";
@@ -144,14 +145,7 @@ const DataCenter: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="navigation">
-        <Link to="/services/network-solution" className="navLink">
-          &lt; NETWORK SOLUTION
-        </Link>
-        <Link to="/services/data-management" className="navLink">
-          DATA MANAGEMENT &gt;
-        </Link>
-      </div>
+      <ServicesPager items={servicesNavItems} />
     </div>
   );
 };

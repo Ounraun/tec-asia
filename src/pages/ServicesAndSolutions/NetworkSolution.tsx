@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+//
+import { ServicesPager } from "@/components/ServicesNav";
+import { servicesNavItems } from "@/features/services/navItems";
 import styles from "./NetworkSolution.module.css";
 import ContentCard from "../../components/NetworkSolutions/Card";
 
 import BackgroudCity from "../../assets/NetworkSolution/backgroudCity.webp";
 
 import { useTranslation } from "react-i18next";
-import type { networkSecurity } from "../../types/networkSecurity";
+import type { NetworkSolution } from "../../types/networkSecurity";
 import { getNetworkSolution } from "../../services/strapi";
 
 const NetworkSolution: React.FC = () => {
-  const [networkData, setNetworkData] = useState<networkSecurity | null>(null);
+  const [networkData, setNetworkData] = useState<NetworkSolution | null>(null);
   const [loading, setLoading] = useState(true);
   const { t, i18n } = useTranslation(["common", "networkSecurity"]);
 
@@ -98,14 +100,7 @@ const NetworkSolution: React.FC = () => {
           {items.length > 0 && <ContentCard item={items[3]} />}
         </div>
       </div>
-      <nav className="navigation">
-        <Link to="/services/digital-transformation" className="navLink">
-          &lt; DIGITAL TRANSFORMATION
-        </Link>
-        <Link to="/services/data-center" className="navLink">
-          DATA CENTER &gt;
-        </Link>
-      </nav>
+      <ServicesPager items={servicesNavItems} />
     </div>
   );
 };

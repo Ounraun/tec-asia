@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Multimedia.module.css";
+import { ServicesPager } from "@/components/ServicesNav";
+import { servicesNavItems } from "@/features/services/navItems";
 
 import { useTranslation } from "react-i18next";
 import type { MultimediaService } from "../../types/multimedia";
@@ -81,14 +83,7 @@ const Multimedia: React.FC = () => {
         </div>
       </div>
 
-      <nav className="navigation">
-        <a href="/services/centralize-management" className="navLink">
-          {"< CENTRALIZE MANAGEMENT"}
-        </a>
-        <a href="/services/digital-transformation" className="navLink">
-          {"DIGITAL TRANSFORMATION >"}
-        </a>
-      </nav>
+      <ServicesPager items={servicesNavItems} />
     </div>
   );
 };
