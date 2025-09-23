@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 //
 import { ServicesPager } from "@/components/ServicesNav";
 import { servicesNavItems } from "@/features/services/navItems";
 import styles from "./NetworkSolution.module.css";
 import ContentCard from "../../components/NetworkSolutions/Card";
+import { formatTextWithLineBreaks } from "@/utils/textFormatter";
 
 import BackgroudCity from "../../assets/NetworkSolution/backgroudCity.webp";
 
@@ -31,23 +32,6 @@ const NetworkSolution: React.FC = () => {
   }, [i18n.language]);
 
   const items = networkData?.content || [];
-
-  // Normalize API newlines/BRs so visual line breaks match editor "Enter"
-  const normalizedSubTitle2 = useMemo(() => {
-    const raw = networkData?.subTitle2 ?? "";
-    if (!raw) return null;
-    // Convert <br> (any casing, optional slash) to newline characters
-    const withNewlines = raw.replace(/<br\s*\/?>(\r?\n)?/gi, "\n");
-    // Also convert escaped newlines ("\\n") to real newlines
-    const normalized = withNewlines.replace(/\\n/g, "\n");
-    const parts = normalized.split(/\r?\n/);
-    return parts.map((p, idx) => (
-      <React.Fragment key={idx}>
-        {p}
-        {idx < parts.length - 1 ? "\n" : null}
-      </React.Fragment>
-    ));
-  }, [networkData?.subTitle2]);
 
   // Keep hook order stable; render loading UI after hooks
   if (loading) {
@@ -83,7 +67,7 @@ const NetworkSolution: React.FC = () => {
       </div>
 
       <div className={styles.description}>
-        <p>{normalizedSubTitle2}</p>
+        <p>{formatTextWithLineBreaks(networkData?.subTitle2 || "")}</p>
       </div>
 
       <div className={styles.contentSections}>

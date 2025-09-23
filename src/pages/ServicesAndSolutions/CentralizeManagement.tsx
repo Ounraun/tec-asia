@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { ServicesPager } from "@/components/ServicesNav";
 import { servicesNavItems } from "@/features/services/navItems";
 import styles from "./CentralizeManagement.module.css";
+import { formatTextWithLineBreaks } from "@/utils/textFormatter";
 
 import { getCentralizeManagement } from "../../services/strapi";
 import type { Feature } from "../../types/centralizeManagement";
@@ -63,7 +64,7 @@ const CentralizeManagement = () => {
 
       <div className={styles.cityBackground}>
         <p className={styles.subtitle}>
-          {feature?.mainSubTitle || t("common:loading")}
+          {formatTextWithLineBreaks(feature?.mainSubTitle || "")}
         </p>
       </div>
 
@@ -85,7 +86,9 @@ const CentralizeManagement = () => {
                   <div key={item.id} className={styles.slide}>
                     <div className={styles.featureCard}>
                       <h3 className={styles.featureTitle}>{item.title}</h3>
-                      <p className={styles.featureContent}>{item.content}</p>
+                      <p className={styles.featureContent}>
+                        {formatTextWithLineBreaks(item.content || "")}
+                      </p>
                     </div>
                   </div>
                 ))
@@ -93,7 +96,9 @@ const CentralizeManagement = () => {
                   <div key={item.id} className={styles.slide}>
                     <div className={styles.featureCard}>
                       <h3 className={styles.featureTitle}>{item.title}</h3>
-                      <p className={styles.featureContent}>{item.content}</p>
+                      <p className={styles.featureContent}>
+                        {formatTextWithLineBreaks(item.content || "")}
+                      </p>
                     </div>
                   </div>
                 ))}

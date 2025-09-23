@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ServicesPager } from "@/components/ServicesNav";
 import { servicesNavItems } from "@/features/services/navItems";
 import { useTranslation } from "react-i18next";
+import { formatTextWithLineBreaks } from "@/utils/textFormatter";
 
 import styles from "./DataCenter.module.css";
 import type { Facility } from "../../types/dataCenter";
@@ -70,7 +71,9 @@ const DataCenter: React.FC = () => {
           <span className={styles.data}>{t("dataCenter:data")}</span>{" "}
           <span className={styles.center}>{t("dataCenter:center")}</span>
         </h1>
-        <p className={styles.subtitle}>{facility?.subTitle || "Loading..."}</p>
+        <p className={styles.subtitle}>
+          {formatTextWithLineBreaks(facility?.subTitle || "")}
+        </p>
       </header>
 
       <div className={styles.line}></div>
@@ -117,7 +120,7 @@ const DataCenter: React.FC = () => {
                   }}
                 >
                   <h3>{item.title}</h3>
-                  <p>{item.content}</p>
+                  <p>{formatTextWithLineBreaks(item.content || "")}</p>
                 </div>
               </div>
 

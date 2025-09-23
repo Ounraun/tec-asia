@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./Multimedia.module.css";
 import { ServicesPager } from "@/components/ServicesNav";
 import { servicesNavItems } from "@/features/services/navItems";
+import { formatTextWithLineBreaks } from "@/utils/textFormatter";
 
 import { useTranslation } from "react-i18next";
 import type { MultimediaService } from "../../types/multimedia";
@@ -47,7 +48,9 @@ const Multimedia: React.FC = () => {
           </span>
           <span className={styles.solution}>{t("multimedia:solution")}</span>
         </h1>
-        <p className={styles.subtitle}>{MultimediaService?.subTitle}</p>
+        <p className={styles.subtitle}>
+          {formatTextWithLineBreaks(MultimediaService?.subTitle || "")}
+        </p>
       </header>
 
       <div className={styles.backgroundsContainer}>
@@ -59,7 +62,9 @@ const Multimedia: React.FC = () => {
                 <ul className={styles.customList}>
                   {service.content.split("\n").map((item, index) => {
                     const cleanText = item.replace(/^[\u2013\u2014-]\s*/, ""); // ลบ "–", "—", "-"
-                    return <li key={index}>{cleanText}</li>;
+                    return (
+                      <li key={index}>{formatTextWithLineBreaks(cleanText)}</li>
+                    );
                   })}
                 </ul>
               </div>
@@ -74,7 +79,7 @@ const Multimedia: React.FC = () => {
                 <h3>{service.title}</h3>
                 <ul>
                   {service.content.split("\n").map((item, index) => (
-                    <li key={index}>{item}</li>
+                    <li key={index}>{formatTextWithLineBreaks(item)}</li>
                   ))}
                 </ul>
               </div>

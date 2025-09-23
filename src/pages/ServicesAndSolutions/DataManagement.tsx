@@ -3,6 +3,7 @@ import { ServicesPager } from "@/components/ServicesNav";
 import { servicesNavItems } from "@/features/services/navItems";
 import styles from "./DataManagement.module.css";
 import DataImage from "@/assets/DataManagement/87.webp";
+import { formatTextWithLineBreaks } from "@/utils/textFormatter";
 
 import { useTranslation } from "react-i18next";
 
@@ -59,8 +60,12 @@ const DataManagement: React.FC = () => {
           />
         </div>
         <div className={styles.rightSection}>
-          <div className={styles.descriptionBox}>{services?.subTitle1}</div>
-          <div className={styles.descriptionBox}>{services?.subTitle2}</div>
+          <div className={styles.descriptionBox}>
+            {formatTextWithLineBreaks(services?.subTitle1 || "")}
+          </div>
+          <div className={styles.descriptionBox}>
+            {formatTextWithLineBreaks(services?.subTitle2 || "")}
+          </div>
         </div>
       </div>
       <div className={styles.servicesContainer}>

@@ -3,6 +3,7 @@ import { ServicesPager } from "@/components/ServicesNav";
 import { servicesNavItems } from "@/features/services/navItems";
 import styles from "./DigitalTransformation.module.css";
 import { useTranslation } from "react-i18next";
+import { formatTextWithLineBreaks } from "@/utils/textFormatter";
 
 import type { Transformation } from "../../types/digitalTransformation";
 import { getDataTransformation } from "../../services/strapi";
@@ -65,7 +66,7 @@ const DigitalTransformation: React.FC = () => {
             />
           </div>
           <div className={styles.description}>
-            {transformationItem?.subTitle}
+            {formatTextWithLineBreaks(transformationItem?.subTitle || "")}
           </div>
         </div>
 
