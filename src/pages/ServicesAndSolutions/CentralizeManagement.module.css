@@ -159,7 +159,8 @@
   border-radius: 1rem;
   box-shadow: 0px 5.48px 3.48px #ddc2688a;
   padding: 1.5rem;
-  height: 513px;
+  height: 400px;
+  min-height: 400px;
   width: 100%;
   max-width: 260px;
   flex: 1 1 220px;
@@ -168,7 +169,7 @@
   gap: 0.5rem;
   position: relative;
   transition: all 0.3s ease;
-  overflow: visible;
+  overflow: hidden;
 }
 .featureCard::before {
   content: "";
@@ -193,14 +194,19 @@
   font-size: 1rem;
   font-weight: 500;
   margin-top: 1rem;
+  margin-bottom: 1rem;
+  height: auto;
+  flex-shrink: 0;
 }
 .featureCard p {
   color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-heading);
   font-size: 14px;
   line-height: 1.6;
-  margin-top: 1rem;
+  margin-top: 0;
   white-space: pre-wrap;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .featureTitle {
@@ -220,8 +226,22 @@
   font-family: var(--font-heading);
   font-size: 20px;
   font-weight: 700;
-  line-height: 30px;
+  line-height: 1.4;
   display: inline-block;
+  min-height: 60px;
+  flex-shrink: 0;
+}
+
+.featureContent {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-heading);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .carouselContainer {
@@ -316,10 +336,18 @@
     margin: 2rem 0;
     padding-top: 36px;
   }
+  .featureCard {
+    height: 350px;
+    min-height: 350px;
+  }
   .featureTitle {
     font-size: 14px;
     line-height: 20px;
     width: 140px;
+    min-height: 50px;
+  }
+  .featureContent {
+    font-size: 13px;
   }
   .navigation {
     padding: 1rem 0.2rem;
@@ -343,10 +371,18 @@
     font-size: 40px;
     line-height: 40px;
   }
+  .featureCard {
+    height: 380px;
+    min-height: 380px;
+  }
   .featureTitle {
     font-size: 16px;
     line-height: 24px;
     width: 160px;
+    min-height: 55px;
+  }
+  .featureContent {
+    font-size: 14px;
   }
   .header {
     padding: 2rem 0;
@@ -388,10 +424,18 @@
     font-size: 50px;
     line-height: 50px;
   }
+  .featureCard {
+    height: 400px;
+    min-height: 400px;
+  }
   .featureTitle {
     font-size: 18px;
     line-height: 28px;
     width: 180px;
+    min-height: 60px;
+  }
+  .featureContent {
+    font-size: 14px;
   }
   .navLink {
     font-size: 18px;
