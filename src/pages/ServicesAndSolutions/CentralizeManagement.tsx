@@ -39,7 +39,7 @@ const CentralizeManagement = () => {
         style={{ height: "100vh" }}
       >
         <div className="spinner-border text-light" role="status">
-          <span className="visually-hidden">Loading...</span>
+          <span className="visually-hidden">{t("common:loading")}</span>
         </div>
       </div>
     );
@@ -63,7 +63,7 @@ const CentralizeManagement = () => {
 
       <div className={styles.cityBackground}>
         <p className={styles.subtitle}>
-          {feature?.mainSubTitle || "Loading..."}
+          {feature?.mainSubTitle || t("common:loading")}
         </p>
       </div>
 
@@ -73,7 +73,7 @@ const CentralizeManagement = () => {
             <button
               className={styles.prevBtn}
               onClick={prev}
-              aria-label="Previous"
+              aria-label={t("common:previous")}
             >
               &lt;
             </button>
@@ -104,6 +104,7 @@ const CentralizeManagement = () => {
               className={styles.nextBtn}
               onClick={next}
               disabled={currentIdx === items.length - 1}
+              aria-label={t("common:next")}
             >
               &gt;
             </button>

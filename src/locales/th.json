@@ -6,7 +6,10 @@
       "services": "บริการ",
       "contact": "ติดต่อเรา"
     },
-    "language": { "en": "English", "th": "ไทย" }
+    "language": { "en": "English", "th": "ไทย" },
+    "loading": "กำลังโหลด...",
+    "previous": "ก่อนหน้า",
+    "next": "ถัดไป"
   },
   "navbar": {
     "home": "Home",
@@ -69,5 +72,6 @@
   },
   "meetingRoom": { "meetingRoomServices": "บริการใช้งานห้องประชุม" },
   "multimedia": { "multimedia": "มัลติมีเดีย", "solution": "โซลูชัน" },
-  "networkSolution": { "network": "บริการวางระบบ", "solution": "และเครือข่าย" }
+  "networkSolution": { "network": "บริการวางระบบ", "solution": "และเครือข่าย" },
+  "networkSecurity": { "network": "บริการวางระบบ", "security": "และเครือข่าย" }
 }

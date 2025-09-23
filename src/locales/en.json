@@ -6,7 +6,10 @@
       "services": "Services",
       "contact": "Contact"
     },
-    "language": { "en": "English", "th": "ไทย" }
+    "language": { "en": "English", "th": "ไทย" },
+    "loading": "Loading...",
+    "previous": "Previous",
+    "next": "Next"
   },
   "navbar": {
     "home": "Home",

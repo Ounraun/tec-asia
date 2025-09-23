@@ -33,6 +33,26 @@ body {
   color: rgba(255, 255, 255, 0.87);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Thai font rendering improvements */
+  line-height: 1.6; /* Accommodate Thai diacritics */
+}
+
+/* Global Thai text improvements */
+* {
+  /* Ensure Thai diacritics aren't clipped */
+  line-height: inherit;
+}
+
+/* Special handling for buttons and compact elements */
+button, 
+.btn, 
+.services-btn,
+input,
+select,
+textarea {
+  line-height: 1.8; /* Extra space for Thai vowels/tone marks */
+  padding-top: 0.3em; /* Top padding for upper diacritics */
+  padding-bottom: 0.3em; /* Bottom padding for lower diacritics */
 }
 
 /* ===== Typography variables ===== */
