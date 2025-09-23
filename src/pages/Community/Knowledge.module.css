@@ -73,6 +73,7 @@
   align-items: center;
   justify-content: center;
   height: 62px;
+  width: 400px;
   padding: 13px 78px; /* Increased top/bottom padding for Thai text */
   color: white;
   font-size: 1.6rem;
