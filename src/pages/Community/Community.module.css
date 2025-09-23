@@ -73,8 +73,10 @@
 
 .eventImageContainer {
   width: 100%;
-  height: 300px;
-  min-height: 300px;
+  /* Make the image area a perfect square */
+  aspect-ratio: 1 / 1;
+  height: auto;
+  overflow: hidden;
 }
 
 .eventContent {
@@ -212,7 +214,8 @@
   }
 
   .eventImageContainer {
-    min-height: 250px;
+    /* Keep square on mobile as well */
+    aspect-ratio: 1 / 1;
   }
 
   .eventContent {
