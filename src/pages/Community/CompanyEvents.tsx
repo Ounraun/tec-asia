@@ -1,61 +1,61 @@
-// src/pages/Community/CompanyEvents.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { formatTextWithLineBreaks } from "../../utils/textFormatter";
 import Contact from "../../components/Contact";
 import ParticlesComponent from "../../components/Particles/Particles";
 import styles from "./Community.module.css";
-import { getStrapiImageUrl } from "../../services/strapi";
-
-interface Category {
-  createdAt: string;
-  description: string | null;
-  documentId: string;
-  id: number;
-  name: string;
-  publishedAt: string;
-  updatedAt: string;
-}
-
-interface BlogPost {
-  id: number;
-  content: string;
-  createdAt: string;
-  documentId: string;
-  gallery_image: null | any;
-  mainImage: {
-    id: number;
-    documentId: string;
-    name: string;
-    alternativeText: string | null;
-    caption: string | null;
-    url: string;
-  } | null;
-  show_main: boolean;
-  title: string;
-  updatedAt: string;
-  publishedAt: string;
-  category: Category;
-}
+import {
+  getStrapiImageUrl,
+  getBlogPostsByCategory,
+} from "../../services/strapi";
+import type { BlogPost } from "../../types/blogPost";
 
 const CompanyEvents = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation(["common", "companyEvents"]);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const apiUrl = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const url = `${apiUrl}/api/blog-posts?filters[category][name][$eq]=Company%20events&populate=*`;
-        const response = await fetch(url);
-        const data = await response.json();
+        console.log("=== CompanyEvents Page Debug ===");
+        console.log("Current i18n.language:", i18n.language);
+        setLoading(true);
 
-        if (data.data && Array.isArray(data.data)) {
-          const companyEvents = data.data.filter(
-            (item: any) =>
-              item.category?.name?.toLowerCase() === "company events"
-          );
+        // ใช้ชื่อ category ตาม locale
+        const categoryName =
+          i18n.language === "th" ? "กิจกรรมองค์กร" : "Company events";
+        console.log("Using category name:", categoryName);
+
+        console.log(`Calling getBlogPostsByCategory('${categoryName}')...`);
+        const response = await getBlogPostsByCategory(categoryName);
+        console.log("API Response:", response);
+        console.log("Response data:", response.data);
+        console.log("Is array?", Array.isArray(response.data));
+
+        if (response.data && Array.isArray(response.data)) {
+          console.log("Raw data before filter:", response.data);
+
+          const companyEvents = response.data.filter((item: BlogPost) => {
+            const expectedCategory =
+              i18n.language === "th" ? "กิจกรรมองค์กร" : "Company events";
+            console.log(
+              `Checking item: ${item.title} - Category: ${item.category?.name} (expected: ${expectedCategory})`
+            );
+            return item.category?.name === expectedCategory;
+          });
+
+          console.log("Filtered companyEvents:", companyEvents);
+          console.log("Number of posts after filter:", companyEvents.length);
           setPosts(companyEvents);
+        } else {
+          console.log("No data or not array");
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -65,8 +65,7 @@ const CompanyEvents = () => {
     };
 
     fetchPosts();
-  }, [apiUrl]);
-
+  }, [i18n.language]);
   const handlePostClick = (documentId: string) => {
     navigate(`/blog/doc/${documentId}`);
   };
@@ -105,14 +104,14 @@ const CompanyEvents = () => {
           style={{ backgroundColor: "transparent" }}
         >
           <div className={styles.communityHeader}>
-            <h1 className={styles.headerTitle}>COMPANY EVENTS</h1>
+            <h1 className={styles.headerTitle}>{t("companyEvents:title")}</h1>
           </div>
 
           <div className={styles.eventsGrid}>
             {loading ? (
-              <div className={styles.loading}>Loading...</div>
+              <div className={styles.loading}>{t("companyEvents:loading")}</div>
             ) : posts.length === 0 ? (
-              <div>No company events found</div>
+              <div>{t("companyEvents:noEvents")}</div>
             ) : (
               posts.map((post, index) => (
                 <div
@@ -120,12 +119,14 @@ const CompanyEvents = () => {
                   className={`${styles.eventCard} ${
                     index % 2 === 0 ? styles.left : styles.right
                   }`}
-                  onClick={() => handlePostClick(post.documentId)}
+                  onClick={() => handlePostClick(String(post.documentId))}
                   style={{ cursor: "pointer" }}
                 >
                   <div className={styles.eventContent}>
                     <h3 className={styles.eventTitle}>{post.title}</h3>
-                    <p className={styles.eventText}>{post.content}</p>
+                    <p className={styles.eventText}>
+                      {formatTextWithLineBreaks(post.content)}
+                    </p>
                   </div>
 
                   {getStrapiImageUrl(post?.mainImage?.url) && (
@@ -155,7 +156,9 @@ const CompanyEvents = () => {
                 window.open("https://www.facebook.com/TecAsiaSupport", "_blank")
               }
             >
-              <span className={styles.moreBtnLabel}>More from our page</span>
+              <span className={styles.moreBtnLabel}>
+                {t("companyEvents:moreFromPage")}
+              </span>
             </button>
           </div>
         </div>

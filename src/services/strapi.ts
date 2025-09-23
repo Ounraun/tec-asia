@@ -42,11 +42,23 @@ export async function callStrapi<T>(
   }
 
   const url = `${API_URL}${endpoint}?${qs.toString()}`;
+  console.log("=== Strapi API Call ===");
+  console.log("Endpoint:", endpoint);
+  console.log("Current i18n.language:", i18n.language);
+  console.log("Params:", params);
+  console.log("Final URL:", url);
+  
   const res = await fetch(url);
+  console.log("Response status:", res.status, res.statusText);
+  
   if (!res.ok) {
+    console.error(`Strapi ${endpoint} error ${res.status}`);
     throw new Error(`Strapi ${endpoint} error ${res.status}`);
   }
-  return (await res.json()) as T;
+  
+  const data = (await res.json()) as T;
+  console.log("Response data:", data);
+  return data;
 }
 
 export function getAboutUs() {
@@ -95,6 +107,13 @@ export function getCompanyInfo() {
 
 export function getBlogPosts() {
   return callStrapi<{ data: BlogPost[] }>("/api/blog-posts", { populate: "*" });
+}
+
+export function getBlogPostsByCategory(category: string) {
+  return callStrapi<{ data: BlogPost[] }>("/api/blog-posts", {
+    "filters[category][name][$eq]": category,
+    populate: "*",
+  });
 }
 
 export async function getCompanyVideoUrl(): Promise<string | null> {

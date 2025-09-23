@@ -81,6 +81,18 @@
     "moreKnowledge": "More Knowledge",
     "readMore": "Read More"
   },
+  "companyEvents": {
+    "title": "COMPANY EVENTS",
+    "loading": "Loading...",
+    "noEvents": "No company events found",
+    "moreFromPage": "More from our page"
+  },
+  "society": {
+    "title": "SOCIETY",
+    "loading": "Loading...",
+    "noEvents": "No society posts found",
+    "moreFromPage": "More from our page"
+  },
   "meetingRoom": { "meetingRoomServices": "Meeting room services" },
   "multimedia": { "multimedia": "MULTIMEDIA", "solution": "SOLUTION" },
   "networkSecurity": { "network": "NETWORK", "security": "AND SECURITY" }

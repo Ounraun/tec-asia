@@ -1,59 +1,51 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Contact from "../../components/Contact";
 import ParticlesComponent from "../../components/Particles/Particles";
 import styles from "./Community.module.css";
-import { getStrapiImageUrl } from "../../services/strapi";
-
-interface Category {
-  createdAt: string;
-  description: string | null;
-  documentId: string;
-  id: number;
-  name: string;
-  publishedAt: string;
-  updatedAt: string;
-}
-
-interface BlogPost {
-  id: number;
-  content: string;
-  createdAt: string;
-  documentId: string;
-  gallery_image: null | any;
-  mainImage: {
-    id: number;
-    documentId: string;
-    name: string;
-    alternativeText: string | null;
-    caption: string | null;
-    url: string;
-  } | null;
-  show_main: boolean;
-  title: string;
-  updatedAt: string;
-  publishedAt: string;
-  category: Category;
-}
+import { getStrapiImageUrl, getBlogPostsByCategory } from "../../services/strapi";
+import type { BlogPost } from "../../types/blogPost";
 
 const Society = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation(["common", "society"]);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const url = `${apiUrl}/api/blog-posts?filters[category][name][$eq]=Society&populate=*`;
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data.data && Array.isArray(data.data)) {
-          const societyPosts = data.data.filter(
-            (item: any) => item.category?.name?.toLowerCase() === "society"
+        console.log("=== Society Page Debug ===");
+        console.log("Current i18n.language:", i18n.language);
+        setLoading(true);
+        
+        // ใช้ชื่อ category ตาม locale
+        const categoryName = i18n.language === 'th' ? 'สังคม' : 'Society';
+        console.log("Using category name:", categoryName);
+        
+        console.log(`Calling getBlogPostsByCategory('${categoryName}')...`);
+        const response = await getBlogPostsByCategory(categoryName);
+        console.log("API Response:", response);
+        console.log("Response data:", response.data);
+        console.log("Is array?", Array.isArray(response.data));
+        
+        if (response.data && Array.isArray(response.data)) {
+          console.log("Raw data before filter:", response.data);
+          
+          const societyPosts = response.data.filter(
+            (item: BlogPost) => {
+              const expectedCategory = i18n.language === 'th' ? 'สังคม' : 'Society';
+              console.log(`Checking item: ${item.title} - Category: ${item.category?.name} (expected: ${expectedCategory})`);
+              return item.category?.name === expectedCategory;
+            }
           );
+          
+          console.log("Filtered societyPosts:", societyPosts);
+          console.log("Number of posts after filter:", societyPosts.length);
           setPosts(societyPosts);
+        } else {
+          console.log("No data or not array");
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -63,7 +55,7 @@ const Society = () => {
     };
 
     fetchPosts();
-  }, [apiUrl]);
+  }, [i18n.language]);
 
   const handlePostClick = (documentId: string) => {
     navigate(`/blog/doc/${documentId}`);
@@ -104,14 +96,14 @@ const Society = () => {
           style={{ backgroundColor: "transparent" }}
         >
           <div className={styles.communityHeader}>
-            <h1 className={styles.headerTitle}>SOCIETY</h1>
+            <h1 className={styles.headerTitle}>{t("society:title")}</h1>
           </div>
 
           <div className={styles.eventsGrid}>
             {loading ? (
-              <div className={styles.loading}>Loading...</div>
+              <div className={styles.loading}>{t("society:loading")}</div>
             ) : posts.length === 0 ? (
-              <div>No society activities found</div>
+              <div>{t("society:noEvents")}</div>
             ) : (
               posts.map((post, index) => (
                 <div
@@ -119,7 +111,7 @@ const Society = () => {
                   className={`${styles.eventCard} ${
                     index % 2 === 0 ? styles.left : styles.right
                   }`}
-                  onClick={() => handlePostClick(post.documentId)}
+                  onClick={() => handlePostClick(String(post.documentId))}
                   style={{ cursor: "pointer" }}
                 >
                   <div className={styles.eventContent}>
@@ -154,7 +146,7 @@ const Society = () => {
                 window.open("https://www.facebook.com/TecAsiaSupport", "_blank")
               }
             >
-              <span className={styles.moreBtnLabel}>More from our page</span>
+              <span className={styles.moreBtnLabel}>{t("society:moreFromPage")}</span>
             </button>
           </div>
         </div>
