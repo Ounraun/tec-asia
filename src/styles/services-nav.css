@@ -3,8 +3,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  margin: 40px auto 0;
+  gap: clamp(40px, 8vw, 480px); /* Responsive gap that scales with viewport */
+  margin: 40px auto 40px;
   max-width: 1200px;
   padding: 0 20px;
 }
@@ -17,9 +17,9 @@
   align-items: center;
   justify-content: center;
   min-height: 56px;
-  padding: 12px 28px; /* Increased top/bottom padding for Thai text */
+  padding: 12px clamp(18px, 3vw, 28px); /* Responsive horizontal padding */
   color: #fff;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem); /* Responsive font size */
   font-weight: 700;
   letter-spacing: 0.5px;
   text-decoration: none;
@@ -30,6 +30,8 @@
   /* Ensure Thai text doesn't get clipped */
   overflow: visible;
   white-space: nowrap;
+  /* Responsive text scaling */
+  text-overflow: ellipsis;
 }
 
 .services-btn:hover {
@@ -48,14 +50,48 @@
   margin-left: auto; /* avoid empty ruleset for lint */
 }
 
-@media (max-width: 768px) {
+/* Tablet styles */
+@media (max-width: 1024px) {
   .services-pager {
-    padding: 0 12px;
+    gap: clamp(30px, 6vw, 200px);
+    margin: 30px auto 30px;
+    padding: 0 15px;
   }
   .services-btn {
-    padding: 12px 18px; /* Maintain extra padding for Thai on mobile */
+    padding: 12px 24px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .services-pager {
+    padding: 0 12px 40px;
+    gap: clamp(20px, 5vw, 60px); /* Smaller responsive gap for mobile */
+    margin: 20px auto 30px;
+    flex-direction: column; /* Stack buttons vertically on very small screens if needed */
+  }
+  .services-btn {
+    padding: 12px 18px;
     font-size: 1rem;
     min-height: 48px;
-    line-height: 1.8; /* Consistent line-height for Thai */
+    line-height: 1.8;
+    min-width: 200px; /* Ensure consistent button width */
+  }
+}
+
+/* Very small mobile */
+@media (max-width: 480px) {
+  .services-pager {
+    gap: 15px;
+    margin: 15px auto 20px;
+    flex-direction: column; /* Stack vertically on very small screens */
+    align-items: stretch;
+  }
+  .services-btn {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    text-align: center;
   }
 }
