@@ -159,7 +159,7 @@
   border-radius: 1rem;
   box-shadow: 0px 5.48px 3.48px #ddc2688a;
   padding: 1.5rem;
-  height: 400px;
+  height: 560px;
   min-height: 400px;
   width: 100%;
   max-width: 260px;
@@ -211,14 +211,8 @@
 
 .featureTitle {
   background: var(
-    --main-solution,
-    linear-gradient(
-      81deg,
-      #34a8d5 19.23%,
-      #a1e8ee 34.62%,
-      #c98d8c 54.33%,
-      #bd6c0f 95.64%
-    )
+    --tital-tone1,
+    linear-gradient(190deg, #005df9 0%, #a7daff 100%)
   );
   background-clip: text;
   -webkit-background-clip: text;
