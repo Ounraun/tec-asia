@@ -1,6 +1,7 @@
 // src/pages/Community/BlogDetail.tsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Contact from "../../components/Contact";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -8,7 +9,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import styles from "./BlogDetail.module.css";
-import { getStrapiImageUrl } from "../../services/strapi";
+import { getStrapiImageUrl, callStrapi } from "../../services/strapi";
+import { formatTextWithLineBreaks } from "../../utils/textFormatter";
 
 interface BlogPost {
   id: number;
@@ -31,10 +33,10 @@ interface BlogPost {
 const BlogDetail = () => {
   const { documentId } = useParams();
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const apiUrl = import.meta.env.VITE_API_URL;
 
   // Always start at top when opening this page
   useEffect(() => {
@@ -55,39 +57,69 @@ const BlogDetail = () => {
 
   useEffect(() => {
     const fetchPost = async () => {
+      if (!documentId) return;
+      
       try {
+        console.log("=== BlogDetail Debug ===");
+        console.log("Current i18n.language:", i18n.language);
+        console.log("DocumentId:", documentId);
+
         setError(null);
-        const response = await fetch(
-          `${apiUrl}/api/blog-posts?populate=*&filters[documentId][$eq]=${documentId}`
+
+        // ใช้ callStrapi แทน fetch API โดยตรง
+        const response = await callStrapi<{ data: BlogPost[] }>(
+          "/api/blog-posts",
+          {
+            populate: "*",
+            "filters[documentId][$eq]": documentId,
+          }
         );
 
-        if (!response.ok)
-          throw new Error(`HTTP error! status: ${response.status}`);
+        console.log("Blog post response:", response);
 
-        const data = await response.json();
         if (
-          !data?.data ||
-          !Array.isArray(data.data) ||
-          data.data.length === 0
+          !response?.data ||
+          !Array.isArray(response.data) ||
+          response.data.length === 0
         ) {
-          throw new Error("Post not found");
+          console.log("No post found in current language, keeping existing post");
+          // ถ้าไม่เจอข้อมูลในภาษาใหม่ ไม่ต้องเปลี่ยนแปลง post state
+          // แค่ return เพื่อไม่ให้แสดงหน้า error
+          return;
         }
 
-        const postData = data.data[0];
+        const postData = response.data[0];
+        console.log("Post data:", postData);
         setPost(postData);
 
+        // ดึง related posts โดยใช้ชื่อ category ที่ถูกต้องตาม locale
         if (postData?.category?.name) {
           try {
-            const relatedResponse = await fetch(
-              `${apiUrl}/api/blog-posts?populate=*&filters[category][name][$eq]=${postData.category.name}&filters[documentId][$ne]=${documentId}`
+            console.log(
+              "Fetching related posts for category:",
+              postData.category.name
             );
-            if (!relatedResponse.ok) return;
 
-            const relatedData = await relatedResponse.json();
-            if (relatedData?.data)
-              setRelatedPosts(relatedData.data.slice(0, 3));
+            const relatedResponse = await callStrapi<{ data: BlogPost[] }>(
+              "/api/blog-posts",
+              {
+                populate: "*",
+                "filters[category][name][$eq]": postData.category.name,
+                "filters[documentId][$ne]": documentId,
+              }
+            );
+
+            console.log("Related posts response:", relatedResponse);
+
+            if (relatedResponse?.data && relatedResponse.data.length > 0) {
+              setRelatedPosts(relatedResponse.data.slice(0, 3));
+            } else {
+              console.log("No related posts found in current language, keeping existing related posts");
+              // ไม่ล้าง relatedPosts ถ้าไม่เจอข้อมูลใหม่
+            }
           } catch (err) {
             console.error("Error fetching related posts:", err);
+            // ไม่ล้าง relatedPosts ถ้า API error
           }
         }
       } catch (err) {
@@ -96,8 +128,8 @@ const BlogDetail = () => {
       }
     };
 
-    if (documentId) fetchPost();
-  }, [documentId, apiUrl]);
+    fetchPost();
+  }, [documentId, i18n.language]);
 
   // After content is ready, nudge scroll to top again (Edge reliability)
   useEffect(() => {
@@ -162,7 +194,7 @@ const BlogDetail = () => {
           </div>
 
           <div className={styles.blogContent}>
-            <p>{post.content}</p>
+            <div>{formatTextWithLineBreaks(post.content)}</div>
           </div>
         </div>
 
@@ -238,7 +270,9 @@ const BlogDetail = () => {
                       )}
                       <div className={styles.cardContent}>
                         <h3>{relatedPost.title}</h3>
-                        <p>{relatedPost.content}</p>
+                        <div>
+                          {formatTextWithLineBreaks(relatedPost.content)}
+                        </div>
                         <span className="read-more">Read more »</span>
                       </div>
                     </div>
