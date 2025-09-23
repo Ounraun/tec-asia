@@ -305,9 +305,9 @@
 .serviceCard li {
   color: #ffffff;
   font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
   font-weight: 400;
-  line-height: 1.9;
+  line-height: 1.5;
 }
 
 .navigation {
@@ -328,10 +328,10 @@
 .customList li {
   position: relative;
   padding-left: 1.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.3rem;
   color: #ffffff;
   font-size: 1.1rem;
-  line-height: 1.6;
+  line-height: 1.4;
 }
 
 .customList li::before {
@@ -453,6 +453,8 @@
   .customList li {
     font-size: 1rem;
     padding-left: 1rem;
+    margin-bottom: 0.2rem;
+    line-height: 1.3;
   }
   .customList li::before {
     width: 6px;
