@@ -77,6 +77,10 @@
   aspect-ratio: 1 / 1;
   height: auto;
   overflow: hidden;
+  /* Limit square size on larger screens and center within its grid cell */
+  max-width: 420px;
+  margin-inline: auto;
+  justify-self: center;
 }
 
 .eventContent {
