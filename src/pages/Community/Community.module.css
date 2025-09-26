@@ -47,8 +47,8 @@
 
 .eventCard {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem; /* slightly tighter column spacing */
+  grid-template-columns: auto 1fr; /* image column sizes to its content */
+  gap: 1rem; /* tighter column spacing so text sits closer to image */
   padding: 2rem; /* reduce internal padding to make image area feel larger */
   background-color: rgba(0, 27, 45, 1);
   stroke-width: 2px;
@@ -59,6 +59,11 @@
   border: 2px solid rgba(16, 151, 249, 0.5);
   border-radius: 8px;
   min-height: 300px;
+}
+
+/* When the card is in a right-oriented wrapper, flip the column sizing */
+.right .eventCard {
+  grid-template-columns: 1fr auto; /* image column on the right sized to its content */
 }
 
 /* ตำแหน่งสลับซ้าย/ขวา */
@@ -72,15 +77,23 @@
 }
 
 .eventImageContainer {
-  width: 100%;
+  width: clamp(320px, 32vw, 520px); /* content-sized image column */
   /* Make the image area a perfect square */
   aspect-ratio: 1 / 1;
   height: auto;
   overflow: hidden;
   /* Limit square size on larger screens and center within its grid cell */
-  max-width: 460px; /* allow larger square on desktop to reduce padding feel */
   margin-inline: 0; /* no auto-centering to tuck toward grid edge */
   justify-self: start; /* align to the container start edge */
+}
+
+/* Flush image to the outer card edge based on side */
+.left .eventImageContainer {
+  margin-left: -2rem; /* equal to .eventCard padding */
+}
+.right .eventImageContainer {
+  margin-right: -2rem; /* equal to .eventCard padding */
+  justify-self: end;
 }
 
 .eventContent {
@@ -89,6 +102,14 @@
   gap: 1rem;
   justify-content: flex-start;
   padding: 1rem;
+}
+
+/* Pull text closer to the adjacent image side */
+.left .eventContent {
+  padding-left: 0;
+}
+.right .eventContent {
+  padding-right: 0;
 }
 
 .eventTitle {
@@ -205,18 +226,25 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     padding: 1.5rem; /* slightly smaller padding on mobile */
+    gap: 1rem; /* maintain sensible spacing on mobile */
   }
 
   .left .eventImageContainer,
   .right .eventImageContainer {
     grid-column: 1;
     grid-row: 1;
+    width: 100%; /* full width on mobile */
+    margin-left: 0; /* reset negative margins on mobile */
+    margin-right: 0;
+    justify-self: center;
   }
 
   .left .eventContent,
   .right .eventContent {
     grid-column: 1;
     grid-row: 2;
+    padding-left: 1rem; /* restore balanced padding on mobile */
+    padding-right: 1rem;
   }
 
   .eventImageContainer {
