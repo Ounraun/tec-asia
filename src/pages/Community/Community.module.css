@@ -48,8 +48,8 @@
 .eventCard {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  padding: 3.2rem;
+  gap: 1.5rem; /* slightly tighter column spacing */
+  padding: 2rem; /* reduce internal padding to make image area feel larger */
   background-color: rgba(0, 27, 45, 1);
   stroke-width: 2px;
   stroke: rgba(16, 151, 249, 0.5);
@@ -78,9 +78,9 @@
   height: auto;
   overflow: hidden;
   /* Limit square size on larger screens and center within its grid cell */
-  max-width: 420px;
-  margin-inline: auto;
-  justify-self: center;
+  max-width: 460px; /* allow larger square on desktop to reduce padding feel */
+  margin-inline: 0; /* no auto-centering to tuck toward grid edge */
+  justify-self: start; /* align to the container start edge */
 }
 
 .eventContent {
@@ -108,6 +108,7 @@
 .eventImage {
   width: 100%;
   height: 100%;
+  display: block; /* remove inline baseline whitespace */
   object-fit: cover;
   border-radius: 8px;
 }
@@ -203,6 +204,7 @@
   .eventCard {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
+    padding: 1.5rem; /* slightly smaller padding on mobile */
   }
 
   .left .eventImageContainer,
