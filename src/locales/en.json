@@ -85,13 +85,13 @@
     "title": "COMPANY EVENTS",
     "loading": "Loading...",
     "noEvents": "No company events found",
-    "moreFromPage": "More from our page"
+    "moreFromPage": "More from page"
   },
   "society": {
     "title": "SOCIETY",
     "loading": "Loading...",
     "noEvents": "No society posts found",
-    "moreFromPage": "More from our page"
+    "moreFromPage": "More from page"
   },
   "blogDetail": {
     "loading": "Loading...",

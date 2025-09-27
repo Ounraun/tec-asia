@@ -403,7 +403,16 @@ const BlogDetail = () => {
                 )
               }
             >
-              {t("all", { ns: "blogDetail" })} {post.category.name}
+              {i18n.language?.startsWith("th") ? (
+                <>
+                  {post.category.name}
+                  {t("all", { ns: "blogDetail" })}
+                </>
+              ) : (
+                <>
+                  {t("all", { ns: "blogDetail" })} {post.category.name}
+                </>
+              )}
             </button>
           </div>
         )}
