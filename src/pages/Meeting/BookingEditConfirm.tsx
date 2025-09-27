@@ -33,7 +33,7 @@ const BookingEditConfirm: React.FC = () => {
         </div>
 
         <button className={styles.closeButton} onClick={handleClose}>
-          Back to timetable
+          Back to booking page
         </button>
       </div>
     </div>

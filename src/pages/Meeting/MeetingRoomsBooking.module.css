@@ -90,7 +90,7 @@
   padding: 1rem;
   text-align: center;
   background: rgba(66, 165, 245, 0.2);
-  color: #42a5f5;
+  color: #ffffff; /* improved readability */
   font-weight: 600;
   border-radius: 6px;
   font-size: 0.9rem;
@@ -111,7 +111,7 @@
 
 .bookingTable td:first-child {
   background: rgba(66, 165, 245, 0.1);
-  color: #42a5f5;
+  color: #ffffff; /* improved readability */
   font-weight: 500;
   width: 120px;
 }
@@ -178,23 +178,24 @@
 }
 
 .closeButton {
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
   border: none;
-  color: white;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
+  padding: 0;
+  transition: transform 0.2s ease;
 }
 
 .closeButton:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
+  transform: scale(1.05);
+}
+
+.closeIcon {
+  width: 32px;
+  height: 32px;
+  display: block;
 }
 
 .selectTimePrompt {
@@ -312,15 +313,35 @@
 }
 
 .confirmBooking {
-  width: 20%;
-  padding: 1rem;
-  background-color: #3498db;
-  color: white;
+  /* Match Knowledge.moreKnowledgeBtn style */
+  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
   border: none;
-  border-radius: 4px;
+  border-radius: 19820.6px; /* pill */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 400px;
+  padding: 13px 78px; /* extra vertical room for Thai diacritics */
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.8; /* prevent clipping */
+  letter-spacing: 0.5px;
   cursor: pointer;
-  font-size: 1rem;
+  transition: background-color 0.3s ease;
   margin-top: 1rem;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.confirmBooking:hover {
+  background-color: #0077ff;
+}
+
+.confirmBooking:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .emailInput {
@@ -401,17 +422,44 @@
 }
 
 .navButton {
-  background: rgba(74, 125, 255, 0.8);
-  color: white;
+  /* moreKnowledge look: pill + gradient */
+  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  color: #fff;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  border-radius: 19820.6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  letter-spacing: 0.3px;
+  box-shadow: 0 8px 20px rgba(4, 151, 236, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 
 .navButton:hover {
-  background: rgba(74, 125, 255, 1);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(4, 151, 236, 0.35);
+  filter: brightness(1.03);
+}
+
+.navButton:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(4, 151, 236, 0.2);
+}
+
+.navButton:focus-visible {
+  outline: 2px solid rgba(4, 151, 236, 0.7);
+  outline-offset: 2px;
+}
+
+.navButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .weekRange {
@@ -537,6 +585,58 @@
 
 .participantRow {
   width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.participantControls {
+  display: grid;
+  grid-template-columns: 1fr auto; /* inputs expand, button hugs content */
+  align-items: start;
+  column-gap: 12px;
+  width: 100%;
+}
+
+/* Make the input take available space when icon is present */
+.participantRow .emailInput,
+.participantRow input[type="email"] {
+  flex: 1 1 auto;
+}
+
+.deleteIconBtn {
+  background: transparent;
+  border: none;
+  color: #e53935; /* red */
+  cursor: pointer;
+  padding: 4px 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px; /* for focus ring only */
+  font-size: 18px; /* size of X */
+  line-height: 1; /* avoid extra vertical space */
+}
+
+.deleteIconBtn:hover {
+  filter: brightness(1.1);
+  transform: scale(1.05);
+}
+
+.deleteIconBtn:focus-visible {
+  outline: 2px solid rgba(229, 57, 53, 0.6);
+  outline-offset: 2px;
+}
+
+.deleteIconBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.deleteIcon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
 }
 
 .addMoreBelow {
@@ -573,9 +673,46 @@
   cursor: not-allowed;
 }
 
+/* Edit button styled like moreKnowledge */
+.btnEdit {
+  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  color: #fff;
+  border: none;
+  border-radius: 19820.6px; /* pill */
+  padding: 0.6rem 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  box-shadow: 0 8px 20px rgba(4, 151, 236, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.btnEdit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(4, 151, 236, 0.35);
+  filter: brightness(1.03);
+}
+
+.btnEdit:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(4, 151, 236, 0.2);
+}
+
+.btnEdit:focus-visible {
+  outline: 2px solid rgba(4, 151, 236, 0.7);
+  outline-offset: 2px;
+}
+
+.btnEdit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .addParticipant {
-  margin-top: 0.5rem;
-  align-self: flex-start;
+  margin-top: 0; /* aligned to top right of inputs */
+  justify-self: end; /* right side */
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto; /* shrink to fit content */
 }
 
 .plusIcon {
@@ -590,11 +727,12 @@
 }
 
 .btnGhost:hover {
-  background-color: #3498db;
+  /* Use the same gradient feel as moreKnowledge button */
+  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
   color: #fff;
-  border-color: #3498db;
+  border-color: transparent;
   transform: translateY(-1px);
-  box-shadow: 0 6px 12px rgba(52, 152, 219, 0.25);
+  box-shadow: 0 6px 12px rgba(4, 151, 236, 0.25);
 }
 
 .btnGhost:active {
@@ -611,16 +749,41 @@
   outline: 2px solid #3498db;
   outline-offset: 2px;
 }
+
+/* Keep the participants label aligned with the first input row even when multiple inputs stack */
+.participantsGroup {
+  align-items: flex-start; /* label stays at top */
+}
+.participantsGroup > label {
+  padding-top: 0.8rem; /* align baseline with the first input padding */
+}
 .btnDanger {
-  background: #e53935;
+  background: #e10b00; /* vivid red */
   color: #fff;
   border: none;
-  padding: 0.9rem 1.25rem;
-  border-radius: 8px;
-  font-weight: 600;
+  padding: 0.9rem 2rem;
+  border-radius: 19820.6px; /* pill */
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  box-shadow: 0 8px 20px rgba(215, 58, 47, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 .btnDanger:hover {
-  background: #d32f2f;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(215, 58, 47, 0.35);
+  filter: brightness(1.03);
+}
+.btnDanger:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(215, 58, 47, 0.2);
+}
+.btnDanger:focus-visible {
+  outline: 2px solid rgba(215, 58, 47, 0.6);
+  outline-offset: 2px;
+}
+.btnDanger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .bookingInfo {
@@ -658,5 +821,28 @@
   }
   .formGroup label {
     min-width: 0;
+  }
+  .participantControls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .addParticipant {
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+  .participantsGroup > label {
+    padding-top: 0; /* stacked layout; no extra top padding needed */
+  }
+  .confirmBooking {
+    width: 100%;
+    padding: 14px 25px;
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  .navButton {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.9rem;
+    box-shadow: 0 6px 14px rgba(4, 151, 236, 0.22);
   }
 }

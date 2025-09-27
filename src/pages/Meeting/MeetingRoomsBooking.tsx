@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.min.css";
 import styles from "./MeetingRoomsBooking.module.css";
 import ParticlesComponent from "../../components/Particles/Particles";
+import closeIcon from "../../assets/icons/close.svg";
 
 // ---------- Types ----------
 type NavState = { name: string; description: string; min: number; max: number };
@@ -1019,14 +1020,19 @@ const MeetingRoomsBooking: React.FC = () => {
             <div className={styles.formActions}>
               {isViewMode && (
                 <button
-                  className={`${styles.btn} ${styles.btnGhost}`}
+                  className={`${styles.btn} ${styles.btnEdit}`}
                   onClick={() => (setIsViewMode(false), setIsEditMode(true))}
                 >
                   แก้ไข
                 </button>
               )}
-              <button className={styles.closeButton} onClick={handleCloseForm}>
-                ×
+              <button
+                className={styles.closeButton}
+                onClick={handleCloseForm}
+                aria-label="ปิดแบบฟอร์ม"
+                title="ปิด"
+              >
+                <img src={closeIcon} alt="ปิด" className={styles.closeIcon} />
               </button>
             </div>
           </div>
@@ -1140,7 +1146,7 @@ const MeetingRoomsBooking: React.FC = () => {
               />
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={`${styles.formGroup} ${styles.participantsGroup}`}>
               <label>อีเมล์ผู้เข้าร่วม</label>
               {isViewMode ? (
                 formData.participants?.length ? (
@@ -1163,7 +1169,7 @@ const MeetingRoomsBooking: React.FC = () => {
                   </div>
                 )
               ) : (
-                <>
+                <div className={styles.participantControls}>
                   <div className={styles.participantInputs}>
                     {formData.participants.map((email, idx) => (
                       <div key={idx} className={styles.participantRow}>
@@ -1193,7 +1199,7 @@ const MeetingRoomsBooking: React.FC = () => {
                     <span className={styles.plusIcon}>＋</span>
                     เพิ่มผู้เข้าร่วม
                   </button>
-                </>
+                </div>
               )}
             </div>
 

@@ -29,7 +29,7 @@ const BookingDeleteConfirm: React.FC = () => {
           className={styles.closeButton}
           onClick={() => navigate(redirectTo)}
         >
-          Back to timetable
+          Back to booking page
         </button>
       </div>
     </div>

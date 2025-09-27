@@ -42,20 +42,43 @@
 }
 
 .closeButton {
-  background-color: #ffa500;
+  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
   border: none;
-  border-radius: 4px;
-  color: white;
+  border-radius: 19820.6px; /* pill */
+  color: #fff;
   font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 500;
-  padding: 0.75rem 3rem;
+  font-size: 24px;
+  font-weight: 700;
+  padding: 0.9rem 2.25rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 8px 20px rgba(4, 151, 236, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 
 .closeButton:hover {
-  background-color: #ff8c00;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(4, 151, 236, 0.35);
+  filter: brightness(1.03);
+}
+
+.closeButton:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(4, 151, 236, 0.2);
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid rgba(4, 151, 236, 0.7);
+  outline-offset: 2px;
+}
+
+.closeButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .redirectMessage {

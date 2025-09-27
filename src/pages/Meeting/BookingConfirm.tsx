@@ -63,7 +63,7 @@ export default function BookingConfirm() {
         </div>
 
         <button className={styles.closeBtn} onClick={handleClose}>
-          Back to timetable
+          Back to booking page
         </button>
       </div>
     </div>
