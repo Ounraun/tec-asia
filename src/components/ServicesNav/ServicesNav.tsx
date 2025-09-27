@@ -59,7 +59,7 @@ export const ServicesPager: React.FC<Props> = ({ items, className }) => {
         className="services-btn services-btn--prev"
         aria-label={`Previous: ${prev.label}`}
       >
-        {`< ${prev.label}`}
+        {`${prev.label}`}
       </Link>
       <Link
         id="services-pager-next"
@@ -67,7 +67,7 @@ export const ServicesPager: React.FC<Props> = ({ items, className }) => {
         className="services-btn services-btn--next"
         aria-label={`Next: ${next.label}`}
       >
-        {`${next.label} >`}
+        {`${next.label}`}
       </Link>
     </nav>
   );

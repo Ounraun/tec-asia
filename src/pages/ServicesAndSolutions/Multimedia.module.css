@@ -23,6 +23,8 @@
   justify-content: center;
   gap: 0.5rem;
   margin-bottom: 5rem;
+  line-height: 1.5; /* extra breathing room for Thai diacritics */
+  overflow: visible; /* avoid clipping above/below glyph box */
   background: var(
     --main-solution,
     linear-gradient(
@@ -37,6 +39,7 @@
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0); /* fix background-clip text overhang clipping in WebKit */
 }
 /* Ensure child spans inherit transparent fill so parent's gradient is continuous */
 .header h1 * {
@@ -46,14 +49,16 @@
 .gradientText,
 .solution {
   font-family: var(--font-heading);
-  letter-spacing: 1px;
   font-size: clamp(2rem, 8vw, 5rem);
   font-style: normal;
   font-weight: 600;
   display: inline-block;
   overflow: visible;
   letter-spacing: 1px;
-  padding-top: 0.04em;
+  padding-top: 0.12em; /* add top padding for Thai upper marks */
+  padding-bottom: 0.16em; /* add bottom padding for lower marks */
+  line-height: 1.2; /* consistent with h1 to prevent clipping */
+  -webkit-text-stroke: 0.1px transparent; /* rendering nudge to avoid glyph clipping */
   white-space: nowrap;
 }
 
@@ -64,7 +69,7 @@
 .subtitle {
   color: #f5f5f5;
   font-family: var(--font-subContent);
-  font-size: 22px;
+  font-size: 1.25rem;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 30px;
@@ -133,9 +138,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 100%;
   min-height: 600px;
-  position: relative;
   padding: 2rem;
   display: flex;
   justify-content: center;
@@ -222,12 +225,7 @@
   box-shadow: 0 0 20px rgba(66, 165, 245, 0.3);
 }
 
-.serviceCard h3 {
-  color: #fff;
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-top: 1rem;
-}
+/*  */
 
 .serviceCard ul,
 .serviceCard p,
@@ -277,14 +275,8 @@
 
 .serviceCard h3 {
   background: var(
-    --main-solution,
-    linear-gradient(
-      81deg,
-      #34a8d5 19.23%,
-      #a1e8ee 34.62%,
-      #c98d8c 54.33%,
-      #bd6c0f 95.64%
-    )
+    --tital-tone1,
+    linear-gradient(180deg, #005df9 0%, #a7daff 100%)
   );
   background-clip: text;
   -webkit-background-clip: text;

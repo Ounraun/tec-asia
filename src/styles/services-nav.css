@@ -1,12 +1,12 @@
-
 .services-pager {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: clamp(40px, 8vw, 240px);
+  gap: 0;
   margin: 40px auto 40px;
-  max-width: 1200px;
-  padding: 0 20px;
+  /* max-width: 84%; */
+  padding: 0 140px;
+  width: 100%;
 }
 
 .services-btn {
@@ -17,9 +17,9 @@
   align-items: center;
   justify-content: center;
   min-height: 56px;
-  padding: 12px clamp(18px, 3vw, 28px); 
+  padding: 12px clamp(18px, 3vw, 28px);
   box-sizing: border-box;
-  width: clamp(240px, 24vw, 320px); 
+  width: clamp(240px, 24vw, 320px);
   color: #fff;
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   font-weight: 700;
@@ -28,7 +28,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.15s ease;
   user-select: none;
-  line-height: 1.8; 
+  line-height: 1.8;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -53,10 +53,10 @@
 
 @media (max-width: 1024px) {
   .services-pager {
-    justify-content: center;
-    gap: clamp(24px, 6vw, 160px);
+    justify-content: space-between;
+    gap: 0;
     margin: 30px auto 30px;
-    padding: 0 15px;
+    padding: 0;
   }
   .services-btn {
     padding: 12px 24px;
@@ -68,9 +68,9 @@
   .services-pager {
     padding: 0 12px 40px;
     justify-content: center;
-    gap: clamp(16px, 5vw, 48px); 
+    gap: clamp(16px, 5vw, 48px);
     margin: 20px auto 30px;
-    flex-direction: column; 
+    flex-direction: column;
   }
   .services-btn {
     padding: 12px 18px;
@@ -85,7 +85,7 @@
   .services-pager {
     gap: 15px;
     margin: 15px auto 20px;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: stretch;
   }
   .services-btn {

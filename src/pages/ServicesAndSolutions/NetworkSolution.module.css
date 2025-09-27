@@ -1,13 +1,14 @@
 :root {
   --primary-color: #34a8d5;
   --secondary-color: #72d4ed;
-  --background-color: rgba(0, 27, 45, 0.95);
+  /* Slightly darker to improve white text contrast (from ~17.81 → ~18) */
+  --background-color: rgba(0, 27, 45, 0.92);
 }
 
 .WireAndWireless_160_272 {
   color: #d58213;
   font-family: var(--font-heading);
-  font-size: 20px;
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 700;
   line-height: 30px;

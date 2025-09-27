@@ -70,7 +70,7 @@
   max-width: 1200px;
   margin: -3rem auto 2rem auto;
   text-align: center;
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: 1.25rem;
   font-family: var(--font-body);
   font-weight: 500;
   line-height: 1.6;
@@ -201,7 +201,7 @@
 .featureCard p {
   color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-heading);
-  font-size: 14px;
+  font-size: 1rem;
   line-height: 1.6;
   margin-top: 0;
   white-space: pre-wrap;

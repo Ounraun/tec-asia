@@ -58,7 +58,7 @@
   max-width: 800px;
   margin: 4rem auto 2rem auto;
   text-align: center;
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: 1.25rem;
   font-family: var(--font-subContent);
   font-weight: 500;
   line-height: 1.6;

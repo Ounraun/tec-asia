@@ -61,9 +61,20 @@
     "knowledge": "Knowledge",
     "society": "Society"
   },
-  "dataCenter": { "data": "ข้อมูล", "center": "ศูนย์ข้อมูล", "facilitiesSystem": "FACILITIES SYSTEM" },
-  "dataManagement": { "data": "ข้อมูล", "management": "และระบบการจัดการ", "ourService": "บริการของเรา" },
-  "digitalTransformation": { "digital": "การปฏิรูปดิจิตอล", "transformation": "ด้วยเทคโนโลยี" },
+  "dataCenter": {
+    "data": "ข้อมูล",
+    "center": "ศูนย์ข้อมูล",
+    "facilitiesSystem": "FACILITIES SYSTEM"
+  },
+  "dataManagement": {
+    "data": "ข้อมูล",
+    "management": "และระบบการจัดการ",
+    "ourService": "บริการของเรา"
+  },
+  "digitalTransformation": {
+    "digital": "การปฏิรูปดิจิทัล",
+    "transformation": "ด้วยเทคโนโลยี"
+  },
   "knowledge": {
     "knowledge": "คลังความรู้",
     "subTitle": "ดิเอกเซลเลน เราให้ความสำคัญกับองค์ความรู้และเชื่อว่าการส่งมอบองค์ความรู้ที่ถูกต้องและมีคุณภาพจะช่วยให้ลูกค้าเข้าถึงข้อมูลที่เป็นประโยชน์และเข้าใจถึงคุณค่าจากบริการ ไม่เพียงแต่เพื่อการตัดสินใจที่ชัดเจน แต่ยังทำให้เห็นว่าบริการด้าน IT Solutions ของเรา สามารถตอบโจทย์ความต้องการ และสนับสนุนการเติบโตของธุรกิจได้อย่างแท้จริง",
@@ -77,7 +88,7 @@
     "moreFromPage": "ดูเพิ่มเติมจากเพจของเรา"
   },
   "society": {
-    "title": "สังคม",
+    "title": "กิจกรรมเพื่อสังคม",
     "loading": "กำลังโหลด...",
     "noEvents": "ไม่พบข้อมูลสังคม",
     "moreFromPage": "ดูเพิ่มเติมจากเพจของเรา"
