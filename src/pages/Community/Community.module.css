@@ -82,17 +82,16 @@
   aspect-ratio: 1 / 1;
   height: auto;
   overflow: hidden;
+  /* Even padding around image on all four sides */
+  padding: 24px;
+  box-sizing: border-box;
   /* Limit square size on larger screens and center within its grid cell */
   margin-inline: 0; /* no auto-centering to tuck toward grid edge */
   justify-self: start; /* align to the container start edge */
 }
 
-/* Flush image to the outer card edge based on side */
-.left .eventImageContainer {
-  margin-left: -2rem; /* equal to .eventCard padding */
-}
+/* Side alignment without negative margins; keep right images to the end */
 .right .eventImageContainer {
-  margin-right: -2rem; /* equal to .eventCard padding */
   justify-self: end;
 }
 
@@ -234,8 +233,6 @@
     grid-column: 1;
     grid-row: 1;
     width: 100%; /* full width on mobile */
-    margin-left: 0; /* reset negative margins on mobile */
-    margin-right: 0;
     justify-self: center;
   }
 
