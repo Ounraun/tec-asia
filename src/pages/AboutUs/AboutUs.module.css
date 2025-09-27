@@ -167,7 +167,8 @@
   color: white;
   text-align: center;
   line-height: 1.42;
-  font-size: 3rem;
+  /* Responsive font size: scales with viewport, caps at 70px on large screens */
+  font-size: clamp(32px, 5vw, 70px);
   margin: 0;
   font-weight: 900;
 }
@@ -516,11 +517,14 @@ button.position-absolute {
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 730px;
+  height: 830px;
   perspective: 1000px;
-  overflow: hidden;
+  /* Allow card shadows/rounded corners to render outside without clipping */
+  overflow: visible;
   z-index: 1;
-  margin-top: 130px;
+  margin-top: 60px;
+  /* Provide slight headroom so enlarged center card top radius isn't visually cropped */
+  /* padding-top: 8px; */
   will-change: transform, opacity;
   contain: layout paint;
 }
@@ -537,19 +541,20 @@ button.position-absolute {
 }
 
 .prev {
-  transform: translateX(-250px) translateY(-50%) scale(0.8);
+  transform: translateX(-380px) translateY(-50%) scale(0.7);
   opacity: 0.5;
   z-index: 1;
 }
 
 .current {
-  transform: translateX(0) translateY(-50%) scale(1);
+  /* Lower the centered card slightly to avoid perceived cropping near heading */
+  transform: translateX(0) translateY(-45%) scale(1);
   opacity: 1;
   z-index: 2;
 }
 
 .next {
-  transform: translateX(250px) translateY(-50%) scale(0.8);
+  transform: translateX(380px) translateY(-50%) scale(0.7);
   opacity: 0.5;
   z-index: 1;
 }
@@ -678,7 +683,8 @@ button.position-absolute {
   }
 
   .serviceHeading h2 {
-    font-size: clamp(1.5rem, 6vw, 2.2rem);
+    /* Keep responsive scaling on small screens (avoid forcing 70px on mobile) */
+    font-size: clamp(24px, 7vw, 42px);
     white-space: normal;
     text-align: center;
     line-height: 1.3;
