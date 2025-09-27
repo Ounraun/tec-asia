@@ -23,8 +23,8 @@ const Society = () => {
         console.log("Current i18n.language:", i18n.language);
         setLoading(true);
 
-        // ใช้ชื่อ category ตาม locale
-        const categoryName = i18n.language === "th" ? "สังคม" : "Society";
+        const categoryName =
+          i18n.language === "th" ? "กิจกรรมเพื่อสังคม" : "Society";
         console.log("Using category name:", categoryName);
 
         console.log(`Calling getBlogPostsByCategory('${categoryName}')...`);
@@ -38,7 +38,7 @@ const Society = () => {
 
           const societyPosts = response.data.filter((item: BlogPost) => {
             const expectedCategory =
-              i18n.language === "th" ? "สังคม" : "Society";
+              i18n.language === "th" ? "กิจกรรมเพื่อสังคม" : "Society";
             console.log(
               `Checking item: ${item.title} - Category: ${item.category?.name} (expected: ${expectedCategory})`
             );

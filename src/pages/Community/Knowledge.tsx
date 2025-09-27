@@ -81,7 +81,9 @@ const Knowledge: React.FC = () => {
   return (
     <>
       <div className={styles.knowledgeContainer}>
-        <h1>{t("knowledge:knowledge")}</h1>
+        <div className={styles.communityHeader}>
+          <h1 className={styles.headerTitle}>{t("knowledge:knowledge")}</h1>
+        </div>
         <div className={styles.knowledgeTopSection}>
           <div className={styles.knowledgeHeader}>
             <p className={styles.knowledgeSubtitle}>

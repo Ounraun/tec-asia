@@ -1,13 +1,17 @@
 .knowledgeContainer {
   background-color: #000;
   min-height: 100vh;
-  padding: 60px 60px;
+  padding: 100px 60px;
   color: white;
 }
 
-.knowledgeContainer h1 {
+.communityHeader {
   text-align: center;
-  width: 100%;
+  margin-bottom: 50px;
+}
+
+.headerTitle {
+  text-align: center;
   text-transform: uppercase;
   background: var(
     --main-solution,
@@ -24,11 +28,12 @@
   -webkit-text-fill-color: transparent;
   font-family: var(--font-heading);
   font-size: 69.751px;
-  font-style: normal;
   font-weight: 700;
-  line-height: 101.523%;
+  /* Looser line-height to avoid clipping Thai descenders with background-clip */
+  line-height: 1.5;
+  /* Small bottom padding as extra guard for script-specific glyphs */
+  padding-bottom: 0.1em;
   display: inline-block;
-  margin-bottom: 4rem;
 }
 
 .knowledgeTopSection {
