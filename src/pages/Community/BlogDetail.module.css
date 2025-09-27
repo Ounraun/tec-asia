@@ -193,8 +193,9 @@
 
 .relatedPostCard {
   filter: drop-shadow(0 4.536px 4.536px #5cb5e7);
-  width: 360px;
+  width: 393.501px;
   height: auto;
+  flex-shrink: 0;
   background: linear-gradient(#1a202a 76.36%, rgba(0, 0, 0, 0.7) 100%);
   border-radius: 32.73px;
   box-shadow: 0 2.297px 2.297px rgba(221, 193, 104, 0.21);
@@ -208,21 +209,18 @@
 
 .relatedPostCard img {
   width: 100%;
-  height: 220px;
+  height: 347.332px;
   object-fit: cover;
 }
 
 .cardContent {
   padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.cardContent h3 {
-  color: #dfbb90;
-  font-family: var(--font-subContent);
-  font-size: 13.781px;
-  font-weight: 275;
-  margin-bottom: 1rem;
-}
+/* Title removed per new design */
 
 .contentText {
   color: #fff;
@@ -239,6 +237,7 @@
   text-overflow: ellipsis;
   height: auto;
   max-height: 5.6em; /* 4 lines × 1.4 line-height */
+  text-align: left;
 }
 
 .readMore {
@@ -247,8 +246,19 @@
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;
-  display: block;
-  margin-top: 0.5rem;
+  margin-left: auto;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.dateText {
+  color: #DFBB90;
+  font-size: 0.85rem;
 }
 
 .moreKnowledgeBtn {
@@ -294,13 +304,13 @@
 /* Responsive */
 @media (max-width: 1440px) {
   .relatedPostCard {
-    width: 340px;
-    height: 500px;
+    width: 393.501px;
+    height: auto;
   }
 
   .relatedPostCard img {
-    width: 340px;
-    height: 300px;
+    width: 100%;
+    height: 347.332px;
   }
 }
 
@@ -310,10 +320,10 @@
   }
   .relatedPostCard {
     width: 100%;
-    max-width: 360px;
+    max-width: 393.501px;
   }
   .relatedPostCard img {
-    height: 180px;
+    height: 347.332px;
   }
 }
 
@@ -340,15 +350,15 @@
 
   .relatedPostCard {
     width: 100%;
-    max-width: 393.676px;
+    max-width: 393.501px;
     height: auto;
     min-height: 577.391px;
   }
 
   .relatedPostCard img {
     width: 100%;
-    height: auto;
-    aspect-ratio: 393.501/347.332;
+    height: 347.332px;
+    aspect-ratio: auto;
   }
 
   .moreKnowledgeBtn {

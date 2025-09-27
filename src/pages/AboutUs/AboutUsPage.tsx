@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, Suspense, lazy } from "react";
+import React, { useState, useMemo, useEffect, Suspense, lazy, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ParticlesComponent from "../../components/Particles/Particles";
@@ -6,6 +6,7 @@ import Contact from "../../components/Contact";
 import aboutStyles from "./AboutUs.module.css";
 import { getAboutUs } from "../../services/strapi";
 import type { AboutUs } from "../../types/aboutUs";
+import type { BlogPost } from "../../types/blogPost";
 import GemGroup from "./GemGroup";
 import BG_Service from "@/assets/AboutUs/bg_service.webp";
 import GemFloor from "@/assets/AboutUs/Gem-floor.svg";
@@ -22,18 +23,21 @@ function usePreloadImages(urls: string[]) {
   React.useEffect(() => {
     let cancelled = false;
 
-    const jobs = urls.filter(Boolean).map(
-      (src) =>
+    const jobs = urls
+      .filter((u): u is string => Boolean(u))
+      .map((src) =>
         new Promise<void>((resolve) => {
           const img = new Image();
           img.onload = img.onerror = () => resolve();
           img.src = src;
-          const d = (img as any).decode?.();
-          if (d && typeof d.then === "function") {
+          const d: Promise<void> | undefined = (img as HTMLImageElement).decode
+            ? img.decode()
+            : undefined;
+          if (d && typeof (d as Promise<void>).then === "function") {
             d.catch(() => {}).finally(() => resolve());
           }
         })
-    );
+      );
 
     Promise.all(jobs).finally(() => {
       if (!cancelled) setReady(true);
@@ -42,7 +46,7 @@ function usePreloadImages(urls: string[]) {
     return () => {
       cancelled = true;
     };
-  }, [urls.join("|")]);
+  }, [urls]);
 
   return ready;
 }
@@ -54,7 +58,11 @@ const AboutUs = () => {
   const keys: Key[] = ["company", "knowledge", "society"];
   const [currentIdx, setCurrentIdx] = useState(0);
   const navigate = useNavigate();
-  const [posts, setPosts] = useState<Record<Key, any>>({} as any);
+  const [posts, setPosts] = useState<Record<Key, BlogPost | null>>({
+    company: null,
+    knowledge: null,
+    society: null,
+  });
 
   const imagesReady = usePreloadImages([
     BG_Service,
@@ -72,6 +80,17 @@ const AboutUs = () => {
 
   const { t, i18n } = useTranslation(["common", "aboutUs", "communityCard"]);
   const [aboutUs, setAboutUs] = useState<AboutUs | null>(null);
+  const isoPdfUrl = useMemo(() => {
+    const files = aboutUs?.ISOImage || [];
+    const pdf = files.find((f) => {
+      const mime = (f?.mime || "").toLowerCase();
+      const extRaw = (f?.ext || "").toLowerCase();
+      const nameExt = (f?.name || "").split(".").pop()?.toLowerCase() || "";
+      const ext = extRaw.startsWith(".") ? extRaw.slice(1) : extRaw; // normalize to 'pdf'
+      return mime.includes("pdf") || ext === "pdf" || nameExt === "pdf";
+    });
+    return getStrapiImageUrl(pdf?.url);
+  }, [aboutUs]);
 
   useEffect(() => {
     Promise.all([
@@ -122,20 +141,20 @@ const AboutUs = () => {
     };
   }, []);
 
-  const scrollToContact = () => {
+  const scrollToContact = useCallback(() => {
     if (!isLoading) {
       const contactSection = document.getElementById("contact-section");
       if (contactSection) {
         contactSection.scrollIntoView({ behavior: "smooth" });
       }
     }
-  };
+  }, [isLoading]);
 
   useEffect(() => {
     if (ready && window.location.hash === "#contact-section") {
       scrollToContact();
     }
-  }, [ready]);
+  }, [ready, scrollToContact]);
 
   function truncate(text: string, maxLength = 100): string {
     if (!text) return "";
@@ -245,14 +264,26 @@ const AboutUs = () => {
                 </p>
                 <p>{t("aboutUs:isoLineThree")}</p>
                 <div>
-                  <a
-                    href="https://online.fliphtml5.com/gardk/ptra/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={aboutStyles["isoButton"]}
-                  >
-                    {aboutUs?.ISONumber}
-                  </a>
+                  {isoPdfUrl ? (
+                    <a
+                      href={isoPdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={aboutStyles["isoButton"]}
+                    >
+                      {aboutUs?.ISONumber}
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      className={aboutStyles["isoButton"]}
+                      style={{ opacity: 0.6, cursor: "not-allowed" }}
+                      title="PDF not available"
+                      disabled
+                    >
+                      {aboutUs?.ISONumber}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -323,11 +354,12 @@ const AboutUs = () => {
                     <CommunityCard
                       title={t(`communityCard:${key}`)}
                       imageUrl={imageUrl}
-                      excerpt={truncate(posts[key]?.content)}
-                      date={formatDate(posts[key]?.createdAt)}
-                      onReadMore={() =>
-                        navigate(`/blog/doc/${posts[key].documentId}`)
-                      }
+                      excerpt={truncate(posts[key]?.content || "")}
+                      date={formatDate(posts[key]?.createdAt || "")}
+                      onReadMore={() => {
+                        const docId = posts[key]?.documentId;
+                        if (docId) navigate(`/blog/doc/${docId}`);
+                      }}
                     />
                   </Suspense>
                   <div className={aboutStyles["cardCategoryTitle"]}>

@@ -17,6 +17,7 @@ interface BlogPost {
   documentId: string;
   title: string;
   content: string;
+  createdAt?: string;
   mainImage: {
     url: string;
     alternativeText: string;
@@ -38,8 +39,49 @@ const BlogDetail = () => {
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  // helper: force scroll to top immediately
+  const scrollToTopNow = () => {
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      const scrollingEl = document.scrollingElement as HTMLElement | null;
+      if (scrollingEl) scrollingEl.scrollTop = 0;
+      const docEl = document.documentElement;
+      const body = document.body;
+      const rootEl = document.getElementById("root");
+      if (docEl) docEl.scrollTop = 0;
+      if (body) body.scrollTop = 0;
+      if (rootEl) (rootEl as HTMLElement).scrollTop = 0;
+      const mainEl = document.querySelector("main");
+      if (mainEl && (mainEl as HTMLElement).scrollTop !== undefined) {
+        (mainEl as HTMLElement).scrollTop = 0;
+      }
+    } catch {
+      /* ignore */
+    }
+  };
+
+  // on related card click: scroll to top then navigate
+  const handleCardClick = (docId: string) => {
+    // pre-scroll to top immediately
+    scrollToTopNow();
+    // navigate to new document
+    navigate(`/blog/doc/${docId}`);
+    // post-scroll in next ticks to beat async layout/anchor
+    setTimeout(scrollToTopNow, 0);
+    setTimeout(scrollToTopNow, 60);
+  };
+
   // Always start at top when opening this page
   useEffect(() => {
+    // prevent browser from restoring previous scroll on SPA navigations
+    try {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+    } catch {
+      /* ignore */
+    }
+
     try {
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
       const docEl = document.documentElement;
@@ -53,12 +95,54 @@ const BlogDetail = () => {
     } catch {
       /* ignore */
     }
+
+    return () => {
+      // restore default behavior on unmount
+      try {
+        if ("scrollRestoration" in window.history) {
+          window.history.scrollRestoration = "auto";
+        }
+      } catch {
+        /* ignore */
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    // on route param change, nudge scroll to top ASAP (before/while fetching)
+    const doScroll = () => {
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        const scrollingEl = document.scrollingElement as HTMLElement | null;
+        if (scrollingEl) scrollingEl.scrollTop = 0;
+        const docEl = document.documentElement;
+        const body = document.body;
+        const rootEl = document.getElementById("root");
+        if (docEl) docEl.scrollTop = 0;
+        if (body) body.scrollTop = 0;
+        if (rootEl) (rootEl as HTMLElement).scrollTop = 0;
+        const mainEl = document.querySelector("main");
+        if (mainEl && (mainEl as HTMLElement).scrollTop !== undefined) {
+          (mainEl as HTMLElement).scrollTop = 0;
+        }
+      } catch {
+        /* ignore */
+      }
+    };
+    const t0 = setTimeout(doScroll, 0);
+    const t1 = setTimeout(doScroll, 60);
+    const raf = requestAnimationFrame(doScroll);
+    return () => {
+      clearTimeout(t0);
+      clearTimeout(t1);
+      cancelAnimationFrame(raf);
+    };
+  }, [documentId]);
 
   useEffect(() => {
     const fetchPost = async () => {
       if (!documentId) return;
-      
+
       try {
         console.log("=== BlogDetail Debug ===");
         console.log("Current i18n.language:", i18n.language);
@@ -82,7 +166,9 @@ const BlogDetail = () => {
           !Array.isArray(response.data) ||
           response.data.length === 0
         ) {
-          console.log("No post found in current language, keeping existing post");
+          console.log(
+            "No post found in current language, keeping existing post"
+          );
           // ถ้าไม่เจอข้อมูลในภาษาใหม่ ไม่ต้องเปลี่ยนแปลง post state
           // แค่ return เพื่อไม่ให้แสดงหน้า error
           return;
@@ -114,7 +200,9 @@ const BlogDetail = () => {
             if (relatedResponse?.data && relatedResponse.data.length > 0) {
               setRelatedPosts(relatedResponse.data.slice(0, 3));
             } else {
-              console.log("No related posts found in current language, keeping existing related posts");
+              console.log(
+                "No related posts found in current language, keeping existing related posts"
+              );
               // ไม่ล้าง relatedPosts ถ้าไม่เจอข้อมูลใหม่
             }
           } catch (err) {
@@ -162,16 +250,33 @@ const BlogDetail = () => {
   if (error) {
     return (
       <div className={styles.errorContainer}>
-        <h2>{t('errorLoading', { ns: 'blogDetail' })}</h2>
+        <h2>{t("errorLoading", { ns: "blogDetail" })}</h2>
         <p>{error}</p>
-        <button onClick={() => navigate(-1)}>{t('goBack', { ns: 'blogDetail' })}</button>
+        <button onClick={() => navigate(-1)}>
+          {t("goBack", { ns: "blogDetail" })}
+        </button>
       </div>
     );
   }
 
   if (!post) {
-    return <div className={styles.loading}>{t('loading', { ns: 'blogDetail' })}</div>;
+    return (
+      <div className={styles.loading}>{t("loading", { ns: "blogDetail" })}</div>
+    );
   }
+
+  const formatDate = (iso?: string) => {
+    if (!iso) return "";
+    try {
+      return new Date(iso).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      });
+    } catch {
+      return iso;
+    }
+  };
 
   return (
     <>
@@ -189,7 +294,9 @@ const BlogDetail = () => {
                 }}
               />
             ) : (
-              <div className={styles.noImage}>{t('noImageAvailable', { ns: 'blogDetail' })}</div>
+              <div className={styles.noImage}>
+                {t("noImageAvailable", { ns: "blogDetail" })}
+              </div>
             )}
           </div>
 
@@ -234,7 +341,9 @@ const BlogDetail = () => {
 
         {post.category && relatedPosts.length > 0 && (
           <div className={styles.otherEvents}>
-            <h2>{t('other', { ns: 'blogDetail' })} {post.category.name}</h2>
+            <h2>
+              {t("other", { ns: "blogDetail" })} {post.category.name}
+            </h2>
             <div className={styles.relatedPostsSwiper}>
               <Swiper
                 modules={[Navigation, Pagination]}
@@ -253,9 +362,7 @@ const BlogDetail = () => {
                   <SwiperSlide key={relatedPost.id}>
                     <div
                       className={styles.relatedPostCard}
-                      onClick={() =>
-                        navigate(`/blog/doc/${relatedPost.documentId}`)
-                      }
+                      onClick={() => handleCardClick(relatedPost.documentId)}
                       style={{ cursor: "pointer" }}
                     >
                       {relatedPost.mainImage?.url && (
@@ -269,11 +376,17 @@ const BlogDetail = () => {
                         />
                       )}
                       <div className={styles.cardContent}>
-                        <h3>{relatedPost.title}</h3>
                         <div className={styles.contentText}>
                           {formatTextWithLineBreaks(relatedPost.content)}
                         </div>
-                        <span className={styles.readMore}>{t('readMore', { ns: 'blogDetail' })}</span>
+                        <div className={styles.cardFooter}>
+                          <span className={styles.dateText}>
+                            {formatDate(relatedPost.createdAt)}
+                          </span>
+                          <span className={styles.readMore}>
+                            {t("readMore", { ns: "blogDetail" })}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </SwiperSlide>
@@ -290,7 +403,7 @@ const BlogDetail = () => {
                 )
               }
             >
-              {t('all', { ns: 'blogDetail' })} {post.category.name}
+              {t("all", { ns: "blogDetail" })} {post.category.name}
             </button>
           </div>
         )}

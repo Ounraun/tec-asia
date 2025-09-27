@@ -22,6 +22,8 @@ export default function ScrollToTop() {
         // ignore
       }
       // also reset common scroll containers just in case
+      const scrollingEl = document.scrollingElement as HTMLElement | null;
+      if (scrollingEl) scrollingEl.scrollTop = 0;
       const docEl = document.documentElement;
       const body = document.body;
       if (docEl) docEl.scrollTop = 0;
@@ -43,6 +45,8 @@ export default function ScrollToTop() {
       } catch {
         // ignore
       }
+      const scrollingEl = document.scrollingElement as HTMLElement | null;
+      if (scrollingEl) scrollingEl.scrollTop = 0;
       const docEl = document.documentElement;
       const body = document.body;
       if (docEl) docEl.scrollTop = 0;
@@ -58,6 +62,8 @@ export default function ScrollToTop() {
       } catch {
         // ignore
       }
+      const scrollingEl = document.scrollingElement as HTMLElement | null;
+      if (scrollingEl) scrollingEl.scrollTop = 0;
       const docEl = document.documentElement;
       const body = document.body;
       if (docEl) docEl.scrollTop = 0;
