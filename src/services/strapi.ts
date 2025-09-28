@@ -94,7 +94,7 @@ export function getMultimedia() {
 }
 
 export function getNetworkSolution() {
-  return callStrapi<{ data: NetworkSolution }>("/api/network-solution", {
+  return callStrapi<{ data: NetworkSolution }>("/api/network-and-security", {
     populate: "*",
   });
 }

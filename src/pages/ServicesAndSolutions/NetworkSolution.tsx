@@ -58,12 +58,9 @@ const NetworkSolution: React.FC = () => {
         <p className={styles.subtitle}>{networkData?.subTitle}</p>
       </header>
 
+      {/* Removed main image from backend schema. Keep decorative background image without alt dependency. */}
       <div className={styles.mainImageContainer}>
-        <img
-          src={BackgroudCity}
-          alt={networkData?.mainImage?.alternativeText || "Default Image"}
-          className={styles.mainImage}
-        />
+        <img src={BackgroudCity} alt="" className={styles.mainImage} />
       </div>
 
       <div className={styles.description}>

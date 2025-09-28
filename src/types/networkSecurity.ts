@@ -30,7 +30,9 @@ export interface NetworkSolution {
   documentId: string;
   subTitle: string | null; // คำบรรยายย่อย (อาจเป็น null)
   subTitle2: string | null; // คำบรรยายเพิ่มเติม (อาจเป็น null)
-  mainImage: MainImage; // URL ของรูปภาพหลัก
+  // mainImage ถูกถอดออกจากสคีมาใหม่ของ Network and security
+  // คงไว้เป็น optional เพื่อไม่ให้กระทบส่วนอื่น ๆ หากมีการใช้งานต่อ
+  mainImage?: MainImage | null;
   content: NetworkContent[]; // อาร์เรย์ของ NetworkContent
   createdAt: string; // วันที่สร้าง
   updatedAt: string; // วันที่อัปเดต
