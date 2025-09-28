@@ -66,7 +66,6 @@
   text-align: center;
 }
 
-
 .mainContent {
   display: flex;
   flex-direction: column;
@@ -198,7 +197,7 @@
 .transformationItem p {
   color: #e9f7ff;
   font-family: var(--font-subContent);
-  font-size: 1.09rem;
+  font-size: 1.25rem;
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.6;
