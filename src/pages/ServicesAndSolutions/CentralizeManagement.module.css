@@ -191,9 +191,9 @@
 }
 .featureCard h3 {
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 500;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   margin-bottom: 1rem;
   height: auto;
   flex-shrink: 0;
@@ -201,7 +201,7 @@
 .featureCard p {
   color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-heading);
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: 1.6;
   margin-top: 0;
   white-space: pre-wrap;
