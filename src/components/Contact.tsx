@@ -53,10 +53,10 @@ const Contact = () => {
                 </a>
               )}
             </div>
-            <p className="text-white">
+            <p className="text-white preserve-linebreaks">
               {companyInfo?.address ?? "Loading..."}
             </p>
-            <p className="text-white mt-3">
+            <p className="text-white mt-3 preserve-linebreaks">
               {companyInfo?.location ?? "Loading..."}
             </p>
           </div>

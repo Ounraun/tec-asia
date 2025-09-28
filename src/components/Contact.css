@@ -63,6 +63,9 @@
   column-count: 2;
   column-gap: 2rem;
 }
+.preserve-linebreaks {
+  white-space: pre-wrap; /* respect newlines from backend */
+}
 .custom-gutter {
   --bs-gutter-x: 8.5rem !important;
 }
