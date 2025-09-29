@@ -22,16 +22,26 @@ const Knowledge: React.FC = () => {
 
   useEffect(() => {
     const fetchVideo = async () => {
-      const url = await getCompanyVideoUrl();
-      setBridgeVideo(url);
-      setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.load();
-          videoRef.current.play().catch((err) => {
-            console.warn("Autoplay blocked:", err);
-          });
+      console.log("Knowledge page: requesting knowledge video URL from Strapi...");
+      try {
+        const url = await getCompanyVideoUrl();
+        console.log("Knowledge page: received knowledge video URL", url);
+        const resolvedUrl = url ? getStrapiImageUrl(url) : null;
+        if (!resolvedUrl) {
+          console.log("Knowledge page: knowledge video URL missing, will use local fallback /knowledge/knowledge.mp4");
         }
-      }, 100);
+        setBridgeVideo(resolvedUrl);
+        setTimeout(() => {
+          if (videoRef.current) {
+            videoRef.current.load();
+            videoRef.current.play().catch((err) => {
+              console.warn("Knowledge page: autoplay blocked", err);
+            });
+          }
+        }, 100);
+      } catch (error) {
+        console.error("Knowledge page: failed to fetch knowledge video URL", error);
+      }
     };
     fetchVideo();
   }, []);
