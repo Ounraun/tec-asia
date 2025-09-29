@@ -50,7 +50,11 @@ interface BookingFormData {
 // ---------- Const / utils ----------
 const ROOM_CACHE_KEY = (id: string) => `mr:${id}`;
 const DEBUG = true;
-const dbg = (...args: any[]) => DEBUG && console.log("[MRB]", ...args);
+const dbg = (..._args: unknown[]): void => {
+  if (DEBUG) {
+    void _args;
+  }
+};
 const genRid = () =>
   `fe_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 const LOCALE = "en";

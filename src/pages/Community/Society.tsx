@@ -20,37 +20,22 @@ const Society = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        console.log("=== Society Page Debug ===");
-        console.log("Current i18n.language:", i18n.language);
         setLoading(true);
 
         const categoryName =
           i18n.language === "th" ? "กิจกรรมเพื่อสังคม" : "Society";
-        console.log("Using category name:", categoryName);
-
-        console.log(`Calling getBlogPostsByCategory('${categoryName}')...`);
         const response = await getBlogPostsByCategory(categoryName);
-        console.log("API Response:", response);
-        console.log("Response data:", response.data);
-        console.log("Is array?", Array.isArray(response.data));
 
         if (response.data && Array.isArray(response.data)) {
-          console.log("Raw data before filter:", response.data);
-
           const societyPosts = response.data.filter((item: BlogPost) => {
             const expectedCategory =
               i18n.language === "th" ? "กิจกรรมเพื่อสังคม" : "Society";
-            console.log(
-              `Checking item: ${item.title} - Category: ${item.category?.name} (expected: ${expectedCategory})`
-            );
             return item.category?.name === expectedCategory;
           });
 
-          console.log("Filtered societyPosts:", societyPosts);
-          console.log("Number of posts after filter:", societyPosts.length);
           setPosts(societyPosts);
         } else {
-          console.log("No data or not array");
+          setPosts([]);
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -74,7 +59,6 @@ const Society = () => {
         backgroundColor: "#0d0d0e",
       }}
     >
-      {/* BG particles */}
       <div
         style={{
           position: "absolute",
@@ -145,7 +129,6 @@ const Society = () => {
             )}
           </div>
 
-          {/* ใช้ util fullWidth จาก module + bootstrap text-center ได้ */}
           <div className={`${styles.fullWidth} text-center`}>
             <button
               className={styles.moreKnowledgeBtn}

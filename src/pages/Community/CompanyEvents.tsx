@@ -24,38 +24,22 @@ const CompanyEvents = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        console.log("=== CompanyEvents Page Debug ===");
-        console.log("Current i18n.language:", i18n.language);
         setLoading(true);
 
-        // ใช้ชื่อ category ตาม locale
         const categoryName =
           i18n.language === "th" ? "กิจกรรมองค์กร" : "Company events";
-        console.log("Using category name:", categoryName);
-
-        console.log(`Calling getBlogPostsByCategory('${categoryName}')...`);
         const response = await getBlogPostsByCategory(categoryName);
-        console.log("API Response:", response);
-        console.log("Response data:", response.data);
-        console.log("Is array?", Array.isArray(response.data));
 
         if (response.data && Array.isArray(response.data)) {
-          console.log("Raw data before filter:", response.data);
-
           const companyEvents = response.data.filter((item: BlogPost) => {
             const expectedCategory =
               i18n.language === "th" ? "กิจกรรมองค์กร" : "Company events";
-            console.log(
-              `Checking item: ${item.title} - Category: ${item.category?.name} (expected: ${expectedCategory})`
-            );
             return item.category?.name === expectedCategory;
           });
 
-          console.log("Filtered companyEvents:", companyEvents);
-          console.log("Number of posts after filter:", companyEvents.length);
           setPosts(companyEvents);
         } else {
-          console.log("No data or not array");
+          setPosts([]);
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -148,7 +132,6 @@ const CompanyEvents = () => {
             )}
           </div>
 
-          {/* ถ้ายังอยากใช้ Bootstrap class อย่าง text-center ต่อไป ก็ผสมได้แบบนี้ */}
           <div className={`${styles.fullWidth} text-center`}>
             <button
               className={styles.moreBtn}

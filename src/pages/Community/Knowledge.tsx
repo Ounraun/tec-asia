@@ -22,14 +22,9 @@ const Knowledge: React.FC = () => {
 
   useEffect(() => {
     const fetchVideo = async () => {
-      console.log("Knowledge page: requesting knowledge video URL from Strapi...");
       try {
         const url = await getCompanyVideoUrl();
-        console.log("Knowledge page: received knowledge video URL", url);
         const resolvedUrl = url ? getStrapiImageUrl(url) : null;
-        if (!resolvedUrl) {
-          console.log("Knowledge page: knowledge video URL missing, will use local fallback /knowledge/knowledge.mp4");
-        }
         setBridgeVideo(resolvedUrl);
         setTimeout(() => {
           if (videoRef.current) {
@@ -49,39 +44,23 @@ const Knowledge: React.FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        console.log("=== Knowledge Page Debug ===");
-        console.log("Current i18n.language:", i18n.language);
         setLoading(true);
-        
-        // ใช้ชื่อ category ตาม locale
-        const categoryName = i18n.language === 'th' ? 'คลังความรู้' : 'Knowledge';
-        console.log("Using category name:", categoryName);
-        
-        console.log(`Calling getBlogPostsByCategory('${categoryName}')...`);
+        const categoryName = i18n.language === "th" ? "คลังความรู้" : "Knowledge";
         const [postsResponse, categoryResponse] = await Promise.all([
           getBlogPostsByCategory(categoryName),
           getCategoryByName(categoryName),
         ]);
-        console.log("API Response:", postsResponse);
-        console.log("Response data:", postsResponse.data);
-        console.log("Is array?", Array.isArray(postsResponse.data));
         
         if (postsResponse.data && Array.isArray(postsResponse.data)) {
-          console.log("Raw data before filter:", postsResponse.data);
-          
           const knowledgePosts = postsResponse.data.filter(
             (item: BlogPost) => {
-              const expectedCategory = i18n.language === 'th' ? 'คลังความรู้' : 'Knowledge';
-              console.log(`Checking item: ${item.title} - Category: ${item.category?.name} (expected: ${expectedCategory})`);
+              const expectedCategory = i18n.language === "th" ? "คลังความรู้" : "Knowledge";
               return item.category?.name === expectedCategory;
             }
           );
-          
-          console.log("Filtered knowledgePosts:", knowledgePosts);
-          console.log("Number of posts after filter:", knowledgePosts.length);
           setPosts(knowledgePosts);
         } else {
-          console.log("No data or not array");
+          setPosts([]);
         }
 
         const description = categoryResponse.data?.[0]?.description;
@@ -94,10 +73,6 @@ const Knowledge: React.FC = () => {
     };
     fetchPosts();
   }, [i18n.language]);
-
-  useEffect(() => {
-    console.log("Current posts state:", posts);
-  }, [posts]);
 
   return (
     <>

@@ -1,4 +1,3 @@
-// src/pages/Community/BlogDetail.tsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -144,13 +143,7 @@ const BlogDetail = () => {
       if (!documentId) return;
 
       try {
-        console.log("=== BlogDetail Debug ===");
-        console.log("Current i18n.language:", i18n.language);
-        console.log("DocumentId:", documentId);
-
         setError(null);
-
-        // ใช้ callStrapi แทน fetch API โดยตรง
         const response = await callStrapi<{ data: BlogPost[] }>(
           "/api/blog-posts",
           {
@@ -159,33 +152,19 @@ const BlogDetail = () => {
           }
         );
 
-        console.log("Blog post response:", response);
-
         if (
           !response?.data ||
           !Array.isArray(response.data) ||
           response.data.length === 0
         ) {
-          console.log(
-            "No post found in current language, keeping existing post"
-          );
-          // ถ้าไม่เจอข้อมูลในภาษาใหม่ ไม่ต้องเปลี่ยนแปลง post state
-          // แค่ return เพื่อไม่ให้แสดงหน้า error
           return;
         }
 
         const postData = response.data[0];
-        console.log("Post data:", postData);
         setPost(postData);
 
-        // ดึง related posts โดยใช้ชื่อ category ที่ถูกต้องตาม locale
         if (postData?.category?.name) {
           try {
-            console.log(
-              "Fetching related posts for category:",
-              postData.category.name
-            );
-
             const relatedResponse = await callStrapi<{ data: BlogPost[] }>(
               "/api/blog-posts",
               {
@@ -195,15 +174,8 @@ const BlogDetail = () => {
               }
             );
 
-            console.log("Related posts response:", relatedResponse);
-
             if (relatedResponse?.data && relatedResponse.data.length > 0) {
               setRelatedPosts(relatedResponse.data.slice(0, 3));
-            } else {
-              console.log(
-                "No related posts found in current language, keeping existing related posts"
-              );
-              // ไม่ล้าง relatedPosts ถ้าไม่เจอข้อมูลใหม่
             }
           } catch (err) {
             console.error("Error fetching related posts:", err);

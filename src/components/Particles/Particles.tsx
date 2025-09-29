@@ -1,6 +1,5 @@
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { useEffect, useMemo } from "react";
-import { Container } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import styles from "./Particle.module.css";
 
@@ -15,11 +14,7 @@ const ParticlesComponent: React.FC<ParticlesProps> = () => {
     });
   }, []);
 
-  const particlesLoaded = async (container?: Container) => {
-    if (container) {
-      console.log(container);
-    }
-  };
+  const particlesLoaded = async (): Promise<void> => {};
 
   const options = useMemo(
     () => ({
