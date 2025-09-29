@@ -8,7 +8,7 @@ import type { Transformation } from "../types/digitalTransformation";
 import type { MultimediaService } from "../types/multimedia";
 import type { NetworkSolution } from "../types/networkSecurity";
 import type { CompanyInfo } from "../types/contact";
-import type { BlogPost } from "../types/blogPost";
+import type { BlogPost, Category } from "../types/blogPost";
 import {
   StrapiCollection,
   StrapiResponse,
@@ -116,8 +116,14 @@ export function getBlogPostsByCategory(category: string) {
   });
 }
 
+export function getCategoryByName(name: string) {
+  return callStrapi<{ data: Category[] }>("/api/categories", {
+    "filters[name][$eq]": name,
+  });
+}
+
 export async function getCompanyVideoUrl(): Promise<string | null> {
-  const res = await callStrapi<{ data: any }>("/api/company-information", {
+  const res = await callStrapi<{ data: CompanyInfo }>("/api/company-information", {
     populate: "*",
   });
   console.log(

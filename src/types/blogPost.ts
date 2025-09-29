@@ -5,6 +5,7 @@ export type Locale = 'en' | 'th'; // เพิ่มได้ตามที่�
 export interface Category {
   id: number;
   name: string;
+  description?: string | null;
   // ถ้า Category เองก็ localized
   locale?: Locale;
 }
@@ -15,7 +16,13 @@ export interface BlogPost {
   title: string;
   content: string;
   show_main: boolean;
-  gallery_image: any | null;
+  gallery_image:
+    | Array<{
+        url: string;
+        alternativeText?: string | null;
+        caption?: string | null;
+      }>
+    | null;
   mainImage:
     | {
         id: number;

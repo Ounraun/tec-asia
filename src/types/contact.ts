@@ -7,6 +7,9 @@ export interface CompanyInfo {
     address: string;
     email: string;
     facebook: string | null;
+    videoknowledge?: {
+      url?: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;

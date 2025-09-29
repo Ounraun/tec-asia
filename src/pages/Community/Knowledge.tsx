@@ -4,12 +4,17 @@ import Contact from "../../components/Contact";
 import styles from "./Knowledge.module.css";
 import { useTranslation } from "react-i18next";
 import type { BlogPost } from "../../types/blogPost";
-import { getCompanyVideoUrl, getBlogPostsByCategory } from "../../services/strapi";
+import {
+  getCompanyVideoUrl,
+  getBlogPostsByCategory,
+  getCategoryByName,
+} from "../../services/strapi";
 import { getStrapiImageUrl } from "../../services/strapi";
 
 const Knowledge: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [subtitle, setSubtitle] = useState<string>("");
   const { t, i18n } = useTranslation(["common", "knowledge"]);
 
   const [bridgeVideo, setBridgeVideo] = useState<string | null>(null);
@@ -43,15 +48,18 @@ const Knowledge: React.FC = () => {
         console.log("Using category name:", categoryName);
         
         console.log(`Calling getBlogPostsByCategory('${categoryName}')...`);
-        const response = await getBlogPostsByCategory(categoryName);
-        console.log("API Response:", response);
-        console.log("Response data:", response.data);
-        console.log("Is array?", Array.isArray(response.data));
+        const [postsResponse, categoryResponse] = await Promise.all([
+          getBlogPostsByCategory(categoryName),
+          getCategoryByName(categoryName),
+        ]);
+        console.log("API Response:", postsResponse);
+        console.log("Response data:", postsResponse.data);
+        console.log("Is array?", Array.isArray(postsResponse.data));
         
-        if (response.data && Array.isArray(response.data)) {
-          console.log("Raw data before filter:", response.data);
+        if (postsResponse.data && Array.isArray(postsResponse.data)) {
+          console.log("Raw data before filter:", postsResponse.data);
           
-          const knowledgePosts = response.data.filter(
+          const knowledgePosts = postsResponse.data.filter(
             (item: BlogPost) => {
               const expectedCategory = i18n.language === 'th' ? 'คลังความรู้' : 'Knowledge';
               console.log(`Checking item: ${item.title} - Category: ${item.category?.name} (expected: ${expectedCategory})`);
@@ -65,6 +73,9 @@ const Knowledge: React.FC = () => {
         } else {
           console.log("No data or not array");
         }
+
+        const description = categoryResponse.data?.[0]?.description;
+        setSubtitle(description ?? "");
         setLoading(false);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -87,7 +98,7 @@ const Knowledge: React.FC = () => {
         <div className={styles.knowledgeTopSection}>
           <div className={styles.knowledgeHeader}>
             <p className={styles.knowledgeSubtitle}>
-              {t("knowledge:subTitle")}
+              {subtitle?.trim() ? subtitle : t("knowledge:subTitle")}
             </p>
             <button className={styles.moreKnowledgeBtn}>
               <a
