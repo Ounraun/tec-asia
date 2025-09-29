@@ -46,8 +46,10 @@
 }
 
 .eventCard {
+  --event-media-size: clamp(320px, 32vw, 520px);
+  --event-text-height: 520px;
   display: grid;
-  grid-template-columns: auto 1fr; /* image column sizes to its content */
+  grid-template-columns: minmax(auto, var(--event-media-size)) minmax(0, 1fr);
   gap: 1rem; /* tighter column spacing so text sits closer to image */
   padding: 2rem; /* reduce internal padding to make image area feel larger */
   background-color: rgba(0, 27, 45, 1);
@@ -58,26 +60,30 @@
   flex-shrink: 0;
   border: 2px solid rgba(16, 151, 249, 0.5);
   border-radius: 8px;
-  min-height: 300px;
+  min-height: calc(var(--event-media-size) + 48px);
+  align-items: stretch;
 }
 
-/* When the card is in a right-oriented wrapper, flip the column sizing */
-.right .eventCard {
-  grid-template-columns: 1fr auto; /* image column on the right sized to its content */
+
+.eventCard.right {
+  grid-template-columns: minmax(0, 1fr) minmax(auto, var(--event-media-size));
 }
 
 /* ตำแหน่งสลับซ้าย/ขวา */
-.left .eventImageContainer {
+.eventCard.left .eventImageContainer {
   grid-column: 1;
   grid-row: 1;
+  justify-self: start;
 }
-.right .eventImageContainer {
+.eventCard.right .eventImageContainer {
   grid-column: 2;
   grid-row: 1;
+  justify-self: end;
 }
 
 .eventImageContainer {
-  width: clamp(320px, 32vw, 520px); /* content-sized image column */
+  width: 100%;
+  max-width: var(--event-media-size); /* content-sized image column */
   /* Make the image area a perfect square */
   aspect-ratio: 1 / 1;
   height: auto;
@@ -85,14 +91,7 @@
   /* Even padding around image on all four sides */
   padding: 24px;
   box-sizing: border-box;
-  /* Limit square size on larger screens and center within its grid cell */
-  margin-inline: 0; /* no auto-centering to tuck toward grid edge */
-  justify-self: start; /* align to the container start edge */
-}
-
-/* Side alignment without negative margins; keep right images to the end */
-.right .eventImageContainer {
-  justify-self: end;
+  margin-inline: 0;
 }
 
 .eventContent {
@@ -101,29 +100,46 @@
   gap: 1rem;
   justify-content: flex-start;
   padding: 1rem;
+  min-height: var(--event-text-height);
+  max-height: var(--event-text-height);
+  overflow: hidden;
+  grid-column: 2;
 }
 
-/* Pull text closer to the adjacent image side */
-.left .eventContent {
+.eventCard.left .eventContent {
   padding-left: 0;
 }
-.right .eventContent {
+
+.eventCard.right .eventContent {
+  grid-column: 1;
   padding-right: 0;
+  padding-left: 1rem;
 }
 
 .eventTitle {
   font-size: 2.5rem;
   color: #fff;
   margin: 0;
+  flex-shrink: 0;
 }
 
 .eventText {
+  flex: 1;
   color: #ccc;
   line-height: 1.6;
   margin: 0;
-  white-space: pre-wrap;
+  white-space: normal;
   text-align: left;
   font-size: 20px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 16;
+  line-clamp: 16;
+  overflow: hidden;
+}
+
+.eventText br {
+  line-height: inherit;
 }
 
 .eventImage {
@@ -227,18 +243,20 @@
     grid-template-rows: auto auto;
     padding: 1.5rem; /* slightly smaller padding on mobile */
     gap: 1rem; /* maintain sensible spacing on mobile */
+    min-height: auto;
+    align-items: stretch;
   }
 
-  .left .eventImageContainer,
-  .right .eventImageContainer {
+  .eventCard.left .eventImageContainer,
+  .eventCard.right .eventImageContainer {
     grid-column: 1;
     grid-row: 1;
     width: 100%; /* full width on mobile */
     justify-self: center;
   }
 
-  .left .eventContent,
-  .right .eventContent {
+  .eventCard.left .eventContent,
+  .eventCard.right .eventContent {
     grid-column: 1;
     grid-row: 2;
     padding-left: 1rem; /* restore balanced padding on mobile */
@@ -252,6 +270,15 @@
 
   .eventContent {
     text-align: center;
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .eventText {
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    white-space: pre-wrap;
   }
 
   .footerInfo {

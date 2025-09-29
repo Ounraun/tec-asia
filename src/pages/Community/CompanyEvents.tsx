@@ -124,9 +124,9 @@ const CompanyEvents = () => {
                 >
                   <div className={styles.eventContent}>
                     <h3 className={styles.eventTitle}>{post.title}</h3>
-                    <p className={styles.eventText}>
+                    <div className={styles.eventText}>
                       {formatTextWithLineBreaks(post.content)}
-                    </p>
+                    </div>
                   </div>
 
                   {getStrapiImageUrl(post?.mainImage?.url) && (

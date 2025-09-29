@@ -8,6 +8,7 @@ import {
   getStrapiImageUrl,
   getBlogPostsByCategory,
 } from "../../services/strapi";
+import { formatTextWithLineBreaks } from "../../utils/textFormatter";
 import type { BlogPost } from "../../types/blogPost";
 
 const Society = () => {
@@ -120,7 +121,9 @@ const Society = () => {
                 >
                   <div className={styles.eventContent}>
                     <h3 className={styles.eventTitle}>{post.title}</h3>
-                    <p className={styles.eventText}>{post.content}</p>
+                    <div className={styles.eventText}>
+                      {formatTextWithLineBreaks(post.content || "")}
+                    </div>
                   </div>
 
                   {getStrapiImageUrl(post?.mainImage?.url) && (
