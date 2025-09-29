@@ -31,9 +31,9 @@
   font-size: 69.751px;
   font-weight: 700;
   /* Looser line-height to avoid clipping Thai descenders with background-clip */
-  line-height: 1.25;
-  /* Small bottom padding as extra guard for script-specific glyphs */
-  padding-bottom: 0.1em;
+  line-height: 1.35;
+  /* Small padding top/bottom as extra guard for script-specific glyphs */
+  padding-block: 0.15em 0.1em;
   display: inline-block;
 }
 
