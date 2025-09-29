@@ -18,23 +18,34 @@
   margin: 4rem 0 7rem 0;
 }
 
+
 .mainContent {
-  display: flex;
-  gap: 5rem;
+  display: block;
   margin-bottom: 5rem;
 }
 
+.mainContent::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .mainImage {
-  flex: 1.2;
-  min-width: 0;
-  height: 600px;
+  float: left;
+  width: 45%;
+  max-width: 620px;
+  min-width: 320px;
+  margin-right: 4rem;
+  margin-bottom: 1.5rem;
   overflow: hidden;
   border-radius: 8px;
 }
 
 .mainImage img {
+  display: block;
   width: 100%;
-  object-fit: cover;
+  height: auto;
+  border-radius: inherit;
 }
 
 .noImage {
@@ -49,11 +60,11 @@
 }
 
 .blogContent {
-  flex: 1;
   min-width: 0;
   line-height: 1.8;
   color: #ffffff;
   font-size: 1.7rem;
+  text-align: left;
 }
 
 .gallerySection {
@@ -327,9 +338,25 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .mainImage {
+    float: none;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    height: auto;
+    margin-right: 0;
+    margin-bottom: 2rem;
+  }
+
+  .blogContent {
+    clear: both;
+  }
+}
+
 @media (max-width: 768px) {
   .mainContent {
-    flex-direction: column;
+    display: block;
   }
 
   .mainImage {
