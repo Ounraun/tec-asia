@@ -1,4 +1,5 @@
 import React from "react";
+import { formatTextWithAllLineBreaks } from "@/utils/textFormatter";
 import styles from "./Card.module.css";
 import type { NetworkContent } from "../../types/networkSecurity";
 
@@ -9,18 +10,18 @@ interface Props {
 
 const ContentCard: React.FC<Props> = ({ item, isGrouped = false }) => (
   <div
-    className={
-      isGrouped ? `${styles.card} ${styles.groupedCard}` : styles.card
-    }
+    className={isGrouped ? `${styles.card} ${styles.groupedCard}` : styles.card}
   >
-    <h2 className={styles.cardTitle}>{item.title}</h2>
+    <h2 className={styles.cardTitle}>
+      {formatTextWithAllLineBreaks(item.title)}
+    </h2>
     {item.subTitle && (
-      <h3 className={styles.cardSubtitle}>{item.subTitle}</h3>
+      <h3 className={styles.cardSubtitle}>
+        {formatTextWithAllLineBreaks(item.subTitle)}
+      </h3>
     )}
     <div className={styles.cardContent}>
-      {item.content.split("\n").map((p, i) => (
-        <p key={i}>{p}</p>
-      ))}
+      <p>{formatTextWithAllLineBreaks(item.content)}</p>
     </div>
   </div>
 );
