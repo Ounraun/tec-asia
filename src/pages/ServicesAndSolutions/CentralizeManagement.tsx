@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { ServicesPager } from "@/components/ServicesNav";
 import { servicesNavItems } from "@/features/services/navItems";
 import styles from "./CentralizeManagement.module.css";
-import { formatTextWithLineBreaks } from "@/utils/textFormatter";
+import { formatTextWithAllLineBreaks } from "@/utils/textFormatter";
 
 import { getCentralizeManagement } from "../../services/strapi";
 import type { Feature } from "../../types/centralizeManagement";
@@ -63,7 +63,7 @@ const CentralizeManagement = () => {
 
       <div className={styles.cityBackground}>
         <p className={styles.subtitle}>
-          {formatTextWithLineBreaks(feature?.mainSubTitle || "")}
+          {formatTextWithAllLineBreaks(feature?.mainSubTitle || "")}
         </p>
       </div>
 
@@ -84,9 +84,11 @@ const CentralizeManagement = () => {
               ? items.slice(currentIdx, currentIdx + 1).map((item) => (
                   <div key={item.id} className={styles.slide}>
                     <div className={styles.featureCard}>
-                      <h3 className={styles.featureTitle}>{item.title}</h3>
+                      <h3 className={styles.featureTitle}>
+                        {formatTextWithAllLineBreaks(item.title || "")}
+                      </h3>
                       <p className={styles.featureContent}>
-                        {formatTextWithLineBreaks(item.content || "")}
+                        {formatTextWithAllLineBreaks(item.content || "")}
                       </p>
                     </div>
                   </div>
@@ -94,9 +96,11 @@ const CentralizeManagement = () => {
               : items.map((item) => (
                   <div key={item.id} className={styles.slide}>
                     <div className={styles.featureCard}>
-                      <h3 className={styles.featureTitle}>{item.title}</h3>
+                      <h3 className={styles.featureTitle}>
+                        {formatTextWithAllLineBreaks(item.title || "")}
+                      </h3>
                       <p className={styles.featureContent}>
-                        {formatTextWithLineBreaks(item.content || "")}
+                        {formatTextWithAllLineBreaks(item.content || "")}
                       </p>
                     </div>
                   </div>
