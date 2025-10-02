@@ -68,7 +68,9 @@ const DataCenter: React.FC = () => {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1>
-          <span className={styles.data}>{t("dataCenter:data")}</span>{" "}
+          {i18n.language !== "th" && (
+            <span className={styles.data}>{t("dataCenter:data")}</span>
+          )}{" "}
           <span className={styles.center}>{t("dataCenter:center")}</span>
         </h1>
         <p className={styles.subtitle}>

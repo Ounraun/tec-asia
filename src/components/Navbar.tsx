@@ -315,7 +315,7 @@ const Navigationbar = () => {
                     setExpanded(false);
                   }}
                 >
-                  Company Events
+                  {t("navbar:companyEvent")}
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
@@ -328,7 +328,7 @@ const Navigationbar = () => {
                     setExpanded(false);
                   }}
                 >
-                  Society
+                  {t("navbar:society")}
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
@@ -341,7 +341,7 @@ const Navigationbar = () => {
                     setExpanded(false);
                   }}
                 >
-                  Knowledge
+                  {t("navbar:knowledge")}
                 </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link
@@ -583,7 +583,7 @@ const Navigationbar = () => {
                       : "#A1A1A1",
                   }}
                 >
-                  Our Community
+                  {t("navbar:ourCommunity")}
                   {location.pathname.startsWith("/community/") && (
                     <span className="tec-navbar-underline" />
                   )}
@@ -610,7 +610,7 @@ const Navigationbar = () => {
                 }`}
                 onClick={() => setShowCommunityDropdown(false)}
               >
-                Company Events
+                {t("navbar:companyEvent")}
               </NavDropdown.Item>
               <NavDropdown.Item
                 as={Link}
@@ -620,7 +620,7 @@ const Navigationbar = () => {
                 }`}
                 onClick={() => setShowCommunityDropdown(false)}
               >
-                Society
+                {t("navbar:society")}
               </NavDropdown.Item>
               <NavDropdown.Item
                 as={Link}
@@ -630,7 +630,7 @@ const Navigationbar = () => {
                 }`}
                 onClick={() => setShowCommunityDropdown(false)}
               >
-                Knowledge
+                {t("navbar:knowledge")}
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link
@@ -652,7 +652,7 @@ const Navigationbar = () => {
                 height: "100%",
               }}
             >
-              Contact
+              {t("navbar:contact")}
               {location.pathname === "/" &&
                 location.hash === "#contact-section" && (
                   <span className="tec-navbar-underline" />
@@ -703,7 +703,7 @@ const Navigationbar = () => {
                   location.pathname === "/meeting-rooms" ? "active" : ""
                 }`}
               >
-                Meeting Rooms
+                {t("navbar:meetingRoom")}
               </NavDropdown.Item>
             </NavDropdown>
             <NavDropdown

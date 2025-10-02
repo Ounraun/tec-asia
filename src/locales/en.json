@@ -21,13 +21,12 @@
     "dataManagement": "Data Management",
     "networkSolution": "Network Security",
     "ourCommunity": "Our Community",
-    "companyEvent": "Company Event",
+    "companyEvent": "Company Events",
     "society": "Society",
     "knowledge": "Knowledge",
     "contact": "Contact",
     "nas": "NAS",
-    "meettingRoom": "Meeting Room",
-    "meetingRoom": "Meeting Room"
+    "meetingRoom": "Meeting Rooms"
   },
   "aboutUs": {
     "service": "SERVICE",
