@@ -44,9 +44,8 @@ const Multimedia: React.FC = () => {
       <header className={styles.header}>
         <h1>
           <span className={styles.gradientText}>
-            {t("multimedia:multimedia")}
+            {t("multimedia:multimediaSolution")}
           </span>
-          <span className={styles.solution}>{t("multimedia:solution")}</span>
         </h1>
         <p className={styles.subtitle}>
           {formatTextWithLineBreaks(MultimediaService?.subTitle || "")}

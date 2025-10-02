@@ -45,9 +45,8 @@ const DataManagement: React.FC = () => {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1>
-          <span className={styles.data}>{t("dataManagement:data")}</span>{" "}
           <span className={styles.management}>
-            {t("dataManagement:management")}
+            {t("dataManagement:dataManagement")}
           </span>
         </h1>
       </header>

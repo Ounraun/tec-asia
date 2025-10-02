@@ -48,11 +48,8 @@ const DigitalTransformation: React.FC = () => {
       <div className={styles.header}>
         <h1>
           <span className={styles.digital}>
-            {t("digitalTransformation:digital")}
+            {t("digitalTransformation:digitalTransformation")}
           </span>{" "}
-          <span className={styles.transformation}>
-            {t("digitalTransformation:transformation")}
-          </span>
         </h1>
       </div>
 

@@ -50,10 +50,9 @@ const NetworkSolution: React.FC = () => {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1>
-          <span className={styles.network}>{t("networkSecurity:network")}</span>{" "}
-          <span className={styles.solution}>
-            {t("networkSecurity:security")}
-          </span>
+          <span className={styles.network}>
+            {t("networkSecurity:networkSecurity")}
+          </span>{" "}
         </h1>
         <p className={styles.subtitle}>{networkData?.subTitle}</p>
       </header>

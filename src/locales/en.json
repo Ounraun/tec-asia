@@ -39,7 +39,7 @@
     "endLineOne": "“ Tailored IT solutions ",
     "endLineTwo": "we're ready to consult and serve you. ”"
   },
-  "centralize": { "heading": "<0>CENTRALIZE</0> <1>MANAGEMENT</1>" },
+  "centralize": { "centralizeManagement": "CENTRALIZE MANAGEMENT" },
   "communityCard": {
     "readMore": "Read more",
     "company": "Company events",
@@ -61,18 +61,15 @@
     "society": "Society"
   },
   "dataCenter": {
-    "data": "DATA",
-    "center": "CENTER",
+    "dataCenter": "DATA CENTER",
     "facilitiesSystem": "FACILITIES SYSTEM"
   },
   "dataManagement": {
-    "data": "DATA",
-    "management": "MANAGEMENT",
+    "dataManagement": "DATA MANAGEMENT",
     "ourService": "OUR SERVICE"
   },
   "digitalTransformation": {
-    "digital": "DIGITAL",
-    "transformation": "TRANSFORMATION"
+    "digitalTransformation": "DIGITAL TRANSFORMATION"
   },
   "knowledge": {
     "knowledge": "KNOWLEDGE",
@@ -107,6 +104,6 @@
     "allKnowledge": "All Knowledge"
   },
   "meetingRoom": { "meetingRoomServices": "Meeting room services" },
-  "multimedia": { "multimedia": "MULTIMEDIA", "solution": "SOLUTION" },
-  "networkSecurity": { "network": "NETWORK", "security": "AND SECURITY" }
+  "multimedia": { "multimediaSolution": "MULTIMEDIA SOLUTION" },
+  "networkSecurity": { "networkSecurity": "NETWORK AND SECURITY"}
 }

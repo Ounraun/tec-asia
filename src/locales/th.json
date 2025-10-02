@@ -14,11 +14,11 @@
   "navbar": {
     "home": "หน้าแรก",
     "serviceAndSolutions": "สินค้าและบริการ",
-    "centralizeManagement": "การจัดการแบบศูนย์กลาง",
-    "dataCenter": "ศูนย์ข้อมูล",
-    "multimediaSolutions": "โซลูชันมัลติมีเดีย",
-    "digitalTransformation": "การเปลี่ยนแปลงดิจิทัล",
-    "dataManagement": "การจัดการข้อมูล",
+    "centralizeManagement": "การจัดการข้อมูลแบบศูนย์กลาง",
+    "dataCenter": "ศูนย์กลางข้อมูล",
+    "multimediaSolutions": "มัลติมีเดียโซลูชั่น",
+    "digitalTransformation": "การปฎิรูปดิจิตอลด้วยเทคโนโลยี",
+    "dataManagement": "ข้อมูลและระบบการจัดการ",
     "networkSolution": "บริการวางระบบ และเครือข่าย",
     "ourCommunity": "ชุมชนของเรา",
     "companyEvent": "กิจกรรมบริษัท",
@@ -40,7 +40,7 @@
     "endLineOne": "“ โซลูชันด้าน IT ที่ออกแบบเฉพาะสำหรับคุณ",
     "endLineTwo": "พร้อมให้คำปรึกษาและบริการอย่างเต็มที่ ”"
   },
-  "centralize": { "heading": "<0>การจัดการ</0> <1>แบบศูนย์กลาง</1>" },
+  "centralize": { "centralizeManagement": "การจัดการข้อมูลแบบศูนย์กลาง" },
   "communityCard": {
     "readMore": "อ่านเพิ่มเติม",
     "company": "กิจกรรมองค์กร",
@@ -48,32 +48,29 @@
     "society": "สังคม"
   },
   "contact": {
-    "menu": "menu",
-    "serviceAndSolution": "Service and Solution",
-    "networkAndSolution": "Network and Security",
-    "dataCenter": "Data Center",
-    "dataManagement": "Data Management",
-    "centralizeManagement": "Centralize Management",
-    "multimediaSolution": "Multimedia Solution",
-    "digitalTransformation": "Digital Transformation",
-    "ourCommunity": "Our Community",
-    "companyEvents": "Company Events",
-    "knowledge": "Knowledge",
-    "society": "Society"
+    "menu": "เมนู",
+    "serviceAndSolution": "สินค้าและบริการ",
+    "networkAndSolution": "บริการวางระบบ และเครือข่าย",
+    "dataCenter": "ศูนย์กลางข้อมูล",
+    "dataManagement": "ข้อมูลและระบบการจัดการ",
+    "centralizeManagement": "การจัดการข้อมูลแบบศูนย์กลาง",
+    "multimediaSolution": "มัลติมีเดียโซลูชั่น",
+    "digitalTransformation": "การปฎิรูปดิจิตอลด้วยเทคโนโลยี",
+    "ourCommunity": "ชุมชนของเรา",
+    "companyEvents": "กิจกรรมบริษัท",
+    "knowledge": "คลังความรู้",
+    "society": "สังคม"
   },
   "dataCenter": {
-    "data": "ข้อมูล",
-    "center": "ศูนย์ข้อมูล",
+    "dataCenter": "ศูนย์กลางข้อมูล",
     "facilitiesSystem": "FACILITIES SYSTEM"
   },
   "dataManagement": {
-    "data": "ข้อมูล",
-    "management": "และระบบการจัดการ",
+    "dataManagement": "ข้อมูลและระบบการจัดการ",
     "ourService": "บริการของเรา"
   },
   "digitalTransformation": {
-    "digital": "การปฏิรูปดิจิทัล",
-    "transformation": "ด้วยเทคโนโลยี"
+    "digitalTransformation": "การปฎิรูปดิจิตอลด้วยเทคโนโลยี"
   },
   "knowledge": {
     "knowledge": "คลังความรู้",
@@ -108,7 +105,6 @@
     "allKnowledge": "ความรู้ทั้งหมด"
   },
   "meetingRoom": { "meetingRoomServices": "บริการใช้งานห้องประชุม" },
-  "multimedia": { "multimedia": "มัลติมีเดีย", "solution": "โซลูชัน" },
-  "networkSolution": { "network": "บริการวางระบบ", "solution": "และเครือข่าย" },
-  "networkSecurity": { "network": "บริการวางระบบ", "security": "และเครือข่าย" }
+  "multimedia": { "multimediaSolution": "มัลติมีเดียโซลูชั่น" },
+  "networkSecurity": { "networkSecurity": "บริการวางระบบและเครือข่าย" }
 }
