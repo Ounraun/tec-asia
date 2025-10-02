@@ -56,9 +56,9 @@ const Contact = () => {
             <p className="text-white preserve-linebreaks">
               {companyInfo?.address ?? "Loading..."}
             </p>
-            <p className="text-white mt-3 preserve-linebreaks">
+            {/* <p className="text-white mt-3 preserve-linebreaks">
               {companyInfo?.location ?? "Loading..."}
-            </p>
+            </p> */}
           </div>
 
           <div className="col-lg-6">
