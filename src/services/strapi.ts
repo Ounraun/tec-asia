@@ -19,6 +19,7 @@ import {
 
 const API_URL = import.meta.env.VITE_API_URL;
 const FORCE_LOCALE = "en";
+const IS_DEV = import.meta.env.DEV;
 
 const toYMD = (d: Date) => {
   const y = d.getFullYear();
@@ -42,14 +43,14 @@ export async function callStrapi<T>(
   }
 
   const url = `${API_URL}${endpoint}?${qs.toString()}`;
-  console.log("=== Strapi API Call ===");
-  console.log("Endpoint:", endpoint);
-  console.log("Current i18n.language:", i18n.language);
-  console.log("Params:", params);
-  console.log("Final URL:", url);
+  if (IS_DEV) {
+    console.debug("[Strapi] request", { endpoint, language: i18n.language, params, url });
+  }
   
   const res = await fetch(url);
-  console.log("Response status:", res.status, res.statusText);
+  if (IS_DEV) {
+    console.debug("[Strapi] response", { endpoint, status: res.status, statusText: res.statusText });
+  }
   
   if (!res.ok) {
     console.error(`Strapi ${endpoint} error ${res.status}`);
@@ -57,7 +58,9 @@ export async function callStrapi<T>(
   }
   
   const data = (await res.json()) as T;
-  console.log("Response data:", data);
+  if (IS_DEV) {
+    console.debug("[Strapi] data", data);
+  }
   return data;
 }
 
@@ -126,10 +129,6 @@ export async function getCompanyVideoUrl(): Promise<string | null> {
   const res = await callStrapi<{ data: CompanyInfo }>("/api/company-information", {
     populate: "*",
   });
-  console.log(
-    "Company video URL response:",
-    res?.data?.videoknowledge?.url ?? null
-  );
   return res?.data?.videoknowledge?.url ?? null;
 }
 
@@ -161,6 +160,7 @@ export async function getBookingsByWeek(
 ): Promise<BookingFlat[]> {
   const start = toYMD(monday);
   const end = toYMD(sunday);
+  const encodedRoomId = roomDocumentId ? encodeURIComponent(roomDocumentId) : "";
 
   const url =
     `${API_URL}/api/bookings` +
@@ -168,7 +168,7 @@ export async function getBookingsByWeek(
     `&filters[date][$gte]=${start}` +
     `&filters[date][$lte]=${end}` +
     (roomDocumentId
-      ? `&filters[meeting_room][documentId][$eq]=${roomDocumentId}`
+      ? `&filters[meeting_room][documentId][$eq]=${encodedRoomId}`
       : "") +
     `&populate=*`;
 

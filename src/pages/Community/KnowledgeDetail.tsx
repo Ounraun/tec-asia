@@ -1,10 +1,11 @@
 // KnowledgeDetail.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Contact from "../../components/Contact";
 import styles from "./KnowledgeDetail.module.css";
 import { getStrapiImageUrl } from "../../services/strapi";
+import DOMPurify from "dompurify";
 
 interface KnowledgePost {
   id: number;
@@ -28,10 +29,14 @@ const KnowledgeDetail: React.FC = () => {
 
   useEffect(() => {
     const fetchPost = async () => {
+      if (!documentId) {
+        return;
+      }
       try {
         setError(null);
+        const encodedId = encodeURIComponent(documentId);
         const res = await fetch(
-          `${apiUrl}/api/blog-posts?populate=*&filters[documentId][$eq]=${documentId}`
+          `${apiUrl}/api/blog-posts?populate=*&filters[documentId][$eq]=${encodedId}`
         );
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
@@ -46,6 +51,11 @@ const KnowledgeDetail: React.FC = () => {
 
     if (documentId) fetchPost();
   }, [documentId, apiUrl]);
+
+  const sanitizedContent = useMemo(
+    () => ({ __html: DOMPurify.sanitize(post?.content ?? "") }),
+    [post?.content]
+  );
 
   if (loading) return <div className={styles.loading}>{t('loading', { ns: 'knowledgeDetail' })}</div>;
   if (error || !post)
@@ -79,7 +89,7 @@ const KnowledgeDetail: React.FC = () => {
           <div className={styles.contentWrapper}>
             <div
               className={styles.articleContent}
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={sanitizedContent}
             />
           </div>
         </div>
