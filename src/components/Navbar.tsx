@@ -24,6 +24,22 @@ const Navigationbar = () => {
     i18n.changeLanguage(lng);
   };
 
+  const handleNavItemClick = (
+    event: React.MouseEvent,
+    callback: () => void,
+    disabled = false
+  ) => {
+    if (disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    callback();
+  };
+
+  const isNasDisabled = true;
+  const isMeetingDisabled = true;
+
   const navLinkStyle = {
     fontFamily: "var(--font-heading)",
     fontWeight: 500,
@@ -387,8 +403,21 @@ const Navigationbar = () => {
                   href="https://tec-asia.quickconnect.to/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="dropdown-item"
-                  onClick={() => setExpanded(false)}
+                  className={`dropdown-item ${isNasDisabled ? "disabled" : ""}`}
+                  aria-disabled={isNasDisabled}
+                  tabIndex={isNasDisabled ? -1 : undefined}
+                  style={
+                    isNasDisabled
+                      ? { pointerEvents: "none", opacity: 0.5 }
+                      : undefined
+                  }
+                  onClick={(event) =>
+                    handleNavItemClick(
+                      event,
+                      () => setExpanded(false),
+                      isNasDisabled
+                    )
+                  }
                 >
                   {t("navbar:nas")}
                 </NavDropdown.Item>
@@ -397,8 +426,21 @@ const Navigationbar = () => {
                   to="/meeting-rooms"
                   className={`dropdown-item ${
                     location.pathname === "/meeting-rooms" ? "active" : ""
-                  }`}
-                  onClick={() => setExpanded(false)}
+                  } ${isMeetingDisabled ? "disabled" : ""}`}
+                  aria-disabled={isMeetingDisabled}
+                  tabIndex={isMeetingDisabled ? -1 : undefined}
+                  style={
+                    isMeetingDisabled
+                      ? { pointerEvents: "none", opacity: 0.5 }
+                      : undefined
+                  }
+                  onClick={(event) =>
+                    handleNavItemClick(
+                      event,
+                      () => setExpanded(false),
+                      isMeetingDisabled
+                    )
+                  }
                 >
                   {t("navbar:meettingRoom")}
                 </NavDropdown.Item>
@@ -422,14 +464,20 @@ const Navigationbar = () => {
                 <NavDropdown.Item
                   active={i18n.language === "en"}
                   onClick={() => switchLang("en")}
-                  style={{ fontFamily: "var(--font-heading)", fontSize: "16px" }}
+                  style={{
+                    fontFamily: "var(--font-heading)",
+                    fontSize: "16px",
+                  }}
                 >
                   English
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   active={i18n.language === "th"}
                   onClick={() => switchLang("th")}
-                  style={{ fontFamily: "var(--font-heading)", fontSize: "16px" }}
+                  style={{
+                    fontFamily: "var(--font-heading)",
+                    fontSize: "16px",
+                  }}
                 >
                   ไทย
                 </NavDropdown.Item>
@@ -675,12 +723,7 @@ const Navigationbar = () => {
                 />
               }
               id="profile-dropdown"
-              className={`custom-nav-dropdown profile-dropdown ${
-                location.pathname === "/nas" ||
-                location.pathname === "/meeting-rooms"
-                  ? "active"
-                  : ""
-              }`}
+              className="custom-nav-dropdown profile-dropdown"
               style={{
                 marginLeft: "0px",
                 marginRight: "50px",
@@ -692,7 +735,17 @@ const Navigationbar = () => {
                 href="https://tec-asia.quickconnect.to/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="dropdown-item"
+                className={`dropdown-item ${isNasDisabled ? "disabled" : ""}`}
+                aria-disabled={isNasDisabled}
+                tabIndex={isNasDisabled ? -1 : undefined}
+                style={
+                  isNasDisabled
+                    ? { pointerEvents: "none", opacity: 0.5 }
+                    : undefined
+                }
+                onClick={(event) =>
+                  handleNavItemClick(event, () => {}, isNasDisabled)
+                }
               >
                 {t("navbar:nas")}
               </NavDropdown.Item>
@@ -701,7 +754,17 @@ const Navigationbar = () => {
                 to="/meeting-rooms"
                 className={`dropdown-item ${
                   location.pathname === "/meeting-rooms" ? "active" : ""
-                }`}
+                } ${isMeetingDisabled ? "disabled" : ""}`}
+                aria-disabled={isMeetingDisabled}
+                tabIndex={isMeetingDisabled ? -1 : undefined}
+                style={
+                  isMeetingDisabled
+                    ? { pointerEvents: "none", opacity: 0.5 }
+                    : undefined
+                }
+                onClick={(event) =>
+                  handleNavItemClick(event, () => {}, isMeetingDisabled)
+                }
               >
                 {t("navbar:meetingRoom")}
               </NavDropdown.Item>
