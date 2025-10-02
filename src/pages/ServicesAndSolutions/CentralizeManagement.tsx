@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { ServicesPager } from "@/components/ServicesNav";
 import { servicesNavItems } from "@/features/services/navItems";
 import styles from "./CentralizeManagement.module.css";
@@ -55,10 +55,13 @@ const CentralizeManagement = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1>
-          <span className={styles.highlight}>{t("centralize:centralize")}</span>{" "}
-          <span className={styles.Management_29_186}>
-            {t("centralize:management")}
-          </span>
+          <Trans
+            i18nKey="centralize:heading"
+            components={[
+              <span key="highlight" className={styles.highlight} />,
+              <span key="regular" className={styles.Management_29_186} />,
+            ]}
+          />
         </h1>
       </div>
 

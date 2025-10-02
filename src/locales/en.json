@@ -39,7 +39,7 @@
     "endLineOne": "“ Tailored IT solutions ",
     "endLineTwo": "we're ready to consult and serve you. ”"
   },
-  "centralize": { "centralize": "CENTRALIZE", "management": "MANAGEMENT" },
+  "centralize": { "heading": "<0>CENTRALIZE</0> <1>MANAGEMENT</1>" },
   "communityCard": {
     "readMore": "Read more",
     "company": "Company events",
