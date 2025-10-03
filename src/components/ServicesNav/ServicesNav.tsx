@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export type ServiceNavItem = {
   path: string;
-  label: string;
+  labelKey: string;
 };
 
 type Props = {
@@ -16,6 +17,7 @@ type Props = {
 // - Left/Right arrow keys navigate prev/next (wraps around)
 export const ServicesPager: React.FC<Props> = ({ items, className }) => {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const index = Math.max(
     0,
@@ -27,6 +29,9 @@ export const ServicesPager: React.FC<Props> = ({ items, className }) => {
 
   const prev = items[prevIndex];
   const next = items[nextIndex];
+
+  const prevLabel = t(prev.labelKey);
+  const nextLabel = t(next.labelKey);
 
   const onKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === "ArrowLeft") {
@@ -57,17 +62,17 @@ export const ServicesPager: React.FC<Props> = ({ items, className }) => {
         id="services-pager-prev"
         to={prev.path}
         className="services-btn services-btn--prev"
-        aria-label={`Previous: ${prev.label}`}
+        aria-label={`${t("common:previous")}: ${prevLabel}`}
       >
-        {`${prev.label}`}
+        {prevLabel}
       </Link>
       <Link
         id="services-pager-next"
         to={next.path}
         className="services-btn services-btn--next"
-        aria-label={`Next: ${next.label}`}
+        aria-label={`${t("common:next")}: ${nextLabel}`}
       >
-        {`${next.label}`}
+        {nextLabel}
       </Link>
     </nav>
   );

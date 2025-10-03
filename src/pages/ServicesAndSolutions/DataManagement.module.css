@@ -58,15 +58,15 @@
   font-size: clamp(2rem, 8vw, 5rem);
   font-style: normal;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.35;
   display: inline-block;
   overflow: visible;
-  padding-top: 0.04em;
+  padding-top: 0.08em;
+  padding-bottom: 0.25em;
 }
 
 .data {
   text-align: center;
-  padding-bottom: 0.2em;
 }
 
 .mainContent {
