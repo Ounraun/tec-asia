@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from "react";
+import React, { useEffect, useState, ChangeEvent, useCallback, useMemo } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.min.css";
@@ -8,8 +8,16 @@ import closeIcon from "../../assets/icons/close.svg";
 
 // ---------- Types ----------
 type NavState = { name: string; description: string; min: number; max: number };
-type EmailNode =
-  | { id?: number; email?: string; attributes?: { email?: string } }
+type BookingEmailNode = {
+  id?: number;
+  email?: string | null;
+  attributes?: { email?: string | null } | null;
+};
+
+type BookingEmailRelation =
+  | BookingEmailNode[]
+  | { data?: BookingEmailNode[] | null }
+  | null
   | undefined;
 
 interface Booking {
@@ -24,7 +32,7 @@ interface Booking {
   contact_phone: string;
   contact_email: string;
   meeting_room?: { documentId: string };
-  email?: EmailNode[] | { data: EmailNode[] };
+  email?: BookingEmailRelation;
 }
 
 interface RoomDetails {
@@ -49,12 +57,6 @@ interface BookingFormData {
 
 // ---------- Const / utils ----------
 const ROOM_CACHE_KEY = (id: string) => `mr:${id}`;
-const DEBUG = true;
-const dbg = (..._args: unknown[]): void => {
-  if (DEBUG) {
-    void _args;
-  }
-};
 const genRid = () =>
   `fe_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
 const LOCALE = "en";
@@ -113,24 +115,52 @@ const validateTimeSelection = (start: string, end: string) => {
   const e = toMinutes(end);
   return s >= 7 * 60 && e <= 20 * 60 && s < e;
 };
-const extractParticipants = (b: Booking): string[] => {
-  const raw: any = b?.email;
-  const arr: any[] = Array.isArray(raw)
-    ? raw
-    : Array.isArray(raw?.data)
-    ? raw.data
+const toPlainEmails = (nodes: BookingEmailRelation): string[] => {
+  const list = Array.isArray(nodes)
+    ? nodes
+    : Array.isArray(nodes?.data)
+    ? nodes.data ?? []
     : [];
   const seen = new Set<string>();
-  return arr
-    .map((e: any) =>
-      (e?.email ?? e?.attributes?.email ?? "").trim().toLowerCase()
+  return list
+    .map((item) =>
+      (item?.email ?? item?.attributes?.email ?? "").trim().toLowerCase()
     )
-    .filter((s: string) => {
-      if (!s || seen.has(s)) return false;
-      seen.add(s);
+    .filter((email) => {
+      if (!email || seen.has(email)) return false;
+      seen.add(email);
       return true;
     });
 };
+
+const getErrorMessage = (error: unknown, fallback: string) => {
+  if (error instanceof Error) return error.message || fallback;
+  if (typeof error === "string" && error) return error;
+  return fallback;
+};
+
+const buildBookingPayload = (
+  bookingDate: string,
+  start: string,
+  end: string,
+  form: BookingFormData,
+  participants: string[],
+  roomId?: string
+) => ({
+  data: {
+    locale: LOCALE,
+    date: bookingDate,
+    start_time: `${start}:00.000`,
+    end_time: `${end}:00.000`,
+    subject: form.subject,
+    description: form.description,
+    contact_email: form.contact_email,
+    contact_name: form.contact_name,
+    contact_phone: form.contact_phone || "",
+    meeting_room: roomId ? { connect: { documentId: roomId } } : undefined,
+    email: participants.map((email) => ({ email })),
+  },
+});
 
 // ================= Component =================
 const MeetingRoomsBooking: React.FC = () => {
@@ -149,6 +179,7 @@ const MeetingRoomsBooking: React.FC = () => {
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentWeek, setCurrentWeek] = useState(getWeekDates());
+  const { monday, sunday } = currentWeek;
   const [refreshKey, setRefreshKey] = useState(0);
 
   const [startTime, setStartTime] = useState("");
@@ -177,24 +208,9 @@ const MeetingRoomsBooking: React.FC = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  // --- debug init ---
-  useEffect(() => {
-    dbg("INIT", { roomId, navState, query: location.search });
-  }, [roomId]); // eslint-disable-line
-
-  useEffect(() => {
-    dbg("roomDetails changed", roomDetails);
-  }, [roomDetails]);
-
   // ---------- 1) Loader: navState -> sessionStorage -> querystring ----------
   useEffect(() => {
     if (!roomId) return;
-
-    dbg("loader:start", {
-      roomId,
-      hasNavState: !!navState,
-      search: location.search,
-    });
 
     // a) navState
     if (navState) {
@@ -204,7 +220,6 @@ const MeetingRoomsBooking: React.FC = () => {
         min: Number(navState.min ?? 1),
         max: Number(navState.max ?? 999),
       };
-      dbg("loader:navState -> setRoomDetails & cache", v);
       setRoomDetails(v);
       sessionStorage.setItem(ROOM_CACHE_KEY(roomId), JSON.stringify(v));
       setLoading(false);
@@ -216,12 +231,12 @@ const MeetingRoomsBooking: React.FC = () => {
     if (raw) {
       try {
         const parsed = JSON.parse(raw);
-        dbg("loader:sessionStorage -> setRoomDetails", parsed);
         setRoomDetails(parsed);
         setLoading(false);
         return;
-      } catch (e) {
-        dbg("loader:sessionStorage parse failed", e);
+      } catch (error) {
+        console.warn("Invalid meeting room cache detected. Clearing entry.", error);
+        sessionStorage.removeItem(ROOM_CACHE_KEY(roomId));
       }
     }
 
@@ -234,11 +249,8 @@ const MeetingRoomsBooking: React.FC = () => {
       max: Number(sp.get("max") || 999),
     };
     if (v.name || v.description) {
-      dbg("loader:querystring -> setRoomDetails", v);
       setRoomDetails(v);
       setLoading(false);
-    } else {
-      dbg("loader:no immediate data, wait for fetch");
     }
   }, [roomId, location.search, navState]);
 
@@ -248,8 +260,6 @@ const MeetingRoomsBooking: React.FC = () => {
     (async () => {
       try {
         if (!roomId) return;
-        dbg("fetchRoom:start", { roomId });
-
         if (navState) {
           setRoomDetails({
             name: navState.name ?? "",
@@ -273,11 +283,8 @@ const MeetingRoomsBooking: React.FC = () => {
         const json = await res.json();
         const row = json?.data?.[0];
         const attrs = row?.attributes ?? null;
-
-        dbg("fetchRoom:result", { rowId: row?.id, attrs });
         if (!alive) return;
         if (!attrs) {
-          dbg("fetchRoom: empty attrs -> keep current");
           return;
         }
 
@@ -289,10 +296,9 @@ const MeetingRoomsBooking: React.FC = () => {
         };
         setRoomDetails(v);
         sessionStorage.setItem(ROOM_CACHE_KEY(roomId), JSON.stringify(v));
-        dbg("fetchRoom:cache saved", { key: ROOM_CACHE_KEY(roomId), v });
-      } catch (e: any) {
+      } catch (error) {
         if (!alive) return;
-        dbg("LOAD_ROOM_FAILED", e?.message || e);
+        console.error("Failed to fetch meeting room details", error);
       } finally {
         if (alive) setLoading(false);
       }
@@ -303,11 +309,11 @@ const MeetingRoomsBooking: React.FC = () => {
   }, [roomId, apiUrl, navState]);
 
   // ---------- Booking list ----------
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     if (!roomId) return;
     try {
-      const startDate = ymdd(currentWeek.monday);
-      const endDate = ymdd(currentWeek.sunday);
+      const startDate = ymdd(monday);
+      const endDate = ymdd(sunday);
       const qs = new URLSearchParams({
         locale: LOCALE,
         "filters[date][$gte]": startDate,
@@ -315,47 +321,31 @@ const MeetingRoomsBooking: React.FC = () => {
         "filters[meeting_room][documentId][$eq]": String(roomId),
         populate: "*",
       });
-      const url = `${apiUrl}/api/bookings?${qs.toString()}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("โหลดข้อมูลการจองไม่สำเร็จ");
+      const res = await fetch(`${apiUrl}/api/bookings?${qs.toString()}`);
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        throw new Error(
+          body?.error?.message || "โหลดข้อมูลการจองไม่สำเร็จ"
+        );
+      }
       const json = await res.json();
-
-      const rows: Booking[] = json?.data || [];
+      const rows: Booking[] = Array.isArray(json?.data) ? json.data : [];
       setBookings(rows);
-      // log ให้เห็นรายการที่โหลด
-      dbg(
-        "BOOKINGS:loaded",
-        rows.map((b) => ({
-          id: b.id,
-          documentId: b.documentId,
-          date: b.date,
-          start: b.start_time,
-          end: b.end_time,
-          subject: b.subject,
-        }))
-      );
-    } catch (err: any) {
-      setFetchError(err?.message || "เกิดข้อผิดพลาดในการโหลดข้อมูล");
+    } catch (error) {
+      setFetchError(getErrorMessage(error, "เกิดข้อผิดพลาดในการโหลดข้อมูล"));
     }
-  };
+  }, [apiUrl, monday, roomId, sunday]);
 
   useEffect(() => {
     if (!roomId) return;
     setFetchError(null);
-    fetchBookings();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    roomId,
-    currentWeek.monday.toISOString(),
-    currentWeek.sunday.toISOString(),
-    apiUrl,
-    refreshKey,
-  ]);
+    void fetchBookings();
+  }, [roomId, fetchBookings, refreshKey]);
 
   useEffect(() => {
     const onFocusOrVisible = () => {
       if (document.visibilityState === "visible") {
-        fetchBookings();
+        void fetchBookings();
       }
     };
     document.addEventListener("visibilitychange", onFocusOrVisible);
@@ -364,10 +354,9 @@ const MeetingRoomsBooking: React.FC = () => {
       document.removeEventListener("visibilitychange", onFocusOrVisible);
       window.removeEventListener("focus", onFocusOrVisible);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchBookings]);
 
-  const roomBookingUrl = React.useMemo(() => {
+  const roomBookingUrl = useMemo(() => {
     if (!roomId) return "/meeting-rooms";
     return `/meeting-rooms-booking/${roomId}`;
   }, [roomId]);
@@ -409,7 +398,7 @@ const MeetingRoomsBooking: React.FC = () => {
         : null
     );
   };
-  const timeOptions = React.useMemo(generateTimeOptions, []);
+  const timeOptions = useMemo(generateTimeOptions, []);
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -513,26 +502,14 @@ const MeetingRoomsBooking: React.FC = () => {
       const participants = formData.participants.filter((e) => e.trim() !== "");
       const bookingDate = selectedDate ? ymdd(selectedDate) : "";
 
-      const payload = {
-        data: {
-          locale: LOCALE,
-          date: bookingDate,
-          start_time: `${startTime}:00.000`,
-          end_time: `${endTime}:00.000`,
-          subject: formData.subject,
-          description: formData.description,
-          contact_email: formData.contact_email,
-          contact_name: formData.contact_name,
-          contact_phone: formData.contact_phone || "",
-          meeting_room: roomId
-            ? { connect: { documentId: roomId } }
-            : undefined,
-          email: participants.map((email) => ({ email })),
-        },
-      };
-
-      dbg("CREATE:url", `${apiUrl}/api/bookings?locale=${LOCALE}&rid=${rid}`);
-      dbg("CREATE:payload", payload);
+      const payload = buildBookingPayload(
+        bookingDate,
+        startTime,
+        endTime,
+        formData,
+        participants,
+        roomId
+      );
 
       const url = `${apiUrl}/api/bookings?locale=${LOCALE}&rid=${encodeURIComponent(
         rid
@@ -550,11 +527,6 @@ const MeetingRoomsBooking: React.FC = () => {
       navigate("/booking-confirm", {
         state: { redirectTo: roomBookingUrl, room: roomSnapshot },
       });
-      dbg("navigate -> /booking-confirm", {
-        redirectTo: roomBookingUrl,
-        roomSnapshot,
-      });
-
       // reset
       setFormData({
         subject: "",
@@ -573,8 +545,8 @@ const MeetingRoomsBooking: React.FC = () => {
       setEndTime("");
       setShowBookingForm(false);
       setRefreshKey((x) => x + 1);
-    } catch (err: any) {
-      window.alert(err?.message || "เกิดข้อผิดพลาดในการจอง");
+    } catch (error) {
+      window.alert(getErrorMessage(error, "เกิดข้อผิดพลาดในการจอง"));
     } finally {
       setIsSubmitting(false);
     }
@@ -593,29 +565,18 @@ const MeetingRoomsBooking: React.FC = () => {
       const participants = formData.participants.filter((e) => e.trim() !== "");
       const bookingDate = selectedDate ? ymdd(selectedDate) : "";
 
-      const payload = {
-        data: {
-          locale: LOCALE,
-          date: bookingDate,
-          start_time: `${startTime}:00.000`,
-          end_time: `${endTime}:00.000`,
-          subject: formData.subject,
-          description: formData.description,
-          contact_email: formData.contact_email,
-          contact_name: formData.contact_name,
-          contact_phone: formData.contact_phone || "",
-          meeting_room: roomId
-            ? { connect: { documentId: roomId } }
-            : undefined,
-          email: participants.map((email) => ({ email })),
-        },
-      };
+      const payload = buildBookingPayload(
+        bookingDate,
+        startTime,
+        endTime,
+        formData,
+        participants,
+        roomId
+      );
 
       const url = `${apiUrl}/api/bookings/${editingBookingDocId}?locale=${LOCALE}&rid=${encodeURIComponent(
         rid
       )}`;
-      dbg("UPDATE:url", url);
-      dbg("UPDATE:payload", payload);
 
       const res = await fetch(url, {
         method: "PUT",
@@ -623,27 +584,20 @@ const MeetingRoomsBooking: React.FC = () => {
         body: JSON.stringify(payload),
       });
 
-      dbg("UPDATE:status", res.status);
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        dbg("UPDATE:error body", body);
         throw new Error(body?.error?.message || "การอัพเดทไม่สำเร็จ");
       }
 
       navigate("/booking-edit-confirm", {
         state: { redirectTo: roomBookingUrl, room: roomSnapshot },
       });
-      dbg("navigate -> /booking-edit-confirm", {
-        redirectTo: roomBookingUrl,
-        roomSnapshot,
-      });
       setIsEditMode(false);
       setEditingBookingDocId(null);
       setShowBookingForm(false);
       setRefreshKey((x) => x + 1);
-    } catch (err: any) {
-      dbg("UPDATE:catch", err?.message || err);
-      window.alert(err?.message || "เกิดข้อผิดพลาดในการอัพเดท");
+    } catch (error) {
+      window.alert(getErrorMessage(error, "เกิดข้อผิดพลาดในการอัพเดท"));
     } finally {
       setIsSubmitting(false);
     }
@@ -664,28 +618,21 @@ const MeetingRoomsBooking: React.FC = () => {
       const url = `${apiUrl}/api/bookings/${editingBookingDocId}?locale=${LOCALE}&rid=${encodeURIComponent(
         rid
       )}`;
-      dbg("DELETE:url", url);
 
       const res = await fetch(url, { method: "DELETE" });
-      dbg("DELETE:status", res.status);
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        dbg("DELETE:error body", body);
         throw new Error(body?.error?.message || "ลบการจองไม่สำเร็จ");
       }
 
       navigate("/booking-delete-confirm", {
         state: { redirectTo: roomBookingUrl, room: roomSnapshot },
       });
-      dbg("navigate -> /booking-delete-confirm", {
-        redirectTo: roomBookingUrl,
-        roomSnapshot,
-      });
       setShowBookingForm(false);
       setRefreshKey((x) => x + 1);
-    } catch (err: any) {
-      window.alert(err?.message || "เกิดข้อผิดพลาดในการลบ");
+    } catch (error) {
+      window.alert(getErrorMessage(error, "เกิดข้อผิดพลาดในการลบ"));
     } finally {
       setIsSubmitting(false);
     }
@@ -705,21 +652,6 @@ const MeetingRoomsBooking: React.FC = () => {
   };
 
   const handleCellClick = (date: Date, hour: number, existing?: Booking) => {
-    dbg("CELL:click", {
-      date: ymdd(date),
-      hour,
-      existing: existing
-        ? {
-            id: existing.id,
-            documentId: existing.documentId,
-            date: existing.date,
-            start: existing.start_time,
-            end: existing.end_time,
-            subject: existing.subject,
-          }
-        : null,
-    });
-
     if (existing) {
       setEditingBookingDocId(existing.documentId);
       setIsViewMode(true);
@@ -737,7 +669,7 @@ const MeetingRoomsBooking: React.FC = () => {
       setStartTime(sHH);
       setEndTime(eHH);
 
-      const participants = extractParticipants(existing);
+  const participants = toPlainEmails(existing.email);
 
       setFormData({
         subject: existing.subject || "",
