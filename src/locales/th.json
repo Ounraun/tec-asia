@@ -17,7 +17,7 @@
     "centralizeManagement": "การจัดการข้อมูลแบบศูนย์กลาง",
     "dataCenter": "ศูนย์กลางข้อมูล",
     "multimediaSolutions": "มัลติมีเดียโซลูชั่น",
-    "digitalTransformation": "การปฎิรูปดิจิตอลด้วยเทคโนโลยี",
+    "digitalTransformation": "การปฎิรูปดิจิทัลด้วยเทคโนโลยี",
     "dataManagement": "ข้อมูลและระบบการจัดการ",
     "networkSolution": "บริการวางระบบ และเครือข่าย",
     "ourCommunity": "ชุมชนของเรา",
@@ -33,11 +33,11 @@
     "service": "สินค้า",
     "and": "และ",
     "solutions": "การให้บริการ",
-    "isoLineOne": "เสริมศักยภาพธุรกิจของคุณด้วยโซลูชันด้านไอที",
+    "isoLineOne": "เสริมศักยภาพธุรกิจของคุณด้วยการให้บริการด้านไอที",
     "isoLineTwo": "จากผู้เชี่ยวชาญที่เข้าใจทุกความต้องการของคุณ",
     "isoLineThree": "รับประกันคุณภาพด้วย",
     "ourCommunity": "เครือข่ายของเรา",
-    "endLineOne": "“ โซลูชันด้าน IT ที่ออกแบบเฉพาะสำหรับคุณ",
+    "endLineOne": "“ การให้บริการด้านไอทีที่ออกแบบเฉพาะสำหรับคุณ",
     "endLineTwo": "พร้อมให้คำปรึกษาและบริการอย่างเต็มที่ ”"
   },
   "centralize": { "centralizeManagement": "การจัดการข้อมูลแบบศูนย์กลาง" },
@@ -55,7 +55,7 @@
     "dataManagement": "ข้อมูลและระบบการจัดการ",
     "centralizeManagement": "การจัดการข้อมูลแบบศูนย์กลาง",
     "multimediaSolution": "มัลติมีเดียโซลูชั่น",
-    "digitalTransformation": "การปฎิรูปดิจิตอลด้วยเทคโนโลยี",
+    "digitalTransformation": "การปฎิรูปดิจิทัลด้วยเทคโนโลยี",
     "ourCommunity": "ชุมชนของเรา",
     "companyEvents": "กิจกรรมบริษัท",
     "knowledge": "คลังความรู้",
@@ -70,7 +70,7 @@
     "ourService": "บริการของเรา"
   },
   "digitalTransformation": {
-    "digitalTransformation": "การปฎิรูปดิจิตอลด้วยเทคโนโลยี"
+    "digitalTransformation": "การปฎิรูปดิจิทัลด้วยเทคโนโลยี"
   },
   "knowledge": {
     "knowledge": "คลังความรู้",
