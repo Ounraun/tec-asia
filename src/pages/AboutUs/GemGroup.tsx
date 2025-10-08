@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import aboutStyles from "./AboutUs.module.css";
-import GemOne from "@/assets/AboutUs/Gem1.webp";
-import GemTwo from "@/assets/AboutUs/Gem2.webp";
-import GemThree from "@/assets/AboutUs/Gem3.webp";
-import GemFour from "@/assets/AboutUs/Gem4.webp";
-import GemFive from "@/assets/AboutUs/Gem5.webp";
-import GemSix from "@/assets/AboutUs/Gem6.webp";
+import GemOne from "@/assets/AboutUs/Gem1en.webp";
+import GemTwo from "@/assets/AboutUs/Gem2en.webp";
+import GemThree from "@/assets/AboutUs/Gem3en.webp";
+import GemFour from "@/assets/AboutUs/Gem4en.webp";
+import GemFive from "@/assets/AboutUs/Gem5en.webp";
+import GemSix from "@/assets/AboutUs/Gem6en.webp";
 
 const gemData = [
   {

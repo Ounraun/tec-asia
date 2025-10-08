@@ -32,9 +32,9 @@ const Contact = () => {
       <div className="contact-inner">
         <div className="row align-items-start mb-5 custom-gutter">
           <div className="col-lg-6 mb-4">
-            <h1 className="contact-title">
+            <h2 className="contact-title">
               {companyInfo?.name ?? "Loading..."}
-            </h1>
+            </h2>
             <p className="text-white fs-5 mb-3">
               {companyInfo?.phone ?? "Loading..."}
             </p>
@@ -78,9 +78,9 @@ const Contact = () => {
 
         <div className="row custom-gutter">
           <div className="col-md-6 mb-4">
-            <h1 className="section-title">
+            <h2 className="section-title">
               {t("contact:serviceAndSolutions")}
-            </h1>
+            </h2>
             <ul className="list-unstyled text-white service-list">
               <li
                 style={{ cursor: "pointer" }}

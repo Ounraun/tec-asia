@@ -232,6 +232,40 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .eventCard {
+    --event-media-size: clamp(280px, 40vw, 420px);
+    min-height: auto;
+    align-items: center;
+  }
+
+  .eventCard.left .eventImageContainer,
+  .eventCard.right .eventImageContainer,
+  .eventImageContainer {
+    width: min(100%, var(--event-media-size));
+    aspect-ratio: 1 / 1;
+    padding: 16px;
+    justify-self: center;
+    align-self: center;
+  }
+
+  .eventCard.left .eventContent,
+  .eventCard.right .eventContent,
+  .eventContent {
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .eventTitle {
+    font-size: 30px;
+  }
+
+  .eventImage {
+    aspect-ratio: 1 / 1;
+  }
+}
+
 @media (max-width: 768px) {
   .communityContainer {
     padding: 80px 20px 30px;

@@ -22,7 +22,7 @@
 .contact-title {
   color: #fff;
   font-family: var(--font-body);
-  font-size: 2.5rem;
+  /* font-size: 2.5rem; */
   margin-bottom: 2rem;
 }
 
@@ -78,7 +78,7 @@
     --bs-gutter-x: 4rem !important;
   }
   .contact-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   .section-title {
     font-size: 1.5rem;
@@ -95,7 +95,7 @@
   }
 
   .contact-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   .section-title {
     font-size: 1.5rem;
