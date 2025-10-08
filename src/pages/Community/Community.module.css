@@ -238,37 +238,33 @@
     padding: 80px 20px 30px;
   }
 
-  .eventCard {
+  .eventCard,
+  .eventCard.left,
+  .eventCard.right {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-    padding: 1.5rem; /* slightly smaller padding on mobile */
-    gap: 1rem; /* maintain sensible spacing on mobile */
+    padding: 1.5rem;
+    gap: 1rem;
     min-height: auto;
     align-items: stretch;
   }
 
   .eventCard.left .eventImageContainer,
-  .eventCard.right .eventImageContainer {
+  .eventCard.right .eventImageContainer,
+  .eventImageContainer {
     grid-column: 1;
     grid-row: 1;
-    width: 100%; /* full width on mobile */
+    width: 100%;
     justify-self: center;
-  }
-
-  .eventCard.left .eventContent,
-  .eventCard.right .eventContent {
-    grid-column: 1;
-    grid-row: 2;
-    padding-left: 1rem; /* restore balanced padding on mobile */
-    padding-right: 1rem;
-  }
-
-  .eventImageContainer {
-    /* Keep square on mobile as well */
     aspect-ratio: 1 / 1;
   }
 
+  .eventCard.left .eventContent,
+  .eventCard.right .eventContent,
   .eventContent {
+    grid-column: 1;
+    grid-row: 2;
+    padding: 0 1rem;
     text-align: center;
     min-height: auto;
     max-height: none;
