@@ -448,24 +448,34 @@
   }
   .highlight,
   .Management_29_186 {
-    font-size: 44px;
-    line-height: 1.4;
+    font-size: 40px;
+    line-height: 1.35;
   }
   .featureCard {
-    height: 420px;
-    min-height: 320px;
+    height: 380px;
+    min-height: 340px;
     max-width: 190px;
-    padding: 1.25rem;
+    padding: 1rem 1.25rem;
     flex: 1 1 180px;
   }
+  .featureCard h3 {
+    font-size: 1.05rem;
+    line-height: 1.4;
+    margin-bottom: 0.85rem;
+  }
   .featureTitle {
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 15px;
+    line-height: 22px;
     width: auto;
-    min-height: 48px;
+    min-height: 44px;
   }
   .featureContent {
-    font-size: 13px;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .featureCard p {
+    font-size: 0.95rem;
+    line-height: 1.55;
   }
   .navLink {
     font-size: 18px;
