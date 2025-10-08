@@ -443,26 +443,29 @@
    ========================= */
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .featuresGrid {
-    flex-wrap: wrap;
-    gap: 2rem;
+    flex-wrap: nowrap;
+    gap: 1rem;
   }
   .highlight,
   .Management_29_186 {
-    font-size: 50px;
-    line-height: 60px;
+    font-size: 44px;
+    line-height: 1.4;
   }
   .featureCard {
-    height: 400px;
-    min-height: 400px;
+    height: 420px;
+    min-height: 320px;
+    max-width: 190px;
+    padding: 1.25rem;
+    flex: 1 1 180px;
   }
   .featureTitle {
-    font-size: 18px;
-    line-height: 28px;
-    width: 180px;
-    min-height: 60px;
+    font-size: 16px;
+    line-height: 24px;
+    width: auto;
+    min-height: 48px;
   }
   .featureContent {
-    font-size: 14px;
+    font-size: 13px;
   }
   .navLink {
     font-size: 18px;
@@ -473,17 +476,18 @@
     display: none;
   }
   .slides {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     transform: none !important;
+    gap: 1rem;
   }
   .slide {
-    flex: 1 1 220px;
-    max-width: 260px;
+    flex: 1 1 180px;
+    max-width: 190px;
   }
   .navigation {
     flex-direction: row;
     justify-content: center;
-    gap: 90rem;
+    gap: 4rem;
     margin: 3rem 0;
   }
 }
