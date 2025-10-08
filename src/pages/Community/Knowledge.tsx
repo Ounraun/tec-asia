@@ -83,7 +83,7 @@ const Knowledge: React.FC = () => {
         <div className={styles.knowledgeTopSection}>
           <div className={styles.knowledgeHeader}>
             <p className={styles.knowledgeSubtitle}>
-              {subtitle?.trim() ? subtitle : t("knowledge:subTitle")}
+              {subtitle}
             </p>
             <button className={styles.moreKnowledgeBtn}>
               <a
