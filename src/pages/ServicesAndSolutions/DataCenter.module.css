@@ -349,6 +349,30 @@
   }
 }
 
+@media (max-width: 1080px) {
+  .card {
+    max-width: 220px;
+    padding: 0.4rem;
+  }
+
+  .card:hover {
+    width: 220px;
+  }
+
+  .cardLabel {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+
+  .card h3 {
+    font-size: 1rem;
+  }
+
+  .card p {
+    font-size: 0.85rem;
+  }
+}
+
 @media (max-width: 768px) {
   .facilitiesGrid {
     flex-direction: column;

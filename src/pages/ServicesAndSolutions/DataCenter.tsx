@@ -10,18 +10,34 @@ import { getDataCenter } from "../../services/strapi";
 
 import BG_DataCenter from "@/assets/DataCenter/bg_datacenter.webp";
 
+const desktopPositions = [
+  { top: "15%", left: "30%" },
+  { top: "15%", left: "65%" },
+  { top: "48%", left: "70%" },
+  { top: "63%", left: "48%" },
+  { top: "79%", left: "72%" },
+  { top: "64%", left: "30%" },
+  { top: "75%", left: "13%" },
+  { top: "40%", left: "33%" },
+  { top: "23%", left: "7%" },
+] as const;
+
+const tabletPositions = [
+  { top: "10%", left: "32%" },
+  { top: "18%", left: "65%" },
+  { top: "42%", left: "68%" },
+  { top: "60%", left: "42%" },
+  { top: "78%", left: "66%" },
+  { top: "56%", left: "20%" },
+  { top: "74%", left: "12%" },
+  { top: "32%", left: "28%" },
+  { top: "19%", left: "10%" },
+] as const;
+
 const DataCenter: React.FC = () => {
-  const positions = [
-    { top: "15%", left: "30%" },
-    { top: "15%", left: "65%" },
-    { top: "48%", left: "70%" },
-    { top: "63%", left: "48%" },
-    { top: "79%", left: "72%" },
-    { top: "64%", left: "30%" },
-    { top: "75%", left: "13%" },
-    { top: "40%", left: "33%" },
-    { top: "23%", left: "7%" },
-  ];
+  const [viewportWidth, setViewportWidth] = useState<number>(() =>
+    typeof window !== "undefined" ? window.innerWidth : 1440
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,6 +47,15 @@ const DataCenter: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const { t, i18n } = useTranslation(["common", "dataCenter"]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const positions = viewportWidth <= 1080 ? tabletPositions : desktopPositions;
 
   useEffect(() => {
     setLoading(true);
