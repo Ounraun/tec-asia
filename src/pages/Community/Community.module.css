@@ -64,7 +64,6 @@
   align-items: stretch;
 }
 
-
 .eventCard.right {
   grid-template-columns: minmax(0, 1fr) minmax(auto, var(--event-media-size));
 }
