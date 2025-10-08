@@ -57,7 +57,7 @@
   letter-spacing: 1px;
   padding-top: 0.12em; /* add top padding for Thai upper marks */
   padding-bottom: 0.16em; /* add bottom padding for lower marks */
-  line-height: 1.2; /* consistent with h1 to prevent clipping */
+  line-height: 1.35; /* additional breathing room for stacked Thai marks */
   -webkit-text-stroke: 0.1px transparent; /* rendering nudge to avoid glyph clipping */
   white-space: nowrap;
 }
@@ -461,12 +461,13 @@
     flex-direction: column;
     font-size: clamp(1.8rem, 5vw, 2.4rem);
     gap: 0.25rem;
+    line-height: 1.55;
   }
   .gradientText,
   .solution {
     font-size: clamp(1.7rem, 4.6vw, 2.2rem);
     height: auto;
-    line-height: 1.2;
+    line-height: 1.45;
   }
   .subtitle {
     font-size: 0.95rem;
