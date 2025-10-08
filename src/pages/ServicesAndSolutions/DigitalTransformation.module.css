@@ -41,25 +41,28 @@
 
 .header h1 {
   font-family: var(--font-heading);
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 8vw, 3.75rem);
   display: inline-flex; /* shrink to content width */
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.35rem;
   align-items: center;
+  line-height: 1.5;
+  overflow: visible;
 }
 
 .digital,
 .transformation {
   font-family: var(--font-heading);
   letter-spacing: 1px;
-  font-size: clamp(2rem, 8vw, 5rem);
+  font-size: inherit;
   font-style: normal;
   font-weight: 600;
   display: inline-block;
   overflow: visible;
   letter-spacing: 1px;
-  padding-top: 0.04em;
+  padding-top: 0.12em;
   padding-bottom: 0.2em;
+  line-height: 1.45;
 }
 
 .digital {
@@ -225,18 +228,28 @@
   }
 }
 
+@media (max-width: 992px) {
+  .header {
+    margin-top: 80px;
+  }
+  .header h1 {
+    font-size: 48px;
+  }
+}
+
 @media (max-width: 900px) {
   .header {
     padding: 2.5rem 0 1.5rem 0;
   }
   .header h1 {
-    font-size: 2rem;
-    gap: 0.25rem;
+    font-size: clamp(2.2rem, 6.5vw, 3rem);
+    gap: 0.3rem;
+    line-height: 1.55;
   }
   .digital,
   .transformation {
-    font-size: 2.1rem;
-    line-height: 2.2rem;
+    font-size: inherit;
+    line-height: 1.45;
   }
   .mainImage {
     height: 200px;
@@ -278,8 +291,8 @@
 
   .digital,
   .transformation {
-    font-size: 36px;
-    line-height: 36px;
+    font-size: inherit;
+    line-height: 1.45;
   }
 
   .transformationItem p {
@@ -302,13 +315,14 @@
   .header h1 {
     flex-direction: column;
     align-items: center;
-    font-size: 1.2rem;
-    gap: 0;
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
+    gap: 0.25rem;
+    line-height: 1.55;
   }
   .digital,
   .transformation {
-    font-size: 1.25rem;
-    line-height: 1.35;
+    font-size: inherit;
+    line-height: 1.45;
     display: block;
     padding: 0 2px;
   }

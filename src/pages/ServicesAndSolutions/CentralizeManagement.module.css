@@ -41,20 +41,24 @@
   -webkit-text-fill-color: transparent;
 }
 .header h1 {
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 8vw, 3.75rem);
   margin-bottom: 1rem;
-  line-height: 1.45;
+  line-height: 1.5;
   overflow: visible;
+  display: inline-flex;
+  justify-content: center;
+  gap: 0.35rem;
+  align-items: center;
 }
 
 /* heading 2 คำ ให้เหมือน Data Management */
 .highlight,
 .Management_29_186 {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 8vw, 5rem);
+  font-size: inherit;
   font-style: normal;
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.45;
   display: inline-block;
   overflow: visible;
   padding-top: 0.12em;
@@ -315,6 +319,19 @@
   color: #34a8d5;
 }
 
+@media (min-width: 600px) and (max-width: 900px) {
+  .header {
+    margin-top: 80px;
+  }
+  .header h1 {
+    font-size: 48px;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    line-height: 1.5;
+  }
+}
+
 /* =========================
    Mobile ≤ 575.98px
    ========================= */
@@ -325,7 +342,7 @@
   }
   .highlight,
   .Management_29_186 {
-    font-size: 40px;
+    font-size: inherit;
     line-height: 1.45;
     padding-top: 0.14em;
     padding-bottom: 0.2em;
@@ -333,6 +350,13 @@
   .header {
     margin: 2rem 0;
     padding-top: 36px;
+  }
+  .header h1 {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    line-height: 1.55;
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
   }
   .featureCard {
     height: 350px;
@@ -366,8 +390,8 @@
   }
   .highlight,
   .Management_29_186 {
-    font-size: 40px;
-    line-height: 40px;
+    font-size: clamp(2rem, 6vw, 2.8rem);
+    line-height: 1.45;
   }
   .featureCard {
     height: 380px;
@@ -385,6 +409,11 @@
   .header {
     padding: 2rem 0;
   }
+  .header h1 {
+    font-size: 48px;
+    gap: 0.3rem;
+    justify-content: center;
+  }
   .carouselContainer .prevBtn,
   .carouselContainer .nextBtn,
   .carouselContainer .dots {
@@ -401,7 +430,7 @@
   .navigation {
     flex-direction: row;
     justify-content: center;
-    gap: 90rem;
+    gap: 3rem;
     margin: 3rem 0;
   }
   .navLink {
@@ -420,7 +449,7 @@
   .highlight,
   .Management_29_186 {
     font-size: 50px;
-    line-height: 50px;
+    line-height: 60px;
   }
   .featureCard {
     height: 400px;

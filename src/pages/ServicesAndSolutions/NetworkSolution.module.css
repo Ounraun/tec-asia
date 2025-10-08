@@ -47,7 +47,13 @@
   /* Make the entire title use one continuous gradient */
   color: transparent;
   -webkit-text-fill-color: transparent;
-  display: inline-block; /* shrink to content width */
+  display: inline-flex; /* shrink to content width */
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: clamp(1.6rem, 8vw, 3.75rem);
+  line-height: 1.5;
+  overflow: visible;
 }
 
 /* Ensure child spans don't paint their own color, so the H1 gradient shows through */
@@ -69,13 +75,14 @@
   font-family: var(--font-heading);
   letter-spacing: 0;
   letter-spacing: 1px;
-  font-size: clamp(2rem, 8vw, 5rem);
+  font-size: inherit;
   font-style: normal;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.45;
   display: inline-block;
   overflow: visible;
-  padding-top: 0.04em;
+  padding-top: 0.12em;
+  padding-bottom: 0.18em;
 }
 .network {
   text-align: center;
@@ -271,6 +278,21 @@
   color: var(--primary-color);
 }
 
+@media (max-width: 992px) {
+  .header {
+    margin-top: 80px;
+  }
+  .header h1 {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 900px) {
+  .header h1 {
+    font-size: clamp(2.2rem, 6.5vw, 3rem);
+  }
+}
+
 @media (min-width: 768px) {
   .contentSections > .fullWrapper,
   .contentSections > .groupWrapper {
@@ -290,8 +312,8 @@
 @media (max-width: 1200px) {
   .network,
   .solution {
-    font-size: 28px;
-    line-height: 32px;
+    font-size: inherit;
+    line-height: 1.45;
   }
   .mainContent {
     padding: 1rem;
@@ -313,11 +335,18 @@
 @media (max-width: 768px) {
   .network,
   .solution {
-    font-size: 36px;
-    line-height: 1.1;
+    font-size: inherit;
+    line-height: 1.45;
   }
   .header {
     padding: 2rem 0;
+  }
+  .header h1 {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    line-height: 1.55;
+    font-size: 3rem;
   }
   .header p {
     font-size: 1rem;
@@ -363,6 +392,13 @@
   .header {
     padding: 1rem 0 0.5rem 0;
   }
+  .header h1 {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    line-height: 1.55;
+    font-size: clamp(1.8rem, 6vw, 2.4rem);
+  }
   .description p {
     max-width: 98vw;
     font-size: 0.93rem;
@@ -382,8 +418,8 @@
   }
   .network,
   .solution {
-    font-size: 2rem;
-    line-height: 1.2;
+    font-size: inherit;
+    line-height: 1.45;
   }
   .description p {
     font-size: 0.9rem;
