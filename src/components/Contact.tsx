@@ -78,9 +78,9 @@ const Contact = () => {
 
         <div className="row custom-gutter">
           <div className="col-md-6 mb-4">
-            <h2 className="section-title">
+            <h1 className="section-title">
               {t("contact:serviceAndSolutions")}
-            </h2>
+            </h1>
             <ul className="list-unstyled text-white service-list">
               <li
                 style={{ cursor: "pointer" }}
