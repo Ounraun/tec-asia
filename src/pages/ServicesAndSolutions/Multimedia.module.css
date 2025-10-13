@@ -337,7 +337,14 @@
   border-radius: 50%;
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 2560px) {
+  .container {
+    margin: 0 auto;
+    max-width: 1920px;
+  }
+}
+
+@media (max-width: 1440px) {
   .firstBackground .servicesGrid,
   .secondBackground .servicesGrid {
     grid-template-columns: repeat(2, 1fr);
@@ -355,7 +362,13 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .header {
+    margin-top: 80px;
+  }
+  .header h1 {
+    font-size: clamp(2.4rem, 6vw, 3rem);
+  }
   .firstBackground,
   .secondBackground {
     min-height: 300px;
@@ -384,15 +397,6 @@
   }
 }
 
-@media (min-width: 600px) and (max-width: 900px) {
-  .header {
-    margin-top: 80px;
-  }
-  .header h1 {
-    font-size: 48px;
-  }
-}
-
 @media (max-width: 768px) {
   .servicesGrid {
     grid-template-columns: 1fr;
@@ -411,7 +415,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 425px) {
   .container {
     padding: 0 !important;
   }
@@ -464,12 +468,7 @@
     flex-direction: column;
     gap: 0.25rem;
     line-height: 1.55;
-    font-size: clamp(1.8rem, 6vw, 2.4rem);
-  }
-  .gradientText,
-  .solution {
-    height: auto;
-    line-height: 1.45;
+    font-size: 1.125rem;
   }
   .subtitle {
     font-size: 0.95rem;
@@ -483,5 +482,23 @@
   }
   .navLink {
     font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .serviceCard {
+    padding: 0.6rem;
+  }
+  .subtitle {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .subtitle {
+    font-size: 0.85rem;
+  }
+  .serviceCard h3 {
+    font-size: 1rem;
   }
 }

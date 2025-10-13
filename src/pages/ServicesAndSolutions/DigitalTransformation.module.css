@@ -208,7 +208,14 @@
   text-shadow: 0 1px 4px #000b;
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 2560px) {
+  .container {
+    margin: 0 auto;
+    max-width: 1920px;
+  }
+}
+
+@media (max-width: 1440px) {
   .leftSection {
     flex-direction: column;
     align-items: center;
@@ -228,17 +235,9 @@
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .header {
     margin-top: 80px;
-  }
-  .header h1 {
-    font-size: 48px;
-  }
-}
-
-@media (max-width: 900px) {
-  .header {
     padding: 2.5rem 0 1.5rem 0;
   }
   .header h1 {
@@ -304,7 +303,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 425px) {
   .container {
     padding: 0 47px !important;
     min-height: unset;
@@ -315,7 +314,7 @@
   .header h1 {
     flex-direction: column;
     align-items: center;
-    font-size: clamp(1.8rem, 6vw, 2.4rem);
+    font-size: 1.125rem;
     gap: 0.25rem;
     line-height: 1.55;
   }
@@ -389,5 +388,31 @@
     box-sizing: border-box;
     display: block;
     text-align: center;
+  }
+}
+
+@media (max-width: 375px) {
+  .container {
+    padding: 0 40px !important;
+  }
+  .description {
+    font-size: 11px;
+  }
+  .transformationItem p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .container {
+    padding: 0 32px !important;
+  }
+  .mainImage {
+    height: 110px;
+    max-height: 32vw;
+  }
+  .description {
+    font-size: 10px;
+    line-height: 1.3;
   }
 }
