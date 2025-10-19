@@ -238,7 +238,7 @@
   height: 62px;
   padding: 11px 78px;
   color: white;
-  font-size: 1.6rem;
+  font-size: clamp(16px, calc(1vw + 1rem), 26px);
   font-weight: 700;
   line-height: 1.5;
   letter-spacing: 0.5px;
@@ -688,7 +688,7 @@ button.position-absolute {
 
   .serviceHeading {
     position: relative !important;
-    top: auto !important;
+    top: 120px;
     left: auto !important;
     transform: none !important;
     margin-bottom: 1.5rem;
@@ -696,7 +696,8 @@ button.position-absolute {
 
   .serviceHeading h2 {
     /* Keep responsive scaling on small screens (avoid forcing 70px on mobile) */
-    font-size: clamp(24px, 7vw, 42px);
+    /* top: 0px; */
+    font-size: clamp(16px, 4vw, 42px);
     white-space: normal;
     text-align: center;
     line-height: 1.3;
@@ -719,38 +720,39 @@ button.position-absolute {
   }
 
   .gem-float-1 {
-    top: 4%;
+    top: -10%;
     left: 10%;
+    width: 100px;
   }
 
   .gem-float-2 {
-    top: 17%;
+    top: 5%;
     left: 5%;
-    width: 130px;
+    width: 100px;
   }
 
   .gem-float-3 {
-    top: 24%;
+    top: 17%;
     left: 10%;
-    width: 170px;
+    width: 100px;
   }
 
   .gem-float-4 {
-    top: 4%;
-    right: 10%;
-    width: 130px;
+    top: -9%;
+    right: 15%;
+    width: 80px;
   }
 
   .gem-float-5 {
-    top: 15%;
+    top: 4%;
     right: 7%;
-    width: 130px;
+    width: 100px;
   }
 
   .gem-float-6 {
-    top: 28%;
+    top: 16%;
     right: 10%;
-    width: 140px;
+    width: 100px;
   }
 
   .gem-float-1 .textInGem,
@@ -765,19 +767,27 @@ button.position-absolute {
   }
 
   .gem-floor-img {
+    display: none;
     width: 100%;
     height: auto;
   }
 
   .iso-layout {
+    position: relative;
+    bottom: auto;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100%, 560px);
+    max-width: calc(100% - 2rem);
+    padding: 0 16px 24px;
+    margin: 48px auto 0;
+    box-sizing: border-box;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 100%;
-    padding: 0 16px;
-    margin: 16px auto 0;
-    box-sizing: border-box;
-    overflow-x: hidden;
+    justify-content: flex-end;
   }
 
   .iso-item-content {
@@ -789,6 +799,12 @@ button.position-absolute {
     word-break: break-word;
     white-space: normal;
   }
+  .isoButton {
+    font-size: clamp(14px, calc(1vw + 0.8rem), 22px);
+    padding: 10px 40px;
+    height: 39px;
+  }
+
 
   .color-gradient-1,
   .color-gradient-2 {

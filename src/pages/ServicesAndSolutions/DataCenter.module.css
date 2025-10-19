@@ -82,7 +82,7 @@
     #f6caa9 45.06%,
     #0e0e0e 85.26%
   );
-  width: 702px;
+  width: clamp(220px, 70vw, 702px);
   height: 0.5px;
   margin: 0 auto;
 }
