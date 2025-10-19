@@ -669,7 +669,7 @@ button.position-absolute {
   }
 
   .main-title {
-    font-size: clamp(2rem, 8vw, 5rem);
+    font-size: clamp(1.5rem, 8vw, 5rem);
     white-space: normal;
     text-align: center;
   }
@@ -776,7 +776,7 @@ button.position-absolute {
     position: relative;
     bottom: auto;
     top: 200px;
-    left: 50%;
+    left: 46%;
     transform: translateX(-50%);
     width: min(100%, 560px);
     max-width: calc(100% - 2rem);
@@ -804,7 +804,6 @@ button.position-absolute {
     padding: 10px 40px;
     height: 39px;
   }
-
 
   .color-gradient-1,
   .color-gradient-2 {
