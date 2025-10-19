@@ -27,7 +27,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-family: var(--font-heading);
-  font-size: 69.751px;
+  font-size: clamp(28px, calc(3vw + 0.5rem), 70px);
   font-weight: 700;
   /* Looser line-height to avoid clipping Thai descenders with background-clip */
   line-height: 1.5;
@@ -56,14 +56,14 @@
 
 .knowledgeHeader h1 {
   font-family: var(--font-body);
-  font-size: 3rem;
+  font-size: clamp(16px, calc(1.2vw + 0.8rem), 24px);
   font-weight: bold;
   color: #00a3ff;
   margin: 0 0 1rem 0;
 }
 
 .knowledgeSubtitle {
-  font-size: 1.5rem;
+  font-size: clamp(16px, calc(1vw + 0.9rem), 24px);
   color: #fff;
   line-height: 1.6;
   opacity: 0.8;
@@ -73,12 +73,12 @@
 .moreKnowledgeBtn {
   background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
   border: none;
-  border-radius: 19820.6px;
+  border-radius: 90px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: 62px;
-  width: 400px;
+  width: clamp(280px, 45vw, 400px);
   padding: 13px 78px; /* Increased top/bottom padding for Thai text */
   color: white;
   font-size: 1.6rem;
@@ -262,7 +262,7 @@
   }
 
   .headerTitle {
-    font-size: 28px;
+    /* font-size: 28px; */
     line-height: 1.4;
   }
 
