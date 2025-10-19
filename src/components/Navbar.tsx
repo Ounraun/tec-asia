@@ -458,7 +458,7 @@ const Navigationbar = () => {
                   </span>
                 }
                 id="language-dropdown"
-                className="custom-nav-dropdown"
+                className="w-100 custom-nav-dropdown"
                 align="end"
               >
                 <NavDropdown.Item
@@ -782,7 +782,7 @@ const Navigationbar = () => {
                 </span>
               }
               id="language-dropdown"
-              className="custom-nav-dropdown"
+              className="custom-nav-dropdown "
               align="end"
             >
               <NavDropdown.Item
