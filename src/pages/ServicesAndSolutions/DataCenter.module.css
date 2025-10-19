@@ -65,7 +65,7 @@
   max-width: 800px;
   margin: 4rem auto 2rem auto;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: clamp(16px, 2.3vw, 20px);
   font-family: var(--font-subContent);
   font-weight: 500;
   line-height: 1.6;
@@ -122,7 +122,7 @@
 .facilitiesTitle {
   text-align: center;
   color: #72d4ed;
-  font-size: 36px;
+  font-size: clamp(18px, 3vw, 38px);
   font-weight: 500;
   margin-bottom: 3rem;
   letter-spacing: 6.4px;
@@ -364,9 +364,9 @@
 }
 
 @media (max-width: 1024px) {
-  .header {
+  /* .header {
     margin-top: 80px;
-  }
+  } */
   .header h1 {
     font-size: clamp(2.4rem, 6vw, 3rem);
     flex-direction: column;
@@ -391,6 +391,9 @@
   .card p {
     font-size: 0.85rem;
   }
+  .container{
+    padding: 0px 40px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -403,7 +406,7 @@
     line-height: 1.45;
   }
   .facilitiesTitle {
-    font-size: 28px;
+    /* font-size: 28px; */
   }
   .navLink {
     font-size: 20px;
@@ -442,9 +445,10 @@
   }
 }
 
-@media (max-width: 425px) {
-  .container {
-    padding: 1rem;
+@media (max-width: 426px) {
+  .header {
+    margin-top: 0px;
+    padding: 2rem 0;
   }
   .facilitiesGrid {
     padding: 0;
@@ -467,6 +471,10 @@
 }
 
 @media (max-width: 375px) {
+  .header {
+    margin-top: 0px;
+    padding: 2rem;
+  }
   .container {
     padding: 0.75rem;
   }

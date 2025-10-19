@@ -125,7 +125,7 @@
 .descriptionBox {
   text-align: left;
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: clamp(16px, 2.4vw, 20px);
   line-height: 1.6;
   color: #f5f5f5;
   padding: 1rem;
@@ -336,9 +336,9 @@
 }
 
 @media (max-width: 1024px) {
-  .header {
+  /* .header {
     margin-top: 80px;
-  }
+  } */
   .header h1 {
     font-size: clamp(2.4rem, 6vw, 3rem);
   }
@@ -372,12 +372,16 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 426px) {
   .navLink {
     font-size: clamp(0.9rem, 5vw, 1.2rem);
   }
   .header h1 {
     font-size: 1.125rem;
+  }
+  .header {
+    margin-top: 0px;
+    padding: 2rem 0px;
   }
   .servicesTitle {
     font-size: clamp(1.2rem, 5vw, 2rem);
@@ -394,19 +398,19 @@
   .servicesContainer {
     padding: 1.25rem;
   }
-  .servicesTitle {
+  /* .servicesTitle {
     font-size: 1.05rem;
-  }
+  } */
 }
 
 @media (max-width: 320px) {
   .container {
     padding: 0 24px;
   }
-  .header h1 {
+  /* .header h1 {
     font-size: 1.05rem;
   }
   .servicesTitle {
     font-size: 1rem;
-  }
+  } */
 }

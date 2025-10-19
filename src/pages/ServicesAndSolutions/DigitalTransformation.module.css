@@ -121,7 +121,7 @@
   text-align: left;
   width: 549px;
   font-family: var(--font-subContent);
-  font-size: 1.25rem;
+  font-size: clamp(16px, 0.8vw + 0.9rem, 20px);
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -200,7 +200,7 @@
 .transformationItem p {
   color: #e9f7ff;
   font-family: var(--font-subContent);
-  font-size: 1.25rem;
+  font-size: clamp(10px, 0.8vw + 0.9rem, 20px);
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.6;
@@ -225,6 +225,7 @@
   .description {
     width: 100%;
     max-width: 800px;
+    padding: 0 40px;
   }
   .mainImage {
     height: 320px;
@@ -237,7 +238,7 @@
 
 @media (max-width: 1024px) {
   .header {
-    margin-top: 80px;
+    /* margin-top: 80px; */
     padding: 2.5rem 0 1.5rem 0;
   }
   .header h1 {
@@ -260,7 +261,7 @@
     width: 95vw;
     font-size: 15px;
     line-height: 2;
-    padding: 0.5rem 0.5rem;
+    /* padding: 0.5rem 0.5rem; */
   }
   .transformationList {
     padding: 0;
@@ -270,7 +271,7 @@
     gap: 14px;
   }
   .transformationItem p {
-    font-size: 14px;
+
     line-height: 1.6;
   }
 }
@@ -295,7 +296,6 @@
   }
 
   .transformationItem p {
-    font-size: 12px;
   }
 
   .navLink {
@@ -303,13 +303,13 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 426px) {
   .container {
     padding: 0 47px !important;
     min-height: unset;
   }
   .header {
-    padding: 1.2rem 0 0.8rem 0;
+    padding: 2rem 0 0.8rem 0;
   }
   .header h1 {
     flex-direction: column;
@@ -351,7 +351,6 @@
     width: 99vw;
     font-size: 12px;
     line-height: 1.4;
-    padding: 0.5rem 0.2rem;
   }
   .transformationList {
     gap: 0.3rem;
@@ -368,7 +367,6 @@
     font-size: 12px;
   }
   .transformationItem p {
-    font-size: 0.95rem;
     line-height: 1.2;
   }
   .itemBar {
@@ -399,7 +397,7 @@
     font-size: 11px;
   }
   .transformationItem p {
-    font-size: 0.9rem;
+
   }
 }
 

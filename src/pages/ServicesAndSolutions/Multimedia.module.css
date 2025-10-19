@@ -180,10 +180,10 @@
 
 .firstBackground .servicesGrid {
   width: 100%;
-  max-width: 2000px;
+  max-width: 1400px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
   padding: 2rem;
   border-radius: 10px;
   z-index: 2;
@@ -218,6 +218,9 @@
   overflow: visible;
   border: none;
   backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .serviceCard:hover {
@@ -347,9 +350,8 @@
 @media (max-width: 1440px) {
   .firstBackground .servicesGrid,
   .secondBackground .servicesGrid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
-    padding: 1rem;
+    padding: 1.5rem;
   }
   .backgroundsContainer {
     gap: 2rem;
@@ -363,9 +365,9 @@
 }
 
 @media (max-width: 1024px) {
-  .header {
+  /* .header {
     margin-top: 80px;
-  }
+  } */
   .header h1 {
     font-size: clamp(2.4rem, 6vw, 3rem);
   }
@@ -374,11 +376,10 @@
     min-height: 300px;
     padding: 0.5rem;
   }
-  .firstBackground .servicesGrid,
-  .secondBackground .servicesGrid {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-    padding: 0.5rem;
+  .firstBackground .servicesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
   }
   .serviceCard {
     padding: 1rem 0.8rem 1.5rem;
@@ -415,7 +416,13 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 426px) {
+  .firstBackground .servicesGrid{
+    width: 90%;
+  }
+  .header h1 {
+    margin-bottom: 40px;
+  }
   .container {
     padding: 0 !important;
   }
@@ -486,6 +493,9 @@
 }
 
 @media (max-width: 375px) {
+  .header {
+    margin-top: 0px;
+  }
   .serviceCard {
     padding: 0.6rem;
   }
