@@ -85,7 +85,7 @@ const Navigationbar = () => {
       style={{
         height: "84px",
         backgroundColor: "#222222",
-        padding: "0px 60px",
+        padding: "0px 20px 0px 40px",
       }}
     >
       <Container
