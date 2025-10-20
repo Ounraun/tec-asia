@@ -215,7 +215,7 @@
   }
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 767px) {
   .leftSection {
     flex-direction: column;
     align-items: center;
@@ -258,10 +258,9 @@
     gap: 1.5rem;
   }
   .description {
-    width: 95vw;
-    font-size: 15px;
-    line-height: 2;
-    /* padding: 0.5rem 0.5rem; */
+    width: clamp(320px, 47vw, 560px);
+    font-size: clamp(15px, 1vw + 0.65rem, 18px);
+    line-height: 1.8;
   }
   .transformationList {
     padding: 0;
@@ -271,14 +270,13 @@
     gap: 14px;
   }
   .transformationItem p {
-
     line-height: 1.6;
   }
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 0 1rem;
   }
 
   .mainImage {
@@ -296,6 +294,7 @@
   }
 
   .transformationItem p {
+    line-height: 1.45;
   }
 
   .navLink {
@@ -397,7 +396,7 @@
     font-size: 11px;
   }
   .transformationItem p {
-
+    line-height: 1.3;
   }
 }
 

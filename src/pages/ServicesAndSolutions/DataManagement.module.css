@@ -357,6 +357,10 @@
 }
 
 @media (max-width: 768px) {
+  .header {
+    margin-top: 0px;
+    padding: 2rem 0;
+  }
   .header h1 {
     flex-direction: column;
     gap: 0.35rem;
@@ -364,7 +368,7 @@
     line-height: 1.55;
   }
   .container {
-    padding: 1rem;
+    padding: 0 1rem;
   }
   .servicesContainer {
     min-height: 500px;
