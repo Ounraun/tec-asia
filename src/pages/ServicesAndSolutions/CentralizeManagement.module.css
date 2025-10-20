@@ -517,12 +517,19 @@
     gap: 4rem;
     margin: 3rem 0;
   }
+    .container {
+    padding: 0 40px;
+  }
+  .subtitle {
+  padding: 0 40px;
+  }
 }
 
 /* =========================
    Extra large ≥ 1200px
    ========================= */
 @media (min-width: 1200px) {
+
   .carouselContainer .prevBtn,
   .carouselContainer .nextBtn,
   .carouselContainer .dots {
