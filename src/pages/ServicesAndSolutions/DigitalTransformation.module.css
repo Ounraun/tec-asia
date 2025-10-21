@@ -121,7 +121,7 @@
   text-align: left;
   width: 549px;
   font-family: var(--font-subContent);
-  font-size: 1.25rem;
+  font-size: clamp(16px, 0.8vw + 0.9rem, 20px);
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -200,7 +200,7 @@
 .transformationItem p {
   color: #e9f7ff;
   font-family: var(--font-subContent);
-  font-size: 1.25rem;
+  font-size: clamp(10px, 0.8vw + 0.9rem, 20px);
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.6;
@@ -208,7 +208,14 @@
   text-shadow: 0 1px 4px #000b;
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 2560px) {
+  .container {
+    margin: 0 auto;
+    max-width: 1920px;
+  }
+}
+
+@media (max-width: 767px) {
   .leftSection {
     flex-direction: column;
     align-items: center;
@@ -218,6 +225,7 @@
   .description {
     width: 100%;
     max-width: 800px;
+    padding: 0 40px;
   }
   .mainImage {
     height: 320px;
@@ -228,17 +236,9 @@
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .header {
-    margin-top: 80px;
-  }
-  .header h1 {
-    font-size: 48px;
-  }
-}
-
-@media (max-width: 900px) {
-  .header {
+    /* margin-top: 80px; */
     padding: 2.5rem 0 1.5rem 0;
   }
   .header h1 {
@@ -258,10 +258,9 @@
     gap: 1.5rem;
   }
   .description {
-    width: 95vw;
-    font-size: 15px;
-    line-height: 2;
-    padding: 0.5rem 0.5rem;
+    width: clamp(320px, 47vw, 560px);
+    font-size: clamp(15px, 1vw + 0.65rem, 18px);
+    line-height: 1.8;
   }
   .transformationList {
     padding: 0;
@@ -271,14 +270,13 @@
     gap: 14px;
   }
   .transformationItem p {
-    font-size: 14px;
     line-height: 1.6;
   }
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 0 1rem;
   }
 
   .mainImage {
@@ -296,7 +294,7 @@
   }
 
   .transformationItem p {
-    font-size: 12px;
+    line-height: 1.45;
   }
 
   .navLink {
@@ -304,18 +302,18 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 426px) {
   .container {
     padding: 0 47px !important;
     min-height: unset;
   }
   .header {
-    padding: 1.2rem 0 0.8rem 0;
+    padding: 2rem 0 0.8rem 0;
   }
   .header h1 {
     flex-direction: column;
     align-items: center;
-    font-size: clamp(1.8rem, 6vw, 2.4rem);
+    font-size: 1.125rem;
     gap: 0.25rem;
     line-height: 1.55;
   }
@@ -352,7 +350,6 @@
     width: 99vw;
     font-size: 12px;
     line-height: 1.4;
-    padding: 0.5rem 0.2rem;
   }
   .transformationList {
     gap: 0.3rem;
@@ -369,7 +366,6 @@
     font-size: 12px;
   }
   .transformationItem p {
-    font-size: 0.95rem;
     line-height: 1.2;
   }
   .itemBar {
@@ -389,5 +385,31 @@
     box-sizing: border-box;
     display: block;
     text-align: center;
+  }
+}
+
+@media (max-width: 375px) {
+  .container {
+    padding: 0 40px !important;
+  }
+  .description {
+    font-size: 11px;
+  }
+  .transformationItem p {
+    line-height: 1.3;
+  }
+}
+
+@media (max-width: 320px) {
+  .container {
+    padding: 0 32px !important;
+  }
+  .mainImage {
+    height: 110px;
+    max-height: 32vw;
+  }
+  .description {
+    font-size: 10px;
+    line-height: 1.3;
   }
 }

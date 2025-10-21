@@ -76,7 +76,7 @@
   max-width: 1200px;
   margin: -3rem auto 2rem auto;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: clamp(16px, 2.4vw, 20px);
   font-family: var(--font-body);
   font-weight: 500;
   line-height: 1.6;
@@ -197,7 +197,7 @@
 }
 .featureCard h3 {
   color: #fff;
-  font-size: 1.25rem;
+  font-size: clamp(16px, 2.4vw, 20px);
   font-weight: 500;
   margin-top: 1.25rem;
   margin-bottom: 1rem;
@@ -207,7 +207,7 @@
 .featureCard p {
   color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: clamp(16px, 2.4vw, 20px);
   line-height: 1.6;
   margin-top: 0;
   white-space: pre-wrap;
@@ -266,13 +266,26 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
+  background: #0497ec;
   color: #fff;
-  font-size: 2rem;
-  padding: 0.2rem 0.6rem;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: background 0.2s ease;
+  box-shadow: 0 2px 6px #0497ec44;
+  padding: 0;
+  line-height: 1;
   z-index: 10;
+}
+.prevBtn:active,
+.nextBtn:active {
+  background: #005a8e;
 }
 .prevBtn {
   left: 0.5rem;
@@ -336,27 +349,31 @@
    Mobile ≤ 575.98px
    ========================= */
 @media (max-width: 575.98px) {
+  .subtitle {
+    padding: 0 40px;
+    /* font-size: 1.05rem; */
+  }
   .featuresGrid {
     flex-direction: column;
     align-items: center;
   }
   .highlight,
   .Management_29_186 {
-    font-size: inherit;
+    /* font-size: inherit; */
     line-height: 1.45;
     padding-top: 0.14em;
     padding-bottom: 0.2em;
   }
   .header {
-    margin: 2rem 0;
-    padding-top: 36px;
+    /* margin: 2rem 0; */
+    padding-top: 2rem;
   }
   .header h1 {
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
     line-height: 1.55;
-    font-size: clamp(1.8rem, 6vw, 2.4rem);
+    font-size: 1.05rem;
   }
   .featureCard {
     height: 350px;
@@ -365,7 +382,7 @@
   .featureTitle {
     font-size: 14px;
     line-height: 20px;
-    width: 140px;
+    /* width: 140px; */
     min-height: 50px;
   }
   .featureContent {
@@ -407,6 +424,7 @@
     font-size: 14px;
   }
   .header {
+    margin-top: 0;
     padding: 2rem 0;
   }
   .header h1 {
@@ -499,6 +517,12 @@
     justify-content: center;
     gap: 4rem;
     margin: 3rem 0;
+  }
+  .container {
+    padding: 0 40px;
+  }
+  .subtitle {
+    padding: 0 40px;
   }
 }
 

@@ -85,7 +85,7 @@ const Navigationbar = () => {
       style={{
         height: "84px",
         backgroundColor: "#222222",
-        padding: "0px 60px",
+        padding: "0px 20px 0px 40px",
       }}
     >
       <Container
@@ -458,7 +458,7 @@ const Navigationbar = () => {
                   </span>
                 }
                 id="language-dropdown"
-                className="custom-nav-dropdown"
+                className="w-100 custom-nav-dropdown"
                 align="end"
               >
                 <NavDropdown.Item
@@ -782,7 +782,7 @@ const Navigationbar = () => {
                 </span>
               }
               id="language-dropdown"
-              className="custom-nav-dropdown"
+              className="custom-nav-dropdown "
               align="end"
             >
               <NavDropdown.Item

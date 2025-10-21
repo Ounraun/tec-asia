@@ -65,7 +65,7 @@
   max-width: 800px;
   margin: 4rem auto 2rem auto;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: clamp(16px, 2.3vw, 20px);
   font-family: var(--font-subContent);
   font-weight: 500;
   line-height: 1.6;
@@ -82,7 +82,7 @@
     #f6caa9 45.06%,
     #0e0e0e 85.26%
   );
-  width: 702px;
+  width: clamp(220px, 70vw, 702px);
   height: 0.5px;
   margin: 0 auto;
 }
@@ -122,7 +122,7 @@
 .facilitiesTitle {
   text-align: center;
   color: #72d4ed;
-  font-size: 36px;
+  font-size: clamp(18px, 3vw, 38px);
   font-weight: 500;
   margin-bottom: 3rem;
   letter-spacing: 6.4px;
@@ -344,20 +344,14 @@
   font-weight: bold;
 }
 
-@media (min-width: 600px) and (max-width: 900px) {
-  .header {
-    margin-top: 80px;
-  }
-  .header h1 {
-    font-size: 48px;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    line-height: 1.5;
+@media (min-width: 2560px) {
+  .container {
+    margin: 0 auto;
+    max-width: 1920px;
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1440px) {
   .facilitiesGrid {
     gap: 2rem;
     padding: 0 1rem;
@@ -369,31 +363,44 @@
   }
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1024px) {
+  /* .header {
+    margin-top: 80px;
+  } */
+  .header h1 {
+    font-size: clamp(2.4rem, 6vw, 3rem);
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    line-height: 1.5;
+  }
   .card {
     max-width: 220px;
     padding: 0.4rem;
   }
-
   .card:hover {
     width: 220px;
   }
-
   .cardLabel {
     font-size: 0.9rem;
     padding: 0.75rem;
   }
-
   .card h3 {
     font-size: 1rem;
   }
-
   .card p {
     font-size: 0.85rem;
+  }
+  .container{
+    padding: 0px 40px;
   }
 }
 
 @media (max-width: 768px) {
+  .header {
+    margin-top: 0px;
+    padding: 2rem 0;
+  }
   .facilitiesGrid {
     flex-direction: column;
   }
@@ -403,7 +410,7 @@
     line-height: 1.45;
   }
   .facilitiesTitle {
-    font-size: 28px;
+    /* font-size: 28px; */
   }
   .navLink {
     font-size: 20px;
@@ -442,9 +449,10 @@
   }
 }
 
-@media (max-width: 480px) {
-  .container {
-    padding: 1rem;
+@media (max-width: 426px) {
+  .header {
+    margin-top: 0px;
+    padding: 2rem 0;
   }
   .facilitiesGrid {
     padding: 0;
@@ -457,11 +465,39 @@
     align-items: center;
     gap: 0.25rem;
     line-height: 1.55;
-    font-size: clamp(1.8rem, 6vw, 2.4rem);
+    font-size: 1.125rem;
   }
   .carouselButton {
     width: 32px;
     height: 32px;
     font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .header {
+    margin-top: 0px;
+    padding: 2rem;
+  }
+  .container {
+    padding: 0.75rem;
+  }
+  .facilityCard {
+    padding: 0.85rem;
+  }
+  .facilitiesTitle {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 320px) {
+  .container {
+    padding: 0.5rem;
+  }
+  .facilitiesTitle {
+    font-size: 22px;
+  }
+  .facilityTitle {
+    font-size: 18px;
   }
 }
