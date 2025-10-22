@@ -876,3 +876,11 @@ button.position-absolute {
     margin-bottom: 16px;
   }
 }
+
+@media (max-width: 430px) {
+  .main-title {
+    font-size: 30px;
+    white-space: normal;
+    text-align: center;
+  }
+}

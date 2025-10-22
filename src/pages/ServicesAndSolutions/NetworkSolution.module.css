@@ -337,7 +337,7 @@
 }
 
 @media (max-width: 768px) {
-    .container {
+  .container {
     padding: 0 1rem;
   }
   .network,
@@ -395,14 +395,13 @@
   }
 }
 
-@media (max-width: 426px) {
-
+@media (max-width: 430px) {
   .header h1 {
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
     line-height: 1.55;
-    font-size: 1rem;
+    font-size: 28px;
   }
   .description p {
     max-width: 98vw;

@@ -395,3 +395,11 @@
     height: 50px;
   }
 }
+
+@media (max-width: 430px) {
+  .blogTitle {
+    font-size: 28px;
+    line-height: 40px;
+    margin: 2rem 0 4rem 0;
+  }
+}
