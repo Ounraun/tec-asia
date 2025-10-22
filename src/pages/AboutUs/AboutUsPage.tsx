@@ -379,7 +379,7 @@ const AboutUs = () => {
               transform: "translate(-50%, -50%)",
               width: "100%",
               textAlign: "center",
-              padding: "0 20px",
+              padding: "0 30px",
             }}
           >
             <h1 className={aboutStyles["main-text-s50"]}>
