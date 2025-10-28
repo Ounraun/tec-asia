@@ -402,4 +402,9 @@
     line-height: 40px;
     margin: 2rem 0 4rem 0;
   }
+  .otherEvents h2 {
+    font-size: 28px;
+    line-height: 40px;
+    margin-bottom: 2rem;
+  }
 }

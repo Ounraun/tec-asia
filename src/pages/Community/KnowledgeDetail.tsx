@@ -25,7 +25,7 @@ const KnowledgeDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -34,14 +34,39 @@ const KnowledgeDetail: React.FC = () => {
       }
       try {
         setError(null);
-        const encodedId = encodeURIComponent(documentId);
-        const res = await fetch(
-          `${apiUrl}/api/blog-posts?populate=*&filters[documentId][$eq]=${encodedId}`
-        );
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const data = await res.json();
-        if (!data?.data?.length) throw new Error("Post not found");
-        setPost(data.data[0]);
+
+        const requestPost = async (locale: string) => {
+          const params = new URLSearchParams();
+          params.set("populate", "*");
+          params.append("filters[documentId][$eq]", documentId);
+          params.set("locale", locale);
+
+          const response = await fetch(
+            `${apiUrl}/api/blog-posts?${params.toString()}`
+          );
+
+          if (!response.ok) {
+            if (response.status === 404) {
+              return null;
+            }
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const json = await response.json();
+          return json?.data?.[0] ?? null;
+        };
+
+        let nextPost = await requestPost(i18n.language);
+
+        if (!nextPost && i18n.language !== "en") {
+          nextPost = await requestPost("en");
+        }
+
+        if (!nextPost) {
+          throw new Error("Post not found");
+        }
+
+        setPost(nextPost);
       } catch (e) {
         setError(e instanceof Error ? e.message : "An error occurred");
       } finally {
@@ -49,22 +74,34 @@ const KnowledgeDetail: React.FC = () => {
       }
     };
 
-    if (documentId) fetchPost();
-  }, [documentId, apiUrl]);
+    if (documentId) {
+      setLoading(true);
+      fetchPost();
+    }
+  }, [documentId, apiUrl, i18n.language]);
 
   const sanitizedContent = useMemo(
     () => ({ __html: DOMPurify.sanitize(post?.content ?? "") }),
     [post?.content]
   );
 
-  if (loading) return <div className={styles.loading}>{t('loading', { ns: 'knowledgeDetail' })}</div>;
+  if (loading)
+    return (
+      <div className={styles.loading}>
+        {t("loading", { ns: "knowledgeDetail" })}
+      </div>
+    );
   if (error || !post)
-    return <div className={styles.error}>{error || t('postNotFound', { ns: 'knowledgeDetail' })}</div>;
+    return (
+      <div className={styles.error}>
+        {error || t("postNotFound", { ns: "knowledgeDetail" })}
+      </div>
+    );
 
   const mainImageUrl = getStrapiImageUrl(post?.mainImage?.url);
 
   return (
-    <> 
+    <>
       <div className={styles.knowledgeDetailContainer}>
         <div className={styles.headerSection}>
           <div className={styles.knowledgeHeader}>
@@ -96,7 +133,7 @@ const KnowledgeDetail: React.FC = () => {
 
         <div className={styles.allKnowledgeSection}>
           <a href="/community/knowledge" className={styles.allKnowledgeLink}>
-            {t('allKnowledge', { ns: 'knowledgeDetail' })}
+            {t("allKnowledge", { ns: "knowledgeDetail" })}
           </a>
         </div>
       </div>

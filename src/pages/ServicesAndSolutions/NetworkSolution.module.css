@@ -337,16 +337,16 @@
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: 0 1rem;
-  }
   .network,
   .solution {
     font-size: inherit;
     line-height: 1.45;
   }
   .header {
-    padding: 2rem 0;
+    padding: 2rem 0px;
+  }
+  .description{
+    padding: 0 32px;
   }
   .header h1 {
     flex-direction: column;
@@ -354,10 +354,12 @@
     gap: 0.25rem;
     line-height: 1.55;
     font-size: 3rem;
+    padding: 0px 32px;
   }
   .header p {
     font-size: 1rem;
     margin-top: 1rem;
+    padding: 0px 32px;
   }
   .cityImageContainer {
     height: 150px;
@@ -396,6 +398,9 @@
 }
 
 @media (max-width: 430px) {
+  .header{
+    padding: 2rem 0px;
+  }
   .header h1 {
     flex-direction: column;
     align-items: center;

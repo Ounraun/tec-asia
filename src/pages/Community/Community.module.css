@@ -48,6 +48,7 @@
 .eventCard {
   --event-media-size: clamp(320px, 32vw, 520px);
   --event-text-height: 520px;
+  --event-image-inset: 0px;
   display: grid;
   grid-template-columns: minmax(auto, var(--event-media-size)) minmax(0, 1fr);
   gap: 1rem; /* tighter column spacing so text sits closer to image */
@@ -81,16 +82,15 @@
 }
 
 .eventImageContainer {
+  position: relative;
   width: 100%;
   max-width: var(--event-media-size); /* content-sized image column */
-  /* Make the image area a perfect square */
   aspect-ratio: 1 / 1;
-  height: auto;
   overflow: hidden;
-  /* Even padding around image on all four sides */
-  padding: 24px;
   box-sizing: border-box;
   margin-inline: 0;
+  border-radius: 8px;
+  align-self: center; /* keep square ratio even when text column grows taller */
 }
 
 .eventContent {
@@ -142,8 +142,11 @@
 }
 
 .eventImage {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: var(--event-image-inset);
+  left: var(--event-image-inset);
+  width: calc(100% - (var(--event-image-inset) * 2));
+  height: calc(100% - (var(--event-image-inset) * 2));
   display: block; /* remove inline baseline whitespace */
   object-fit: cover;
   border-radius: 8px;
@@ -231,6 +234,14 @@
   width: 100%;
 }
 
+@supports not (aspect-ratio: 1 / 1) {
+  .eventImageContainer::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .eventCard {
@@ -244,7 +255,6 @@
   .eventImageContainer {
     width: min(100%, var(--event-media-size));
     aspect-ratio: 1 / 1;
-    padding: 16px;
     justify-self: center;
     align-self: center;
   }
@@ -258,7 +268,7 @@
   }
 
   .eventTitle {
-    font-size: 30px;
+    font-size: 28px;
   }
 
   .eventImage {

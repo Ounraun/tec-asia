@@ -391,7 +391,7 @@
   .card p {
     font-size: 0.85rem;
   }
-  .container{
+  .container {
     padding: 0px 40px;
   }
 }
@@ -400,6 +400,9 @@
   .header {
     margin-top: 0px;
     padding: 2rem 0;
+  }
+  .header h1 {
+    font-size: 28px;
   }
   .facilitiesGrid {
     flex-direction: column;
@@ -410,7 +413,7 @@
     line-height: 1.45;
   }
   .facilitiesTitle {
-    /* font-size: 28px; */
+    font-size: 28px;
   }
   .navLink {
     font-size: 20px;
@@ -465,7 +468,7 @@
     align-items: center;
     gap: 0.25rem;
     line-height: 1.55;
-    font-size: 1.125rem;
+    /* font-size: 1.125rem; */
   }
   .carouselButton {
     width: 32px;
