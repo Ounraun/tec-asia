@@ -76,7 +76,7 @@
   max-width: 1200px;
   margin: -3rem auto 2rem auto;
   text-align: center;
-  font-size: clamp(16px, 2.4vw, 20px);
+  font-size: clamp(16px, 2.4vw, var(--services-body-lg));
   font-family: var(--font-body);
   font-weight: 500;
   line-height: 1.6;
@@ -197,7 +197,7 @@
 }
 .featureCard h3 {
   color: #fff;
-  font-size: clamp(16px, 2.4vw, 20px);
+  font-size: clamp(16px, 2.4vw, var(--services-body-lg));
   font-weight: 500;
   margin-top: 1.25rem;
   margin-bottom: 1rem;
@@ -207,7 +207,7 @@
 .featureCard p {
   color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-heading);
-  font-size: clamp(16px, 2.4vw, 20px);
+  font-size: clamp(16px, 2.4vw, var(--services-body-lg));
   line-height: 1.6;
   margin-top: 0;
   white-space: pre-wrap;
@@ -224,7 +224,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-family: var(--font-heading);
-  font-size: 20px;
+  font-size: var(--services-body-lg);
   font-weight: 700;
   line-height: 1.4;
   display: inline-block;
@@ -235,7 +235,7 @@
 .featureContent {
   color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-heading);
-  font-size: 14px;
+  font-size: var(--services-body-sm);
   line-height: 1.6;
   white-space: pre-wrap;
   flex: 1;
@@ -337,7 +337,7 @@
     margin-top: 80px;
   }
   .header h1 {
-    font-size: 48px;
+    font-size: var(--services-heading-tablet);
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
@@ -373,14 +373,14 @@
     align-items: center;
     gap: 0.25rem;
     line-height: 1.55;
-    font-size: 1.05rem;
+    font-size: var(--services-heading-mobile) !important;
   }
   .featureCard {
     height: 350px;
     min-height: 350px;
   }
   .featureTitle {
-    font-size: 14px;
+    font-size: var(--services-body-sm);
     line-height: 20px;
     /* width: 140px; */
     min-height: 50px;
@@ -421,14 +421,14 @@
     min-height: 55px;
   }
   .featureContent {
-    font-size: 14px;
+    font-size: var(--services-body-sm);
   }
   .header {
     margin-top: 0;
     padding: 2rem 0;
   }
   .header h1 {
-    font-size: 48px;
+    font-size: var(--services-heading-tablet);
     gap: 0.3rem;
     justify-content: center;
   }

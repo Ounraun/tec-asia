@@ -64,7 +64,7 @@
 .header p {
   color: #fff;
   font-family: var(--font-subContent);
-  font-size: 20px;
+  font-size: var(--services-body-lg);
   font-weight: 700;
   line-height: 170%;
   margin-top: 4rem;
@@ -138,7 +138,7 @@
   color: #fff;
   letter-spacing: -0.38px;
   font-family: var(--font-subContent);
-  font-size: 20px;
+  font-size: var(--services-body-lg);
   font-weight: 400;
   line-height: 1.6;
   /* Preserve line breaks from API (\n) */
@@ -178,7 +178,7 @@
 .sectionContent p {
   color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-subContent);
-  font-size: 14px;
+  font-size: var(--services-body-sm);
   line-height: 1.6;
   margin: 0.5rem 0;
 }
@@ -345,7 +345,7 @@
   .header {
     padding: 2rem 0px;
   }
-  .description{
+  .description {
     padding: 0 32px;
   }
   .header h1 {
@@ -398,7 +398,7 @@
 }
 
 @media (max-width: 430px) {
-  .header{
+  .header {
     padding: 2rem 0px;
   }
   .header h1 {
@@ -406,7 +406,7 @@
     align-items: center;
     gap: 0.25rem;
     line-height: 1.55;
-    font-size: 28px;
+    font-size: var(--services-heading-mobile);
   }
   .description p {
     max-width: 98vw;
@@ -420,7 +420,7 @@
   }
   .topBox p,
   .sectionContent p {
-    font-size: 14px;
+    font-size: var(--services-body-sm);
   }
   .network,
   .solution {

@@ -65,7 +65,7 @@
   max-width: 800px;
   margin: 4rem auto 2rem auto;
   text-align: center;
-  font-size: clamp(16px, 2.3vw, 20px);
+  font-size: clamp(16px, 2.3vw, var(--services-body-lg));
   font-family: var(--font-subContent);
   font-weight: 500;
   line-height: 1.6;
@@ -145,6 +145,9 @@
   line-height: 250%;
   display: block;
 }
+.description {
+  font-size: clamp(16px, 2.4vw, var(--services-body-lg));
+}
 
 .facilitiesGrid {
   display: grid;
@@ -195,7 +198,7 @@
   color: #d58213;
   width: 359px;
   font-family: var(--font-heading);
-  font-size: 20px;
+  font-size: var(--services-body-lg);
   font-style: normal;
   font-weight: 700;
   line-height: 30px;
@@ -402,7 +405,7 @@
     padding: 2rem 0;
   }
   .header h1 {
-    font-size: 28px;
+    font-size: var(--services-heading-mobile);
   }
   .facilitiesGrid {
     flex-direction: column;
@@ -413,10 +416,10 @@
     line-height: 1.45;
   }
   .facilitiesTitle {
-    font-size: 28px;
+    font-size: var(--services-heading-mobile);
   }
   .navLink {
-    font-size: 20px;
+    font-size: var(--services-body-lg);
   }
   .cardLabel {
     display: none !important;

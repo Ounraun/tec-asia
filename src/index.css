@@ -44,8 +44,8 @@ body {
 }
 
 /* Special handling for buttons and compact elements */
-button, 
-.btn, 
+button,
+.btn,
 .services-btn,
 input,
 select,
@@ -62,6 +62,10 @@ html[lang="th"] {
   --font-heading: "Sarabun", sans-serif;
   --font-body: "Sarabun", sans-serif;
   --font-subContent: "Sarabun", sans-serif;
+  --services-heading-mobile: 28px;
+  --services-heading-tablet: 48px;
+  --services-body-lg: 20px;
+  --services-body-sm: 14px;
 }
 
 /* ===== Links ===== */

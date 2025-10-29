@@ -121,7 +121,7 @@
   text-align: left;
   width: 549px;
   font-family: var(--font-subContent);
-  font-size: clamp(16px, 0.8vw + 0.9rem, 20px);
+  font-size: clamp(16px, 0.8vw + 0.9rem, var(--services-body-lg));
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -200,7 +200,7 @@
 .transformationItem p {
   color: #e9f7ff;
   font-family: var(--font-subContent);
-  font-size: clamp(10px, 0.8vw + 0.9rem, 20px);
+  font-size: clamp(10px, 0.8vw + 0.9rem, var(--services-body-lg));
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.6;
@@ -284,7 +284,7 @@
   }
 
   .description {
-    font-size: 14px;
+    font-size: var(--services-body-sm);
   }
 
   .digital,
@@ -313,7 +313,7 @@
   .header h1 {
     flex-direction: column;
     align-items: center;
-    font-size: 28px;
+    font-size: var(--services-heading-mobile);
     gap: 0.25rem;
     line-height: 1.55;
   }
