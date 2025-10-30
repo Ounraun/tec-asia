@@ -17,7 +17,7 @@
     "centralizeManagement": "การจัดการข้อมูลแบบศูนย์กลาง",
     "dataCenter": "ศูนย์กลางข้อมูล",
     "multimediaSolutions": "มัลติมีเดียโซลูชั่น",
-    "digitalTransformation": "การปฎิรูปดิจิทัลด้วยเทคโนโลยี",
+    "digitalTransformation": "การปฏิรูปดิจิทัลด้วยเทคโนโลยี",
     "dataManagement": "ข้อมูลและระบบการจัดการ",
     "networkSolution": "บริการวางระบบ และเครือข่าย",
     "ourCommunity": "ชุมชนของเรา",
@@ -55,7 +55,7 @@
     "dataManagement": "ข้อมูลและระบบการจัดการ",
     "centralizeManagement": "การจัดการข้อมูลแบบศูนย์กลาง",
     "multimediaSolution": "มัลติมีเดียโซลูชั่น",
-    "digitalTransformation": "การปฎิรูปดิจิทัลด้วยเทคโนโลยี",
+    "digitalTransformation": "การปฏิรูปดิจิทัลด้วยเทคโนโลยี",
     "ourCommunity": "ชุมชนของเรา",
     "companyEvents": "กิจกรรมบริษัท",
     "knowledge": "คลังความรู้",
@@ -63,14 +63,15 @@
   },
   "dataCenter": {
     "dataCenter": "ศูนย์กลางข้อมูล",
-    "facilitiesSystem": "FACILITIES SYSTEM"
+    "facilitiesSystem": "FACILITIES SYSTEM",
+    "seeMore": "ดูเพิ่มเติม"
   },
   "dataManagement": {
     "dataManagement": "ข้อมูลและระบบการจัดการ",
     "ourService": "บริการของเรา"
   },
   "digitalTransformation": {
-    "digitalTransformation": "การปฎิรูปดิจิทัลด้วยเทคโนโลยี"
+    "digitalTransformation": "การปฏิรูปดิจิทัลด้วยเทคโนโลยี"
   },
   "knowledge": {
     "knowledge": "คลังความรู้",

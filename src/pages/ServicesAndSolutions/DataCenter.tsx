@@ -47,6 +47,7 @@ const DataCenter: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const { t, i18n } = useTranslation(["common", "dataCenter"]);
+  const seeMoreLabel = t("dataCenter:seeMore", { defaultValue: "See More" });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -127,7 +128,9 @@ const DataCenter: React.FC = () => {
               style={{ top: pos.top, left: pos.left }}
             >
               <div className={styles.card}>
-                <div className={styles.cardLabel}>{item.title}</div>
+                <div className={styles.cardLabel}>
+                  {`${item.title}\u00a0\u2192 ${seeMoreLabel}`}
+                </div>
                 <div
                   className={styles.cardContent}
                   tabIndex={0}

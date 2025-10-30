@@ -62,7 +62,8 @@
   },
   "dataCenter": {
     "dataCenter": "DATA CENTER",
-    "facilitiesSystem": "FACILITIES SYSTEM"
+    "facilitiesSystem": "FACILITIES SYSTEM",
+    "seeMore": "See More"
   },
   "dataManagement": {
     "dataManagement": "DATA MANAGEMENT",
