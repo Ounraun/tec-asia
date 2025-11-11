@@ -1,6 +1,6 @@
 :root {
   --primary-color: #34a8d5;
-  --secondary-color: #72d4ed;
+  --secondary-color: var(--color-brand-sky);
   /* Slightly darker to improve white text contrast (from ~17.81 → ~18) */
   --background-color: rgba(0, 27, 45, 0.92);
 }

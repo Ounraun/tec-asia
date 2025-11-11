@@ -58,7 +58,7 @@
   font-family: var(--font-body);
   font-size: clamp(16px, calc(1.2vw + 0.8rem), 24px);
   font-weight: bold;
-  color: #00a3ff;
+  color: var(--color-brand-azure);
   margin: 0 0 1rem 0;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .moreKnowledgeBtn {
-  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  background: var(--gradient-brand-horizontal);
   border: none;
   border-radius: 90px;
   display: inline-flex;
@@ -95,7 +95,7 @@
 }
 
 .moreKnowledgeBtn:hover {
-  background-color: #0077ff;
+  background-color: var(--color-brand-azure-hover);
 }
 
 .videoContainer {
@@ -221,7 +221,7 @@
 }
 
 .companyInfo h3 {
-  color: #00a3ff;
+  color: var(--color-brand-azure);
   margin-bottom: 20px;
 }
 

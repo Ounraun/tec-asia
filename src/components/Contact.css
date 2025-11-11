@@ -43,7 +43,7 @@
 }
 
 .contact-layout ul li:hover {
-  color: #00a3ff;
+  color: var(--color-brand-azure);
   cursor: pointer;
 }
 .map-container {

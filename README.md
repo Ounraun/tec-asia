@@ -1,55 +1,85 @@
-# React + TypeScript + Vite
+# TEC Asia Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend application built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## 📋 ความต้องการของระบบ
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js (เวอร์ชัน 18 หรือสูงกว่า)
+- npm หรือ yarn
 
-## Expanding the ESLint configuration
+## 🚀 การติดตั้ง
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. ติดตั้ง dependencies:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. สร้างไฟล์ `.env` ในโฟลเดอร์ root ของโปรเจกต์:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```env
+VITE_API_URL=http://localhost:1337
 ```
-# tec-asia
+
+สำหรับ production ให้เปลี่ยนเป็น URL ของ production API:
+
+```env
+VITE_API_URL=https://api.yourdomain.com
+```
+
+## 🛠️ การรันโปรเจกต์
+
+### Development Mode
+
+```bash
+npm run dev
+```
+
+แอปพลิเคชันจะรันที่ `http://localhost:5173`
+
+### Build สำหรับ Production
+
+```bash
+npm run build
+```
+
+ไฟล์ที่ build จะอยู่ในโฟลเดอร์ `dist/`
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## 📁 โครงสร้างโปรเจกต์
+
+```
+frontend/
+├── public/          # ไฟล์ static
+├── src/
+│   ├── components/  # React components
+│   ├── pages/      # หน้า pages
+│   ├── services/    # API services
+│   ├── types/       # TypeScript types
+│   ├── locales/     # ไฟล์ภาษา (i18n)
+│   └── utils/       # Utility functions
+├── package.json
+└── vite.config.ts
+```
+
+## 🔧 Environment Variables
+
+| Variable       | Description                | Required |
+| -------------- | -------------------------- | -------- |
+| `VITE_API_URL` | URL ของ Strapi API backend | ✅       |
+
+## 📝 หมายเหตุ
+
+- ไฟล์ `.env` จะไม่ถูก commit ไปยัง repository (อยู่ใน .gitignore)
+- สำหรับ production ควรสร้างไฟล์ `.env.production` แยกต่างหาก

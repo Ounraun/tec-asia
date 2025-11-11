@@ -20,16 +20,16 @@
 }
 
 .custom-nav-dropdown.active .dropdown-toggle {
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .custom-nav-dropdown.active .dropdown-toggle::after {
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .custom-nav-dropdown .dropdown-menu {
-  background-color: #0c2536;
-  border: 1.5px solid #00a3ff;
+  background-color: var(--color-surface-panel);
+  border: 1.5px solid var(--color-brand-azure);
   border-radius: 12px;
   padding: 10px 0;
   box-shadow: 0 0 10px rgba(0, 163, 255, 0.35);
@@ -52,7 +52,7 @@
 .custom-nav-dropdown .dropdown-item:focus,
 .custom-nav-dropdown .dropdown-item.active {
   background-color: rgba(255, 255, 255, 0.05);
-  color: #00a3ff;
+  color: var(--color-brand-azure);
   font-weight: 600;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .profile-dropdown.active .dropdown-toggle svg {
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .profile-dropdown .dropdown-item {
@@ -101,7 +101,7 @@
   width: 100%;
   bottom: 0;
   height: 3px;
-  background: #72d4ed;
+  background: var(--color-brand-sky);
   border-radius: 2px 2px 0 0;
   z-index: 2;
   pointer-events: none;
@@ -117,7 +117,7 @@
   box-sizing: border-box;
 }
 .offcanvas-header .btn-close {
-  --bs-btn-close-color: #00a3ff;
+  --bs-btn-close-color: var(--color-brand-azure);
   --bs-btn-close-opacity: 1;
   filter: none;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath stroke='%2300a3ff' stroke-linecap='round' stroke-width='1.5' d='M4 4l8 8M12 4l-8 8'/%3e%3c/svg%3e");
@@ -127,7 +127,7 @@
   box-shadow: 0 0 0 0.25rem rgba(0, 163, 255, 0.35);
 }
 .tec-nav-link.active {
-  color: #fff !important;
+  color: var(--color-text-primary) !important;
 }
 .navbar-nav .nav-link.tec-nav-link {
   height: 84px !important;
@@ -141,21 +141,21 @@
 #language-dropdown .dropdown-menu {
   min-width: 160px;
   border-radius: 12px;
-  border: 1.5px solid #00a3ff;
-  background: #0c2536;
+  border: 1.5px solid var(--color-brand-azure);
+  background: var(--color-surface-panel);
   box-shadow: 0 0 12px 0 rgba(0, 163, 255, 0.22);
 }
 @media (max-width: 992px) {
   #language-dropdown .dropdown-menu {
     min-width: 160px;
     border-radius: 12px;
-    border: 1.5px solid #00a3ff;
-    background: #0c2536;
+    border: 1.5px solid var(--color-brand-azure);
+    background: var(--color-surface-panel);
     box-shadow: 0 0 12px 0 rgba(0, 163, 255, 0.22);
   }
   .custom-nav-dropdown .dropdown-menu {
-    background-color: #032031;
-    border: 2px solid #00a3ff;
+    background-color: var(--color-surface-overlay);
+    border: 2px solid var(--color-brand-azure);
     border-radius: 18px;
     padding: 18px 0 18px 0;
     min-width: 320px;
@@ -167,7 +167,7 @@
     top: 82px !important; /* ปรับให้ตรงกับ navbar */
   }
   .custom-nav-dropdown .dropdown-item {
-    color: #fff;
+    color: var(--color-text-primary);
     font-family: var(--font-body);
     font-size: 1.28rem; /* ~20px */
     font-weight: 700;
@@ -185,13 +185,13 @@
   .custom-nav-dropdown .dropdown-item:focus,
   .custom-nav-dropdown .dropdown-item.active {
     background-color: rgba(0, 163, 255, 0.1);
-    color: #00a3ff;
+    color: var(--color-brand-azure);
     font-weight: 900;
     text-shadow: 0px 5px 13.3px rgba(0, 163, 255, 0.21);
   }
   .custom-nav-dropdown .dropdown-menu {
     box-shadow: 0 0 20px 0 rgba(0, 163, 255, 0.28);
-    border: 1.5px solid #00a3ff;
+    border: 1.5px solid var(--color-brand-azure);
     border-radius: 12px;
   }
   .profile-dropdown {
@@ -237,7 +237,7 @@
   }
   .profile-dropdown.active,
   .profile-dropdown .dropdown-toggle.active {
-    border: 1.5px solid #00a3ff !important;
+    border: 1.5px solid var(--color-brand-azure) !important;
     background: #19212a !important;
   }
 
@@ -310,12 +310,12 @@
 
   .offcanvas .nav-link.active,
   .offcanvas .dropdown-toggle.active {
-    color: #00a3ff;
+    color: var(--color-brand-azure);
     font-weight: bold;
   }
   .offcanvas .dropdown-menu {
     background: #19212a;
-    border: 2px solid #00a3ff;
+    border: 2px solid var(--color-brand-azure);
     border-radius: 16px;
     box-shadow: 0 0 14px 0 rgba(0, 163, 255, 0.22);
     margin: 0.3rem auto;
@@ -334,7 +334,7 @@
   .offcanvas .dropdown-item.active,
   .offcanvas .dropdown-item:focus,
   .offcanvas .dropdown-item:hover {
-    color: #00a3ff;
+    color: var(--color-brand-azure);
     font-weight: bold;
   }
   .offcanvas .nav-link.tec-nav-link {

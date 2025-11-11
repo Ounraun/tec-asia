@@ -229,7 +229,7 @@
 
 /* ISO button (matches Knowledge.moreKnowledgeBtn styling) */
 .isoButton {
-  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  background: var(--gradient-brand-horizontal);
   border: none;
   border-radius: 19820.6px;
   display: inline-flex;
@@ -248,7 +248,7 @@
 }
 
 .isoButton:hover {
-  background-color: #0077ff;
+  background-color: var(--color-brand-azure-hover);
 }
 
 .color-gradient-1 {
@@ -589,7 +589,7 @@ button.position-absolute {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #000;
+  background: var(--color-bg-body);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -600,7 +600,7 @@ button.position-absolute {
   width: 56px;
   height: 56px;
   border: 3px solid rgba(255, 255, 255, 0.25);
-  border-top-color: #72d4ed;
+  border-top-color: var(--color-brand-sky);
   border-radius: 50%;
   animation: aboutus-spin 0.8s linear infinite;
 }
@@ -644,6 +644,53 @@ button.position-absolute {
     padding: 0 1rem;
     width: 100%;
     text-align: center;
+  }
+  .gem-float-1 {
+    animation: float 3s ease-in-out infinite;
+    animation-delay: 0.2s;
+    top: 8%;
+    left: 25%;
+    width: 240px;
+  }
+
+  .gem-float-2 {
+    animation: float 4s ease-in-out infinite;
+    animation-delay: 0.4s;
+    top: 16%;
+    left: 10%;
+    width: 300px;
+  }
+
+  .gem-float-3 {
+    animation: float 5s ease-in-out infinite;
+    animation-delay: 0.6s;
+    top: 27%;
+    left: 13%;
+    width: 320px;
+  }
+
+  .gem-float-4 {
+    animation: float 3s ease-in-out infinite;
+    animation-delay: 0.8s;
+    top: 6%;
+    right: 27%;
+    width: 240px;
+  }
+
+  .gem-float-5 {
+    animation: float 4s ease-in-out infinite;
+    animation-delay: 1s;
+    top: 16%;
+    right: 13%;
+    width: 280px;
+  }
+
+  .gem-float-6 {
+    animation: float 3s ease-in-out infinite;
+    animation-delay: 1.2s;
+    top: 28%;
+    right: 12%;
+    width: 310px;
   }
 }
 

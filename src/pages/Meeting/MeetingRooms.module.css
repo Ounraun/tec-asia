@@ -76,7 +76,7 @@
 
 .bookingButton {
   display: inline-block;
-  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  background: var(--gradient-brand-horizontal);
   color: white;
   text-decoration: none;
   padding: 0.75rem 2rem;

@@ -19,12 +19,12 @@
 
 .header h1 {
   font-size: clamp(1.6rem, 8vw, 3.75rem);
-  display: inline-flex; /* shrink to content width */
+  display: inline-flex;
   justify-content: center;
   gap: 0.4rem;
   margin-bottom: 5rem;
-  line-height: 1.5; /* extra breathing room for Thai diacritics */
-  overflow: visible; /* avoid clipping above/below glyph box */
+  line-height: 1.5;
+  overflow: visible;
   background: var(
     --main-solution,
     linear-gradient(
@@ -39,9 +39,8 @@
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0); /* fix background-clip text overhang clipping in WebKit */
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
-/* Ensure child spans inherit transparent fill so parent's gradient is continuous */
 .header h1 * {
   -webkit-text-fill-color: transparent;
 }
@@ -55,16 +54,12 @@
   display: inline-block;
   overflow: visible;
   letter-spacing: 1px;
-  padding-top: 0.12em; /* add top padding for Thai upper marks */
-  padding-bottom: 0.16em; /* add bottom padding for lower marks */
-  line-height: 1.45; /* additional breathing room for stacked Thai marks */
-  -webkit-text-stroke: 0.1px transparent; /* rendering nudge to avoid glyph clipping */
+  padding-top: 0.12em;
+  padding-bottom: 0.16em;
+  line-height: 1.45;
+  -webkit-text-stroke: 0.1px transparent;
   white-space: nowrap;
 }
-
-/* .gradientText gradient moved to parent h1 */
-
-/* .solution gradient moved to parent h1 */
 
 .subtitle {
   color: #f5f5f5;
@@ -228,8 +223,6 @@
   box-shadow: 0 0 20px rgba(66, 165, 245, 0.3);
 }
 
-/*  */
-
 .serviceCard ul,
 .serviceCard p,
 .serviceCard li {
@@ -269,8 +262,8 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #72d4ed;
-  box-shadow: 0 0 10px #72d4ed;
+  background: var(--color-brand-sky);
+  box-shadow: var(--shadow-brand-glow-strong);
   position: absolute;
   top: -5px;
   left: 20px;
@@ -298,7 +291,7 @@
 }
 
 .serviceCard li {
-  color: #ffffff;
+  color: var(--color-text-primary);
   margin-bottom: 0.2rem;
   font-weight: 400;
   line-height: 1.5;
@@ -323,7 +316,7 @@
   position: relative;
   padding-left: 1.5rem;
   margin-bottom: 0.3rem;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 1.1rem;
   line-height: 1.4;
 }
@@ -335,7 +328,7 @@
   left: 0;
   width: 8px;
   height: 8px;
-  background-color: #72d4ed;
+  background-color: var(--color-brand-sky);
   border-radius: 50%;
 }
 
@@ -364,9 +357,6 @@
 }
 
 @media (max-width: 1024px) {
-  /* .header {
-    margin-top: 80px;
-  } */
   .header h1 {
     font-size: clamp(2.4rem, 6vw, 3rem);
   }

@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  background-color: #000;
+  background-color: var(--color-bg-body);
   color: white;
   width: 100%;
   position: relative;
@@ -17,29 +17,7 @@
   position: relative;
   z-index: 2;
 }
-.header h1 {
-  display: inline-block; /* shrink to content width */
-}
-.header h1 {
-  background: var(
-    --main-solution,
-    linear-gradient(
-      81deg,
-      #34a8d5 19.23%,
-      #a1e8ee 34.62%,
-      #c98d8c 54.33%,
-      #bd6c0f 95.64%
-    )
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-/* Ensure child spans inherit transparent fill so parent's gradient is continuous */
-.header h1 * {
-  -webkit-text-fill-color: transparent;
-}
+
 .header h1 {
   font-size: clamp(1.6rem, 8vw, 3.75rem);
   margin-bottom: 1rem;
@@ -49,9 +27,17 @@
   justify-content: center;
   gap: 0.35rem;
   align-items: center;
+  background: var(--main-solution);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
-/* heading 2 คำ ให้เหมือน Data Management */
+.header h1 * {
+  -webkit-text-fill-color: transparent;
+}
+
 .highlight,
 .Management_29_186 {
   font-family: var(--font-heading);
@@ -145,7 +131,7 @@
 }
 
 .Rectangle_26_29_195 {
-  background: #72d4ed;
+  background: var(--color-brand-sky);
   border-radius: 100px 100px 0 0;
   width: 150px;
   height: 2px;
@@ -185,9 +171,9 @@
   transform: translateX(-50%);
   width: 100px;
   height: 4px;
-  background: #72d4ed;
+  background: var(--color-brand-sky);
   border-radius: 100px;
-  box-shadow: 0 0 10px 4px #72d4ed;
+  box-shadow: var(--shadow-brand-glow-strong);
   z-index: 10;
 }
 .featureCard:hover {
@@ -266,7 +252,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: #0497ec;
+  background: var(--color-brand-royal);
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -278,14 +264,14 @@
   justify-content: center;
   cursor: pointer;
   transition: background 0.2s ease;
-  box-shadow: 0 2px 6px #0497ec44;
+  box-shadow: var(--shadow-royal-soft);
   padding: 0;
   line-height: 1;
   z-index: 10;
 }
 .prevBtn:active,
 .nextBtn:active {
-  background: #005a8e;
+  background: var(--color-brand-royal-pressed);
 }
 .prevBtn {
   left: 0.5rem;
@@ -311,7 +297,7 @@
   cursor: pointer;
 }
 .activeDot {
-  background: #34a8d5;
+  background: var(--color-brand-sky-light);
 }
 
 .navigation {
@@ -345,13 +331,9 @@
   }
 }
 
-/* =========================
-   Mobile ≤ 575.98px
-   ========================= */
 @media (max-width: 575.98px) {
   .subtitle {
     padding: 0 40px;
-    /* font-size: 1.05rem; */
   }
   .featuresGrid {
     flex-direction: column;
@@ -359,13 +341,11 @@
   }
   .highlight,
   .Management_29_186 {
-    /* font-size: inherit; */
     line-height: 1.45;
     padding-top: 0.14em;
     padding-bottom: 0.2em;
   }
   .header {
-    /* margin: 2rem 0; */
     padding-top: 2rem;
   }
   .header h1 {
@@ -382,7 +362,6 @@
   .featureTitle {
     font-size: var(--services-body-sm);
     line-height: 20px;
-    /* width: 140px; */
     min-height: 50px;
   }
   .featureContent {
@@ -397,9 +376,6 @@
   }
 }
 
-/* =========================
-   Tablet 768–991.98px
-   ========================= */
 @media (min-width: 768px) and (max-width: 991.98px) {
   .featuresGrid {
     flex-wrap: wrap;
@@ -456,9 +432,6 @@
   }
 }
 
-/* =========================
-   Desktop 992–1199.98px
-   ========================= */
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .featuresGrid {
     flex-wrap: nowrap;
@@ -526,9 +499,6 @@
   }
 }
 
-/* =========================
-   Extra large ≥ 1200px
-   ========================= */
 @media (min-width: 1200px) {
   .carouselContainer .prevBtn,
   .carouselContainer .nextBtn,

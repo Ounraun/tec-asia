@@ -102,7 +102,7 @@
   justify-content: center;
   height: 62px;
   padding: 11px 78px;
-  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  background: var(--gradient-brand-horizontal);
   color: white;
   text-decoration: none;
   border-radius: 19820.6px;

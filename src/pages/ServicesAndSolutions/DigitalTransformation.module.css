@@ -184,15 +184,19 @@
 }
 
 .transformationItem:hover {
-  border-color: #72d4ed;
-  box-shadow: 0 0 16px 2px #72d4ed2f;
+  border-color: var(--color-brand-sky);
+  box-shadow: var(--shadow-sky-focus);
 }
 
 .itemBar {
   width: 3.5px;
   min-width: 3.5px;
   height: 30px;
-  background: linear-gradient(180deg, #34a8d5 0%, #72d4ed 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-brand-sky-light) 0%,
+    var(--color-brand-sky) 100%
+  );
   border-radius: 2px;
   margin-right: 4px;
 }

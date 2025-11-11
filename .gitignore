@@ -32,3 +32,5 @@ dist-ssr
 .firebase/
 public/knowledge/knowledge.mp4
 knowledge.zip
+public.zip
+*.zip

@@ -48,7 +48,7 @@
 }
 
 .closeButton {
-  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  background: var(--gradient-brand-horizontal);
   border: none;
   border-radius: 19820.6px; /* pill */
   color: #fff;

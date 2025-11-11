@@ -1,3 +1,7 @@
+.services-nav {
+  background: var(--gradient-brand-horizontal);
+}
+
 .services-pager {
   display: flex;
   justify-content: space-between;
@@ -10,7 +14,7 @@
 }
 
 .services-btn {
-  background: linear-gradient(90deg, #0497ec 73.43%, #005f96 96.19%);
+  background: var(--gradient-brand-horizontal);
   border: none;
   border-radius: 19820.6px;
   display: inline-flex;
@@ -20,7 +24,7 @@
   padding: 12px clamp(18px, 3vw, 28px);
   box-sizing: border-box;
   width: clamp(240px, 24vw, 320px);
-  color: #fff;
+  color: var(--color-text-primary);
   font-size: clamp(1rem, 1.5vw, 1.2rem);
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -35,7 +39,7 @@
 }
 
 .services-btn:hover {
-  background-color: #0077ff;
+  background-color: var(--color-brand-azure-hover);
 }
 
 .services-btn:active {

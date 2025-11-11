@@ -9,7 +9,7 @@ body,
   height: 100%;
   box-sizing: border-box;
   overflow-x: hidden;
-  background: #000;
+  background: var(--color-bg-body);
 }
 
 /* Prevent scroll anchoring from overriding manual scrollToTop, especially on Edge */
@@ -62,10 +62,49 @@ html[lang="th"] {
   --font-heading: "Sarabun", sans-serif;
   --font-body: "Sarabun", sans-serif;
   --font-subContent: "Sarabun", sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 32px;
   --services-heading-mobile: 28px;
   --services-heading-tablet: 48px;
-  --services-body-lg: 20px;
-  --services-body-sm: 14px;
+  --services-body-lg: var(--font-size-lg);
+  --services-body-sm: var(--font-size-sm);
+  --color-bg-body: #000000;
+  --color-surface-deep: #0f2b3e;
+  --color-surface-panel: #0c2536;
+  --color-surface-overlay: #032031;
+  --color-text-primary: #ffffff;
+  --color-text-muted: #cbd5e1;
+  --color-brand-sky: #72d4ed;
+  --color-brand-sky-light: #34a8d5;
+  --color-brand-royal: #0497ec;
+  --color-brand-royal-dark: #005f96;
+  --color-brand-royal-pressed: #005a8e;
+  --color-brand-azure: #00a3ff;
+  --color-brand-azure-hover: #0077ff;
+  --color-brand-cyan: #00aaff;
+  --color-brand-amber: #f59e0b;
+  --color-brand-bronze: #d58213;
+  --gradient-brand-horizontal: linear-gradient(
+    90deg,
+    var(--color-brand-royal) 73.43%,
+    var(--color-brand-royal-dark) 96.19%
+  );
+  --gradient-main-solution: linear-gradient(
+    81deg,
+    #34a8d5 19.23%,
+    #a1e8ee 34.62%,
+    #c98d8c 54.33%,
+    #bd6c0f 95.64%
+  );
+  --main-solution: var(--gradient-main-solution);
+  --shadow-brand-glow-soft: 0 0 12px rgba(0, 170, 255, 0.4);
+  --shadow-brand-glow-strong: 0 0 10px #72d4ed;
+  --shadow-royal-soft: 0 2px 6px #0497ec44;
+  --shadow-sky-focus: 0 0 16px 2px #72d4ed2f;
 }
 
 /* ===== Links ===== */
@@ -114,7 +153,7 @@ main.flex-grow-1 {
   width: 56px;
   height: 56px;
   border: 3px solid rgba(255, 255, 255, 0.25);
-  border-top-color: #72d4ed;
+  border-top-color: var(--color-brand-sky);
   border-radius: 50%;
   animation: app-spin 0.8s linear infinite;
   will-change: transform; /* hint ให้ compositor */
@@ -148,7 +187,7 @@ main.flex-grow-1 {
   transition: color 0.2s;
 }
 .navLink:hover {
-  color: #72d4ed;
+  color: var(--color-brand-sky);
 }
 
 /* ===== Mobile ≤ 575.98px ===== */

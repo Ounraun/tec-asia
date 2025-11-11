@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  background-color: #000;
+  background-color: var(--color-bg-body);
   color: white;
   display: flex;
   flex-direction: column;
@@ -10,15 +10,13 @@
   text-align: center;
   padding: 5rem 0 0;
 }
-
-/* Single gradient across the entire title */
 .header h1 {
   font-size: clamp(1.6rem, 8vw, 3.75rem);
   line-height: 1.5;
   display: inline-flex;
   justify-content: center;
   gap: 0.35rem;
-  align-items: center;
+    align-items: center;
   overflow: visible;
   background: var(
     --main-solution,
@@ -41,7 +39,7 @@
   -webkit-text-fill-color: transparent;
 }
 
-.data,
+/* .data,
 .center {
   font-family: var(--font-heading);
   font-size: inherit;
@@ -53,11 +51,7 @@
   padding-top: 0.12em;
   padding-bottom: 0.18em;
   letter-spacing: 1px;
-}
-
-.data {
-  text-align: center;
-}
+} */
 
 .subtitle {
   position: relative;
@@ -72,6 +66,7 @@
   color: #f5f5f5;
   white-space: pre-wrap;
   word-break: break-word;
+
 }
 
 .line {
@@ -121,22 +116,13 @@
 
 .facilitiesTitle {
   text-align: center;
-  color: #72d4ed;
+  color: var(--color-brand-sky);
   font-size: clamp(18px, 3vw, 38px);
   font-weight: 500;
   margin-bottom: 3rem;
   letter-spacing: 6.4px;
   text-transform: capitalize;
-  background: var(
-    --main-solution,
-    linear-gradient(
-      81deg,
-      #34a8d5 19.23%,
-      #a1e8ee 34.62%,
-      #c98d8c 54.33%,
-      #bd6c0f 95.64%
-    )
-  );
+  background: var(--main-solution);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -187,7 +173,7 @@
 }
 
 .facilityNumber {
-  color: #72d4ed;
+  color: var(--color-brand-sky);
   font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 600;
@@ -195,7 +181,7 @@
 }
 
 .facilityTitle {
-  color: #d58213;
+  color: var(--color-brand-bronze);
   width: 359px;
   font-family: var(--font-heading);
   font-size: var(--services-body-lg);
@@ -206,7 +192,7 @@
 }
 
 .facilityContent {
-  color: #fff;
+  color: var(--color-text-primary);
   flex-direction: column;
   justify-content: center;
   width: 328px;
@@ -237,10 +223,10 @@
   min-width: 80px;
   max-width: 280px;
   min-height: 80px;
-  background: #0f2b3e;
+  background: var(--color-surface-deep);
   border-radius: 10px;
-  border: 3px solid #00aaff;
-  box-shadow: 0 0 12px rgba(0, 170, 255, 0.4);
+  border: 3px solid var(--color-brand-cyan);
+  box-shadow: var(--shadow-brand-glow-soft);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -260,7 +246,7 @@
   font-family: var(--font-heading);
   font-size: 1rem;
   font-weight: bold;
-  color: #f59e0b;
+  color: var(--color-brand-amber);
   transition: opacity 0.3s ease;
   padding: 1rem;
 }
@@ -286,12 +272,12 @@
 }
 
 .card h3 {
-  color: #f59e0b;
+  color: var(--color-brand-amber);
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
 .card p {
-  color: #cbd5e1;
+  color: var(--color-text-muted);
   font-size: 0.95rem;
   line-height: 1.6;
 }
@@ -317,7 +303,7 @@
 }
 
 .carouselButton {
-  background: #0497ec;
+  background: var(--color-brand-royal);
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -326,7 +312,7 @@
   font-size: 1.5rem;
   cursor: pointer;
   transition: background 0.2s;
-  box-shadow: 0 2px 6px #0497ec44;
+  box-shadow: var(--shadow-royal-soft);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -334,7 +320,7 @@
   line-height: 1;
 }
 .carouselButton:active {
-  background: #005a8e;
+  background: var(--color-brand-royal-pressed);
 }
 
 .carouselIndicator {
@@ -367,9 +353,6 @@
 }
 
 @media (max-width: 1024px) {
-  /* .header {
-    margin-top: 80px;
-  } */
   .header h1 {
     font-size: clamp(2.4rem, 6vw, 3rem);
     flex-direction: column;
@@ -471,7 +454,6 @@
     align-items: center;
     gap: 0.25rem;
     line-height: 1.55;
-    /* font-size: 1.125rem; */
   }
   .carouselButton {
     width: 32px;
