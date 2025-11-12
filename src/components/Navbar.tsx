@@ -20,6 +20,10 @@ const Navigationbar = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation(["common", "navbar"]);
 
+  const isCommunityRoute =
+    location.pathname.startsWith("/community/") ||
+    location.pathname.startsWith("/blog/");
+
   const switchLang = (lng: "en" | "th") => {
     i18n.changeLanguage(lng);
   };
@@ -282,12 +286,8 @@ const Navigationbar = () => {
                   <span
                     style={{
                       position: "relative",
-                      color: location.pathname.startsWith("/community/")
-                        ? "#00a3ff"
-                        : "#A1A1A1",
-                      fontWeight: location.pathname.startsWith("/community/")
-                        ? "bold"
-                        : undefined,
+                      color: isCommunityRoute ? "#00a3ff" : "#A1A1A1",
+                      fontWeight: isCommunityRoute ? "bold" : undefined,
                       borderRadius: "8px",
                       padding: "1.2rem 0",
                       width: "100%",
@@ -296,7 +296,7 @@ const Navigationbar = () => {
                     }}
                   >
                     {t("navbar:ourCommunity")}
-                    {location.pathname.startsWith("/community/") && (
+                    {isCommunityRoute && (
                       <span
                         className="tec-navbar-underline"
                         style={{
@@ -313,9 +313,7 @@ const Navigationbar = () => {
                 }
                 show={showCommunityDropdown}
                 onToggle={setShowCommunityDropdown}
-                className={`w-100${
-                  location.pathname.startsWith("/community/") ? " active" : ""
-                }`}
+                className={`w-100${isCommunityRoute ? " active" : ""}`}
                 menuVariant="dark"
               >
                 <NavDropdown.Item
@@ -621,18 +619,16 @@ const Navigationbar = () => {
               title={
                 <div
                   className={`tec-nav-link${
-                    location.pathname.startsWith("/community/") ? " active" : ""
+                    isCommunityRoute ? " active" : ""
                   }`}
                   style={{
                     ...dropdownStyle,
                     position: "relative",
-                    color: location.pathname.startsWith("/community/")
-                      ? "#fff"
-                      : "#A1A1A1",
+                    color: isCommunityRoute ? "#fff" : "#A1A1A1",
                   }}
                 >
                   {t("navbar:ourCommunity")}
-                  {location.pathname.startsWith("/community/") && (
+                  {isCommunityRoute && (
                     <span className="tec-navbar-underline" />
                   )}
                 </div>
@@ -641,7 +637,7 @@ const Navigationbar = () => {
               show={showCommunityDropdown}
               onToggle={(nextShow) => setShowCommunityDropdown(nextShow)}
               className={`custom-nav-dropdown ${
-                location.pathname.startsWith("/community/") ? "active" : ""
+                isCommunityRoute ? "active" : ""
               }`}
               style={{
                 marginRight: "25px",
